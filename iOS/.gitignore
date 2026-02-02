@@ -1,0 +1,49 @@
+# Xcode
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+xcuserdata/
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+Packages/
+Package.pins
+Package.resolved
+*.xcworkspace
+
+# CocoaPods (if used)
+Pods/
+Podfile.lock
+
+# Carthage (if used)
+Carthage/Build/
+
+# OS
+.DS_Store
+*.swp
+*.lock
+profile
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+# Code coverage
+*.gcno
+*.gcda
+
+# Build
+build/
+
+# Archives
+*.xcarchive

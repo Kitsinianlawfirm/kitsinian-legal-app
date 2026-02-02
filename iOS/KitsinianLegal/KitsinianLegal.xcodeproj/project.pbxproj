@@ -1,0 +1,490 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		/* App Files */
+		E01A00001 /* KitsinianLegalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00101 /* KitsinianLegalApp.swift */; };
+		E01A00002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00102 /* ContentView.swift */; };
+		E01A00003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E01A00103 /* Assets.xcassets */; };
+
+		/* Models */
+		E01A00011 /* PracticeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00111 /* PracticeArea.swift */; };
+		E01A00012 /* Lead.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00112 /* Lead.swift */; };
+		E01A00013 /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00113 /* Quiz.swift */; };
+		E01A00014 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00114 /* Resource.swift */; };
+
+		/* Views */
+		E01A00021 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00121 /* OnboardingView.swift */; };
+		E01A00022 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00122 /* HomeView.swift */; };
+		E01A00023 /* QuizStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00123 /* QuizStartView.swift */; };
+		E01A00024 /* QuizFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00124 /* QuizFlowView.swift */; };
+		E01A00025 /* QuizResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00125 /* QuizResultView.swift */; };
+		E01A00026 /* PracticeAreasListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00126 /* PracticeAreasListView.swift */; };
+		E01A00027 /* PracticeAreaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00127 /* PracticeAreaDetailView.swift */; };
+		E01A00028 /* ResourceLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00128 /* ResourceLibraryView.swift */; };
+		E01A00029 /* ResourceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00129 /* ResourceDetailView.swift */; };
+		E01A00030 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00130 /* ContactView.swift */; };
+		E01A00031 /* LeadFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00131 /* LeadFormView.swift */; };
+
+		/* Services */
+		E01A00041 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00141 /* APIService.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E01A00000 /* KitsinianLegal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KitsinianLegal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+
+		/* App Files */
+		E01A00101 /* KitsinianLegalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitsinianLegalApp.swift; sourceTree = "<group>"; };
+		E01A00102 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E01A00103 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+
+		/* Models */
+		E01A00111 /* PracticeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeArea.swift; sourceTree = "<group>"; };
+		E01A00112 /* Lead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lead.swift; sourceTree = "<group>"; };
+		E01A00113 /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
+		E01A00114 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+
+		/* Views */
+		E01A00121 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		E01A00122 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E01A00123 /* QuizStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizStartView.swift; sourceTree = "<group>"; };
+		E01A00124 /* QuizFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizFlowView.swift; sourceTree = "<group>"; };
+		E01A00125 /* QuizResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResultView.swift; sourceTree = "<group>"; };
+		E01A00126 /* PracticeAreasListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeAreasListView.swift; sourceTree = "<group>"; };
+		E01A00127 /* PracticeAreaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeAreaDetailView.swift; sourceTree = "<group>"; };
+		E01A00128 /* ResourceLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLibraryView.swift; sourceTree = "<group>"; };
+		E01A00129 /* ResourceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDetailView.swift; sourceTree = "<group>"; };
+		E01A00130 /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
+		E01A00131 /* LeadFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadFormView.swift; sourceTree = "<group>"; };
+
+		/* Services */
+		E01A00141 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E01A00200 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E01A00300 = {
+			isa = PBXGroup;
+			children = (
+				E01A00301 /* KitsinianLegal */,
+				E01A00302 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E01A00301 /* KitsinianLegal */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00310 /* App */,
+				E01A00311 /* Models */,
+				E01A00312 /* Views */,
+				E01A00313 /* Services */,
+				E01A00103 /* Assets.xcassets */,
+			);
+			path = KitsinianLegal;
+			sourceTree = "<group>";
+		};
+		E01A00302 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00000 /* KitsinianLegal.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E01A00310 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00101 /* KitsinianLegalApp.swift */,
+				E01A00102 /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E01A00311 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00111 /* PracticeArea.swift */,
+				E01A00112 /* Lead.swift */,
+				E01A00113 /* Quiz.swift */,
+				E01A00114 /* Resource.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E01A00312 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00320 /* Onboarding */,
+				E01A00122 /* HomeView.swift */,
+				E01A00321 /* Quiz */,
+				E01A00322 /* PracticeAreas */,
+				E01A00323 /* Resources */,
+				E01A00324 /* Contact */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E01A00313 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00141 /* APIService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E01A00320 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00121 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		E01A00321 /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00123 /* QuizStartView.swift */,
+				E01A00124 /* QuizFlowView.swift */,
+				E01A00125 /* QuizResultView.swift */,
+			);
+			path = Quiz;
+			sourceTree = "<group>";
+		};
+		E01A00322 /* PracticeAreas */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00126 /* PracticeAreasListView.swift */,
+				E01A00127 /* PracticeAreaDetailView.swift */,
+			);
+			path = PracticeAreas;
+			sourceTree = "<group>";
+		};
+		E01A00323 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00128 /* ResourceLibraryView.swift */,
+				E01A00129 /* ResourceDetailView.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E01A00324 /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00130 /* ContactView.swift */,
+				E01A00131 /* LeadFormView.swift */,
+			);
+			path = Contact;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E01A00400 /* KitsinianLegal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E01A00410 /* Build configuration list for PBXNativeTarget "KitsinianLegal" */;
+			buildPhases = (
+				E01A00401 /* Sources */,
+				E01A00200 /* Frameworks */,
+				E01A00402 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KitsinianLegal;
+			productName = KitsinianLegal;
+			productReference = E01A00000 /* KitsinianLegal.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E01A00500 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					E01A00400 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = E01A00501 /* Build configuration list for PBXProject "KitsinianLegal" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E01A00300;
+			productRefGroup = E01A00302 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E01A00400 /* KitsinianLegal */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E01A00402 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E01A00003 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E01A00401 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E01A00001 /* KitsinianLegalApp.swift in Sources */,
+				E01A00002 /* ContentView.swift in Sources */,
+				E01A00011 /* PracticeArea.swift in Sources */,
+				E01A00012 /* Lead.swift in Sources */,
+				E01A00013 /* Quiz.swift in Sources */,
+				E01A00014 /* Resource.swift in Sources */,
+				E01A00021 /* OnboardingView.swift in Sources */,
+				E01A00022 /* HomeView.swift in Sources */,
+				E01A00023 /* QuizStartView.swift in Sources */,
+				E01A00024 /* QuizFlowView.swift in Sources */,
+				E01A00025 /* QuizResultView.swift in Sources */,
+				E01A00026 /* PracticeAreasListView.swift in Sources */,
+				E01A00027 /* PracticeAreaDetailView.swift in Sources */,
+				E01A00028 /* ResourceLibraryView.swift in Sources */,
+				E01A00029 /* ResourceDetailView.swift in Sources */,
+				E01A00030 /* ContactView.swift in Sources */,
+				E01A00031 /* LeadFormView.swift in Sources */,
+				E01A00041 /* APIService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E01A00600 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E01A00601 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E01A00610 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Kitsinian Law";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitsinianlaw.legalapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E01A00611 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Kitsinian Law";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitsinianlaw.legalapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E01A00501 /* Build configuration list for PBXProject "KitsinianLegal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E01A00600 /* Debug */,
+				E01A00601 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E01A00410 /* Build configuration list for PBXNativeTarget "KitsinianLegal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E01A00610 /* Debug */,
+				E01A00611 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E01A00500 /* Project object */;
+}
