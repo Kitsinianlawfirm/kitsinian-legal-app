@@ -1,0 +1,30 @@
+{
+  "project": {
+    "name": "ClaimIt",
+    "type": "legal-app",
+    "platforms": ["ios", "web-preview"]
+  },
+  "sync": {
+    "enabled": true,
+    "source": "preview/index.html",
+    "destinations": [
+      "/Users/hkitsinian/claimit-preview/index.html"
+    ]
+  },
+  "conventions": {
+    "commits": {
+      "coAuthor": "Claude Opus 4.5 <noreply@anthropic.com>",
+      "style": "conventional"
+    },
+    "css": {
+      "useVariables": true,
+      "borderRadius": "var(--radius-xl)",
+      "touchTargetMin": "44px"
+    }
+  },
+  "placeholders": {
+    "phone": "+1YOURNUMBER",
+    "email": ["privacy@claimit.com", "legal@claimit.com"],
+    "patterns": ["555-", "YOURNUMBER", "example.com"]
+  }
+}
