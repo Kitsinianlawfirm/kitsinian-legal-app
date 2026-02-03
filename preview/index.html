@@ -3527,6 +3527,55 @@
                     { value: 'business', label: 'Business dispute', icon: 'document' },
                     { value: 'other-legal', label: 'Something else', icon: 'question' }
                 ]
+            },
+            // Referral Network practice areas
+            'family-law': {
+                question: 'What family law matter do you need help with?',
+                subtext: 'Select the option that best describes your situation',
+                options: [
+                    { value: 'divorce', label: 'Divorce or separation', icon: 'family' },
+                    { value: 'custody', label: 'Child custody or visitation', icon: 'family' },
+                    { value: 'support', label: 'Child or spousal support', icon: 'document' },
+                    { value: 'adoption', label: 'Adoption or guardianship', icon: 'family' },
+                    { value: 'domestic-violence', label: 'Domestic violence / restraining order', icon: 'shield' },
+                    { value: 'other-family', label: 'Other family matter', icon: 'question' }
+                ]
+            },
+            'criminal-defense': {
+                question: 'What type of criminal matter?',
+                subtext: 'All consultations are confidential',
+                options: [
+                    { value: 'dui', label: 'DUI / DWI', icon: 'car' },
+                    { value: 'drug', label: 'Drug charges', icon: 'gavel' },
+                    { value: 'theft', label: 'Theft or property crimes', icon: 'denied' },
+                    { value: 'assault', label: 'Assault or violent crimes', icon: 'injury' },
+                    { value: 'traffic', label: 'Traffic violations', icon: 'car' },
+                    { value: 'other-criminal', label: 'Other criminal matter', icon: 'question' }
+                ]
+            },
+            'employment-law': {
+                question: 'What employment issue are you facing?',
+                subtext: 'Tell us about your workplace situation',
+                options: [
+                    { value: 'wrongful-termination', label: 'Wrongful termination', icon: 'denied' },
+                    { value: 'discrimination', label: 'Discrimination or harassment', icon: 'injury' },
+                    { value: 'wage', label: 'Unpaid wages or overtime', icon: 'document' },
+                    { value: 'retaliation', label: 'Retaliation for reporting', icon: 'shield' },
+                    { value: 'contract', label: 'Employment contract dispute', icon: 'document' },
+                    { value: 'other-employment', label: 'Other employment issue', icon: 'question' }
+                ]
+            },
+            'real-estate': {
+                question: 'What real estate issue do you have?',
+                subtext: 'Select the option that applies',
+                options: [
+                    { value: 'landlord-tenant', label: 'Landlord-tenant dispute', icon: 'home' },
+                    { value: 'purchase', label: 'Purchase or sale issue', icon: 'document' },
+                    { value: 'boundary', label: 'Boundary or neighbor dispute', icon: 'building' },
+                    { value: 'hoa', label: 'HOA dispute', icon: 'building' },
+                    { value: 'foreclosure', label: 'Foreclosure', icon: 'denied' },
+                    { value: 'other-realestate', label: 'Other real estate matter', icon: 'question' }
+                ]
             }
         };
 
@@ -3673,6 +3722,10 @@
                 'insurance': 'Insurance Dispute',
                 'lemon': 'Lemon Law',
                 'property': 'Property Damage',
+                'family-law': 'Family Law',
+                'criminal-defense': 'Criminal Defense',
+                'employment-law': 'Employment Law',
+                'real-estate': 'Real Estate',
                 'other': 'Other',
                 'referral': quizAnswers.referralArea || 'Referral'
             };
@@ -4046,16 +4099,45 @@
 
         function startReferralQuiz() {
             hideReferralModal();
-            // Set quiz answers for referral
+
+            // Map referral area names to case type keys
+            const referralMap = {
+                'Family Law': 'family-law',
+                'Criminal Defense': 'criminal-defense',
+                'Employment Law': 'employment-law',
+                'Real Estate Law': 'real-estate'
+            };
+
+            const caseType = referralMap[currentReferralArea] || 'other';
+
+            // Set quiz answers
             quizAnswers = {
-                step1: 'referral',
-                caseType: 'referral',
+                step1: caseType,
+                caseType: caseType,
                 referralArea: currentReferralArea
             };
-            // Switch to claim tab and go directly to contact form (step 4)
+
+            // Populate Step 2 with relevant questions
+            const config = step2Questions[caseType];
+            if (config) {
+                document.getElementById('step2-question').textContent = config.question;
+                document.getElementById('step2-subtext').textContent = config.subtext;
+
+                const optionsContainer = document.getElementById('step2-options');
+                optionsContainer.innerHTML = config.options.map(opt => `
+                    <div class="quiz-option" onclick="selectAndAdvance(this, '${opt.value}', 3)">
+                        <div class="quiz-option-icon">
+                            <svg style="width: 26px; height: 26px; color: white;"><use href="#icon-${opt.icon}"/></svg>
+                        </div>
+                        <span>${opt.label}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Switch to claim tab and go to Step 2
             switchTab('claim');
             setTimeout(() => {
-                goToStep(4);
+                goToStep(2);
             }, 100);
         }
 
