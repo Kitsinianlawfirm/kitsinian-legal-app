@@ -3383,6 +3383,22 @@
                     <button class="legal-modal-close" onclick="hideDisclaimerModal()">Close</button>
                 </div>
             </div>
+
+            <!-- REFERRAL MODAL -->
+            <div class="legal-modal" id="referral-modal" onclick="hideReferralModal()">
+                <div class="legal-modal-content" onclick="event.stopPropagation()" style="text-align: center;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                        <svg style="width: 28px; height: 28px; color: white;"><use href="#icon-family"/></svg>
+                    </div>
+                    <h2 id="referral-area-name">Family Law</h2>
+                    <p id="referral-area-desc" style="margin-bottom: 16px;">We partner with trusted California attorneys who specialize in family law.</p>
+                    <p style="font-weight: 600; color: var(--text-primary);">Complete a quick questionnaire to get matched with qualified representation.</p>
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="legal-modal-close" onclick="hideReferralModal()" style="background: var(--border-color); color: var(--text-primary); flex: 1;">Cancel</button>
+                        <button class="legal-modal-close" onclick="startReferralQuiz()" style="flex: 1;">Get Started</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -4015,9 +4031,18 @@
         }
 
         function showReferralInfo(areaName) {
-            if (confirm('Referral Network: ' + areaName + '\n\nWe partner with trusted California attorneys who specialize in ' + areaName.toLowerCase() + '.\n\nComplete a quick questionnaire to get matched with qualified representation.\n\nStart now?')) {
-                switchTab('claim');
-            }
+            document.getElementById('referral-area-name').textContent = areaName;
+            document.getElementById('referral-area-desc').textContent = 'We partner with trusted California attorneys who specialize in ' + areaName.toLowerCase() + '.';
+            document.getElementById('referral-modal').classList.add('active');
+        }
+
+        function hideReferralModal() {
+            document.getElementById('referral-modal').classList.remove('active');
+        }
+
+        function startReferralQuiz() {
+            hideReferralModal();
+            switchTab('claim');
         }
 
         // Legal Modal Functions
