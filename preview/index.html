@@ -2147,6 +2147,168 @@
             text-align: center;
         }
 
+        /* Legal Agreement Screen (Scroll-to-Accept) */
+        .legal-agreement-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(20, 25, 35, 0.97);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .legal-agreement-header {
+            padding: 20px 20px 16px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .legal-agreement-header h2 {
+            color: #F8FAFC;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+        }
+
+        .legal-agreement-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .legal-agreement-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 13px;
+            line-height: 1.7;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .legal-agreement-content h3 {
+            color: #F8FAFC;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .legal-agreement-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .legal-agreement-content h4 {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 14px;
+            font-weight: 600;
+            margin: 20px 0 8px 0;
+        }
+
+        .legal-agreement-content p {
+            color: rgba(255, 255, 255, 0.75);
+            margin: 0 0 12px 0;
+        }
+
+        .legal-agreement-content ul {
+            margin: 0 0 12px 0;
+            padding-left: 20px;
+        }
+
+        .legal-agreement-content li {
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 6px;
+        }
+
+        .legal-agreement-content strong {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .legal-agreement-scroll-end {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            margin-top: 20px;
+        }
+
+        .legal-agreement-scroll-end p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        .legal-agreement-footer {
+            padding: 16px 20px;
+            background: rgba(30, 35, 45, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .scroll-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            margin-bottom: 12px;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-indicator.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .scroll-indicator svg {
+            animation: bounceDown 1.5s ease-in-out infinite;
+        }
+
+        @keyframes bounceDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+
+        .legal-agreement-footer .btn-agree {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .legal-agreement-footer .btn-agree:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.3);
+            cursor: not-allowed;
+        }
+
+        .legal-agreement-footer .btn-agree:not(:disabled) {
+            background: linear-gradient(145deg, #00C48C 0%, #00A876 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 196, 140, 0.3);
+        }
+
+        .legal-agreement-footer .btn-agree:not(:disabled):hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 196, 140, 0.4);
+        }
+
+        .legal-ad-notice {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
         /* Modal Styles - Glassmorphism */
         .modal-overlay {
             position: absolute;
@@ -7717,67 +7879,114 @@
                 </div>
 
                 <!-- Screen 1: Consent & Agreement (FIRST SCREEN) -->
+                <!-- Screen 1: Legal Agreement (Scroll-to-Accept) -->
                 <div class="onboarding-screen active" id="onboarding-3">
-                    <div class="onboarding-logo" style="margin-bottom: 8px;">
-                        <svg style="width: 40px; height: 40px;"><use href="#logo-mark"/></svg>
-                    </div>
+                    <div class="legal-agreement-screen">
+                        <div class="legal-agreement-header">
+                            <h2>User Agreement</h2>
+                            <p>Please review and scroll to continue</p>
+                        </div>
 
-                    <div class="onboarding-question">
-                        <h2>One More Thing 🚨</h2>
-                        <p>Be prepared if you're ever in an accident</p>
-                    </div>
+                        <div class="legal-agreement-content" id="legal-scroll-container" onscroll="checkLegalScroll()">
+                            <h3>Terms of Service</h3>
+                            <p><strong>Effective Date:</strong> February 2, 2025</p>
+                            <p>Welcome to ClaimIt, operated by Kitsinian Law Firm, APC. By using this application, you agree to these terms.</p>
 
-                    <div class="onboarding-content">
-                        <div class="consent-card">
-                            <div class="consent-icon-container">
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                                    <line x1="12" y1="9" x2="12" y2="13"/>
-                                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            <h4>No Attorney-Client Relationship</h4>
+                            <p>Using this app does not create an attorney-client relationship. Such a relationship only forms when you sign a written retainer agreement with an attorney.</p>
+
+                            <h4>No Legal Advice</h4>
+                            <p>Information provided through this app is for general informational purposes only and should not be construed as legal advice. For advice specific to your situation, consult a licensed attorney.</p>
+
+                            <h4>No Guarantees</h4>
+                            <p>Past results do not guarantee future outcomes. All statistics and success rates represent historical data only and vary based on individual circumstances.</p>
+
+                            <h4>Fee Arrangements</h4>
+                            <p>"No Fee Unless We Win" means no attorney's fees unless we recover compensation for you. However, you may still be responsible for case costs including filing fees, expert witness fees, and other litigation expenses.</p>
+
+                            <h4>Eligibility</h4>
+                            <p>You must be 18 years of age or older to use this application.</p>
+
+                            <h3>Privacy Policy</h3>
+                            <p><strong>Effective Date:</strong> February 2, 2025</p>
+                            <p>Kitsinian Law Firm, APC ("we," "us," or "our") operates the ClaimIt mobile application. This Privacy Policy explains how we collect, use, disclose, and protect your information.</p>
+
+                            <h4>Information We Collect</h4>
+                            <ul>
+                                <li><strong>Contact Information:</strong> Name, phone number, email address</li>
+                                <li><strong>Case Information:</strong> Details about your legal matter, including descriptions, dates, and circumstances</li>
+                                <li><strong>Device Information:</strong> Device type, operating system, and app usage data</li>
+                                <li><strong>Evidence Data:</strong> Photos, voice recordings, and documents you choose to capture or upload</li>
+                            </ul>
+
+                            <h4>How We Use Your Information</h4>
+                            <ul>
+                                <li>To evaluate your potential legal case</li>
+                                <li>To contact you regarding your inquiry</li>
+                                <li>To match you with appropriate legal representation</li>
+                                <li>To improve our services and user experience</li>
+                            </ul>
+
+                            <h4>Information Sharing</h4>
+                            <p>We do not sell your personal information. We may share your information with:</p>
+                            <ul>
+                                <li>Attorneys in our referral network (with your consent)</li>
+                                <li>Service providers who assist our operations</li>
+                                <li>Law enforcement or government agencies as required by law</li>
+                            </ul>
+
+                            <h4>California Privacy Rights (CCPA)</h4>
+                            <p>California residents have the right to:</p>
+                            <ul>
+                                <li>Know what personal data we collect about you</li>
+                                <li>Request deletion of your personal data</li>
+                                <li>Opt-out of the sale of personal data (we do not sell your data)</li>
+                                <li>Exercise these rights without discrimination</li>
+                            </ul>
+                            <p>Contact: privacy@claimit.com</p>
+
+                            <h3>Legal Disclaimers</h3>
+
+                            <h4>Attorney Advertising</h4>
+                            <p>This application constitutes attorney advertising. Kitsinian Law Firm, APC. Principal office located in Los Angeles, California. Licensed to practice in California state and federal courts.</p>
+
+                            <h4>Success Rate Disclaimer</h4>
+                            <p>Statistics displayed in this app represent historical data. <strong>Past results do not guarantee future outcomes.</strong> Each case is unique and evaluated on its own merits.</p>
+
+                            <h4>Accident Mode Features</h4>
+                            <p>The Accident Mode feature allows you to capture evidence following an incident. By using this feature:</p>
+                            <ul>
+                                <li>Photos, recordings, and data are stored locally on your device</li>
+                                <li>Data is only transmitted when you explicitly choose to share it</li>
+                                <li>Using Accident Mode does not create an attorney-client relationship</li>
+                                <li>We may contact you regarding your captured evidence if you share it with us</li>
+                            </ul>
+
+                            <h4>Contact Information</h4>
+                            <p>For questions about these terms or our practices:</p>
+                            <ul>
+                                <li>Email: legal@claimit.com</li>
+                                <li>Privacy inquiries: privacy@claimit.com</li>
+                            </ul>
+
+                            <div class="legal-agreement-scroll-end" id="legal-scroll-end">
+                                <p>— End of Agreement —</p>
+                            </div>
+                        </div>
+
+                        <div class="legal-agreement-footer">
+                            <div class="scroll-indicator" id="scroll-indicator">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M5 12l7 7 7-7"/>
                                 </svg>
+                                <span>Scroll down to continue</span>
                             </div>
-                            <h3>Accident Mode</h3>
-                            <p class="consent-description">If you're in a car accident, instantly capture photos, record what happened, and connect with our legal team.</p>
-
-                            <div class="consent-features">
-                                <div class="consent-feature">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                                    <span>Guided photo checklist</span>
-                                </div>
-                                <div class="consent-feature">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                                    <span>Voice recording</span>
-                                </div>
-                                <div class="consent-feature">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                                    <span>2-hour attorney response</span>
-                                </div>
+                            <button class="btn-agree" id="btn-agree-continue" onclick="proceedFromConsent()" disabled>
+                                I Have Read and Agree
+                            </button>
+                            <div class="legal-ad-notice">
+                                ADVERTISEMENT: Kitsinian Law Firm, APC, Los Angeles, CA
                             </div>
-
-                            <div class="consent-toggle-row">
-                                <span class="consent-toggle-label">Enable Accident Mode</span>
-                                <div class="toggle-switch active" id="accident-consent-toggle" onclick="toggleAccidentConsent(this)"></div>
-                            </div>
-                        </div>
-
-                        <p class="consent-legal-text">
-                            By enabling, you consent to ClaimIt showing an emergency banner on the home screen. Your data stays on your device unless you choose to share it. This does not create an attorney-client relationship.
-                            <br><br>
-                            <span style="font-size: 10px; opacity: 0.7;">ADVERTISEMENT: Kitsinian Law Firm, APC, Los Angeles, CA</span>
-                        </p>
-                    </div>
-
-                    <div class="onboarding-cta">
-                        <div class="onboarding-dots">
-                            <div class="dot active"></div>
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                        </div>
-                        <button class="btn-onboarding accent" onclick="proceedFromConsent()">
-                            I Agree & Continue
-                        </button>
-                        <div class="skip-link">
-                            <a href="#" onclick="skipOnboarding(); return false;">Skip for now</a>
                         </div>
                     </div>
                 </div>
@@ -10342,10 +10551,28 @@
         // Accident Mode consent state
         let accidentModeConsent = true; // Default ON
 
-        // Proceed from consent screen (screen 1) to welcome screen (screen 2)
+        // Check if user has scrolled to bottom of legal agreement
+        function checkLegalScroll() {
+            const container = document.getElementById('legal-scroll-container');
+            const btn = document.getElementById('btn-agree-continue');
+            const indicator = document.getElementById('scroll-indicator');
+
+            if (!container || !btn) return;
+
+            // Check if scrolled near bottom (within 50px)
+            const isAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 50;
+
+            if (isAtBottom) {
+                btn.disabled = false;
+                if (indicator) indicator.classList.add('hidden');
+            }
+        }
+
+        // Proceed from legal agreement (screen 1) to welcome screen (screen 2)
         function proceedFromConsent() {
-            // Save accident mode preference immediately
-            localStorage.setItem('accidentModeEnabled', accidentModeConsent ? 'true' : 'false');
+            // User agreed to terms - enable Accident Mode by default
+            localStorage.setItem('accidentModeEnabled', 'true');
+            localStorage.setItem('userAgreedToTerms', 'true');
 
             // Update banner visibility
             updateAccidentBannerVisibility();
