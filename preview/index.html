@@ -4693,15 +4693,82 @@
             color: #111827 !important;
         }
 
-        /* Onboarding value props - keep dark text on white cards */
-        .device-screen.dark-mode .onboarding-value-prop,
-        .device-screen.dark-mode .onboarding .value-prop {
+        /* ==================== ONBOARDING - DARK MODE ==================== */
+
+        /* Dark gradient background for onboarding overlay */
+        .device-screen.dark-mode .onboarding-overlay {
+            background: linear-gradient(160deg, #1E293B 0%, #0F172A 100%) !important;
+        }
+
+        /* Trust badges - dark cards with light text */
+        .device-screen.dark-mode .onboarding-overlay .trust-badge {
+            background: var(--dark-card-bg) !important;
+            border: 1px solid var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .onboarding-overlay .trust-badge .value {
+            color: var(--primary-light) !important;
+        }
+
+        .device-screen.dark-mode .onboarding-overlay .trust-badge .label {
+            color: var(--dark-text-secondary) !important;
+        }
+
+        /* Value props - dark cards */
+        .device-screen.dark-mode .onboarding-overlay .value-prop {
+            background: var(--dark-card-bg) !important;
+            border: 1px solid var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .onboarding-overlay .value-prop-text {
+            color: var(--dark-text-primary) !important;
+        }
+
+        .device-screen.dark-mode .onboarding-overlay .value-prop-icon {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%) !important;
+        }
+
+        /* CTA button - white on dark */
+        .device-screen.dark-mode .btn-onboarding {
+            background: white !important;
+            color: var(--primary) !important;
+        }
+
+        .device-screen.dark-mode .btn-onboarding:hover {
+            background: #F8FAFC !important;
+        }
+
+        /* Skip link */
+        .device-screen.dark-mode .skip-link a {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .device-screen.dark-mode .skip-link a:hover {
+            color: white !important;
+        }
+
+        /* Screen 2 - Question text */
+        .device-screen.dark-mode .onboarding-question h2 {
+            color: white !important;
+        }
+
+        .device-screen.dark-mode .onboarding-question p {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        /* Dots indicator */
+        .device-screen.dark-mode .onboarding-dots .dot {
+            background: rgba(255, 255, 255, 0.3) !important;
+        }
+
+        .device-screen.dark-mode .onboarding-dots .dot.active {
             background: white !important;
         }
 
-        .device-screen.dark-mode .onboarding-value-prop span,
-        .device-screen.dark-mode .onboarding .value-prop-text {
-            color: #111827 !important;
+        /* Continue button in screen 2 */
+        .device-screen.dark-mode .btn-onboarding.accent {
+            background: linear-gradient(145deg, #FF7B45 0%, var(--accent) 100%) !important;
+            color: white !important;
         }
 
         /* Trust badges in hero - maintain readability */
