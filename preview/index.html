@@ -7602,8 +7602,8 @@
 
             <!-- ONBOARDING OVERLAY -->
             <div class="onboarding-overlay" id="onboarding">
-                <!-- Screen 1: Trust & Value -->
-                <div class="onboarding-screen active" id="onboarding-1">
+                <!-- Screen 1: Trust & Value (now Screen 2) -->
+                <div class="onboarding-screen" id="onboarding-1" style="display: none;">
                     <div class="onboarding-logo">
                         <svg class="logo-icon" style="width: 56px; height: 56px;"><use href="#logo-mark"/></svg>
                         <h1>Claim<span style="color: var(--brand-gold);">It</span></h1>
@@ -7644,6 +7644,7 @@
 
                     <div class="onboarding-cta">
                         <div class="onboarding-dots">
+                            <div class="dot"></div>
                             <div class="dot active"></div>
                             <div class="dot"></div>
                         </div>
@@ -7656,7 +7657,7 @@
                     </div>
                 </div>
 
-                <!-- Screen 2: Quick Quiz Start -->
+                <!-- Screen 3: Quick Quiz Start -->
                 <div class="onboarding-screen" id="onboarding-2">
                     <div class="onboarding-logo" style="margin-bottom: 8px;">
                         <svg style="width: 40px; height: 40px;"><use href="#logo-mark"/></svg>
@@ -7703,9 +7704,10 @@
                     <div class="onboarding-cta">
                         <div class="onboarding-dots">
                             <div class="dot"></div>
+                            <div class="dot"></div>
                             <div class="dot active"></div>
                         </div>
-                        <button class="btn-onboarding accent" id="onboarding-continue-btn" onclick="startQuizFromOnboarding()" style="opacity: 0.5; pointer-events: none;">
+                        <button class="btn-onboarding accent" id="onboarding-continue-btn" onclick="completeOnboardingWithConsent()" style="opacity: 0.5; pointer-events: none;">
                             Calculate My Compensation
                         </button>
                         <div class="skip-link">
@@ -7714,8 +7716,8 @@
                     </div>
                 </div>
 
-                <!-- Screen 3: Accident Mode Consent -->
-                <div class="onboarding-screen" id="onboarding-3" style="display: none;">
+                <!-- Screen 1: Consent & Agreement (FIRST SCREEN) -->
+                <div class="onboarding-screen active" id="onboarding-3">
                     <div class="onboarding-logo" style="margin-bottom: 8px;">
                         <svg style="width: 40px; height: 40px;"><use href="#logo-mark"/></svg>
                     </div>
@@ -7767,12 +7769,12 @@
 
                     <div class="onboarding-cta">
                         <div class="onboarding-dots">
-                            <div class="dot"></div>
-                            <div class="dot"></div>
                             <div class="dot active"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
                         </div>
-                        <button class="btn-onboarding accent" onclick="completeOnboardingWithConsent()">
-                            Continue
+                        <button class="btn-onboarding accent" onclick="proceedFromConsent()">
+                            I Agree & Continue
                         </button>
                         <div class="skip-link">
                             <a href="#" onclick="skipOnboarding(); return false;">Skip for now</a>
@@ -10340,16 +10342,17 @@
         // Accident Mode consent state
         let accidentModeConsent = true; // Default ON
 
-        function startQuizFromOnboarding() {
-            if (!selectedOnboardingOption) return;
+        // Proceed from consent screen (screen 1) to welcome screen (screen 2)
+        function proceedFromConsent() {
+            // Save accident mode preference immediately
+            localStorage.setItem('accidentModeEnabled', accidentModeConsent ? 'true' : 'false');
 
-            // Store the answer for later
-            quizAnswers['step1'] = selectedOnboardingOption;
-            quizAnswers.caseType = selectedOnboardingOption;
+            // Update banner visibility
+            updateAccidentBannerVisibility();
 
-            // Navigate to onboarding-3 (Accident Mode consent)
-            document.getElementById('onboarding-2').style.display = 'none';
-            document.getElementById('onboarding-3').style.display = 'block';
+            // Go from consent (onboarding-3) to welcome (onboarding-1)
+            document.getElementById('onboarding-3').style.display = 'none';
+            document.getElementById('onboarding-1').style.display = 'block';
         }
 
         function toggleAccidentConsent(element) {
@@ -10357,14 +10360,15 @@
             accidentModeConsent = element.classList.contains('active');
         }
 
+        // Complete onboarding after incident selection (final step)
         function completeOnboardingWithConsent() {
-            // Save accident mode preference
-            localStorage.setItem('accidentModeEnabled', accidentModeConsent ? 'true' : 'false');
+            if (!selectedOnboardingOption) return;
 
-            // Show/hide the banner on home screen based on preference
-            updateAccidentBannerVisibility();
+            // Store the answer for later
+            quizAnswers['step1'] = selectedOnboardingOption;
+            quizAnswers.caseType = selectedOnboardingOption;
 
-            // Now complete the quiz setup
+            // Complete the quiz setup
             const config = step2Questions[selectedOnboardingOption];
             if (config) {
                 document.getElementById('step2-question').textContent = config.question;
