@@ -3990,7 +3990,9 @@
         }
 
         function showReferralInfo(areaName) {
-            alert('Referral Network: ' + areaName + '\\n\\nWe partner with trusted California attorneys who specialize in ' + areaName.toLowerCase() + '. Contact us to get connected with a qualified specialist.');
+            if (confirm('Referral Network: ' + areaName + '\n\nWe partner with trusted California attorneys who specialize in ' + areaName.toLowerCase() + '.\n\nComplete a quick questionnaire to get matched with qualified representation.\n\nStart now?')) {
+                switchTab('claim');
+            }
         }
 
         // Legal Modal Functions
