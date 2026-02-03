@@ -4717,6 +4717,26 @@
             background: transparent;
         }
 
+        /* ==================== CHECKLIST ITEMS - ALWAYS DARK TEXT ==================== */
+        /* Checklist items have white backgrounds, need dark text regardless of mode */
+        .device-screen.dark-mode .checklist-item {
+            background: white !important;
+        }
+
+        .device-screen.dark-mode .checklist-item span {
+            color: #111827 !important;
+        }
+
+        .device-screen.dark-mode .checklist-item .check {
+            border-color: var(--primary) !important;
+            color: var(--primary) !important;
+        }
+
+        .device-screen.dark-mode .checklist-item .check.checked {
+            background: var(--primary) !important;
+            color: white !important;
+        }
+
         /* ==================== Tablet Layout ==================== */
         /* Tablet has a different notch/camera area */
         .device-frame.tablet .dynamic-island {
@@ -7067,6 +7087,62 @@
                     </div>
                 </div>
             </div>
+
+            <!-- SIGN-IN MODAL -->
+            <div class="modal-overlay" id="signin-modal" onclick="hideSignInModal()" role="dialog" aria-modal="true" aria-labelledby="signin-modal-title">
+                <div class="modal-content" onclick="event.stopPropagation()">
+                    <button class="modal-close" onclick="hideSignInModal()" aria-label="Close sign in dialog">×</button>
+                    <div class="modal-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">
+                        <svg style="width: 32px; height: 32px; color: white;"><use href="#icon-user"/></svg>
+                    </div>
+                    <h2 id="signin-modal-title">Sign In</h2>
+                    <p>Access your submitted cases and track their status.</p>
+                    <label for="signin-phone" class="visually-hidden">Phone Number</label>
+                    <input type="tel" id="signin-phone" class="modal-input" placeholder="Phone Number" aria-label="Phone Number" maxlength="14" autocomplete="tel">
+                    <label for="signin-email" class="visually-hidden">Email Address</label>
+                    <input type="email" id="signin-email" class="modal-input" placeholder="Email (optional)" aria-label="Email Address" maxlength="254" autocomplete="email">
+                    <button class="modal-btn primary" onclick="signIn()">Sign In</button>
+
+                    <div class="signin-divider">
+                        <span>or continue with</span>
+                    </div>
+
+                    <button class="apple-signin-btn" onclick="signInWithApple()">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                        </svg>
+                        Sign in with Apple
+                    </button>
+
+                    <p class="modal-help">New here? Submit a claim to create an account automatically.</p>
+                </div>
+            </div>
+
+            <!-- SAVE PROGRESS MODAL -->
+            <div class="modal-overlay" id="save-progress-modal" onclick="hideSaveProgressModal()" role="dialog" aria-modal="true" aria-labelledby="save-progress-modal-title">
+                <div class="modal-content" onclick="event.stopPropagation()">
+                    <button class="modal-close" onclick="hideSaveProgressModal()" aria-label="Close save progress dialog">×</button>
+                    <div class="modal-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">
+                        <svg style="width: 32px; height: 32px; color: white;"><use href="#icon-document"/></svg>
+                    </div>
+                    <h2 id="save-progress-modal-title">Save Your Progress</h2>
+                    <p>We'll send you a link to continue where you left off.</p>
+                    <div class="save-method-tabs">
+                        <button class="save-tab active" onclick="showSaveMethod('sms')">Text Me</button>
+                        <button class="save-tab" onclick="showSaveMethod('email')">Email Me</button>
+                    </div>
+                    <div class="save-method" id="save-method-sms">
+                        <label for="save-phone" class="visually-hidden">Phone Number</label>
+                        <input type="tel" id="save-phone" class="modal-input" placeholder="Phone Number" aria-label="Phone Number" maxlength="14" autocomplete="tel">
+                        <button class="modal-btn primary" onclick="saveProgress('sms')">Send Link</button>
+                    </div>
+                    <div class="save-method hidden" id="save-method-email">
+                        <label for="save-email" class="visually-hidden">Email Address</label>
+                        <input type="email" id="save-email" class="modal-input" placeholder="Email Address" aria-label="Email Address" maxlength="254" autocomplete="email">
+                        <button class="modal-btn primary" onclick="saveProgress('email')">Send Link</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -7284,6 +7360,9 @@
         }
 
         function showArticle(articleId) {
+            // First, hide any currently open article
+            document.querySelectorAll('.detail-screen').forEach(s => s.classList.remove('active'));
+
             document.getElementById('screen-' + currentScreen).classList.add('slide-left');
             const article = document.getElementById('article-' + articleId);
             article.classList.add('active');
@@ -8378,62 +8457,6 @@
             }
         }
     </script>
-
-    <!-- SIGN-IN MODAL -->
-    <div class="modal-overlay" id="signin-modal" onclick="hideSignInModal()" role="dialog" aria-modal="true" aria-labelledby="signin-modal-title">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="hideSignInModal()" aria-label="Close sign in dialog">×</button>
-            <div class="modal-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">
-                <svg style="width: 32px; height: 32px; color: white;"><use href="#icon-user"/></svg>
-            </div>
-            <h2 id="signin-modal-title">Sign In</h2>
-            <p>Access your submitted cases and track their status.</p>
-            <label for="signin-phone" class="visually-hidden">Phone Number</label>
-            <input type="tel" id="signin-phone" class="modal-input" placeholder="Phone Number" aria-label="Phone Number" maxlength="14" autocomplete="tel">
-            <label for="signin-email" class="visually-hidden">Email Address</label>
-            <input type="email" id="signin-email" class="modal-input" placeholder="Email (optional)" aria-label="Email Address" maxlength="254" autocomplete="email">
-            <button class="modal-btn primary" onclick="signIn()">Sign In</button>
-
-            <div class="signin-divider">
-                <span>or continue with</span>
-            </div>
-
-            <button class="apple-signin-btn" onclick="signInWithApple()">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                </svg>
-                Sign in with Apple
-            </button>
-
-            <p class="modal-help">New here? Submit a claim to create an account automatically.</p>
-        </div>
-    </div>
-
-    <!-- SAVE PROGRESS MODAL -->
-    <div class="modal-overlay" id="save-progress-modal" onclick="hideSaveProgressModal()" role="dialog" aria-modal="true" aria-labelledby="save-progress-modal-title">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="hideSaveProgressModal()" aria-label="Close save progress dialog">×</button>
-            <div class="modal-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">
-                <svg style="width: 32px; height: 32px; color: white;"><use href="#icon-document"/></svg>
-            </div>
-            <h2 id="save-progress-modal-title">Save Your Progress</h2>
-            <p>We'll send you a link to continue where you left off.</p>
-            <div class="save-method-tabs">
-                <button class="save-tab active" onclick="showSaveMethod('sms')">Text Me</button>
-                <button class="save-tab" onclick="showSaveMethod('email')">Email Me</button>
-            </div>
-            <div class="save-method" id="save-method-sms">
-                <label for="save-phone" class="visually-hidden">Phone Number</label>
-                <input type="tel" id="save-phone" class="modal-input" placeholder="Phone Number" aria-label="Phone Number" maxlength="14" autocomplete="tel">
-                <button class="modal-btn primary" onclick="saveProgress('sms')">Send Link</button>
-            </div>
-            <div class="save-method hidden" id="save-method-email">
-                <label for="save-email" class="visually-hidden">Email Address</label>
-                <input type="email" id="save-email" class="modal-input" placeholder="Email Address" aria-label="Email Address" maxlength="254" autocomplete="email">
-                <button class="modal-btn primary" onclick="saveProgress('email')">Send Link</button>
-            </div>
-        </div>
-    </div>
 
 </body>
 </html>
