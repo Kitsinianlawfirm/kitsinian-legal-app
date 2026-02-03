@@ -78,23 +78,35 @@
             margin: 0 4px;
         }
 
-        /* iPhone Frame */
-        .iphone {
+        /* Device Frame - Single container for iPhone and iPad views */
+        .device-frame {
             width: 390px;
             height: 844px;
             background: #1a1a1a;
             border-radius: 55px;
             padding: 14px;
             box-shadow: 0 50px 100px rgba(0,0,0,0.4), inset 0 0 0 2px #333;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .iphone-screen {
+        .device-frame.tablet {
+            width: 820px;
+            height: 1180px;
+            border-radius: 40px;
+            padding: 20px;
+        }
+
+        .device-screen {
             width: 100%;
             height: 100%;
             border-radius: 42px;
             overflow: hidden;
             position: relative;
             background: var(--page-bg);
+        }
+
+        .device-frame.tablet .device-screen {
+            border-radius: 24px;
         }
 
         .dynamic-island {
@@ -3453,56 +3465,27 @@
             height: 18px;
         }
 
-        /* ==================== iPad Frame ==================== */
-        .ipad {
-            width: 820px;
-            height: 1180px;
-            background: #1a1a1a;
-            border-radius: 40px;
-            padding: 20px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.4), inset 0 0 0 2px #333;
-            display: none;
-        }
-
-        .ipad.active {
-            display: block;
-        }
-
-        .ipad-screen {
-            width: 100%;
-            height: 100%;
-            border-radius: 24px;
-            overflow: hidden;
-            position: relative;
-            background: var(--page-bg);
-        }
-
-        /* iPad has a different notch/camera area */
-        .ipad .dynamic-island {
+        /* ==================== Tablet Layout ==================== */
+        /* Tablet has a different notch/camera area */
+        .device-frame.tablet .dynamic-island {
             width: 10px;
             height: 10px;
             border-radius: 50%;
             top: 16px;
         }
 
-        .ipad .status-bar {
+        .device-frame.tablet .status-bar {
             height: 44px;
             padding: 0 20px 6px;
         }
 
-        /* Hide iPhone when iPad is active */
-        .iphone.hidden {
-            display: none;
-        }
-
-        /* ==================== iPad Tablet Layout ==================== */
-        .ipad .screen {
+        .device-frame.tablet .screen {
             padding-top: 44px;
             padding-bottom: 0;
         }
 
-        /* iPad Sidebar Navigation */
-        .ipad .tab-bar {
+        /* Tablet Sidebar Navigation */
+        .device-frame.tablet .tab-bar {
             position: absolute;
             left: 0;
             top: 44px;
@@ -3518,7 +3501,7 @@
             box-shadow: 4px 0 20px rgba(0, 0, 0, 0.04);
         }
 
-        .ipad .tab {
+        .device-frame.tablet .tab {
             flex-direction: column;
             padding: 14px 8px;
             min-width: auto;
@@ -3526,110 +3509,110 @@
             border-radius: 14px;
         }
 
-        .ipad .tab-icon {
+        .device-frame.tablet .tab-icon {
             width: 32px;
             height: 32px;
         }
 
-        .ipad .tab-icon svg {
+        .device-frame.tablet .tab-icon svg {
             width: 28px !important;
             height: 28px !important;
         }
 
-        .ipad .tab span {
+        .device-frame.tablet .tab span {
             font-size: 11px;
         }
 
-        /* iPad Screen Container - offset for sidebar */
-        .ipad .screen-container {
+        /* Tablet Screen Container - offset for sidebar */
+        .device-frame.tablet .screen-container {
             left: 80px;
             right: 0;
         }
 
-        .ipad .screen {
+        .device-frame.tablet .screen {
             padding-bottom: 40px;
         }
 
         /* iPad: Larger hero */
-        .ipad .hero {
+        .device-frame.tablet .hero {
             padding: 30px 40px 50px;
         }
 
-        .ipad .hero h1 {
+        .device-frame.tablet .hero h1 {
             font-size: 42px;
         }
 
-        .ipad .hero p {
+        .device-frame.tablet .hero p {
             font-size: 18px;
         }
 
-        .ipad .hero-logo svg {
+        .device-frame.tablet .hero-logo svg {
             width: 56px !important;
             height: 56px !important;
         }
 
-        .ipad .hero-logo-text {
+        .device-frame.tablet .hero-logo-text {
             font-size: 36px;
         }
 
-        .ipad .stats-row {
+        .device-frame.tablet .stats-row {
             gap: 20px;
         }
 
-        .ipad .stat {
+        .device-frame.tablet .stat {
             padding: 16px 28px;
         }
 
-        .ipad .stat-value {
+        .device-frame.tablet .stat-value {
             font-size: 28px;
         }
 
-        .ipad .stat-label {
+        .device-frame.tablet .stat-label {
             font-size: 13px;
         }
 
         /* iPad: Glass card */
-        .ipad .glass-card {
+        .device-frame.tablet .glass-card {
             margin: -24px 40px 24px;
             padding: 24px;
         }
 
-        .ipad .btn-primary {
+        .device-frame.tablet .btn-primary {
             font-size: 20px;
             padding: 22px 32px;
         }
 
-        .ipad .cta-subtext {
+        .device-frame.tablet .cta-subtext {
             font-size: 14px;
         }
 
         /* iPad: Trust seals - horizontal layout */
-        .ipad .trust-seals {
+        .device-frame.tablet .trust-seals {
             flex-direction: row;
             justify-content: center;
             gap: 24px;
             padding: 20px 40px;
         }
 
-        .ipad .trust-seal {
+        .device-frame.tablet .trust-seal {
             min-width: 120px;
         }
 
         /* iPad: Section headers */
-        .ipad .section-header {
+        .device-frame.tablet .section-header {
             padding: 28px 40px 16px;
         }
 
-        .ipad .section-title {
+        .device-frame.tablet .section-title {
             font-size: 22px;
         }
 
-        .ipad .section-link {
+        .device-frame.tablet .section-link {
             font-size: 15px;
         }
 
         /* iPad: Quick actions - 2 column grid */
-        .ipad .quick-actions {
+        .device-frame.tablet .quick-actions {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
@@ -3637,52 +3620,52 @@
             overflow-x: visible;
         }
 
-        .ipad .quick-action {
+        .device-frame.tablet .quick-action {
             min-width: auto;
             padding: 20px 16px;
         }
 
-        .ipad .quick-action-icon {
+        .device-frame.tablet .quick-action-icon {
             width: 56px;
             height: 56px;
         }
 
-        .ipad .quick-action h4 {
+        .device-frame.tablet .quick-action h4 {
             font-size: 15px;
         }
 
-        .ipad .quick-action p {
+        .device-frame.tablet .quick-action p {
             font-size: 12px;
         }
 
         /* iPad: Practice cards - 2 column grid */
-        .ipad .practice-cards-container {
+        .device-frame.tablet .practice-cards-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
             padding: 0 40px;
         }
 
-        .ipad .practice-card {
+        .device-frame.tablet .practice-card {
             margin: 0;
             padding: 18px 20px;
         }
 
-        .ipad .practice-icon {
+        .device-frame.tablet .practice-icon {
             width: 56px;
             height: 56px;
         }
 
-        .ipad .practice-info h4 {
+        .device-frame.tablet .practice-info h4 {
             font-size: 17px;
         }
 
-        .ipad .practice-info p {
+        .device-frame.tablet .practice-info p {
             font-size: 14px;
         }
 
         /* iPad: Referral scroll - grid */
-        .ipad .referral-scroll {
+        .device-frame.tablet .referral-scroll {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
@@ -3690,308 +3673,308 @@
             overflow-x: visible;
         }
 
-        .ipad .referral-card {
+        .device-frame.tablet .referral-card {
             min-width: auto;
             padding: 20px 16px;
         }
 
-        .ipad .referral-icon {
+        .device-frame.tablet .referral-icon {
             width: 48px;
             height: 48px;
         }
 
-        .ipad .referral-card h4 {
+        .device-frame.tablet .referral-card h4 {
             font-size: 15px;
         }
 
         /* iPad: Learn screen */
-        .ipad .learn-header {
+        .device-frame.tablet .learn-header {
             padding: 30px 40px 0;
         }
 
-        .ipad .learn-header h1 {
+        .device-frame.tablet .learn-header h1 {
             font-size: 34px;
         }
 
-        .ipad .learn-header p {
+        .device-frame.tablet .learn-header p {
             font-size: 16px;
         }
 
-        .ipad .header-logo span {
+        .device-frame.tablet .header-logo span {
             font-size: 22px;
         }
 
-        .ipad .category-chips {
+        .device-frame.tablet .category-chips {
             padding: 16px 40px;
             gap: 12px;
         }
 
-        .ipad .category-chip {
+        .device-frame.tablet .category-chip {
             padding: 12px 20px;
             font-size: 15px;
         }
 
         /* iPad: Resource cards - 2 column grid */
-        .ipad .resources-grid {
+        .device-frame.tablet .resources-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
             padding: 0 40px 30px;
         }
 
-        .ipad .resource-card {
+        .device-frame.tablet .resource-card {
             margin: 0;
             padding: 20px;
         }
 
-        .ipad .resource-icon {
+        .device-frame.tablet .resource-icon {
             width: 52px;
             height: 52px;
         }
 
-        .ipad .resource-info h4 {
+        .device-frame.tablet .resource-info h4 {
             font-size: 17px;
         }
 
-        .ipad .resource-info p {
+        .device-frame.tablet .resource-info p {
             font-size: 14px;
         }
 
-        .ipad .resource-tag {
+        .device-frame.tablet .resource-tag {
             font-size: 12px;
             padding: 5px 12px;
         }
 
         /* iPad: Account screen */
-        .ipad .account-header {
+        .device-frame.tablet .account-header {
             padding: 30px 40px !important;
         }
 
-        .ipad .account-header h1 {
+        .device-frame.tablet .account-header h1 {
             font-size: 34px !important;
         }
 
-        .ipad .signin-prompt,
-        .ipad .cases-list {
+        .device-frame.tablet .signin-prompt,
+        .device-frame.tablet .cases-list {
             padding: 0 40px;
         }
 
-        .ipad .user-profile-card {
+        .device-frame.tablet .user-profile-card {
             padding: 24px;
         }
 
-        .ipad .user-avatar {
+        .device-frame.tablet .user-avatar {
             width: 70px;
             height: 70px;
             font-size: 28px;
         }
 
-        .ipad #user-name {
+        .device-frame.tablet #user-name {
             font-size: 22px;
         }
 
-        .ipad #user-phone {
+        .device-frame.tablet #user-phone {
             font-size: 15px;
         }
 
         /* iPad: Cases list - 2 column */
-        .ipad .cases-container {
+        .device-frame.tablet .cases-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
         }
 
-        .ipad .case-card {
+        .device-frame.tablet .case-card {
             margin: 0;
             padding: 20px;
         }
 
-        .ipad .case-type {
+        .device-frame.tablet .case-type {
             font-size: 17px;
         }
 
         /* iPad: Quiz/Claim screen */
-        .ipad .claim-screen {
+        .device-frame.tablet .claim-screen {
             padding: 20px 40px;
         }
 
-        .ipad .question-container {
+        .device-frame.tablet .question-container {
             max-width: 650px;
             margin: 0 auto;
         }
 
-        .ipad .question-text {
+        .device-frame.tablet .question-text {
             font-size: 28px;
         }
 
-        .ipad .question-subtext {
+        .device-frame.tablet .question-subtext {
             font-size: 16px;
         }
 
-        .ipad .quiz-step {
+        .device-frame.tablet .quiz-step {
             padding: 20px 0;
         }
 
-        .ipad .quiz-option {
+        .device-frame.tablet .quiz-option {
             padding: 20px 24px;
             font-size: 17px;
         }
 
-        .ipad .quiz-option-icon {
+        .device-frame.tablet .quiz-option-icon {
             width: 52px;
             height: 52px;
         }
 
-        .ipad .progress-container {
+        .device-frame.tablet .progress-container {
             padding: 20px 0;
         }
 
-        .ipad .progress-text {
+        .device-frame.tablet .progress-text {
             font-size: 15px;
         }
 
         /* iPad: Article/Detail screens */
-        .ipad .article-content {
+        .device-frame.tablet .article-content {
             padding: 0 60px;
             max-width: 700px;
             margin: 0 auto;
         }
 
-        .ipad .article-content h2 {
+        .device-frame.tablet .article-content h2 {
             font-size: 26px;
         }
 
-        .ipad .article-content h3 {
+        .device-frame.tablet .article-content h3 {
             font-size: 20px;
         }
 
-        .ipad .article-content p,
-        .ipad .article-content li {
+        .device-frame.tablet .article-content p,
+        .device-frame.tablet .article-content li {
             font-size: 17px;
             line-height: 1.8;
         }
 
-        .ipad .detail-header {
+        .device-frame.tablet .detail-header {
             padding: 0 60px 30px;
             max-width: 700px;
             margin: 0 auto;
         }
 
-        .ipad .detail-title {
+        .device-frame.tablet .detail-title {
             font-size: 34px;
         }
 
-        .ipad .detail-meta {
+        .device-frame.tablet .detail-meta {
             font-size: 16px;
         }
 
-        .ipad .back-btn {
+        .device-frame.tablet .back-btn {
             padding: 16px 40px;
             font-size: 18px;
         }
 
         /* iPad: Legal footer */
-        .ipad .legal-footer {
+        .device-frame.tablet .legal-footer {
             padding: 24px 40px;
         }
 
-        .ipad .legal-footer p {
+        .device-frame.tablet .legal-footer p {
             font-size: 12px;
         }
 
-        .ipad .legal-footer-links a {
+        .device-frame.tablet .legal-footer-links a {
             font-size: 12px;
         }
 
         /* iPad: Onboarding */
-        .ipad .onboarding-overlay {
+        .device-frame.tablet .onboarding-overlay {
             padding: 60px 80px;
         }
 
-        .ipad .onboarding-logo h1 {
+        .device-frame.tablet .onboarding-logo h1 {
             font-size: 48px;
         }
 
-        .ipad .onboarding-logo .tagline {
+        .device-frame.tablet .onboarding-logo .tagline {
             font-size: 20px;
         }
 
-        .ipad .trust-badges {
+        .device-frame.tablet .trust-badges {
             gap: 30px;
         }
 
-        .ipad .trust-badge .value {
+        .device-frame.tablet .trust-badge .value {
             font-size: 36px;
         }
 
-        .ipad .trust-badge .label {
+        .device-frame.tablet .trust-badge .label {
             font-size: 14px;
         }
 
-        .ipad .value-props {
+        .device-frame.tablet .value-props {
             gap: 20px;
         }
 
-        .ipad .value-prop {
+        .device-frame.tablet .value-prop {
             padding: 20px 24px;
             font-size: 17px;
         }
 
-        .ipad .btn-onboarding {
+        .device-frame.tablet .btn-onboarding {
             font-size: 18px;
             padding: 18px 36px;
         }
 
-        .ipad .onboarding-options {
+        .device-frame.tablet .onboarding-options {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
         }
 
-        .ipad .onboarding-option {
+        .device-frame.tablet .onboarding-option {
             padding: 24px 20px;
         }
 
-        .ipad .onboarding-option .icon svg {
+        .device-frame.tablet .onboarding-option .icon svg {
             width: 40px !important;
             height: 40px !important;
         }
 
-        .ipad .onboarding-option .label {
+        .device-frame.tablet .onboarding-option .label {
             font-size: 15px;
         }
 
         /* iPad: Modal styling */
-        .ipad .legal-modal-content {
+        .device-frame.tablet .legal-modal-content {
             max-width: 600px;
             padding: 30px;
         }
 
-        .ipad .legal-modal-content h2 {
+        .device-frame.tablet .legal-modal-content h2 {
             font-size: 24px;
         }
 
-        .ipad .legal-modal-content p,
-        .ipad .legal-modal-content li {
+        .device-frame.tablet .legal-modal-content p,
+        .device-frame.tablet .legal-modal-content li {
             font-size: 15px;
         }
 
         /* iPad: Form inputs */
-        .ipad .form-input {
+        .device-frame.tablet .form-input {
             padding: 18px;
             font-size: 17px;
         }
 
-        .ipad textarea.form-input {
+        .device-frame.tablet textarea.form-input {
             min-height: 140px;
         }
 
-        .ipad .form-label {
+        .device-frame.tablet .form-label {
             font-size: 15px;
         }
 
         /* iPad: Adjust screen container for sidebar */
-        .ipad .screen-container {
+        .device-frame.tablet .screen-container {
             position: absolute;
             top: 0;
             left: 80px;
@@ -4308,8 +4291,8 @@
         </div>
     </div>
 
-    <div class="iphone" id="iphone-frame">
-        <div class="iphone-screen">
+    <div class="device-frame" id="device-frame">
+        <div class="device-screen">
             <div class="dynamic-island"></div>
 
             <!-- ONBOARDING OVERLAY -->
@@ -5810,13 +5793,6 @@
         </div>
     </div>
 
-    <!-- iPad Frame (content cloned via JS) -->
-    <div class="ipad" id="ipad-frame">
-        <div class="ipad-screen" id="ipad-screen">
-            <!-- Content will be cloned from iPhone -->
-        </div>
-    </div>
-
     <script>
         let currentDevice = 'iphone';
         let currentScreen = 'home';
@@ -7057,160 +7033,14 @@
             });
             document.getElementById('toggle-' + device).classList.add('active');
 
-            const iphoneFrame = document.getElementById('iphone-frame');
-            const ipadFrame = document.getElementById('ipad-frame');
-
+            // Toggle tablet class on the single device frame
+            const deviceFrame = document.getElementById('device-frame');
             if (device === 'ipad') {
-                // Clone iPhone content to iPad if not already done
-                const ipadScreen = document.getElementById('ipad-screen');
-                if (!ipadScreen.hasChildNodes() || ipadScreen.children.length === 0) {
-                    const iphoneScreen = document.querySelector('.iphone-screen');
-                    ipadScreen.innerHTML = iphoneScreen.innerHTML;
-
-                    // Re-initialize event listeners for iPad content
-                    initializeIPadContent();
-                }
-
-                iphoneFrame.classList.add('hidden');
-                ipadFrame.classList.add('active');
-
-                // Sync the current state
-                syncDeviceState('ipad');
+                deviceFrame.classList.add('tablet');
             } else {
-                ipadFrame.classList.remove('active');
-                iphoneFrame.classList.remove('hidden');
-
-                // Sync state back
-                syncDeviceState('iphone');
+                deviceFrame.classList.remove('tablet');
             }
         }
-
-        function initializeIPadContent() {
-            const ipadScreen = document.getElementById('ipad-screen');
-
-            // Re-bind tab navigation
-            ipadScreen.querySelectorAll('.tab').forEach(tab => {
-                const tabName = tab.id.replace('tab-', '');
-                tab.onclick = function() { switchTabInDevice('ipad', tabName); };
-            });
-
-            // Re-bind quick actions
-            ipadScreen.querySelectorAll('.quick-action').forEach(action => {
-                const topic = action.getAttribute('data-topic');
-                if (topic) {
-                    action.onclick = function() { startQuizWithTopic(topic); };
-                }
-            });
-
-            // Re-bind article links
-            ipadScreen.querySelectorAll('[onclick*="showArticle"]').forEach(el => {
-                const onclick = el.getAttribute('onclick');
-                el.onclick = function() { eval(onclick); };
-            });
-
-            // Re-bind other interactive elements
-            ipadScreen.querySelectorAll('[onclick]').forEach(el => {
-                const onclick = el.getAttribute('onclick');
-                if (onclick && !el.classList.contains('tab')) {
-                    el.onclick = function(e) {
-                        e.stopPropagation();
-                        eval(onclick);
-                    };
-                }
-            });
-        }
-
-        function switchTabInDevice(device, tabName) {
-            // Use the same switchTab function but target the specific device
-            const container = device === 'ipad' ? document.getElementById('ipad-screen') : document.querySelector('.iphone-screen');
-
-            if (articleOpen) return;
-
-            container.querySelectorAll('.tab').forEach(t => {
-                t.classList.remove('active');
-                t.setAttribute('aria-selected', 'false');
-            });
-            container.querySelectorAll('.screen:not(.detail-screen)').forEach(s => s.classList.remove('active'));
-
-            const activeTab = container.querySelector('#tab-' + tabName);
-            if (activeTab) {
-                activeTab.classList.add('active');
-                activeTab.setAttribute('aria-selected', 'true');
-            }
-
-            const activeScreen = container.querySelector('#screen-' + tabName);
-            if (activeScreen) {
-                activeScreen.classList.add('active');
-            }
-
-            const statusBar = container.querySelector('.status-bar');
-            if (statusBar) {
-                statusBar.className = tabName === 'home' ? 'status-bar light' : 'status-bar dark';
-            }
-
-            if (activeScreen) {
-                activeScreen.scrollTop = 0;
-            }
-
-            currentScreen = tabName;
-
-            if (tabName === 'account') {
-                updateAccountUI();
-            }
-        }
-
-        function syncDeviceState(targetDevice) {
-            // Sync the current screen state between devices
-            const targetContainer = targetDevice === 'ipad'
-                ? document.getElementById('ipad-screen')
-                : document.querySelector('.iphone-screen');
-
-            if (!targetContainer) return;
-
-            // Sync active tab
-            targetContainer.querySelectorAll('.tab').forEach(t => {
-                t.classList.remove('active');
-                t.setAttribute('aria-selected', 'false');
-            });
-            targetContainer.querySelectorAll('.screen:not(.detail-screen)').forEach(s => s.classList.remove('active'));
-
-            const activeTab = targetContainer.querySelector('#tab-' + currentScreen);
-            if (activeTab) {
-                activeTab.classList.add('active');
-                activeTab.setAttribute('aria-selected', 'true');
-            }
-
-            const activeScreen = targetContainer.querySelector('#screen-' + currentScreen);
-            if (activeScreen) {
-                activeScreen.classList.add('active');
-            }
-
-            const statusBar = targetContainer.querySelector('.status-bar');
-            if (statusBar) {
-                statusBar.className = currentScreen === 'home' ? 'status-bar light' : 'status-bar dark';
-            }
-
-            // Sync onboarding state
-            const onboarding = targetContainer.querySelector('#onboarding');
-            if (onboarding) {
-                const iphoneOnboarding = document.querySelector('.iphone-screen #onboarding');
-                if (iphoneOnboarding && iphoneOnboarding.classList.contains('hidden')) {
-                    onboarding.classList.add('hidden');
-                }
-            }
-        }
-
-        // Override the original switchTab to work with both devices
-        const originalSwitchTab = switchTab;
-        switchTab = function(tabName) {
-            originalSwitchTab(tabName);
-
-            // Also sync to iPad if it exists and has content
-            const ipadScreen = document.getElementById('ipad-screen');
-            if (ipadScreen && ipadScreen.hasChildNodes() && ipadScreen.children.length > 0) {
-                syncDeviceState('ipad');
-            }
-        };
     </script>
 
     <!-- SIGN-IN MODAL -->
