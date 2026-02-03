@@ -88,6 +88,14 @@ KitsinianLegal/
 - Lead capture form
 - Push notification ready
 
+### Preview Features (HTML - `/preview/index.html`)
+- **Sign-In/Account System**: User authentication with phone/email
+- **My Cases Screen**: Track submitted claims with status badges
+- **Case Status Flow**: Submitted → Under Review → Qualified → Matched → Retained
+- **Attorney Assignment**: Shows assigned attorney info when case is retained
+- **Adaptive Quiz**: Follow-up questions change based on case type selected
+- **4 Tabs**: Home, Claim, Learn, Account (Contact tab removed)
+
 ### Backend (`/backend/`)
 Node.js/Express API with PostgreSQL:
 
@@ -123,10 +131,13 @@ Browser-based design mockups for iteration:
 
 | File | Description |
 |------|-------------|
-| `index.html` | Original Kitsinian Law branded (deprecated) |
-| `claimit.html` | ClaimIt rebrand, static tabs |
+| `index.html` | **CURRENT** - Full interactive with sign-in, account, adaptive quiz |
+| `claimit-full.html` | Previous version with full article content |
 | `claimit-interactive.html` | Interactive tab navigation |
-| `claimit-full.html` | **CURRENT** - Full interactive with article content |
+| `claimit.html` | ClaimIt rebrand, static tabs |
+| `old-kitsinian-index.html` | Original Kitsinian Law branded (deprecated) |
+
+**Live Preview:** https://kitsinianlawfirm.github.io/claimit-preview/
 
 ---
 
@@ -184,6 +195,21 @@ Browser-based design mockups for iteration:
   - Solid white cards with borders (replaced glassmorphism)
   - 2-screen onboarding with incident type selection
   - Modern card-based UI throughout
+- [x] **Sign-In & Account Feature** (Feb 2025)
+  - Sign-in button in status bar
+  - Sign-in modal with phone/email
+  - Account tab replacing Contact tab
+  - My Cases screen with status tracking
+  - Auto-account creation on form submission
+- [x] **Adaptive Quiz System** (Feb 2025)
+  - Dynamic Step 2 questions based on case type
+  - Car accident: role (driver, passenger, pedestrian, rideshare)
+  - Injury: cause (work, medical, product, dog bite, assault)
+  - Slip/fall: location (store, apartment, sidewalk, workplace)
+  - Insurance: issue (denied, delayed, lowball, cancelled)
+  - Lemon: problem (engine, electrical, safety, recurring)
+  - Property: type (vehicle, fire, water, theft)
+  - Streamlined to 4 questions + contact form
 
 ### Pending
 - [ ] User to install Xcode for iOS development
@@ -197,11 +223,13 @@ Browser-based design mockups for iteration:
 
 ## Design Iteration History
 
-1. **v1 (index.html):** Kitsinian Law branded, conservative design
+1. **v1 (old-kitsinian-index.html):** Kitsinian Law branded, conservative design
 2. **v2 (claimit.html):** Rebranded to ClaimIt, vibrant colors, animations
 3. **v3 (claimit-interactive.html):** Added tab interactivity
 4. **v4 (claimit-full.html):** Full article content, interactive checklists
 5. **v5 (iOS update):** Full iOS SwiftUI code updated to match ClaimIt design
+6. **v6 (index.html):** Sign-in/account system, My Cases tracking
+7. **v7 (index.html):** Adaptive quiz with case-type-specific questions
 
 ### User Feedback Applied
 - Remove law firm branding → made general/consumer-facing
@@ -212,6 +240,9 @@ Browser-based design mockups for iteration:
 - Interactive tabs needed → JavaScript tab switching
 - Show guide content → Full article detail views
 - 2-screen onboarding with incident selection
+- Remove direct contact options → users work through quiz flow
+- Quiz too generic → adaptive questions based on case type
+- Need case tracking → My Cases with status badges and attorney info
 
 ---
 
@@ -243,7 +274,8 @@ Browser-based design mockups for iteration:
 | iOS App | `/iOS/KitsinianLegal/` |
 | Backend | `/backend/` |
 | Previews | `/preview/` |
-| Current Preview | `/preview/claimit-full.html` |
+| Current Preview | `/preview/index.html` |
+| Live Preview | https://kitsinianlawfirm.github.io/claimit-preview/ |
 
 ---
 
@@ -262,8 +294,11 @@ Browser-based design mockups for iteration:
 ## Commands Reference
 
 ```bash
-# Open current preview
-open /Users/hkitsinian/kitsinian-legal-app/preview/claimit-full.html
+# Open current preview (local)
+open /Users/hkitsinian/kitsinian-legal-app/preview/index.html
+
+# View live preview
+open https://kitsinianlawfirm.github.io/claimit-preview/
 
 # Start backend (local)
 cd /Users/hkitsinian/kitsinian-legal-app/backend
@@ -273,6 +308,15 @@ npm run dev
 # Open iOS project (requires Xcode)
 open /Users/hkitsinian/kitsinian-legal-app/iOS/KitsinianLegal/KitsinianLegal.xcodeproj
 ```
+
+---
+
+## Repositories
+
+| Repo | URL |
+|------|-----|
+| Main App | https://github.com/Kitsinianlawfirm/kitsinian-legal-app |
+| Preview (GitHub Pages) | https://github.com/Kitsinianlawfirm/claimit-preview |
 
 ---
 
