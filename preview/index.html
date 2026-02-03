@@ -43,7 +43,7 @@
             /* Text Colors */
             --text-primary: #111827;
             --text-secondary: #4B5563;
-            --text-muted: #9CA3AF;
+            --text-muted: #6B7280; /* Improved contrast ratio for WCAG AA compliance */
 
             /* Border Colors */
             --border-color: #E5E7EB;
@@ -131,7 +131,7 @@
             --dark-card-bg-elevated: #334155;
             --dark-text-primary: #F8FAFC;
             --dark-text-secondary: #CBD5E1;
-            --dark-text-muted: #64748B;
+            --dark-text-muted: #94A3B8; /* Improved contrast for dark mode WCAG AA */
             --dark-border-color: #334155;
             --dark-border-light: #475569;
         }
@@ -8495,6 +8495,120 @@
                 document.getElementById('toggle-dark').classList.remove('active');
             }
         }
+
+        // Auto-detect system dark mode preference
+        function initThemeFromSystem() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) {
+                toggleTheme('dark');
+            }
+        }
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            toggleTheme(e.matches ? 'dark' : 'light');
+        });
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', initThemeFromSystem);
+
+        // ===== ACCESSIBILITY ENHANCEMENTS =====
+
+        // Keyboard navigation for tab bar (arrow keys)
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBar = document.getElementById('tab-bar');
+            const tabs = ['home', 'claim', 'learn', 'account'];
+
+            tabBar.addEventListener('keydown', function(e) {
+                const currentTab = document.activeElement;
+                if (!currentTab.classList.contains('tab')) return;
+
+                const currentIndex = tabs.findIndex(t => currentTab.id === 'tab-' + t);
+                let newIndex = currentIndex;
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    newIndex = (currentIndex + 1) % tabs.length;
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                } else if (e.key === 'Home') {
+                    e.preventDefault();
+                    newIndex = 0;
+                } else if (e.key === 'End') {
+                    e.preventDefault();
+                    newIndex = tabs.length - 1;
+                }
+
+                if (newIndex !== currentIndex) {
+                    const newTab = document.getElementById('tab-' + tabs[newIndex]);
+                    newTab.focus();
+                    switchTab(tabs[newIndex]);
+                }
+            });
+        });
+
+        // Focus trap helper for modals
+        function trapFocus(modal) {
+            const focusableElements = modal.querySelectorAll(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+            const firstFocusable = focusableElements[0];
+            const lastFocusable = focusableElements[focusableElements.length - 1];
+
+            modal.addEventListener('keydown', function(e) {
+                if (e.key !== 'Tab') return;
+
+                if (e.shiftKey) {
+                    if (document.activeElement === firstFocusable) {
+                        lastFocusable.focus();
+                        e.preventDefault();
+                    }
+                } else {
+                    if (document.activeElement === lastFocusable) {
+                        firstFocusable.focus();
+                        e.preventDefault();
+                    }
+                }
+            });
+        }
+
+        // Initialize focus trapping for modals
+        document.addEventListener('DOMContentLoaded', function() {
+            const modals = document.querySelectorAll('.modal-overlay, .legal-modal');
+            modals.forEach(trapFocus);
+
+            // Close modals with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const activeModal = document.querySelector('.modal-overlay.active, .legal-modal.active');
+                    if (activeModal) {
+                        if (activeModal.id === 'signin-modal') hideSignInModal();
+                        else if (activeModal.id === 'privacy-modal') hidePrivacyModal();
+                        else if (activeModal.id === 'terms-modal') hideTermsModal();
+                        else if (activeModal.id === 'disclaimer-modal') hideDisclaimerModal();
+                        else if (activeModal.id === 'referral-modal') hideReferralModal();
+                        else if (activeModal.id === 'save-progress-modal') hideSaveProgressModal();
+                    }
+                }
+            });
+        });
+
+        // Skip to main content link
+        document.addEventListener('DOMContentLoaded', function() {
+            const skipLink = document.createElement('a');
+            skipLink.href = '#main-content';
+            skipLink.className = 'skip-link';
+            skipLink.textContent = 'Skip to main content';
+            skipLink.style.cssText = 'position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;';
+            skipLink.addEventListener('focus', function() {
+                this.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);top:10px;padding:12px 24px;background:#0066FF;color:white;border-radius:8px;z-index:9999;font-weight:600;';
+            });
+            skipLink.addEventListener('blur', function() {
+                this.style.cssText = 'position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;';
+            });
+            document.querySelector('.device-screen').prepend(skipLink);
+        });
     </script>
 
 </body>
