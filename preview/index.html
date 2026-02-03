@@ -500,6 +500,23 @@
 
         .hero p { font-size: 15px; opacity: 0.9; margin-bottom: 16px; font-weight: 500; }
 
+        .hero-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .hero-logo-text {
+            font-size: 28px;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+        .hero-logo-text .highlight {
+            color: #FFD700;
+        }
+
         .stats-row {
             display: flex;
             justify-content: center;
@@ -845,6 +862,28 @@
         .learn-header { padding: 20px 20px 0; }
         .learn-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.5px; }
         .learn-header p { font-size: 14px; color: var(--text-secondary); margin-top: 4px; font-weight: 500; }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .header-logo span {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        .header-logo .highlight {
+            color: var(--accent);
+        }
+        /* White text for dark backgrounds (account screen) */
+        .account-header .header-logo span {
+            color: white;
+        }
+        .account-header .header-logo .highlight {
+            color: #FFD700;
+        }
 
         .category-scroll {
             display: flex;
@@ -2463,7 +2502,10 @@
                 <!-- HOME SCREEN -->
                 <div class="screen home-screen active" id="screen-home">
                     <div class="hero">
-                        <div class="hero-badge"><svg style="width: 14px; height: 14px; color: white;"><use href="#icon-lightning"/></svg> Free Case Evaluation</div>
+                        <div class="hero-logo">
+                            <svg style="width: 44px; height: 44px;"><use href="#logo-mark"/></svg>
+                            <span class="hero-logo-text">Claim<span class="highlight">It</span></span>
+                        </div>
                         <h1>Get What You<br>Deserve</h1>
                         <p>Find out if you have a case in 2 minutes</p>
                         <div class="stats-row">
@@ -2627,7 +2669,10 @@
 
                 <!-- LEARN SCREEN -->
                 <div class="screen learn-screen" id="screen-learn">
-                    <div class="learn-header"><h1>Learn</h1><p>Know your rights. Win your case.</p></div>
+                    <div class="learn-header">
+                        <div class="header-logo"><svg style="width: 28px; height: 28px;"><use href="#logo-mark"/></svg><span>Claim<span class="highlight">It</span></span></div>
+                        <h1>Learn</h1><p>Know your rights. Win your case.</p>
+                    </div>
                     <div class="category-scroll">
                         <div class="category-chip active"><svg style="width: 14px; height: 14px;"><use href="#icon-star"/></svg> Popular</div>
                         <div class="category-chip"><svg style="width: 14px; height: 14px;"><use href="#icon-book"/></svg> Guides</div>
@@ -2665,6 +2710,7 @@
                 <!-- ACCOUNT SCREEN -->
                 <div class="screen account-screen" id="screen-account">
                     <div class="account-header">
+                        <div class="header-logo"><svg style="width: 28px; height: 28px;"><use href="#logo-mark"/></svg><span>Claim<span class="highlight">It</span></span></div>
                         <h1>My Cases</h1>
                         <p>Track your claim evaluations</p>
                     </div>
