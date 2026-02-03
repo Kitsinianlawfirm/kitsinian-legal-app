@@ -239,9 +239,96 @@ Browser-based design mockups for iteration:
 - [ ] Deploy backend to Render
 - [ ] Create app icon (1024x1024)
 - [ ] Replace placeholder phone numbers/emails with real ones
-- [ ] Update Privacy Policy email (privacy@kitsinian.com) to real address
+- [ ] Update Privacy Policy email to real address
 - [ ] App Store submission
 - [ ] Port iOS Swift code to match HTML preview compliance features
+
+---
+
+## Future Development: Accident Mode (Phase 2)
+
+**Concept:** Post-crash guidance and real-time evidence collection feature.
+
+**Mockup:** `/preview/accident-mode-concept.html`
+
+### Feature Overview
+
+When a user is in an accident, they can activate "Accident Mode" which guides them through:
+
+1. **Safety Check**
+   - Prominent 911 call button
+   - "I'm Safe" button to proceed to documentation
+
+2. **Photo Documentation** (Guided camera flow)
+   - Your vehicle damage
+   - Other vehicle damage
+   - Accident scene (wide shot)
+   - Street signs / intersection
+   - Other driver's license (OCR extraction)
+   - Other driver's insurance card (OCR extraction)
+   - License plate
+
+3. **Voice Recording**
+   - Record verbal account while memory is fresh
+   - Voice-to-text transcription for case file
+   - Prompts: "Where were you going? What happened right before?"
+
+4. **Auto-Captured Data**
+   - GPS location (automatic)
+   - Timestamp (automatic)
+   - Weather conditions (via API)
+
+5. **Critical Reminders**
+   - "DO NOT say 'I'm sorry' or admit fault"
+   - "DO NOT give recorded statements to their insurance"
+   - "DO get the police report number"
+
+6. **Witness Information**
+   - Name and phone number collection
+   - Optional voice recording of witness statement
+
+7. **Review & Submit**
+   - Summary of all collected evidence
+   - Photo count, recording duration, documents scanned
+   - **Digital Retainer Signature** (e-signature legally valid in CA)
+   - Case submitted immediately to firm
+
+### Technical Requirements
+
+| Component | Technology |
+|-----------|------------|
+| Camera | AVFoundation (iOS) |
+| OCR | Vision framework for text extraction |
+| Voice Recording | AVAudioRecorder + Speech framework for transcription |
+| GPS | CoreLocation |
+| Weather | OpenWeatherMap API or WeatherKit |
+| E-Signature | Custom SignatureView with touch capture |
+| Offline Support | Core Data for local storage, sync when online |
+
+### Entry Points
+
+1. **Emergency Button** - Prominent "I Was In An Accident" button on home screen
+2. **Push Notification** - If integrated with Apple/Google crash detection APIs (future)
+3. **Widget** - iOS home screen widget for quick access
+
+### Legal Considerations
+
+- E-signatures are valid for retainer agreements in California
+- Digital signature includes timestamp and device info
+- All evidence timestamped and geotagged for authenticity
+- Recording disclaimer shown before voice capture
+
+### Competitive Advantage
+
+- No other legal app offers guided post-accident documentation
+- Evidence collected minutes after accident = stronger cases
+- Friction-free client acquisition at moment of highest intent
+- Professional evidence package vs. random phone photos
+
+### Not Building (Intentionally)
+
+- **Automatic crash detection** - Apple/Google do this at OS level, can't compete
+- Focus on post-crash workflow, not crash detection
 
 ---
 

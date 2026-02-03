@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClaimIt - Accident Mode Concept</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #0066FF;
+            --primary-dark: #0047B3;
+            --accent: #FF6B35;
+            --success: #00C48C;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --text-primary: #111827;
+            --text-secondary: #4B5563;
+            --text-muted: #9CA3AF;
+            --border-color: #E5E7EB;
+            --page-bg: #F8FAFC;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        .concept-label {
+            background: var(--warning);
+            color: #000;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .screens-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1400px;
+        }
+
+        .screen-wrapper {
+            text-align: center;
+        }
+
+        .screen-label {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .iphone {
+            width: 280px;
+            height: 600px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 10px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            background: var(--page-bg);
+        }
+
+        .dynamic-island {
+            width: 90px;
+            height: 28px;
+            background: #000;
+            border-radius: 16px;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+
+        .screen-content {
+            padding: 50px 16px 20px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        /* Emergency Screen */
+        .emergency-screen {
+            background: linear-gradient(180deg, #DC2626 0%, #991B1B 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .emergency-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        .emergency-icon svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        .emergency-screen h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .emergency-screen p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .safety-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 0 8px;
+        }
+
+        .btn-911 {
+            background: white;
+            color: #DC2626;
+            padding: 18px;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-safe {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        /* Photo Guide Screen */
+        .photo-screen {
+            background: #111827;
+            color: white;
+        }
+
+        .photo-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .photo-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .photo-header p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .photo-progress {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 20px;
+        }
+
+        .photo-progress-step {
+            flex: 1;
+            height: 4px;
+            background: #374151;
+            border-radius: 2px;
+        }
+
+        .photo-progress-step.complete {
+            background: var(--success);
+        }
+
+        .photo-progress-step.current {
+            background: var(--primary);
+        }
+
+        .camera-viewfinder {
+            background: #000;
+            border-radius: 16px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .viewfinder-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 16px;
+        }
+
+        .viewfinder-corners {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px solid var(--success);
+            border-radius: 8px;
+        }
+
+        .camera-hint {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .photo-instruction {
+            background: #1F2937;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .photo-instruction h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .photo-instruction p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .capture-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #374151;
+        }
+
+        .capture-btn-inner {
+            width: 54px;
+            height: 54px;
+            background: white;
+            border-radius: 50%;
+            border: 2px solid #E5E7EB;
+        }
+
+        /* Checklist Screen */
+        .checklist-screen {
+            background: var(--page-bg);
+        }
+
+        .checklist-header {
+            text-align: center;
+            padding: 10px 0 20px;
+        }
+
+        .checklist-header h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .checklist-header p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .checklist-section {
+            margin-bottom: 20px;
+        }
+
+        .checklist-section h3 {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            padding-left: 4px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .checklist-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .checklist-check.done {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .checklist-item-text {
+            flex: 1;
+        }
+
+        .checklist-item-text h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .checklist-item-text p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Voice Recording Screen */
+        .voice-screen {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .voice-header {
+            margin-bottom: 30px;
+        }
+
+        .voice-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .voice-header p {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        .voice-visualizer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .voice-bar {
+            width: 4px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 2px;
+            animation: voicePulse 0.5s ease-in-out infinite alternate;
+        }
+
+        .voice-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+        .voice-bar:nth-child(2) { height: 35px; animation-delay: 0.1s; }
+        .voice-bar:nth-child(3) { height: 50px; animation-delay: 0.2s; }
+        .voice-bar:nth-child(4) { height: 40px; animation-delay: 0.3s; }
+        .voice-bar:nth-child(5) { height: 55px; animation-delay: 0.4s; }
+        .voice-bar:nth-child(6) { height: 30px; animation-delay: 0.5s; }
+        .voice-bar:nth-child(7) { height: 45px; animation-delay: 0.6s; }
+
+        @keyframes voicePulse {
+            to { height: 15px; }
+        }
+
+        .recording-time {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .recording-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .recording-dot {
+            width: 10px;
+            height: 10px;
+            background: #EF4444;
+            border-radius: 50%;
+            animation: recordingPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes recordingPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .voice-prompt {
+            background: rgba(255,255,255,0.15);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .voice-prompt h4 {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        .voice-prompt p {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .stop-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stop-btn-inner {
+            width: 28px;
+            height: 28px;
+            background: #EF4444;
+            border-radius: 6px;
+        }
+
+        /* Summary Screen */
+        .summary-screen {
+            background: var(--page-bg);
+        }
+
+        .summary-header {
+            text-align: center;
+            padding: 10px 0 20px;
+        }
+
+        .summary-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--success) 0%, #00E6A0 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+        }
+
+        .summary-icon svg {
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+
+        .summary-header h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .summary-header p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .evidence-item {
+            aspect-ratio: 1;
+            background: #E5E7EB;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 8px;
+        }
+
+        .evidence-item.has-content {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .summary-stats {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .summary-stat {
+            text-align: center;
+        }
+
+        .summary-stat-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .summary-stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .btn-submit-claim {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--success) 0%, #00E6A0 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 196, 140, 0.35);
+        }
+
+        .retainer-note {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* Reminder Card */
+        .reminder-card {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border-left: 4px solid var(--warning);
+            padding: 14px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 16px;
+        }
+
+        .reminder-card h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #92400E;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .reminder-card ul {
+            font-size: 12px;
+            color: #A16207;
+            padding-left: 16px;
+            line-height: 1.6;
+        }
+
+        .notes {
+            margin-top: 40px;
+            color: white;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        .notes h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .notes ul {
+            font-size: 14px;
+            line-height: 1.8;
+            opacity: 0.85;
+            padding-left: 20px;
+        }
+
+        .notes li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="concept-label">Future Feature Concept</div>
+        <h1>Accident Mode</h1>
+        <p>Post-crash guidance and evidence collection</p>
+    </div>
+
+    <div class="screens-container">
+        <!-- Screen 1: Emergency/Safety Check -->
+        <div class="screen-wrapper">
+            <div class="screen-label">1. Safety Check</div>
+            <div class="iphone">
+                <div class="iphone-screen">
+                    <div class="dynamic-island"></div>
+                    <div class="screen-content emergency-screen">
+                        <div class="emergency-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                        <h1>Are You Safe?</h1>
+                        <p>Your safety is the priority. If anyone is injured, call 911 immediately.</p>
+                        <div class="safety-buttons">
+                            <div class="btn-911">
+                                <svg style="width: 24px; height: 24px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                </svg>
+                                Call 911
+                            </div>
+                            <div class="btn-safe">I'm Safe - Start Documenting</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 2: Photo Documentation -->
+        <div class="screen-wrapper">
+            <div class="screen-label">2. Photo Documentation</div>
+            <div class="iphone">
+                <div class="iphone-screen">
+                    <div class="dynamic-island"></div>
+                    <div class="screen-content photo-screen">
+                        <div class="photo-header">
+                            <h2>Document the Scene</h2>
+                            <p>Photo 2 of 6</p>
+                        </div>
+                        <div class="photo-progress">
+                            <div class="photo-progress-step complete"></div>
+                            <div class="photo-progress-step current"></div>
+                            <div class="photo-progress-step"></div>
+                            <div class="photo-progress-step"></div>
+                            <div class="photo-progress-step"></div>
+                            <div class="photo-progress-step"></div>
+                        </div>
+                        <div class="camera-viewfinder">
+                            <div class="viewfinder-overlay"></div>
+                            <div class="viewfinder-corners"></div>
+                            <span class="camera-hint">Position car in frame</span>
+                        </div>
+                        <div class="photo-instruction">
+                            <h3>
+                                <svg style="width: 18px; height: 18px; color: var(--primary);" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l4.59-4.58L18 11l-6 6z"/>
+                                </svg>
+                                Other Vehicle Damage
+                            </h3>
+                            <p>Capture the damage to the other car involved</p>
+                        </div>
+                        <div class="capture-btn">
+                            <div class="capture-btn-inner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Voice Recording -->
+        <div class="screen-wrapper">
+            <div class="screen-label">3. Voice Statement</div>
+            <div class="iphone">
+                <div class="iphone-screen">
+                    <div class="dynamic-island"></div>
+                    <div class="screen-content voice-screen">
+                        <div class="voice-header">
+                            <h2>Record What Happened</h2>
+                            <p>Describe the accident in your own words</p>
+                        </div>
+                        <div class="voice-visualizer">
+                            <div class="voice-bar"></div>
+                            <div class="voice-bar"></div>
+                            <div class="voice-bar"></div>
+                            <div class="voice-bar"></div>
+                            <div class="voice-bar"></div>
+                            <div class="voice-bar"></div>
+                            <div class="voice-bar"></div>
+                        </div>
+                        <div class="recording-time">1:24</div>
+                        <div class="recording-status">
+                            <div class="recording-dot"></div>
+                            Recording...
+                        </div>
+                        <div class="voice-prompt">
+                            <h4>Helpful prompts:</h4>
+                            <p>Where were you going? What happened right before? What did you see? How did the collision occur?</p>
+                        </div>
+                        <div class="stop-btn">
+                            <div class="stop-btn-inner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Info Collection -->
+        <div class="screen-wrapper">
+            <div class="screen-label">4. Collect Info</div>
+            <div class="iphone">
+                <div class="iphone-screen">
+                    <div class="dynamic-island"></div>
+                    <div class="screen-content checklist-screen">
+                        <div class="checklist-header">
+                            <h2>Information Checklist</h2>
+                            <p>Tap each item to capture</p>
+                        </div>
+
+                        <div class="reminder-card">
+                            <h4>
+                                <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                                Important Reminders
+                            </h4>
+                            <ul>
+                                <li>Do NOT say "I'm sorry" or admit fault</li>
+                                <li>Do NOT give recorded statements</li>
+                            </ul>
+                        </div>
+
+                        <div class="checklist-section">
+                            <h3>Other Driver</h3>
+                            <div class="checklist-item">
+                                <div class="checklist-check done">
+                                    <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                                </div>
+                                <div class="checklist-item-text">
+                                    <h4>Driver's License</h4>
+                                    <p>Photo captured via OCR</p>
+                                </div>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-check done">
+                                    <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                                </div>
+                                <div class="checklist-item-text">
+                                    <h4>Insurance Card</h4>
+                                    <p>Photo captured via OCR</p>
+                                </div>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-check"></div>
+                                <div class="checklist-item-text">
+                                    <h4>License Plate</h4>
+                                    <p>Tap to capture</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checklist-section">
+                            <h3>Scene Info</h3>
+                            <div class="checklist-item">
+                                <div class="checklist-check done">
+                                    <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                                </div>
+                                <div class="checklist-item-text">
+                                    <h4>GPS Location</h4>
+                                    <p>Auto-captured</p>
+                                </div>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-check done">
+                                    <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                                </div>
+                                <div class="checklist-item-text">
+                                    <h4>Weather Conditions</h4>
+                                    <p>Clear, 72°F - Auto-fetched</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 5: Summary & Submit -->
+        <div class="screen-wrapper">
+            <div class="screen-label">5. Review & Submit</div>
+            <div class="iphone">
+                <div class="iphone-screen">
+                    <div class="dynamic-island"></div>
+                    <div class="screen-content summary-screen">
+                        <div class="summary-header">
+                            <div class="summary-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <h2>Evidence Collected</h2>
+                            <p>Review your documentation</p>
+                        </div>
+
+                        <div class="evidence-grid">
+                            <div class="evidence-item has-content">Your Car</div>
+                            <div class="evidence-item has-content">Their Car</div>
+                            <div class="evidence-item has-content">Scene</div>
+                            <div class="evidence-item has-content">License</div>
+                            <div class="evidence-item has-content">Insurance</div>
+                            <div class="evidence-item has-content">Plate</div>
+                        </div>
+
+                        <div class="summary-stats">
+                            <div class="summary-stat">
+                                <div class="summary-stat-value">6</div>
+                                <div class="summary-stat-label">Photos</div>
+                            </div>
+                            <div class="summary-stat">
+                                <div class="summary-stat-value">1:24</div>
+                                <div class="summary-stat-label">Recording</div>
+                            </div>
+                            <div class="summary-stat">
+                                <div class="summary-stat-value">4</div>
+                                <div class="summary-stat-label">Documents</div>
+                            </div>
+                        </div>
+
+                        <button class="btn-submit-claim">
+                            Submit & Sign Retainer
+                        </button>
+                        <p class="retainer-note">You'll review and e-sign our representation agreement</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notes">
+        <h2>Implementation Notes</h2>
+        <ul>
+            <li><strong>Entry Point:</strong> "I Was In An Accident" emergency button on home screen, or triggered from notification</li>
+            <li><strong>GPS & Weather:</strong> Captured automatically using device location and weather API</li>
+            <li><strong>OCR:</strong> Use Vision framework (iOS) to extract text from license/insurance photos</li>
+            <li><strong>Voice Recording:</strong> Transcribed to text for case file, original audio preserved</li>
+            <li><strong>Retainer:</strong> Digital signature via SignatureView, legally binding e-signature</li>
+            <li><strong>Offline Mode:</strong> All data saved locally, synced when connection available</li>
+            <li><strong>Time Sensitivity:</strong> Show "Evidence collected 3 mins after accident" in case file</li>
+        </ul>
+    </div>
+</body>
+</html>
