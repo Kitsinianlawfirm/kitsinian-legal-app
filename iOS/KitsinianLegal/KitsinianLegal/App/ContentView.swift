@@ -7,9 +7,10 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var selectedTab: Tab = .home
 
-    enum Tab: String {
+    enum Tab: String, CaseIterable {
         case home = "Home"
         case claim = "Claim"
         case learn = "Learn"
@@ -30,12 +31,53 @@ struct ContentView: View {
             if !appState.hasCompletedOnboarding {
                 OnboardingView()
             } else {
-                mainTabView
+                if horizontalSizeClass == .regular {
+                    iPadNavigationView
+                } else {
+                    iPhoneTabView
+                }
             }
         }
     }
 
-    private var mainTabView: some View {
+    // MARK: - iPad Navigation (Sidebar)
+    private var iPadNavigationView: some View {
+        NavigationSplitView {
+            List(Tab.allCases, id: \.self, selection: $selectedTab) { tab in
+                Label(tab.rawValue, systemImage: tab.icon)
+                    .tag(tab)
+            }
+            .navigationTitle("ClaimIt")
+            .listStyle(.sidebar)
+        } detail: {
+            NavigationStack {
+                selectedView
+            }
+        }
+        .tint(.claimPrimary)
+        .onAppear {
+            if appState.selectedIncidentType != nil {
+                selectedTab = .claim
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var selectedView: some View {
+        switch selectedTab {
+        case .home:
+            HomeView()
+        case .claim:
+            QuizStartView()
+        case .learn:
+            ResourceLibraryView()
+        case .contact:
+            ContactView()
+        }
+    }
+
+    // MARK: - iPhone Navigation (Bottom Tabs)
+    private var iPhoneTabView: some View {
         TabView(selection: $selectedTab) {
             HomeView()
                 .tabItem {

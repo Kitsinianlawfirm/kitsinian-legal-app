@@ -6,6 +6,12 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private var isIPad: Bool {
+        horizontalSizeClass == .regular
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
@@ -14,7 +20,7 @@ struct HomeView: View {
                     heroSection
 
                     // Content
-                    VStack(spacing: 20) {
+                    VStack(spacing: isIPad ? 32 : 20) {
                         // Quick Actions
                         quickActionsSection
 
@@ -30,6 +36,8 @@ struct HomeView: View {
                     .padding(.top, -20)
                     .padding(.bottom, 32)
                 }
+                .frame(maxWidth: isIPad ? 900 : .infinity)
+                .frame(maxWidth: .infinity)
             }
             .background(Color.claimBackground)
             .navigationBarTitleDisplayMode(.inline)
@@ -46,36 +54,36 @@ struct HomeView: View {
         ZStack(alignment: .bottom) {
             // Gradient background
             LinearGradient.claimHeroGradient
-                .frame(height: 280)
+                .frame(height: isIPad ? 340 : 280)
 
-            VStack(spacing: 16) {
+            VStack(spacing: isIPad ? 20 : 16) {
                 // Badge
                 HStack(spacing: 6) {
                     Image(systemName: "bolt.fill")
-                        .font(.system(size: 12, weight: .bold))
+                        .font(.system(size: isIPad ? 14 : 12, weight: .bold))
                     Text("Free Case Evaluation")
-                        .font(.system(size: 12, weight: .semibold))
+                        .font(.system(size: isIPad ? 14 : 12, weight: .semibold))
                 }
                 .foregroundColor(.white)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
+                .padding(.horizontal, isIPad ? 18 : 14)
+                .padding(.vertical, isIPad ? 10 : 8)
                 .background(.white.opacity(0.2))
                 .cornerRadius(20)
 
                 // Title
                 Text("Get What You\nDeserve")
-                    .font(.system(size: 30, weight: .heavy))
+                    .font(.system(size: isIPad ? 42 : 30, weight: .heavy))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white)
                     .lineSpacing(2)
 
                 // Subtitle
                 Text("Find out if you have a case in 2 minutes")
-                    .font(.system(size: 15, weight: .medium))
+                    .font(.system(size: isIPad ? 18 : 15, weight: .medium))
                     .foregroundColor(.white.opacity(0.9))
 
                 // Stats Row
-                HStack(spacing: 10) {
+                HStack(spacing: isIPad ? 16 : 10) {
                     StatBadge(value: "$50M+", label: "Recovered")
                     StatBadge(value: "5000+", label: "Cases")
                     StatBadge(value: "98%", label: "Success")
@@ -89,23 +97,23 @@ struct HomeView: View {
                 NavigationLink(destination: QuizStartView()) {
                     HStack(spacing: 10) {
                         Image(systemName: "bolt.fill")
-                            .font(.system(size: 18, weight: .bold))
+                            .font(.system(size: isIPad ? 20 : 18, weight: .bold))
                         Text("Start My Free Claim Review")
-                            .font(.system(size: 16, weight: .bold))
+                            .font(.system(size: isIPad ? 18 : 16, weight: .bold))
                     }
                     .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 52)
+                    .frame(maxWidth: isIPad ? 400 : .infinity)
+                    .frame(height: isIPad ? 56 : 52)
                     .background(LinearGradient.claimAccentGradient)
                     .cornerRadius(14)
                     .shadow(color: .claimAccent.opacity(0.35), radius: 12, y: 6)
                 }
             }
-            .padding(16)
+            .padding(isIPad ? 20 : 16)
             .background(Color.white)
             .cornerRadius(20)
             .claimShadowLarge()
-            .padding(.horizontal, 16)
+            .padding(.horizontal, isIPad ? 32 : 16)
             .offset(y: 30)
         }
     }
@@ -157,7 +165,7 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("We Fight For")
-                    .font(.system(size: 17, weight: .bold))
+                    .font(.system(size: isIPad ? 20 : 17, weight: .bold))
                     .foregroundColor(.claimTextPrimary)
 
                 Spacer()
@@ -165,23 +173,36 @@ struct HomeView: View {
                 NavigationLink(destination: PracticeAreasListView(category: .inHouse)) {
                     HStack(spacing: 2) {
                         Text("See All")
-                            .font(.system(size: 13, weight: .semibold))
+                            .font(.system(size: isIPad ? 15 : 13, weight: .semibold))
                         Image(systemName: "chevron.right")
-                            .font(.system(size: 11, weight: .semibold))
+                            .font(.system(size: isIPad ? 13 : 11, weight: .semibold))
                     }
                     .foregroundColor(.claimPrimary)
                 }
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, isIPad ? 24 : 20)
 
-            VStack(spacing: 10) {
-                ForEach(PracticeArea.inHouseAreas.prefix(5)) { area in
-                    NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
-                        PracticeAreaCard(practiceArea: area, showTopBadge: area == PracticeArea.inHouseAreas.first)
+            if isIPad {
+                // iPad: Grid layout
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 320, maximum: 400), spacing: 16)], spacing: 16) {
+                    ForEach(PracticeArea.inHouseAreas.prefix(5)) { area in
+                        NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
+                            PracticeAreaCard(practiceArea: area, showTopBadge: area == PracticeArea.inHouseAreas.first)
+                        }
                     }
                 }
+                .padding(.horizontal, 20)
+            } else {
+                // iPhone: Vertical list
+                VStack(spacing: 10) {
+                    ForEach(PracticeArea.inHouseAreas.prefix(5)) { area in
+                        NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
+                            PracticeAreaCard(practiceArea: area, showTopBadge: area == PracticeArea.inHouseAreas.first)
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
         }
     }
 
@@ -225,7 +246,7 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("Popular Resources")
-                    .font(.system(size: 17, weight: .bold))
+                    .font(.system(size: isIPad ? 20 : 17, weight: .bold))
                     .foregroundColor(.claimTextPrimary)
 
                 Spacer()
@@ -233,23 +254,36 @@ struct HomeView: View {
                 NavigationLink(destination: ResourceLibraryView()) {
                     HStack(spacing: 2) {
                         Text("See All")
-                            .font(.system(size: 13, weight: .semibold))
+                            .font(.system(size: isIPad ? 15 : 13, weight: .semibold))
                         Image(systemName: "chevron.right")
-                            .font(.system(size: 11, weight: .semibold))
+                            .font(.system(size: isIPad ? 13 : 11, weight: .semibold))
                     }
                     .foregroundColor(.claimPrimary)
                 }
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, isIPad ? 24 : 20)
 
-            VStack(spacing: 10) {
-                ForEach(LegalResource.featuredResources.prefix(3)) { resource in
-                    NavigationLink(destination: ResourceDetailView(resource: resource)) {
-                        ResourceCard(resource: resource)
+            if isIPad {
+                // iPad: Grid layout
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 320, maximum: 400), spacing: 16)], spacing: 16) {
+                    ForEach(LegalResource.featuredResources.prefix(4)) { resource in
+                        NavigationLink(destination: ResourceDetailView(resource: resource)) {
+                            ResourceCard(resource: resource)
+                        }
                     }
                 }
+                .padding(.horizontal, 20)
+            } else {
+                // iPhone: Vertical list
+                VStack(spacing: 10) {
+                    ForEach(LegalResource.featuredResources.prefix(3)) { resource in
+                        NavigationLink(destination: ResourceDetailView(resource: resource)) {
+                            ResourceCard(resource: resource)
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
         }
     }
 }

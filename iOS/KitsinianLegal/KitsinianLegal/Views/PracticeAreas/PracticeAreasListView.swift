@@ -6,7 +6,12 @@
 import SwiftUI
 
 struct PracticeAreasListView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let category: PracticeArea.Category?
+
+    private var isIPad: Bool {
+        horizontalSizeClass == .regular
+    }
 
     init(category: PracticeArea.Category? = nil) {
         self.category = category
@@ -28,7 +33,7 @@ struct PracticeAreasListView: View {
 
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: 24) {
+            VStack(spacing: isIPad ? 32 : 24) {
                 // Header description
                 headerSection
 
@@ -43,6 +48,8 @@ struct PracticeAreasListView: View {
                 }
             }
             .padding(.bottom, 32)
+            .frame(maxWidth: isIPad ? 900 : .infinity)
+            .frame(maxWidth: .infinity)
         }
         .background(Color.claimBackground)
         .navigationTitle(title)
@@ -71,14 +78,29 @@ struct PracticeAreasListView: View {
 
     // MARK: - Areas List
     private var areasListSection: some View {
-        VStack(spacing: 10) {
-            ForEach(areas) { area in
-                NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
-                    PracticeAreaListCard(practiceArea: area)
+        Group {
+            if isIPad {
+                // iPad: 2-column grid
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 340, maximum: 420), spacing: 16)], spacing: 16) {
+                    ForEach(areas) { area in
+                        NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
+                            PracticeAreaListCard(practiceArea: area)
+                        }
+                    }
                 }
+                .padding(.horizontal, 20)
+            } else {
+                // iPhone: Single column
+                VStack(spacing: 10) {
+                    ForEach(areas) { area in
+                        NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
+                            PracticeAreaListCard(practiceArea: area)
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
             }
         }
-        .padding(.horizontal, 16)
     }
 
     // MARK: - In-House Section
@@ -87,24 +109,37 @@ struct PracticeAreasListView: View {
             HStack(spacing: 10) {
                 GradientIconView(
                     systemName: "checkmark.shield.fill",
-                    size: 36,
-                    iconSize: 16,
+                    size: isIPad ? 40 : 36,
+                    iconSize: isIPad ? 18 : 16,
                     gradient: LinearGradient.claimPrimaryGradient
                 )
                 Text("We Handle Directly")
-                    .font(.system(size: 17, weight: .bold))
+                    .font(.system(size: isIPad ? 20 : 17, weight: .bold))
                     .foregroundColor(.claimTextPrimary)
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, isIPad ? 24 : 20)
 
-            VStack(spacing: 10) {
-                ForEach(PracticeArea.inHouseAreas) { area in
-                    NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
-                        PracticeAreaListCard(practiceArea: area)
+            if isIPad {
+                // iPad: 2-column grid
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 340, maximum: 420), spacing: 16)], spacing: 16) {
+                    ForEach(PracticeArea.inHouseAreas) { area in
+                        NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
+                            PracticeAreaListCard(practiceArea: area)
+                        }
                     }
                 }
+                .padding(.horizontal, 20)
+            } else {
+                // iPhone: Single column
+                VStack(spacing: 10) {
+                    ForEach(PracticeArea.inHouseAreas) { area in
+                        NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
+                            PracticeAreaListCard(practiceArea: area)
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
         }
     }
 
@@ -114,24 +149,37 @@ struct PracticeAreasListView: View {
             HStack(spacing: 10) {
                 GradientIconView(
                     systemName: "person.2.fill",
-                    size: 36,
-                    iconSize: 16,
+                    size: isIPad ? 40 : 36,
+                    iconSize: isIPad ? 18 : 16,
                     gradient: LinearGradient.claimAccentGradient
                 )
                 Text("Trusted Referral Network")
-                    .font(.system(size: 17, weight: .bold))
+                    .font(.system(size: isIPad ? 20 : 17, weight: .bold))
                     .foregroundColor(.claimTextPrimary)
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, isIPad ? 24 : 20)
 
-            VStack(spacing: 10) {
-                ForEach(PracticeArea.referralAreas) { area in
-                    NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
-                        PracticeAreaListCard(practiceArea: area)
+            if isIPad {
+                // iPad: 2-column grid
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 340, maximum: 420), spacing: 16)], spacing: 16) {
+                    ForEach(PracticeArea.referralAreas) { area in
+                        NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
+                            PracticeAreaListCard(practiceArea: area)
+                        }
                     }
                 }
+                .padding(.horizontal, 20)
+            } else {
+                // iPhone: Single column
+                VStack(spacing: 10) {
+                    ForEach(PracticeArea.referralAreas) { area in
+                        NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
+                            PracticeAreaListCard(practiceArea: area)
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
         }
     }
 }

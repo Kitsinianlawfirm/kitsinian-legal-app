@@ -7,11 +7,21 @@ import SwiftUI
 
 struct LeadFormView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let practiceArea: PracticeArea?
 
     @StateObject private var viewModel = LeadFormViewModel()
     @State private var showingConfirmation = false
     @FocusState private var focusedField: FormField?
+
+    private var isIPad: Bool {
+        horizontalSizeClass == .regular
+    }
+
+    // Comfortable form width for iPad
+    private var maxFormWidth: CGFloat {
+        isIPad ? 600 : .infinity
+    }
 
     enum FormField {
         case firstName, lastName, email, phone, description
@@ -19,7 +29,7 @@ struct LeadFormView: View {
 
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: 24) {
+            VStack(spacing: isIPad ? 32 : 24) {
                 // Header
                 headerSection
 
@@ -32,7 +42,9 @@ struct LeadFormView: View {
                 // Disclaimer
                 disclaimer
             }
-            .padding(16)
+            .padding(isIPad ? 24 : 16)
+            .frame(maxWidth: maxFormWidth)
+            .frame(maxWidth: .infinity)
         }
         .background(Color.claimBackground)
         .navigationTitle("Contact Us")
@@ -62,27 +74,27 @@ struct LeadFormView: View {
 
     // MARK: - Header Section
     private var headerSection: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: isIPad ? 20 : 16) {
             if let area = practiceArea {
                 HStack(spacing: 8) {
                     Image(systemName: area.icon)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(.system(size: isIPad ? 16 : 14, weight: .semibold))
                     Text(area.name)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(.system(size: isIPad ? 16 : 14, weight: .semibold))
                 }
                 .foregroundColor(.claimPrimary)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
+                .padding(.horizontal, isIPad ? 20 : 16)
+                .padding(.vertical, isIPad ? 12 : 10)
                 .background(Color.claimPrimary.opacity(0.1))
                 .cornerRadius(20)
             }
 
             Text("Tell us about your situation")
-                .font(.system(size: 20, weight: .bold))
+                .font(.system(size: isIPad ? 24 : 20, weight: .bold))
                 .foregroundColor(.claimTextPrimary)
 
             Text("All information is confidential. We'll review your case and respond within 24 hours.")
-                .font(.system(size: 14, weight: .medium))
+                .font(.system(size: isIPad ? 16 : 14, weight: .medium))
                 .foregroundColor(.claimTextSecondary)
                 .multilineTextAlignment(.center)
                 .lineSpacing(4)
@@ -91,9 +103,9 @@ struct LeadFormView: View {
 
     // MARK: - Form Section
     private var formSection: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: isIPad ? 20 : 16) {
             // Name Row
-            HStack(spacing: 12) {
+            HStack(spacing: isIPad ? 16 : 12) {
                 FormTextField(
                     title: "First Name",
                     text: $viewModel.lead.firstName,
@@ -217,11 +229,11 @@ struct LeadFormView: View {
                     .focused($focusedField, equals: .description)
             }
         }
-        .padding(16)
+        .padding(isIPad ? 24 : 16)
         .background(Color.white)
-        .cornerRadius(16)
+        .cornerRadius(isIPad ? 20 : 16)
         .overlay(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: isIPad ? 20 : 16)
                 .stroke(Color.claimBorder, lineWidth: 1)
         )
         .claimShadowSmall()
@@ -243,20 +255,20 @@ struct LeadFormView: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 } else {
                     Image(systemName: "paperplane.fill")
-                        .font(.system(size: 18, weight: .bold))
+                        .font(.system(size: isIPad ? 20 : 18, weight: .bold))
                     Text("Submit Request")
-                        .font(.system(size: 17, weight: .bold))
+                        .font(.system(size: isIPad ? 18 : 17, weight: .bold))
                 }
             }
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
-            .frame(height: 54)
+            .frame(height: isIPad ? 58 : 54)
             .background(
                 viewModel.isFormValid
                     ? LinearGradient.claimAccentGradient
                     : LinearGradient(colors: [.gray, .gray], startPoint: .leading, endPoint: .trailing)
             )
-            .cornerRadius(14)
+            .cornerRadius(isIPad ? 16 : 14)
             .shadow(color: viewModel.isFormValid ? .claimAccent.opacity(0.35) : .clear, radius: 12, y: 6)
         }
         .disabled(!viewModel.isFormValid || viewModel.isSubmitting)
@@ -265,7 +277,7 @@ struct LeadFormView: View {
     // MARK: - Disclaimer
     private var disclaimer: some View {
         Text("By submitting this form, you agree to be contacted regarding your legal matter. This does not create an attorney-client relationship.")
-            .font(.system(size: 11, weight: .medium))
+            .font(.system(size: isIPad ? 13 : 11, weight: .medium))
             .foregroundColor(.claimTextMuted)
             .multilineTextAlignment(.center)
             .lineSpacing(3)

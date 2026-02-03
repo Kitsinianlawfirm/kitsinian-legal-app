@@ -6,8 +6,13 @@
 import SwiftUI
 
 struct ResourceLibraryView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var searchText = ""
     @State private var selectedCategory: LegalResource.Category?
+
+    private var isIPad: Bool {
+        horizontalSizeClass == .regular
+    }
 
     var filteredResources: [LegalResource] {
         var resources = LegalResource.allResources
@@ -29,7 +34,7 @@ struct ResourceLibraryView: View {
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 24) {
+                VStack(spacing: isIPad ? 32 : 24) {
                     // Category Filter
                     categoryFilter
 
@@ -42,6 +47,8 @@ struct ResourceLibraryView: View {
                     resourcesSection
                 }
                 .padding(.bottom, 32)
+                .frame(maxWidth: isIPad ? 900 : .infinity)
+                .frame(maxWidth: .infinity)
             }
             .background(Color.claimBackground)
             .navigationTitle("Learn")
@@ -98,21 +105,34 @@ struct ResourceLibraryView: View {
     private var resourcesSection: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text(selectedCategory?.displayName ?? "All Resources")
-                .font(.system(size: 17, weight: .bold))
+                .font(.system(size: isIPad ? 20 : 17, weight: .bold))
                 .foregroundColor(.claimTextPrimary)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, isIPad ? 24 : 20)
 
             if filteredResources.isEmpty {
                 emptyState
             } else {
-                VStack(spacing: 10) {
-                    ForEach(filteredResources) { resource in
-                        NavigationLink(destination: ResourceDetailView(resource: resource)) {
-                            ResourceListCard(resource: resource)
+                if isIPad {
+                    // iPad: 2-column grid
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 340, maximum: 420), spacing: 16)], spacing: 16) {
+                        ForEach(filteredResources) { resource in
+                            NavigationLink(destination: ResourceDetailView(resource: resource)) {
+                                ResourceListCard(resource: resource)
+                            }
                         }
                     }
+                    .padding(.horizontal, 20)
+                } else {
+                    // iPhone: Single column
+                    VStack(spacing: 10) {
+                        ForEach(filteredResources) { resource in
+                            NavigationLink(destination: ResourceDetailView(resource: resource)) {
+                                ResourceListCard(resource: resource)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 16)
                 }
-                .padding(.horizontal, 16)
             }
         }
     }

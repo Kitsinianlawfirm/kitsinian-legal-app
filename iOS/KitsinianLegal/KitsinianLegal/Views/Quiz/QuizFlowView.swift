@@ -7,9 +7,19 @@ import SwiftUI
 
 struct QuizFlowView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @EnvironmentObject var appState: AppState
     @StateObject private var viewModel = QuizViewModel()
     @State private var showingResult = false
+
+    private var isIPad: Bool {
+        horizontalSizeClass == .regular
+    }
+
+    // Comfortable reading width for iPad
+    private var maxContentWidth: CGFloat {
+        isIPad ? 650 : .infinity
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -17,13 +27,13 @@ struct QuizFlowView: View {
             VStack(spacing: 8) {
                 HStack {
                     Text("Step \(viewModel.questionHistory.count + 1)")
-                        .font(.system(size: 12, weight: .bold))
+                        .font(.system(size: isIPad ? 14 : 12, weight: .bold))
                         .foregroundColor(.claimPrimary)
 
                     Spacer()
 
                     Text("\(Int(viewModel.progress * 100))%")
-                        .font(.system(size: 12, weight: .bold))
+                        .font(.system(size: isIPad ? 14 : 12, weight: .bold))
                         .foregroundColor(.claimTextMuted)
                 }
 
@@ -31,42 +41,44 @@ struct QuizFlowView: View {
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: 4)
                             .fill(Color.claimBorder)
-                            .frame(height: 8)
+                            .frame(height: isIPad ? 10 : 8)
 
                         RoundedRectangle(cornerRadius: 4)
                             .fill(LinearGradient.claimPrimaryGradient)
-                            .frame(width: geometry.size.width * viewModel.progress, height: 8)
+                            .frame(width: geometry.size.width * viewModel.progress, height: isIPad ? 10 : 8)
                     }
                 }
-                .frame(height: 8)
+                .frame(height: isIPad ? 10 : 8)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 16)
-            .padding(.bottom, 20)
+            .frame(maxWidth: maxContentWidth)
+            .padding(.horizontal, isIPad ? 32 : 20)
+            .padding(.top, isIPad ? 24 : 16)
+            .padding(.bottom, isIPad ? 28 : 20)
+            .frame(maxWidth: .infinity)
 
             if viewModel.isComplete {
                 QuizResultView(result: viewModel.result)
             } else if let currentQuestion = viewModel.currentQuestion {
                 ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 24) {
+                    VStack(alignment: .leading, spacing: isIPad ? 32 : 24) {
                         // Question
-                        VStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading, spacing: isIPad ? 14 : 10) {
                             Text(currentQuestion.text)
-                                .font(.system(size: 24, weight: .heavy))
+                                .font(.system(size: isIPad ? 32 : 24, weight: .heavy))
                                 .foregroundColor(.claimTextPrimary)
                                 .lineSpacing(2)
 
                             if let subtext = currentQuestion.subtext {
                                 Text(subtext)
-                                    .font(.system(size: 15, weight: .medium))
+                                    .font(.system(size: isIPad ? 17 : 15, weight: .medium))
                                     .foregroundColor(.claimTextSecondary)
                                     .lineSpacing(4)
                             }
                         }
-                        .padding(.horizontal, 20)
+                        .padding(.horizontal, isIPad ? 32 : 20)
 
                         // Options
-                        VStack(spacing: 12) {
+                        VStack(spacing: isIPad ? 16 : 12) {
                             ForEach(currentQuestion.options) { option in
                                 QuizOptionButton(
                                     option: option,
@@ -76,11 +88,13 @@ struct QuizFlowView: View {
                                 }
                             }
                         }
-                        .padding(.horizontal, 16)
+                        .padding(.horizontal, isIPad ? 24 : 16)
 
                         Spacer(minLength: 100)
                     }
                     .padding(.top, 8)
+                    .frame(maxWidth: maxContentWidth)
+                    .frame(maxWidth: .infinity)
                 }
             }
         }
@@ -96,9 +110,9 @@ struct QuizFlowView: View {
                     }) {
                         HStack(spacing: 4) {
                             Image(systemName: "chevron.left")
-                                .font(.system(size: 14, weight: .semibold))
+                                .font(.system(size: isIPad ? 16 : 14, weight: .semibold))
                             Text("Back")
-                                .font(.system(size: 16, weight: .medium))
+                                .font(.system(size: isIPad ? 18 : 16, weight: .medium))
                         }
                         .foregroundColor(.claimPrimary)
                     }
