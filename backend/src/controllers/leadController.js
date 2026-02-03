@@ -6,6 +6,7 @@
 const { v4: uuidv4 } = require('uuid');
 const db = require('../config/database');
 const emailService = require('../services/emailService');
+const leadDocketService = require('../services/leadDocketService');
 const { logger } = require('../utils/logger');
 const { encrypt, decrypt, encryptFields, decryptFields } = require('../utils/encryption');
 
@@ -98,7 +99,30 @@ const createLead = async (req, res) => {
       logger.error('Failed to send lead confirmation email:', emailError);
     }
 
-    logger.info('New lead created', { id, practiceArea, urgency });
+    // Sync to Lead Docket CRM (if configured)
+    let leadDocketResult = null;
+    try {
+      leadDocketResult = await leadDocketService.sendToLeadDocket({
+        id,
+        firstName,
+        lastName,
+        email,
+        phone,
+        preferredContact,
+        practiceArea,
+        practiceAreaCategory,
+        urgency,
+        description,
+        quizAnswers,
+        source,
+        createdAt
+      });
+    } catch (ldError) {
+      logger.error('Failed to sync lead to Lead Docket:', ldError);
+      // Don't fail the request if Lead Docket sync fails
+    }
+
+    logger.info('New lead created', { id, practiceArea, urgency, leadDocket: leadDocketResult?.success });
 
     res.status(201).json({
       success: true,

@@ -34,6 +34,8 @@ services:
         sync: false
       - key: LEAD_NOTIFICATION_EMAIL
         sync: false
+      - key: LEAD_DOCKET_ENDPOINT_URL
+        sync: false
 
 databases:
   - name: kitsinian-legal-db

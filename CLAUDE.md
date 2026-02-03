@@ -635,7 +635,36 @@ NOTIFICATION_EMAIL=intake@kitsinianlawfirm.com
 ALLOWED_ORIGINS=https://app.claimit.com
 PORT=3000
 NODE_ENV=production
+ENCRYPTION_KEY=<64-char-hex-key>
+LEAD_DOCKET_ENDPOINT_URL=https://[YOURFIRM].leaddocket.com/Opportunities/Form/[ID]
 ```
+
+### Lead Docket Integration
+
+ClaimIt automatically syncs leads to Lead Docket (Filevine) CRM when configured.
+
+**Setup:**
+1. In Lead Docket: Settings → Integrations → Create Integration
+2. Copy the endpoint URL (format: `https://[FIRM].leaddocket.com/Opportunities/Form/[ID]`)
+3. Add to Render environment variables: `LEAD_DOCKET_ENDPOINT_URL`
+4. First test submission: Check Lead Docket "Notes" to verify field mapping
+
+**Field Mapping (ClaimIt → Lead Docket):**
+| ClaimIt Field | Lead Docket Field |
+|---------------|-------------------|
+| firstName | FirstName |
+| lastName | LastName |
+| email | Email |
+| phone | PrimaryPhoneNum |
+| practiceArea | Case_Type |
+| description | Description |
+| urgency | Urgency |
+| source | Source_Detail |
+| quizAnswers | Quiz_Answers (JSON) |
+
+**Files:**
+- `backend/src/services/leadDocketService.js` - Integration service
+- `backend/src/controllers/leadController.js` - Calls Lead Docket on lead creation
 
 ### Deployment (Render)
 
@@ -751,7 +780,11 @@ services:
 ### Pending
 - [ ] Install Xcode for iOS development
 - [ ] Create Apple Developer account
-- [ ] Deploy backend to Render
+- [x] Deploy backend to Render (Live: https://kitsinian-legal-api.onrender.com)
+- [x] Lead Docket integration (auto-syncs leads to CRM)
+- [x] AES-256-GCM encryption for PII data
+- [ ] Configure Lead Docket endpoint URL in Render
+- [ ] Configure SMTP email settings in Render
 - [ ] Create app icon (1024x1024)
 - [ ] Replace placeholder phone/email
 - [ ] Update Privacy Policy email
