@@ -195,6 +195,7 @@
             overflow: hidden;
             position: relative;
             background: var(--page-bg);
+            isolation: isolate; /* Creates stacking context to contain fixed-position modals */
         }
 
         .device-frame.tablet .device-screen {
@@ -2031,7 +2032,7 @@
 
         /* Modal Styles */
         .modal-overlay {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
@@ -3611,7 +3612,7 @@
         /* ==================== WOW FACTOR: CONFETTI ==================== */
 
         #confetti-canvas {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
