@@ -4,7 +4,7 @@
 
 **Client:** Kitsinian Law Firm, APC
 **App Name:** ClaimIt
-**Platform:** iOS (SwiftUI)
+**Platform:** iOS (SwiftUI) + HTML Preview
 **Purpose:** Ethical client acquisition and referral network routing for legal services in California
 
 ### Business Model
@@ -15,58 +15,422 @@
 
 ---
 
-## Practice Areas
+## Project Structure
 
-### In-House (Primary)
-- Personal Injury
-- Premises Liability
-- Property Damage
-- Insurance Bad Faith
-- Lemon Law (secondary)
-
-### Referral Network
-- Family Law
-- Criminal Defense
-- Estate Planning
-- Employment Law
-- Immigration
-- Bankruptcy
-- Business Law
-- Real Estate
-- Medical Malpractice
-- Workers' Compensation
+```
+/kitsinian-legal-app/
+├── CLAUDE.md                    # This knowledge base
+├── README.md                    # Basic project readme
+├── iOS/                         # iOS SwiftUI application
+│   └── KitsinianLegal/
+│       └── KitsinianLegal/
+│           ├── App/             # App entry, theme, navigation
+│           ├── Models/          # Data models
+│           ├── Views/           # SwiftUI views
+│           ├── Services/        # API communication
+│           └── Assets.xcassets/ # Colors, icons, images
+├── backend/                     # Node.js/Express API
+│   ├── package.json
+│   ├── render.yaml              # Render deployment config
+│   └── src/
+│       ├── index.js             # Express server entry
+│       ├── routes/              # API routes
+│       ├── controllers/         # Business logic
+│       ├── services/            # Email, external services
+│       ├── config/              # Database config
+│       └── utils/               # Logger, migrations
+└── preview/                     # HTML design mockups
+    ├── index.html               # CURRENT - Full interactive preview
+    ├── claimit-full.html        # Previous version with articles
+    ├── claimit-interactive.html # Earlier interactive version
+    ├── claimit.html             # ClaimIt rebrand, static
+    ├── old-kitsinian-index.html # Original law firm branded
+    └── accident-mode-concept.html # Future phase 2 concept
+```
 
 ---
 
-## What's Been Built
+## Practice Areas
 
-### iOS App (`/iOS/KitsinianLegal/`)
-Complete SwiftUI application with:
+### In-House (Primary) - Handled Directly
+| Practice Area | ID | Icon | Description |
+|--------------|-----|------|-------------|
+| Personal Injury | `personal-injury` | `bandage.fill` | Car accidents, dog bites, assault |
+| Premises Liability | `premises-liability` | `building.2.fill` | Slip/fall, inadequate security |
+| Property Damage | `property-damage` | `car.fill` | Vehicle damage, total loss claims |
+| Insurance Bad Faith | `insurance-bad-faith` | `shield.slash.fill` | Denied claims, delays, lowballs |
+| Lemon Law | `lemon-law` | `exclamationmark.triangle.fill` | Defective vehicle buybacks |
 
-#### Architecture
-- **Pattern:** MVVM
-- **Min iOS:** 17.0
+### Referral Network - Partner Attorneys
+| Practice Area | ID | Icon |
+|--------------|-----|------|
+| Family Law | `family-law` | `figure.2.and.child.holdinghands` |
+| Criminal Defense | `criminal-defense` | `building.columns.fill` |
+| Estate Planning | `estate-planning` | `doc.text.fill` |
+| Employment Law | `employment-law` | `briefcase.fill` |
+| Immigration | `immigration` | `globe.americas.fill` |
+| Bankruptcy | `bankruptcy` | `chart.line.downtrend.xyaxis` |
+| Business Law | `business-law` | `building.fill` |
+| Real Estate Law | `real-estate-law` | `house.and.flag.fill` |
+| Medical Malpractice | `medical-malpractice` | `cross.case.fill` |
+| Workers' Compensation | `workers-comp` | `hammer.fill` |
+
+---
+
+## HTML Preview (`/preview/index.html`)
+
+### Overview
+- ~7000+ lines comprehensive interactive prototype
+- iPhone and iPad device frames
+- Full responsive design system
+- JavaScript-driven navigation and quiz flow
+
+### Screens
+
+| Screen | ID | Purpose |
+|--------|-----|---------|
+| Home | `screen-home` | Hero, quick actions, practice areas |
+| Claim | `screen-claim` | Quiz flow for case evaluation |
+| Learn | `screen-learn` | Resource library and articles |
+| Account | `screen-account` | User profile, case tracking |
+| Onboarding | `onboarding` | 2-screen welcome flow |
+
+### Navigation Flow
+
+```
+App Launch
+    └── Onboarding (if first time)
+        ├── Screen 1: Welcome, trust badges, value props
+        └── Screen 2: Incident type selection → Claim tab
+    └── Tab Navigation (4 tabs)
+        ├── Home → Practice area detail screens
+        ├── Claim → Quiz flow (5 steps)
+        ├── Learn → Article detail screens
+        └── Account → My Cases, sign in/out
+
+Detail Screens (slide from right):
+├── article-car-accident
+├── article-checklist
+├── article-lemon-law
+├── article-slip-fall
+├── article-insurance
+├── article-deadlines
+├── article-pa-personal-injury
+├── article-pa-premises-liability
+├── article-pa-property-damage
+├── article-pa-insurance-bad-faith
+└── article-pa-lemon-law
+```
+
+### Quiz Flow Logic
+
+**5-Step Adaptive Quiz:**
+
+```
+Step 1: Case Type Selection
+├── car-accident → Step 2: Role (driver, passenger, pedestrian, rideshare, parked)
+├── injury → Step 2: Cause (work, medical, product, dog bite, assault)
+├── slip-fall → Step 2: Location (store, apartment, sidewalk, workplace)
+├── insurance → Step 2: Issue (denied, delayed, lowball, cancelled)
+├── lemon → Step 2: Problem (engine, electrical, safety, recurring)
+├── property → Step 2: Type (vehicle, fire, water, theft)
+└── other → Step 2: Legal help type
+
+Step 2: Dynamic follow-up based on Step 1 selection
+Step 3: Injury timeline (when did it happen)
+Step 4: Contact form (name, phone, email, description)
+Step 5: Success confirmation
+```
+
+**Branching Configuration (`step2Questions` object):**
+- Each case type has custom questions and icons
+- Options map to specific practice areas
+- Referral areas also have custom Step 2 questions
+
+### Form Validation Rules
+
+```javascript
+// Name: minimum 2 characters
+validateInput(input, 'name'): value.length >= 2
+
+// Phone: exactly 10 digits, auto-formats to (xxx) xxx-xxxx
+validateInput(input, 'phone'): phoneDigits.length === 10
+
+// Email: standard email regex
+validateInput(input, 'email'): /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+```
+
+### Case Status Flow
+
+```
+Submitted → Under Review → Qualified → Matched → Retained
+    │            │             │           │          │
+    └── 1 step ──┴── 2 steps ──┴── 3 steps ┴ 4 steps ─┴── 5 steps (complete)
+```
+
+Status badges: `.submitted`, `.under-review`, `.qualified`, `.matched`, `.retained`
+
+### Legal Resources/Articles
+
+| Article | ID | Category | Read Time |
+|---------|-----|----------|-----------|
+| After a Car Accident | `car-accident` | Guide | 10 min |
+| Personal Injury Checklist | `checklist` | Checklist | 5 min |
+| California Lemon Law | `lemon-law` | Guide | 12 min |
+| Slip and Fall Guide | `slip-fall` | Guide | 10 min |
+| Fight Insurance Bad Faith | `insurance` | Know Your Rights | 8 min |
+| California Legal Deadlines | `deadlines` | Timeline | 6 min |
+| Diminished Value Claims | `diminished-value` | Guide | 8 min |
+
+### JavaScript Functions Reference
+
+**Navigation:**
+- `switchTab(tabName)` - Switch between main tabs
+- `showArticle(articleId)` - Open detail/article screen
+- `hideArticle()` - Close detail screen and return
+
+**Quiz:**
+- `goToStep(stepNum)` - Navigate to quiz step
+- `selectCaseType(element, caseType)` - Handle Step 1 selection
+- `selectAndAdvance(element, value, nextStep)` - Handle Step 2+ selections
+- `submitLead()` - Submit contact form
+- `resetQuiz()` - Clear quiz and restart
+- `startQuizWithTopic(topic)` - Start quiz from article CTA
+
+**Onboarding:**
+- `nextOnboarding()` - Go from screen 1 to screen 2
+- `selectOnboardingOption(element, value)` - Select incident type
+- `startQuizFromOnboarding()` - Complete onboarding and start quiz
+- `skipOnboarding()` - Skip directly to home
+
+**Authentication:**
+- `toggleSignIn()` - Show account or sign-in modal
+- `showSignInModal()` / `hideSignInModal()` - Sign-in modal
+- `signIn()` / `signOut()` - Auth actions
+- `updateSignInButton()` - Update status bar button state
+- `updateAccountUI()` - Refresh account screen
+- `renderCases(container)` - Render user's case cards
+
+**Modals:**
+- `showPrivacyModal()` / `hidePrivacyModal()`
+- `showTermsModal()` / `hideTermsModal()`
+- `showLegalDisclaimer()` / `hideDisclaimerModal()`
+- `showReferralInfo(areaName)` / `hideReferralModal()`
+- `startReferralQuiz()` - Begin quiz for referral area
+
+**UI Helpers:**
+- `toggleFaq(element)` - Accordion for FAQ items
+- `formatPhoneNumber(input)` - Auto-format phone
+- `validateInput(input, type)` - Form validation
+- `handleFileUpload(input)` / `removeFile(index, event)` - Doc uploads
+- `showToast(message, type)` - In-app notifications
+- `escapeHtml(text)` - XSS prevention
+
+**Device Toggle:**
+- `toggleDevice(device)` - Switch iPhone/iPad preview
+
+---
+
+## Design System
+
+### Color Palette
+
+```css
+/* Primary Colors */
+--primary: #0066FF;        /* Vibrant blue - main brand */
+--primary-light: #4D94FF;  /* Lighter blue */
+--primary-dark: #0047B3;   /* Darker blue for gradients */
+
+/* Accent Colors */
+--accent: #FF6B35;         /* Orange - CTAs, urgency */
+--accent-light: #FF8F66;   /* Lighter orange */
+
+/* Semantic Colors */
+--success: #00C48C;        /* Green - confirmations, positive */
+--success-light: #00E6A0;
+--warning: #F59E0B;        /* Amber - caution */
+--error: #EF4444;          /* Red - errors */
+--gold: #F59E0B;           /* Gold - "It" in ClaimIt */
+--brand-gold: #FFD700;     /* Bright gold for logo */
+--purple: #8B5CF6;         /* Purple - Know Your Rights */
+--purple-light: #A78BFA;
+
+/* Background Colors */
+--page-bg: #F8FAFC;        /* Light gray page background */
+--card-bg: #FFFFFF;        /* White cards */
+--bg-secondary: #F1F5F9;   /* Secondary background */
+--bg-gradient-start: #0066FF;
+--bg-gradient-end: #00D4FF;
+
+/* Text Colors */
+--text-primary: #111827;   /* Near black - headings */
+--text-secondary: #4B5563; /* Dark gray - body text */
+--text-muted: #9CA3AF;     /* Light gray - captions */
+
+/* Border Colors */
+--border-color: #E5E7EB;   /* Standard borders */
+--border-light: #F3F4F6;   /* Subtle borders */
+
+/* Status Badge Colors */
+--status-submitted-bg: #E5E7EB;
+--status-submitted-text: #4B5563;
+--status-review-bg: #DBEAFE;
+--status-review-text: #1D4ED8;
+--status-qualified-bg: #D1FAE5;
+--status-qualified-text: #059669;
+--status-matched-bg: #FEF3C7;
+--status-matched-text: #D97706;
+--status-retained-bg: #D1FAE5;
+--status-retained-text: #059669;
+```
+
+### Typography Scale
+
+```css
+--font-size-xs: 10px;    /* Disclaimers, badges */
+--font-size-sm: 12px;    /* Labels, meta */
+--font-size-base: 14px;  /* Body text */
+--font-size-md: 16px;    /* Buttons, inputs */
+--font-size-lg: 18px;    /* Section headers */
+--font-size-xl: 20px;    /* Card titles */
+--font-size-2xl: 24px;   /* Page titles */
+--font-size-3xl: 28px;   /* Hero subtitles */
+--font-size-4xl: 34px;   /* Hero titles */
+--font-size-5xl: 42px;   /* Large hero (iPad) */
+
+/* Font weights: 400 (regular), 500 (medium), 600 (semibold), 700 (bold), 800 (extrabold), 900 (black) */
+```
+
+### Spacing Scale
+
+```css
+--space-1: 4px;
+--space-1-5: 6px;
+--space-2: 8px;
+--space-2-5: 10px;
+--space-3: 12px;
+--space-3-5: 14px;
+--space-4: 16px;
+--space-5: 20px;
+--space-6: 24px;
+--space-7: 32px;
+--space-8: 40px;
+--space-10: 48px;
+--space-12: 56px;
+--space-16: 80px;
+```
+
+### Border Radius Scale
+
+```css
+--radius-sm: 4px;      /* Small elements */
+--radius-md: 8px;      /* Inputs, small cards */
+--radius-lg: 12px;     /* Buttons, icons */
+--radius-xl: 16px;     /* Cards, quiz options */
+--radius-2xl: 20px;    /* Large cards */
+--radius-3xl: 24px;    /* Hero cards */
+--radius-full: 9999px; /* Pills, circles */
+```
+
+### Shadows
+
+```css
+--shadow-sm: 0 1px 3px rgba(0,0,0,0.08);    /* Cards, inputs */
+--shadow-md: 0 4px 12px rgba(0,0,0,0.08);   /* Elevated cards */
+--shadow-lg: 0 8px 24px rgba(0,0,0,0.12);   /* Modals, hero */
+```
+
+### Animation Timing
+
+```css
+--ease-out: cubic-bezier(0.16, 1, 0.3, 1);      /* Quick deceleration */
+--ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);    /* Standard easing */
+--duration-fast: 200ms;    /* Hover states */
+--duration-normal: 300ms;  /* Most transitions */
+--duration-slow: 400ms;    /* Screen transitions */
+```
+
+### Component Patterns
+
+**Cards:**
+```css
+.card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+```
+
+**Primary Button (Orange CTA):**
+```css
+.btn-primary {
+    background: linear-gradient(145deg, #FF7B45 0%, var(--accent) 30%, #E85A25 70%, #FF6B35 100%);
+    color: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+    /* Includes shimmer animation and hover lift */
+}
+```
+
+**Gradient Icons:**
+```css
+.icon-container {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    border-radius: 12px;
+}
+/* Accent variant uses --accent to --accent-light */
+/* Success variant uses --success to #00D9A0 */
+```
+
+### iPhone vs iPad Differences
+
+**iPhone (Default):**
+- Bottom tab bar navigation
+- Single column layouts
+- Horizontal scroll for quick actions
+- Device frame: 390x844px, 55px radius
+
+**iPad (`.tablet` class):**
+- Left sidebar navigation (80px wide)
+- 2-3 column grid layouts
+- Larger typography (hero h1: 42px vs 30px)
+- Larger spacing and padding
+- Device frame: 820x1180px, 40px radius
+- Screen container offset by sidebar width
+
+---
+
+## iOS App (`/iOS/KitsinianLegal/`)
+
+### Architecture
+
+- **Pattern:** MVVM (Model-View-ViewModel)
 - **Language:** Swift
+- **Framework:** SwiftUI
+- **Min iOS:** 17.0
+- **No external dependencies** (pure SwiftUI)
 
-#### App Structure
+### File Structure
+
 ```
 KitsinianLegal/
 ├── App/
-│   ├── KitsinianLegalApp.swift    # Entry point (ClaimItApp), AppState
-│   ├── ContentView.swift           # Tab navigation
-│   └── Theme.swift                 # Design system (colors, gradients, components)
+│   ├── KitsinianLegalApp.swift    # Entry point, AppState
+│   ├── ContentView.swift           # Tab/sidebar navigation
+│   └── Theme.swift                 # Design system
 ├── Models/
 │   ├── PracticeArea.swift          # 15 practice areas with FAQs
-│   ├── Lead.swift                  # Lead data model
-│   ├── Quiz.swift                  # Legal triage quiz logic
-│   └── Resource.swift              # 7 legal resources/guides
+│   ├── Lead.swift                  # Lead submission model
+│   ├── Quiz.swift                  # Quiz questions & branching
+│   └── Resource.swift              # 7 legal resource guides
 ├── Views/
 │   ├── Onboarding/
 │   │   └── OnboardingView.swift
 │   ├── HomeView.swift
 │   ├── Quiz/
 │   │   ├── QuizStartView.swift
-│   │   ├── QuizFlowView.swift      # ViewModel with branching logic
+│   │   ├── QuizFlowView.swift      # QuizViewModel
 │   │   └── QuizResultView.swift
 │   ├── PracticeAreas/
 │   │   ├── PracticeAreasListView.swift
@@ -81,98 +445,290 @@ KitsinianLegal/
     └── APIService.swift            # Backend communication
 ```
 
-#### Features
-- Legal triage quiz with smart branching
-- Practice area browser with FAQs
-- Resource library with legal guides
-- Lead capture form
-- Push notification ready
+### Key Models
 
-### Preview Features (HTML - `/preview/index.html`)
-- **Sign-In/Account System**: User authentication with phone/email
-- **My Cases Screen**: Track submitted claims with status badges
-- **Case Status Flow**: Submitted → Under Review → Qualified → Matched → Retained
-- **Attorney Assignment**: Shows assigned attorney info when case is retained
-- **Adaptive Quiz**: Follow-up questions change based on case type selected
-- **4 Tabs**: Home, Claim, Learn, Account (Contact tab removed)
-
-### Backend (`/backend/`)
-Node.js/Express API with PostgreSQL:
-
-```
-backend/
-├── package.json
-├── render.yaml                     # Render deployment config
-└── src/
-    ├── index.js                    # Express server
-    ├── routes/
-    │   ├── leads.js                # Lead CRUD endpoints
-    │   └── health.js
-    ├── controllers/
-    │   └── leadController.js
-    ├── config/
-    │   └── database.js             # PostgreSQL pool
-    ├── services/
-    │   └── emailService.js         # Nodemailer notifications
-    └── utils/
-        ├── logger.js
-        └── migrate.js              # DB schema
+**PracticeArea:**
+```swift
+struct PracticeArea: Identifiable, Codable, Hashable {
+    let id: String
+    let name: String
+    let shortDescription: String
+    let fullDescription: String
+    let icon: String              // SF Symbol name
+    let category: Category        // .inHouse or .referral
+    let commonCauses: [String]
+    let whatWeDo: [String]
+    let faq: [FAQ]
+}
 ```
 
-#### Endpoints
-- `POST /api/leads` - Create new lead
-- `GET /api/leads` - List leads (admin)
-- `GET /api/leads/:id` - Get lead details
-- `PATCH /api/leads/:id` - Update lead status
-- `GET /health` - Health check
+**Lead:**
+```swift
+struct Lead: Identifiable, Codable {
+    var id: UUID
+    var firstName, lastName, email, phone: String
+    var preferredContact: ContactMethod  // .phone, .email, .text
+    var practiceArea: String
+    var practiceAreaCategory: String
+    var incidentDate: Date?
+    var description: String
+    var quizAnswers: [String: String]
+    var urgency: Urgency  // .urgent, .normal, .informational
+    var createdAt: Date
+    var source: String = "ios_app"
+}
+```
 
-### HTML Previews (`/preview/`)
-Browser-based design mockups for iteration:
+**QuizQuestion/QuizOption:**
+```swift
+struct QuizQuestion: Identifiable {
+    let id: String
+    let text: String
+    let subtext: String?
+    let options: [QuizOption]
+    let allowsMultiple: Bool
+    let nextQuestionLogic: ((Set<String>) -> String?)?
+}
 
-| File | Description |
-|------|-------------|
-| `index.html` | **CURRENT** - Full interactive with sign-in, account, adaptive quiz |
-| `claimit-full.html` | Previous version with full article content |
-| `claimit-interactive.html` | Interactive tab navigation |
-| `claimit.html` | ClaimIt rebrand, static tabs |
-| `old-kitsinian-index.html` | Original Kitsinian Law branded (deprecated) |
+struct QuizOption: Identifiable {
+    let id: String
+    let text: String
+    let icon: String?
+    let leadsTo: String?      // Next question ID
+    let resultArea: String?   // Practice area ID for result
+}
+```
 
-**Live Preview:** https://kitsinianlawfirm.github.io/claimit-preview/
+### Theme System (Theme.swift)
+
+**Color Extensions:**
+```swift
+Color.claimPrimary      // #0066FF
+Color.claimPrimaryLight // #4D94FF
+Color.claimPrimaryDark  // #0047B3
+Color.claimAccent       // #FF6B35
+Color.claimAccentLight  // #FF8855
+Color.claimSuccess      // #00C48C
+Color.claimWarning      // #F59E0B
+Color.claimGold         // #F59E0B
+Color.claimBackground   // #F8FAFC
+Color.claimCardBackground // white
+Color.claimBorder       // #E5E7EB
+Color.claimTextPrimary  // #111827
+Color.claimTextSecondary // #4B5563
+Color.claimTextMuted    // #9CA3AF
+```
+
+**Gradient Extensions:**
+```swift
+LinearGradient.claimPrimaryGradient  // Primary blue gradient
+LinearGradient.claimAccentGradient   // Orange accent gradient
+LinearGradient.claimSuccessGradient  // Green success gradient
+LinearGradient.claimHeroGradient     // Vertical hero gradient
+```
+
+**View Modifiers:**
+```swift
+.claimShadowSmall()   // Subtle card shadow
+.claimShadowMedium()  // Standard elevation
+.claimShadowLarge()   // Modal/hero shadow
+.claimCard()          // White card with border and shadow
+```
+
+**Reusable Components:**
+```swift
+ClaimItLogo(size: CGFloat, showText: Bool, textColor: Color)
+GradientIconView(systemName: String, size: CGFloat, iconSize: CGFloat, gradient: LinearGradient)
+TrustBadge(value: String, label: String, compact: Bool)
+ClaimPrimaryButtonStyle(isAccent: Bool)
+ClaimSecondaryButtonStyle()
+```
+
+### iPad Adaptations
+
+`ContentView.swift` detects `horizontalSizeClass`:
+- `.regular` (iPad): Uses `NavigationSplitView` with sidebar
+- `.compact` (iPhone): Uses `TabView` with bottom tabs
+
+Views check `isIPad` for:
+- Grid vs list layouts
+- Larger font sizes
+- Wider max content width (650px)
+- Additional padding
 
 ---
 
-## Design System (ClaimIt)
+## Backend (`/backend/`)
 
-### Brand Identity
-- **Name:** ClaimIt
-- **Tagline:** "Your Claim. Our Fight."
-- **Tone:** Bold, action-oriented, empowering
+### Technology Stack
+- **Runtime:** Node.js 18+
+- **Framework:** Express.js
+- **Database:** PostgreSQL 14+
+- **Security:** Helmet, express-rate-limit
+- **Validation:** express-validator
+- **Email:** Nodemailer
 
-### Color Palette
-```css
---primary: #0066FF;        /* Vibrant blue */
---primary-light: #4D94FF;
---accent: #FF6B35;         /* Orange - CTAs */
---accent-light: #FF8F66;
---success: #00C48C;        /* Green - confirmations */
---bg-gradient-start: #0066FF;
---bg-gradient-end: #00D4FF;
+### API Endpoints
+
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| `GET` | `/` | API info | No |
+| `GET` | `/api/health` | Health check | No |
+| `POST` | `/api/leads` | Submit new lead | No |
+| `GET` | `/api/leads` | List all leads | Yes (admin) |
+| `GET` | `/api/leads/:id` | Get lead by ID | Yes (admin) |
+| `PUT` | `/api/leads/:id` | Update lead | Yes (admin) |
+| `DELETE` | `/api/leads/:id` | Delete lead | Yes (admin) |
+
+### Lead Validation Rules
+
+```javascript
+body('firstName').trim().notEmpty().isLength({ max: 100 })
+body('lastName').trim().notEmpty().isLength({ max: 100 })
+body('email').trim().isEmail().normalizeEmail()
+body('phone').trim().notEmpty().isLength({ min: 10, max: 20 })
+body('preferredContact').optional().isIn(['phone', 'email', 'text'])
+body('practiceArea').optional().trim().isLength({ max: 100 })
+body('urgency').optional().isIn(['urgent', 'normal', 'informational'])
+body('description').optional().trim().isLength({ max: 5000 })
 ```
 
-### UI Features
-- Solid white cards with subtle shadows (no glassmorphism - improves readability)
-- Gradient backgrounds on hero sections
-- Gradient icons (GradientIconView component)
-- Accent-colored CTAs with shadows
-- Card-based layouts with subtle borders
-- Bottom tab navigation
-- ClaimIt logo (shield with lightning bolt)
+### Database Schema
 
-### iOS Theme System (Theme.swift)
-- Color extensions: `.claimPrimary`, `.claimAccent`, `.claimSuccess`, etc.
-- Gradient extensions: `.claimPrimaryGradient`, `.claimAccentGradient`, etc.
-- Shadow modifiers: `.claimShadowSmall()`, `.claimShadowLarge()`
-- Reusable components: `ClaimItLogo`, `GradientIconView`, `TrustBadge`
+```sql
+CREATE TABLE leads (
+    id UUID PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    preferred_contact VARCHAR(20) DEFAULT 'phone',
+    practice_area VARCHAR(100),
+    practice_area_category VARCHAR(50),
+    urgency VARCHAR(20) DEFAULT 'normal',
+    description TEXT,
+    quiz_answers JSONB DEFAULT '{}',
+    source VARCHAR(50) DEFAULT 'ios_app',
+    status VARCHAR(50) DEFAULT 'new',
+    notes TEXT,
+    assigned_to VARCHAR(100),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Indexes
+CREATE INDEX idx_leads_status ON leads(status);
+CREATE INDEX idx_leads_practice_area ON leads(practice_area);
+CREATE INDEX idx_leads_created_at ON leads(created_at DESC);
+CREATE INDEX idx_leads_urgency ON leads(urgency);
+```
+
+### Environment Variables
+
+```bash
+DATABASE_URL=postgresql://...
+EMAIL_HOST=smtp.example.com
+EMAIL_PORT=587
+EMAIL_USER=notifications@example.com
+EMAIL_PASS=secret
+NOTIFICATION_EMAIL=intake@kitsinianlawfirm.com
+ALLOWED_ORIGINS=https://app.claimit.com
+PORT=3000
+NODE_ENV=production
+```
+
+### Deployment (Render)
+
+```yaml
+# render.yaml
+services:
+  - type: web
+    name: kitsinian-legal-api
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+```
+
+---
+
+## Business Logic
+
+### Lead Capture Flow
+
+```
+1. User encounters CTA (home hero, article, practice area)
+2. Enters quiz flow (adaptive branching based on case type)
+3. Answers 3-4 screening questions
+4. Provides contact information
+5. Lead submitted to backend
+6. Email notification sent to firm
+7. User account auto-created
+8. Case appears in "My Cases" with status tracking
+```
+
+### Quiz Branching Logic
+
+**Entry Points:**
+- Home screen "Start My Free Claim Review" button
+- Onboarding screen 2 (incident type selection)
+- Article CTAs via `startQuizWithTopic(topic)`
+- Practice area detail CTAs
+- Referral modal via `startReferralQuiz()`
+
+**Routing Logic (iOS Quiz.swift):**
+```swift
+// Each option either:
+// 1. leadsTo: String → next question ID
+// 2. resultArea: String → end quiz with practice area result
+```
+
+### Practice Area Categorization
+
+**In-House Handling Criteria:**
+- Personal injury cases with clear liability
+- Premises liability with identifiable property owner
+- Insurance disputes (first-party or third-party)
+- Lemon law qualifying vehicles
+- Property damage claims
+
+**Referral Routing:**
+- Family law → Family law specialists
+- Criminal defense → Criminal defense attorneys
+- Employment → Employment law firms
+- Immigration → Immigration attorneys
+- Business/Real Estate → Transactional attorneys
+- Medical Malpractice → Med-mal specialists (requires experts)
+- Workers' Comp → Workers' comp specialists
+
+---
+
+## Compliance & Legal Features
+
+### Disclaimers
+
+- **Success Rate:** "Results vary by case" asterisk
+- **No Fee Unless We Win:** Clarifies attorney fees vs. case costs
+- **Attorney Advertising:** State bar compliant notice
+- **No Attorney-Client Relationship:** Using app ≠ representation
+
+### CCPA Compliance
+
+- Privacy Policy modal with CCPA rights
+- "Do Not Sell My Info" link in footer
+- Data access/deletion request info
+
+### Accessibility (WCAG 2.1)
+
+- Semantic HTML (`<nav>`, `<main>`, ARIA roles)
+- ARIA labels on all interactive elements
+- `aria-selected` on tab navigation
+- `visually-hidden` class for screen reader text
+- `prefers-reduced-motion` CSS support
+- Minimum 44px touch targets
+- Focus-visible outlines
+- High contrast mode support
 
 ---
 
@@ -181,226 +737,42 @@ Browser-based design mockups for iteration:
 ### Completed
 - [x] Full iOS app architecture and code
 - [x] Backend API with PostgreSQL
-- [x] HTML preview system for design iteration
+- [x] HTML preview system with iPhone/iPad toggle
 - [x] ClaimIt branding and design system
-- [x] Interactive prototype with full article content
-- [x] Legal triage quiz flow
-- [x] 15 practice areas with content
-- [x] 5 legal resource guides with full content
-- [x] Lead capture form
-- [x] **iOS Swift code updated to ClaimIt design** (Feb 2025)
-  - Theme.swift: Complete design system with colors, gradients, shadows
-  - All views updated to use `.claimPrimary`, `.claimAccent`, etc.
-  - GradientIconView replacing raw SF Symbols
-  - Solid white cards with borders (replaced glassmorphism)
-  - 2-screen onboarding with incident type selection
-  - Modern card-based UI throughout
-- [x] **Sign-In & Account Feature** (Feb 2025)
-  - Sign-in button in status bar
-  - Sign-in modal with phone/email
-  - Account tab replacing Contact tab
-  - My Cases screen with status tracking
-  - Auto-account creation on form submission
-- [x] **Adaptive Quiz System** (Feb 2025)
-  - Dynamic Step 2 questions based on case type
-  - Car accident: role (driver, passenger, pedestrian, rideshare)
-  - Injury: cause (work, medical, product, dog bite, assault)
-  - Slip/fall: location (store, apartment, sidewalk, workplace)
-  - Insurance: issue (denied, delayed, lowball, cancelled)
-  - Lemon: problem (engine, electrical, safety, recurring)
-  - Property: type (vehicle, fire, water, theft)
-  - Streamlined to 4 questions + contact form
-- [x] **Compliance & Legal Disclaimers** (Feb 2025)
-  - Privacy Policy modal with CCPA rights
-  - Terms of Service modal
-  - Legal Disclaimers modal (success rate, no fee explanation)
-  - "Do Not Sell My Info" CCPA link
-  - Legal footer on home screen
-  - Disclaimers on statistics ("98% Success" - *Results vary)
-  - "No Fee Unless We Win" clarification with asterisk
-  - Form disclaimer with links to Terms/Privacy
-- [x] **Accessibility Improvements** (Feb 2025)
-  - Semantic nav element for tab bar
-  - ARIA labels on all form inputs
-  - aria-selected on tab navigation
-  - visually-hidden labels for screen readers
-  - prefers-reduced-motion CSS support
-  - Minimum 44px touch targets
-- [x] **UI/Branding Refinements** (Feb 2025)
-  - ClaimIt logo (shield + text) added to Home, Learn, Account screens
-  - Gold "It" text for brand consistency
-  - Centered hero logo alignment
-  - Native in-app referral modal (replaces browser confirm dialog)
-  - Referral network directs users to questionnaire flow
+- [x] Legal triage quiz with adaptive branching
+- [x] 15 practice areas with FAQs
+- [x] 7 legal resource guides with full content
+- [x] Lead capture form with validation
+- [x] Sign-in/account system (preview)
+- [x] My Cases tracking with status badges
+- [x] Compliance features (Privacy, Terms, Disclaimers)
+- [x] Accessibility improvements
 
 ### Pending
-- [ ] User to install Xcode for iOS development
-- [ ] User to create Apple Developer account
+- [ ] Install Xcode for iOS development
+- [ ] Create Apple Developer account
 - [ ] Deploy backend to Render
 - [ ] Create app icon (1024x1024)
-- [ ] Replace placeholder phone numbers/emails with real ones
-- [ ] Update Privacy Policy email to real address
+- [ ] Replace placeholder phone/email
+- [ ] Update Privacy Policy email
 - [ ] App Store submission
-- [ ] Port iOS Swift code to match HTML preview compliance features
+- [ ] Port compliance features to iOS Swift code
 
 ---
 
 ## Future Development: Accident Mode (Phase 2)
 
-**Concept:** Post-crash guidance and real-time evidence collection feature.
+Post-crash guidance and evidence collection feature:
 
-**Mockup:** `/preview/accident-mode-concept.html`
+1. **Safety Check** - 911 button, "I'm Safe" proceed
+2. **Photo Documentation** - Guided camera for 7 photo types
+3. **Voice Recording** - Verbal account with transcription
+4. **Auto-Captured Data** - GPS, timestamp, weather
+5. **Critical Reminders** - Don't admit fault, etc.
+6. **Witness Information** - Name/phone collection
+7. **Review & Submit** - E-signature retainer
 
-### Feature Overview
-
-When a user is in an accident, they can activate "Accident Mode" which guides them through:
-
-1. **Safety Check**
-   - Prominent 911 call button
-   - "I'm Safe" button to proceed to documentation
-
-2. **Photo Documentation** (Guided camera flow)
-   - Your vehicle damage
-   - Other vehicle damage
-   - Accident scene (wide shot)
-   - Street signs / intersection
-   - Other driver's license (OCR extraction)
-   - Other driver's insurance card (OCR extraction)
-   - License plate
-
-3. **Voice Recording**
-   - Record verbal account while memory is fresh
-   - Voice-to-text transcription for case file
-   - Prompts: "Where were you going? What happened right before?"
-
-4. **Auto-Captured Data**
-   - GPS location (automatic)
-   - Timestamp (automatic)
-   - Weather conditions (via API)
-
-5. **Critical Reminders**
-   - "DO NOT say 'I'm sorry' or admit fault"
-   - "DO NOT give recorded statements to their insurance"
-   - "DO get the police report number"
-
-6. **Witness Information**
-   - Name and phone number collection
-   - Optional voice recording of witness statement
-
-7. **Review & Submit**
-   - Summary of all collected evidence
-   - Photo count, recording duration, documents scanned
-   - **Digital Retainer Signature** (e-signature legally valid in CA)
-   - Case submitted immediately to firm
-
-### Technical Requirements
-
-| Component | Technology |
-|-----------|------------|
-| Camera | AVFoundation (iOS) |
-| OCR | Vision framework for text extraction |
-| Voice Recording | AVAudioRecorder + Speech framework for transcription |
-| GPS | CoreLocation |
-| Weather | OpenWeatherMap API or WeatherKit |
-| E-Signature | Custom SignatureView with touch capture |
-| Offline Support | Core Data for local storage, sync when online |
-
-### Entry Points
-
-1. **Emergency Button** - Prominent "I Was In An Accident" button on home screen
-2. **Push Notification** - If integrated with Apple/Google crash detection APIs (future)
-3. **Widget** - iOS home screen widget for quick access
-
-### Legal Considerations
-
-- E-signatures are valid for retainer agreements in California
-- Digital signature includes timestamp and device info
-- All evidence timestamped and geotagged for authenticity
-- Recording disclaimer shown before voice capture
-
-### Competitive Advantage
-
-- No other legal app offers guided post-accident documentation
-- Evidence collected minutes after accident = stronger cases
-- Friction-free client acquisition at moment of highest intent
-- Professional evidence package vs. random phone photos
-
-### Not Building (Intentionally)
-
-- **Automatic crash detection** - Apple/Google do this at OS level, can't compete
-- Focus on post-crash workflow, not crash detection
-
----
-
-## Design Iteration History
-
-1. **v1 (old-kitsinian-index.html):** Kitsinian Law branded, conservative design
-2. **v2 (claimit.html):** Rebranded to ClaimIt, vibrant colors, animations
-3. **v3 (claimit-interactive.html):** Added tab interactivity
-4. **v4 (claimit-full.html):** Full article content, interactive checklists
-5. **v5 (iOS update):** Full iOS SwiftUI code updated to match ClaimIt design
-6. **v6 (index.html):** Sign-in/account system, My Cases tracking
-7. **v7 (index.html):** Adaptive quiz with case-type-specific questions
-8. **v8 (index.html):** Compliance fixes, branding refinements, native modals
-7. **v7 (index.html):** Adaptive quiz with case-type-specific questions
-
-### User Feedback Applied
-- Remove law firm branding → made general/consumer-facing
-- "Looks boring" → vibrant blue/orange, gradient accents
-- Emojis look amateur → custom gradient icons (GradientIconView)
-- Text hard to read on transparent → solid white cards with borders
-- Action-oriented name → "ClaimIt"
-- Interactive tabs needed → JavaScript tab switching
-- Show guide content → Full article detail views
-- 2-screen onboarding with incident selection
-- Remove direct contact options → users work through quiz flow
-- Quiz too generic → adaptive questions based on case type
-- Need case tracking → My Cases with status badges and attorney info
-
----
-
-## Technical Notes
-
-### iOS Requirements
-- Xcode 15+ required
-- iOS 17.0 minimum deployment target
-- No external dependencies (pure SwiftUI)
-
-### Backend Requirements
-- Node.js 18+
-- PostgreSQL 14+
-- Environment variables needed:
-  - `DATABASE_URL`
-  - `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USER`, `EMAIL_PASS`
-  - `NOTIFICATION_EMAIL`
-
-### Deployment
-- Backend: Render (config in `render.yaml`)
-- iOS: App Store (requires Apple Developer account)
-
----
-
-## File Locations
-
-| Asset | Path |
-|-------|------|
-| iOS App | `/iOS/KitsinianLegal/` |
-| Backend | `/backend/` |
-| Previews | `/preview/` |
-| Current Preview | `/preview/index.html` |
-| Live Preview | https://kitsinianlawfirm.github.io/claimit-preview/ |
-
----
-
-## Next Steps (Recommended Order)
-
-1. **Install Xcode** - Required for iOS development (download from Mac App Store)
-2. **Test on Simulator** - Run app in Xcode iOS Simulator
-3. **Replace phone numbers** - Update placeholder `+1YOURNUMBER` with real contact
-4. **Create app icon** - 1024x1024 ClaimIt logo for App Store
-5. **Deploy backend** - Push to Render
-6. **Create developer account** - Apple Developer Program ($99/year)
-7. **App Store submission** - TestFlight beta, then production
+Mockup: `/preview/accident-mode-concept.html`
 
 ---
 
@@ -418,6 +790,10 @@ cd /Users/hkitsinian/kitsinian-legal-app/backend
 npm install
 npm run dev
 
+# Run database migrations
+cd /Users/hkitsinian/kitsinian-legal-app/backend
+node src/utils/migrate.js
+
 # Open iOS project (requires Xcode)
 open /Users/hkitsinian/kitsinian-legal-app/iOS/KitsinianLegal/KitsinianLegal.xcodeproj
 ```
@@ -430,7 +806,8 @@ open /Users/hkitsinian/kitsinian-legal-app/iOS/KitsinianLegal/KitsinianLegal.xco
 |------|-----|
 | Main App | https://github.com/Kitsinianlawfirm/kitsinian-legal-app |
 | Preview (GitHub Pages) | https://github.com/Kitsinianlawfirm/claimit-preview |
+| Live Preview | https://kitsinianlawfirm.github.io/claimit-preview/ |
 
 ---
 
-*Last Updated: February 2, 2025*
+*Last Updated: February 3, 2025*
