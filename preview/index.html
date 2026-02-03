@@ -4984,7 +4984,7 @@
 
                     <h3>California Privacy Rights (CCPA)</h3>
                     <p>California residents may: know what data we collect, request deletion, opt-out of data sales (we don't sell), and exercise rights without discrimination.</p>
-                    <p>Contact: privacy@kitsinian.com | (213) 555-0100</p>
+                    <p>Contact: privacy@claimit.com</p>
 
                     <button class="legal-modal-close" onclick="hidePrivacyModal()">Close</button>
                 </div>
@@ -5011,7 +5011,7 @@
                     <h3>Eligibility</h3>
                     <p>You must be 18+ to use this application.</p>
 
-                    <p>Contact: legal@kitsinian.com | (213) 555-0100</p>
+                    <p>Contact: legal@claimit.com</p>
 
                     <button class="legal-modal-close" onclick="hideTermsModal()">Close</button>
                 </div>
@@ -5712,7 +5712,7 @@
                                 <p>Your Attorney</p>
                             </div>
                             <div class="attorney-contact">
-                                <button class="attorney-contact-btn" onclick="alert('Calling ${caseItem.attorney.phone}')">
+                                <button class="attorney-contact-btn" onclick="showToast('Calling ${caseItem.attorney.phone}...', 'success')">
                                     <svg style="width: 16px; height: 16px;"><use href="#icon-phone"/></svg>
                                 </button>
                             </div>
