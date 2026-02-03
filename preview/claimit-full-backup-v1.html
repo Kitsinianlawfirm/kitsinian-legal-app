@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClaimIt - Full Interactive Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066FF;
+            --primary-light: #4D94FF;
+            --primary-dark: #0052CC;
+            --accent: #FF6B35;
+            --accent-light: #FF8F66;
+            --success: #00C48C;
+            --bg-gradient-start: #0066FF;
+            --bg-gradient-end: #00D4FF;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-primary: #1A1A2E;
+            --text-secondary: #6B7280;
+            --shadow-color: rgba(0, 102, 255, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .instructions {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .instructions span {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin: 0 4px;
+        }
+
+        /* iPhone Frame */
+        .iphone {
+            width: 390px;
+            height: 844px;
+            background: #1a1a1a;
+            border-radius: 55px;
+            padding: 14px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.4), inset 0 0 0 2px #333;
+        }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 42px;
+            overflow: hidden;
+            position: relative;
+            background: #F0F7FF;
+        }
+
+        .dynamic-island {
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 20px;
+            position: absolute;
+            top: 11px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+
+        .status-bar {
+            height: 54px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0 28px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+        }
+
+        .status-bar.light { color: white; }
+        .status-bar.dark { color: #1a1a1a; }
+
+        /* Screen Container */
+        .screen-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            overflow-y: auto;
+            padding-top: 54px;
+            padding-bottom: 90px;
+            background: #F0F7FF;
+        }
+
+        .screen.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+
+        .screen.slide-left {
+            transform: translateX(-30%);
+        }
+
+        .screen::-webkit-scrollbar { display: none; }
+
+        /* Detail Screen (slides from right) */
+        .detail-screen {
+            z-index: 60;
+            padding-bottom: 40px;
+        }
+
+        /* Tab Bar */
+        .tab-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.5);
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding-top: 12px;
+            z-index: 100;
+        }
+
+        .tab-bar.hidden { display: none; }
+
+        .tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-secondary);
+            font-size: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover, .tab.active { color: var(--primary); }
+
+        .tab-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            transition: transform 0.3s ease;
+        }
+
+        .tab.active .tab-icon { transform: scale(1.15); }
+
+        /* Back Button */
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .back-btn:hover { opacity: 0.8; }
+
+        /* Detail Header */
+        .detail-header {
+            padding: 0 20px 20px;
+        }
+
+        .detail-category {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 16px;
+            margin-bottom: 12px;
+        }
+
+        .detail-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .detail-meta {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Article Content */
+        .article-content {
+            padding: 0 20px;
+        }
+
+        .article-content h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 24px 0 12px;
+            padding-top: 16px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        .article-content h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 20px 0 10px;
+        }
+
+        .article-content p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        .article-content li {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .article-content .tip-box {
+            background: linear-gradient(135deg, rgba(0,196,140,0.1) 0%, rgba(0,230,160,0.1) 100%);
+            border-left: 4px solid var(--success);
+            padding: 16px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .article-content .tip-box p {
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .article-content .warning-box {
+            background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(255,143,102,0.1) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 16px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .article-content .warning-box p {
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .article-content .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .article-content .checklist-item .check {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .article-content .checklist-item .check.checked {
+            background: var(--primary);
+            color: white;
+        }
+
+        .article-content .checklist-item span {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        /* CTA at bottom of article */
+        .article-cta {
+            margin: 30px 20px;
+            padding: 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .article-cta h3 {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .article-cta p {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .article-cta button {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .article-cta button:hover {
+            transform: scale(1.05);
+        }
+
+        /* ==================== HOME SCREEN ==================== */
+        .home-screen {
+            background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 45%, #F0F7FF 45%);
+        }
+
+        .hero {
+            padding: 20px 20px 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+            line-height: 1.2;
+        }
+
+        .hero p { font-size: 16px; opacity: 0.9; margin-bottom: 20px; }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 14px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+        }
+
+        .stat { text-align: center; }
+        .stat-value { font-size: 22px; font-weight: 800; color: white; }
+        .stat-label { font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 2px; }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px var(--shadow-color);
+            margin: -20px 16px 16px;
+            padding: 20px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4); }
+            50% { box-shadow: 0 8px 32px rgba(255, 107, 53, 0.6); }
+        }
+
+        .pulse { animation: pulse 2s ease-in-out infinite; }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 20px 12px;
+        }
+
+        .section-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+        .section-link { font-size: 14px; font-weight: 600; color: var(--primary); cursor: pointer; }
+
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            padding: 0 20px 20px;
+            overflow-x: auto;
+        }
+
+        .quick-action {
+            min-width: 100px;
+            padding: 16px;
+            background: white;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .quick-action:hover { transform: translateY(-4px); }
+
+        .quick-action-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .quick-action h4 { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+        .quick-action p { font-size: 11px; color: var(--text-secondary); }
+
+        .practice-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: white;
+            margin: 0 16px 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .practice-card:hover { transform: translateX(4px); }
+
+        .practice-icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--bg-gradient-end) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+
+        .practice-info { flex: 1; }
+        .practice-info h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-primary {
+            font-size: 9px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--success) 0%, #00E6A0 100%);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .practice-info p { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+        .chevron { color: var(--primary); font-size: 18px; font-weight: 600; }
+
+        .referral-scroll {
+            display: flex;
+            gap: 12px;
+            padding: 0 20px 20px;
+            overflow-x: auto;
+        }
+
+        .referral-card {
+            min-width: 130px;
+            padding: 20px 16px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .referral-card:hover { transform: translateY(-4px); }
+
+        .referral-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8F66 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .referral-card h4 { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+
+        /* ==================== LEARN SCREEN ==================== */
+        .learn-screen { background: #F0F7FF; }
+
+        .learn-header { padding: 20px 20px 0; }
+        .learn-header h1 { font-size: 34px; font-weight: 800; color: var(--text-primary); }
+        .learn-header p { font-size: 15px; color: var(--text-secondary); margin-top: 4px; }
+
+        .category-scroll {
+            display: flex;
+            gap: 8px;
+            padding: 16px 20px;
+            overflow-x: auto;
+        }
+
+        .category-chip {
+            padding: 10px 18px;
+            background: white;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            color: var(--text-secondary);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-chip:hover { border-color: var(--primary); }
+
+        .category-chip.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+        }
+
+        .resource-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: white;
+            margin: 0 16px 12px;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .resource-card:hover { transform: translateX(4px); }
+
+        .resource-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .resource-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .resource-meta { font-size: 12px; color: var(--text-secondary); }
+        .resource-meta span { color: var(--primary); font-weight: 600; }
+
+        /* ==================== CONTACT SCREEN ==================== */
+        .contact-screen { background: #F0F7FF; }
+
+        .contact-header {
+            text-align: center;
+            padding: 30px 20px 20px;
+        }
+
+        .contact-header h1 { font-size: 32px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; }
+        .contact-header p { font-size: 15px; color: var(--text-secondary); }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px;
+            background: white;
+            margin: 0 16px 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-card:hover { transform: scale(1.02); }
+
+        .contact-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+
+        .contact-icon.blue { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); }
+        .contact-icon.green { background: linear-gradient(135deg, #00C48C 0%, #00E6A0 100%); }
+        .contact-icon.orange { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); }
+
+        .contact-info { flex: 1; }
+        .contact-info h4 { font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+        .contact-info p { font-size: 13px; color: var(--text-secondary); }
+
+        .contact-action {
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .contact-action.blue { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); }
+        .contact-action.green { background: linear-gradient(135deg, #00C48C 0%, #00E6A0 100%); }
+        .contact-action.orange { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); }
+
+        .office-card {
+            background: white;
+            margin: 20px 16px;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+        }
+
+        .office-card h3 { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 20px; }
+
+        .office-row {
+            display: flex;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid #F0F4F8;
+        }
+
+        .office-row:last-child { border-bottom: none; }
+        .office-row-icon { font-size: 24px; }
+        .office-row h4 { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+        .office-row p { font-size: 13px; color: var(--text-secondary); }
+
+        /* ==================== CLAIM SCREEN ==================== */
+        .claim-screen { background: #F0F7FF; }
+
+        .progress-container { padding: 16px 20px 0; }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(0, 102, 255, 0.15);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--bg-gradient-end) 100%);
+            border-radius: 3px;
+            width: 33%;
+            transition: width 0.5s ease;
+        }
+
+        .question-container { padding: 24px 20px; }
+
+        .question-text {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .question-subtext {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-option:hover {
+            transform: translateX(6px);
+            border-color: var(--primary);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(0,102,255,0.1) 0%, rgba(0,212,255,0.1) 100%);
+        }
+
+        .quiz-option-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .quiz-option span { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+
+        .spacer { height: 30px; }
+
+        /* Quiz Step Visibility */
+        .quiz-step {
+            display: none;
+        }
+
+        .quiz-step.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .quiz-back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .quiz-back-btn:hover { opacity: 0.7; }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 18px;
+            border: 2px solid #E5E7EB;
+            border-radius: 14px;
+            font-size: 16px;
+            font-family: inherit;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 16px 18px;
+            border: 2px solid #E5E7EB;
+            border-radius: 14px;
+            font-size: 16px;
+            font-family: inherit;
+            background: white;
+            min-height: 100px;
+            resize: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, var(--success) 0%, #00E6A0 100%);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 196, 140, 0.4);
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 196, 140, 0.5);
+        }
+
+        .form-disclaimer {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 16px;
+            line-height: 1.5;
+        }
+
+        /* Success Styles */
+        .success-container {
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounceIn 0.6s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .success-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin: 24px 0;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            text-align: left;
+        }
+
+        .success-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .success-step {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid #F0F4F8;
+        }
+
+        .success-step:last-child {
+            border-bottom: none;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .success-step span:last-child {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 16px 24px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 14px;
+            color: var(--primary);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 ClaimIt</h1>
+        <p>Get What You Deserve</p>
+    </div>
+
+    <div class="instructions">
+        <span>👆 Tap tabs</span> to navigate • <span>📖 Tap guides</span> to read content
+    </div>
+
+    <div class="iphone">
+        <div class="iphone-screen">
+            <div class="dynamic-island"></div>
+            <div class="status-bar light" id="status-bar">
+                <span>9:41</span>
+                <span>📶 📡 🔋</span>
+            </div>
+
+            <div class="screen-container">
+                <!-- HOME SCREEN -->
+                <div class="screen home-screen active" id="screen-home">
+                    <div class="hero">
+                        <div class="hero-badge">⚡ Free Case Evaluation</div>
+                        <h1>Get What You<br>Deserve</h1>
+                        <p>Find out if you have a case in 2 minutes</p>
+                        <div class="stats-row">
+                            <div class="stat"><div class="stat-value">$50M+</div><div class="stat-label">Recovered</div></div>
+                            <div class="stat"><div class="stat-value">5000+</div><div class="stat-label">Cases</div></div>
+                            <div class="stat"><div class="stat-value">98%</div><div class="stat-label">Success</div></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <button class="btn-primary pulse" onclick="switchTab('claim')">
+                            <span style="font-size: 20px;">⚡</span> Start My Free Claim Review
+                        </button>
+                    </div>
+
+                    <div class="section-header">
+                        <span class="section-title">Quick Actions</span>
+                    </div>
+                    <div class="quick-actions">
+                        <div class="quick-action" onclick="switchTab('contact')"><div class="quick-action-icon">📞</div><h4>Call Now</h4><p>Talk to us</p></div>
+                        <div class="quick-action"><div class="quick-action-icon">💬</div><h4>Live Chat</h4><p>Instant help</p></div>
+                        <div class="quick-action" onclick="switchTab('learn')"><div class="quick-action-icon">📚</div><h4>Guides</h4><p>Free resources</p></div>
+                        <div class="quick-action"><div class="quick-action-icon">📍</div><h4>Track Case</h4><p>Status updates</p></div>
+                    </div>
+
+                    <div class="section-header">
+                        <span class="section-title">We Fight For</span>
+                        <span class="section-link">See All →</span>
+                    </div>
+
+                    <div class="practice-card"><div class="practice-icon">🩹</div><div class="practice-info"><h4>Personal Injury <span class="badge-primary">Top</span></h4><p>Accidents, negligence, pain & suffering</p></div><span class="chevron">›</span></div>
+                    <div class="practice-card"><div class="practice-icon">🏢</div><div class="practice-info"><h4>Premises Liability</h4><p>Slip & fall, unsafe properties</p></div><span class="chevron">›</span></div>
+                    <div class="practice-card"><div class="practice-icon">🚗</div><div class="practice-info"><h4>Property Damage</h4><p>Vehicle damage, total loss claims</p></div><span class="chevron">›</span></div>
+                    <div class="practice-card"><div class="practice-icon">🛡️</div><div class="practice-info"><h4>Insurance Bad Faith</h4><p>Denied claims, lowball offers</p></div><span class="chevron">›</span></div>
+                    <div class="practice-card"><div class="practice-icon">🍋</div><div class="practice-info"><h4>Lemon Law</h4><p>Defective vehicles, buybacks</p></div><span class="chevron">›</span></div>
+
+                    <div class="section-header">
+                        <span class="section-title">Referral Network</span>
+                        <span class="section-link">See All →</span>
+                    </div>
+
+                    <div class="referral-scroll">
+                        <div class="referral-card"><div class="referral-icon">👨‍👩‍👧</div><h4>Family Law</h4></div>
+                        <div class="referral-card"><div class="referral-icon">⚖️</div><h4>Criminal</h4></div>
+                        <div class="referral-card"><div class="referral-icon">💼</div><h4>Employment</h4></div>
+                        <div class="referral-card"><div class="referral-icon">🏠</div><h4>Real Estate</h4></div>
+                    </div>
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- CLAIM SCREEN -->
+                <div class="screen claim-screen" id="screen-claim">
+                    <div class="progress-container"><div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div></div>
+
+                    <!-- Step 1: What happened -->
+                    <div class="quiz-step active" id="quiz-step-1">
+                        <div class="question-container">
+                            <div class="question-text">What happened to you?</div>
+                            <div class="question-subtext">Select the option that best describes your situation</div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'car-accident', 2)"><div class="quiz-option-icon">🚗</div><span>Car or vehicle accident</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'injury', 2)"><div class="quiz-option-icon">🤕</div><span>I was injured</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'slip-fall', 2)"><div class="quiz-option-icon">⬇️</div><span>Slip, trip, or fall</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'insurance', 2)"><div class="quiz-option-icon">🛡️</div><span>Insurance dispute</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'lemon', 2)"><div class="quiz-option-icon">🚙</div><span>Defective vehicle (Lemon)</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'property', 2)"><div class="quiz-option-icon">💔</div><span>Property was damaged</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'other', 2)"><div class="quiz-option-icon">❓</div><span>Something else</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: When did it happen -->
+                    <div class="quiz-step" id="quiz-step-2">
+                        <div class="question-container">
+                            <button class="quiz-back-btn" onclick="goToStep(1)">← Back</button>
+                            <div class="question-text">When did this happen?</div>
+                            <div class="question-subtext">This helps us understand your timeline</div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'recent', 3)"><div class="quiz-option-icon">📅</div><span>Within the last week</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, '1month', 3)"><div class="quiz-option-icon">📆</div><span>Within the last month</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, '6months', 3)"><div class="quiz-option-icon">🗓️</div><span>1-6 months ago</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, '1year', 3)"><div class="quiz-option-icon">📋</div><span>6-12 months ago</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'over1year', 3)"><div class="quiz-option-icon">⏳</div><span>Over a year ago</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Were you injured -->
+                    <div class="quiz-step" id="quiz-step-3">
+                        <div class="question-container">
+                            <button class="quiz-back-btn" onclick="goToStep(2)">← Back</button>
+                            <div class="question-text">Were you injured?</div>
+                            <div class="question-subtext">Even minor injuries may be compensable</div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'yes-serious', 4)"><div class="quiz-option-icon">🏥</div><span>Yes, serious injuries</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'yes-minor', 4)"><div class="quiz-option-icon">🩹</div><span>Yes, minor injuries</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'unsure', 4)"><div class="quiz-option-icon">🤔</div><span>I'm not sure yet</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'no-injury', 4)"><div class="quiz-option-icon">✋</div><span>No injuries, just property damage</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Have you spoken to insurance -->
+                    <div class="quiz-step" id="quiz-step-4">
+                        <div class="question-container">
+                            <button class="quiz-back-btn" onclick="goToStep(3)">← Back</button>
+                            <div class="question-text">Have you talked to an insurance company?</div>
+                            <div class="question-subtext">This helps us understand your case status</div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'no-contact', 5)"><div class="quiz-option-icon">📵</div><span>No, not yet</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'filed-claim', 5)"><div class="quiz-option-icon">📝</div><span>Yes, I filed a claim</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'denied', 5)"><div class="quiz-option-icon">❌</div><span>Yes, and they denied me</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'lowball', 5)"><div class="quiz-option-icon">💸</div><span>Yes, but their offer is too low</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Contact Form -->
+                    <div class="quiz-step" id="quiz-step-5">
+                        <div class="question-container">
+                            <button class="quiz-back-btn" onclick="goToStep(4)">← Back</button>
+                            <div class="question-text">Almost done!</div>
+                            <div class="question-subtext">Enter your info for a free case evaluation</div>
+
+                            <div class="form-group">
+                                <input type="text" id="lead-name" placeholder="Your Full Name" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" id="lead-phone" placeholder="Phone Number" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="lead-email" placeholder="Email Address" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <textarea id="lead-description" placeholder="Briefly describe what happened..." class="form-textarea"></textarea>
+                            </div>
+
+                            <button class="btn-submit" onclick="submitLead()">
+                                <span style="font-size: 20px;">🚀</span> Get My Free Evaluation
+                            </button>
+
+                            <p class="form-disclaimer">By submitting, you agree to be contacted about your case. Free consultation, no obligation.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 6: Success -->
+                    <div class="quiz-step" id="quiz-step-6">
+                        <div class="question-container success-container">
+                            <div class="success-icon">✅</div>
+                            <div class="question-text">We Got Your Info!</div>
+                            <div class="question-subtext">A member of our team will contact you within 1 hour during business hours.</div>
+
+                            <div class="success-card">
+                                <h4>What happens next?</h4>
+                                <div class="success-step"><span class="step-number">1</span><span>We'll review your case details</span></div>
+                                <div class="success-step"><span class="step-number">2</span><span>An attorney will call you</span></div>
+                                <div class="success-step"><span class="step-number">3</span><span>Get your free case evaluation</span></div>
+                            </div>
+
+                            <button class="btn-secondary" onclick="resetQuiz()">
+                                Start Over
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- LEARN SCREEN -->
+                <div class="screen learn-screen" id="screen-learn">
+                    <div class="learn-header"><h1>Learn</h1><p>Know your rights. Win your case.</p></div>
+                    <div class="category-scroll">
+                        <div class="category-chip active">🔥 Popular</div>
+                        <div class="category-chip">📖 Guides</div>
+                        <div class="category-chip">✅ Checklists</div>
+                        <div class="category-chip">⏰ Deadlines</div>
+                    </div>
+
+                    <div class="resource-card" onclick="showArticle('car-accident')">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, #00C48C 0%, #00E6A0 100%);">🚗</div>
+                        <div class="resource-info"><h4>After a Car Accident: Step-by-Step</h4><div class="resource-meta"><span>Guide</span> • 8 min</div></div>
+                    </div>
+
+                    <div class="resource-card" onclick="showArticle('checklist')">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">✅</div>
+                        <div class="resource-info"><h4>Injury Claim Checklist</h4><div class="resource-meta"><span>Checklist</span> • 5 min</div></div>
+                    </div>
+
+                    <div class="resource-card" onclick="showArticle('lemon-law')">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);">🍋</div>
+                        <div class="resource-info"><h4>California Lemon Law Guide</h4><div class="resource-meta"><span>Guide</span> • 12 min</div></div>
+                    </div>
+
+                    <div class="resource-card" onclick="showArticle('insurance')">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, #9333EA 0%, #A855F7 100%);">🛡️</div>
+                        <div class="resource-info"><h4>Fight Insurance Bad Faith</h4><div class="resource-meta"><span>Know Your Rights</span> • 8 min</div></div>
+                    </div>
+
+                    <div class="resource-card" onclick="showArticle('deadlines')">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);">⏰</div>
+                        <div class="resource-info"><h4>Don't Miss These Deadlines</h4><div class="resource-meta"><span>Timeline</span> • 6 min</div></div>
+                    </div>
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- CONTACT SCREEN -->
+                <div class="screen contact-screen" id="screen-contact">
+                    <div class="contact-header"><h1>Let's Talk</h1><p>Get your free consultation today</p></div>
+                    <div class="contact-card"><div class="contact-icon blue">📞</div><div class="contact-info"><h4>Call Us Now</h4><p>Speak with our team directly</p></div><div class="contact-action blue">Call</div></div>
+                    <div class="contact-card"><div class="contact-icon green">💬</div><div class="contact-info"><h4>Live Chat</h4><p>Instant responses, 24/7</p></div><div class="contact-action green">Chat</div></div>
+                    <div class="contact-card"><div class="contact-icon orange">📝</div><div class="contact-info"><h4>Request Callback</h4><p>We'll call you back in 1 hour</p></div><div class="contact-action orange">Request</div></div>
+                    <div class="office-card">
+                        <h3>📍 Office</h3>
+                        <div class="office-row"><div class="office-row-icon">🏢</div><div><h4>Los Angeles, California</h4><p>Serving all of Southern California</p></div></div>
+                        <div class="office-row"><div class="office-row-icon">🕐</div><div><h4>Available 24/7</h4><p>For urgent matters anytime</p></div></div>
+                        <div class="office-row"><div class="office-row-icon">⚡</div><div><h4>Response Time</h4><p>Usually within 1 hour</p></div></div>
+                    </div>
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- ARTICLE: Car Accident -->
+                <div class="screen detail-screen" id="article-car-accident">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category">📖 Guide</div>
+                        <h1 class="detail-title">What to Do After a Car Accident</h1>
+                        <div class="detail-meta">8 min read • Updated Jan 2024</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Being in a car accident is stressful and overwhelming. Knowing what to do can protect your health, your rights, and your potential claim.</p>
+
+                        <h2>At the Scene</h2>
+
+                        <h3>1. Check for Injuries</h3>
+                        <p>Check yourself and passengers for injuries. Call 911 if anyone is hurt. Don't move seriously injured people unless there's immediate danger.</p>
+
+                        <h3>2. Move to Safety</h3>
+                        <p>If possible, move vehicles out of traffic. Turn on hazard lights. Set up flares or triangles if you have them.</p>
+
+                        <h3>3. Call the Police</h3>
+                        <p>Always get a police report, even for minor accidents. The report documents the scene and may assign fault. Get the report number before officers leave.</p>
+
+                        <div class="tip-box">
+                            <p><strong>💡 Pro Tip:</strong> Always get a police report, even if the other driver asks you not to. It's crucial evidence for your claim.</p>
+                        </div>
+
+                        <h3>4. Exchange Information</h3>
+                        <p>Collect from all drivers:</p>
+                        <ul>
+                            <li>Name, address, phone number</li>
+                            <li>Driver's license number</li>
+                            <li>Insurance company and policy number</li>
+                            <li>License plate number</li>
+                            <li>Vehicle make, model, color</li>
+                        </ul>
+
+                        <h3>5. Document Everything</h3>
+                        <p>Take photos of all vehicles, damage, and the scene. Photograph skid marks, traffic signs, and road conditions. Get contact info for witnesses.</p>
+
+                        <div class="warning-box">
+                            <p><strong>⚠️ Important:</strong> Don't say "I'm sorry" or admit fault. Stick to facts when talking to police.</p>
+                        </div>
+
+                        <h2>After Leaving the Scene</h2>
+
+                        <h3>6. Seek Medical Attention</h3>
+                        <p>See a doctor within 24-48 hours, even if you feel fine. Some injuries don't show symptoms immediately. Medical records link your injuries to the accident.</p>
+
+                        <h3>7. Notify Your Insurance</h3>
+                        <p>Report the accident promptly. Stick to facts; don't speculate about fault. Don't give recorded statements without legal advice.</p>
+
+                        <h2>Important Deadlines</h2>
+                        <ul>
+                            <li><strong>Police Report:</strong> Get a copy within a few weeks</li>
+                            <li><strong>Insurance Claim:</strong> File promptly per your policy</li>
+                            <li><strong>Lawsuit Deadline:</strong> 2 years from accident date in California</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Were you in an accident?</h3>
+                        <p>Get a free case evaluation in 2 minutes</p>
+                        <button onclick="switchTab('claim'); hideArticle();">Start My Claim Review</button>
+                    </div>
+                </div>
+
+                <!-- ARTICLE: Checklist -->
+                <div class="screen detail-screen" id="article-checklist">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">✅ Checklist</div>
+                        <h1 class="detail-title">Personal Injury Claim Checklist</h1>
+                        <div class="detail-meta">5 min read • Interactive checklist</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Use this checklist to gather everything you need for your claim. Tap items to mark them complete.</p>
+
+                        <h2>Immediate Documentation</h2>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Photos of your injuries</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Photos of the accident scene</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Photos of property damage</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Witness names and contact info</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Police report number</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Other party's insurance info</span></div>
+
+                        <h2>Medical Records</h2>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Emergency room records</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Doctor visit notes</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Physical therapy records</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Prescription records</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Medical imaging (X-rays, MRIs)</span></div>
+
+                        <h2>Financial Documentation</h2>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>All medical bills</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Pay stubs (before and after)</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Lost income calculations</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Out-of-pocket expense receipts</span></div>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Have your documents ready?</h3>
+                        <p>Let us review your case for free</p>
+                        <button onclick="switchTab('claim'); hideArticle();">Start My Claim Review</button>
+                    </div>
+                </div>
+
+                <!-- ARTICLE: Lemon Law -->
+                <div class="screen detail-screen" id="article-lemon-law">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);">🍋 Guide</div>
+                        <h1 class="detail-title">California Lemon Law Guide</h1>
+                        <div class="detail-meta">12 min read • Complete guide</div>
+                    </div>
+                    <div class="article-content">
+                        <p>California has some of the strongest lemon laws in the country. If you're stuck with a defective vehicle, you have rights.</p>
+
+                        <h2>What Qualifies as a "Lemon"?</h2>
+                        <p>Your vehicle may qualify if:</p>
+
+                        <h3>Repair Attempts</h3>
+                        <ul>
+                            <li><strong>2 or more attempts</strong> to fix a safety defect, OR</li>
+                            <li><strong>4 or more attempts</strong> to fix any substantial defect, OR</li>
+                            <li>Vehicle has been <strong>in the shop 30+ days</strong> total</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <p><strong>💡 Good News:</strong> Under California law, the manufacturer pays your attorney fees if you win. There's no cost to you!</p>
+                        </div>
+
+                        <h2>What Vehicles Are Covered?</h2>
+                        <ul>
+                            <li>✅ New cars, trucks, and SUVs</li>
+                            <li>✅ Used vehicles still under manufacturer's warranty</li>
+                            <li>✅ Leased vehicles</li>
+                            <li>✅ Demonstrator vehicles</li>
+                        </ul>
+
+                        <h2>What Can You Get?</h2>
+
+                        <h3>Refund ("Buyback")</h3>
+                        <ul>
+                            <li>Full purchase price</li>
+                            <li>Down payment</li>
+                            <li>Monthly payments made</li>
+                            <li>Registration and taxes</li>
+                            <li>Incidental costs (towing, rentals)</li>
+                        </ul>
+
+                        <h3>Replacement</h3>
+                        <p>A new vehicle of the same make and model that's acceptable to you.</p>
+
+                        <div class="warning-box">
+                            <p><strong>⏰ Time Limit:</strong> Generally 4 years from when you first noticed the defect. Don't wait!</p>
+                        </div>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Stuck with a lemon?</h3>
+                        <p>Find out if you qualify for a buyback</p>
+                        <button onclick="switchTab('claim'); hideArticle();">Check My Vehicle</button>
+                    </div>
+                </div>
+
+                <!-- ARTICLE: Insurance -->
+                <div class="screen detail-screen" id="article-insurance">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, #9333EA 0%, #A855F7 100%);">✊ Know Your Rights</div>
+                        <h1 class="detail-title">Fight Insurance Bad Faith</h1>
+                        <div class="detail-meta">8 min read • Know your rights</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Insurance companies are businesses focused on profits. Know your rights to level the playing field.</p>
+
+                        <h2>California Insurance Deadlines</h2>
+                        <p>Insurers MUST follow these timelines:</p>
+                        <ul>
+                            <li><strong>15 days</strong> - Acknowledge your claim</li>
+                            <li><strong>Immediately</strong> - Begin investigation</li>
+                            <li><strong>40 days</strong> - Accept or deny after proof submitted</li>
+                            <li><strong>30 days</strong> - Pay undisputed amounts after settlement</li>
+                        </ul>
+
+                        <h2>Signs of Bad Faith</h2>
+                        <p>Your insurer may be acting in bad faith if they:</p>
+                        <ul>
+                            <li>🚩 Deny claim without explanation</li>
+                            <li>🚩 Unreasonably delay processing</li>
+                            <li>🚩 Offer far less than claim is worth</li>
+                            <li>🚩 Misrepresent policy terms</li>
+                            <li>🚩 Fail to conduct proper investigation</li>
+                            <li>🚩 Refuse to communicate</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <p><strong>⚠️ Don't Accept the First Offer:</strong> Insurance companies often lowball initial offers. You don't have to accept.</p>
+                        </div>
+
+                        <h2>What You Can Recover</h2>
+                        <p>Bad faith claims can recover:</p>
+                        <ul>
+                            <li>Original claim amount</li>
+                            <li>Consequential damages</li>
+                            <li>Emotional distress</li>
+                            <li>Attorney fees</li>
+                            <li>Punitive damages (in egregious cases)</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Insurance treating you unfairly?</h3>
+                        <p>Find out if you have a bad faith claim</p>
+                        <button onclick="switchTab('claim'); hideArticle();">Review My Claim</button>
+                    </div>
+                </div>
+
+                <!-- ARTICLE: Deadlines -->
+                <div class="screen detail-screen" id="article-deadlines">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);">⏰ Timeline</div>
+                        <h1 class="detail-title">California Legal Deadlines</h1>
+                        <div class="detail-meta">6 min read • Critical info</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Missing a deadline can mean losing your right to legal action. Know these critical timeframes.</p>
+
+                        <div class="warning-box">
+                            <p><strong>⚠️ Warning:</strong> These are general guidelines. Some cases have shorter deadlines. Consult an attorney immediately if you're unsure.</p>
+                        </div>
+
+                        <h2>Personal Injury Claims</h2>
+                        <ul>
+                            <li><strong>Personal injury (general):</strong> 2 years from injury</li>
+                            <li><strong>Medical malpractice:</strong> 3 years from injury OR 1 year from discovery</li>
+                            <li><strong>Against government:</strong> 6 months to file claim</li>
+                            <li><strong>Minors:</strong> Until 2 years after turning 18</li>
+                        </ul>
+
+                        <h2>Property Damage</h2>
+                        <ul>
+                            <li><strong>Property damage from accident:</strong> 3 years</li>
+                            <li><strong>Against government:</strong> 6 months claim + 2 years lawsuit</li>
+                        </ul>
+
+                        <h2>Employment Claims</h2>
+                        <ul>
+                            <li><strong>Discrimination (DFEH):</strong> 3 years to file complaint</li>
+                            <li><strong>Wage claims:</strong> 3-4 years depending on type</li>
+                            <li><strong>Wrongful termination:</strong> 2-3 years depending on basis</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <p><strong>💡 Don't Wait:</strong> Even if you have time, evidence disappears, witnesses forget, and records get lost. Cases are stronger when fresh.</p>
+                        </div>
+
+                        <h2>Government Claims</h2>
+                        <p>Claims against cities, counties, or state require:</p>
+                        <ol>
+                            <li>Filing administrative claim within <strong>6 months</strong></li>
+                            <li>Waiting for response (45 days)</li>
+                            <li>Then filing lawsuit</li>
+                        </ol>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Don't miss your deadline</h3>
+                        <p>Get a free case evaluation today</p>
+                        <button onclick="switchTab('claim'); hideArticle();">Check My Deadline</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Bar -->
+            <div class="tab-bar" id="tab-bar">
+                <div class="tab active" id="tab-home" onclick="switchTab('home')"><div class="tab-icon">🏠</div>Home</div>
+                <div class="tab" id="tab-claim" onclick="switchTab('claim')"><div class="tab-icon">⚡</div>Claim</div>
+                <div class="tab" id="tab-learn" onclick="switchTab('learn')"><div class="tab-icon">📚</div>Learn</div>
+                <div class="tab" id="tab-contact" onclick="switchTab('contact')"><div class="tab-icon">💬</div>Contact</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentScreen = 'home';
+        let articleOpen = false;
+        let currentQuizStep = 1;
+        let quizAnswers = {};
+
+        const progressSteps = {
+            1: 16,
+            2: 33,
+            3: 50,
+            4: 67,
+            5: 85,
+            6: 100
+        };
+
+        function switchTab(tabName) {
+            if (articleOpen) return;
+
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.screen:not(.detail-screen)').forEach(s => s.classList.remove('active'));
+
+            document.getElementById('tab-' + tabName).classList.add('active');
+            document.getElementById('screen-' + tabName).classList.add('active');
+
+            const statusBar = document.getElementById('status-bar');
+            statusBar.className = tabName === 'home' ? 'status-bar light' : 'status-bar dark';
+
+            document.getElementById('screen-' + tabName).scrollTop = 0;
+            currentScreen = tabName;
+        }
+
+        function showArticle(articleId) {
+            document.getElementById('screen-' + currentScreen).classList.add('slide-left');
+            const article = document.getElementById('article-' + articleId);
+            article.classList.add('active');
+            article.scrollTop = 0;
+            document.getElementById('tab-bar').classList.add('hidden');
+            document.getElementById('status-bar').className = 'status-bar dark';
+            articleOpen = true;
+        }
+
+        function hideArticle() {
+            document.querySelectorAll('.detail-screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-' + currentScreen).classList.remove('slide-left');
+            document.getElementById('tab-bar').classList.remove('hidden');
+            const statusBar = document.getElementById('status-bar');
+            statusBar.className = currentScreen === 'home' ? 'status-bar light' : 'status-bar dark';
+            articleOpen = false;
+        }
+
+        function goToStep(stepNum) {
+            document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('quiz-step-' + stepNum).classList.add('active');
+            document.getElementById('progress-fill').style.width = progressSteps[stepNum] + '%';
+            currentQuizStep = stepNum;
+            document.getElementById('screen-claim').scrollTop = 0;
+        }
+
+        function selectAndAdvance(element, value, nextStep) {
+            // Highlight selected option briefly
+            const parentStep = element.closest('.quiz-step');
+            parentStep.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+            element.classList.add('selected');
+
+            // Store answer
+            quizAnswers['step' + currentQuizStep] = value;
+
+            // Advance after short delay
+            setTimeout(() => {
+                goToStep(nextStep);
+            }, 200);
+        }
+
+        function submitLead() {
+            const name = document.getElementById('lead-name').value;
+            const phone = document.getElementById('lead-phone').value;
+            const email = document.getElementById('lead-email').value;
+            const description = document.getElementById('lead-description').value;
+
+            // Simple validation
+            if (!name || !phone) {
+                alert('Please enter your name and phone number');
+                return;
+            }
+
+            // Store lead info
+            quizAnswers.name = name;
+            quizAnswers.phone = phone;
+            quizAnswers.email = email;
+            quizAnswers.description = description;
+
+            console.log('Lead submitted:', quizAnswers);
+
+            // Go to success step
+            goToStep(6);
+        }
+
+        function resetQuiz() {
+            quizAnswers = {};
+            currentQuizStep = 1;
+
+            // Clear form fields
+            document.getElementById('lead-name').value = '';
+            document.getElementById('lead-phone').value = '';
+            document.getElementById('lead-email').value = '';
+            document.getElementById('lead-description').value = '';
+
+            // Clear selections
+            document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+
+            // Go back to step 1
+            goToStep(1);
+        }
+
+        function toggleCheck(element) {
+            element.querySelector('.check').classList.toggle('checked');
+        }
+
+        document.querySelectorAll('.category-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

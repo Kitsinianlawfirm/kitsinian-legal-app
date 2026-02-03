@@ -1,6 +1,6 @@
 //
 //  ResourceLibraryView.swift
-//  KitsinianLegal
+//  ClaimIt
 //
 
 import SwiftUI
@@ -28,7 +28,7 @@ struct ResourceLibraryView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {
                     // Category Filter
                     categoryFilter
@@ -43,8 +43,8 @@ struct ResourceLibraryView: View {
                 }
                 .padding(.bottom, 32)
             }
-            .background(Color("Background"))
-            .navigationTitle("Resources")
+            .background(Color.claimBackground)
+            .navigationTitle("Learn")
             .navigationBarTitleDisplayMode(.large)
             .searchable(text: $searchText, prompt: "Search resources")
         }
@@ -53,7 +53,7 @@ struct ResourceLibraryView: View {
     // MARK: - Category Filter
     private var categoryFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
+            HStack(spacing: 10) {
                 CategoryChip(
                     title: "All",
                     isSelected: selectedCategory == nil,
@@ -69,48 +69,50 @@ struct ResourceLibraryView: View {
                     )
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 16)
         }
     }
 
     // MARK: - Featured Section
     private var featuredSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 14) {
             Text("Featured")
-                .font(.headline)
-                .padding(.horizontal)
+                .font(.system(size: 17, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
+                .padding(.horizontal, 20)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 16) {
+                HStack(spacing: 12) {
                     ForEach(LegalResource.featuredResources) { resource in
                         NavigationLink(destination: ResourceDetailView(resource: resource)) {
                             FeaturedResourceCard(resource: resource)
                         }
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 16)
             }
         }
     }
 
     // MARK: - Resources Section
     private var resourcesSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 14) {
             Text(selectedCategory?.displayName ?? "All Resources")
-                .font(.headline)
-                .padding(.horizontal)
+                .font(.system(size: 17, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
+                .padding(.horizontal, 20)
 
             if filteredResources.isEmpty {
                 emptyState
             } else {
-                VStack(spacing: 12) {
+                VStack(spacing: 10) {
                     ForEach(filteredResources) { resource in
                         NavigationLink(destination: ResourceDetailView(resource: resource)) {
                             ResourceListCard(resource: resource)
                         }
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 16)
             }
         }
     }
@@ -118,17 +120,20 @@ struct ResourceLibraryView: View {
     // MARK: - Empty State
     private var emptyState: some View {
         VStack(spacing: 16) {
-            Image(systemName: "magnifyingglass")
-                .font(.system(size: 48))
-                .foregroundColor(.secondary)
+            GradientIconView(
+                systemName: "magnifyingglass",
+                size: 72,
+                iconSize: 32,
+                gradient: LinearGradient(colors: [.claimTextMuted, .claimTextSecondary], startPoint: .topLeading, endPoint: .bottomTrailing)
+            )
 
             Text("No resources found")
-                .font(.headline)
-                .foregroundColor(.secondary)
+                .font(.system(size: 17, weight: .bold))
+                .foregroundColor(.claimTextSecondary)
 
             Text("Try adjusting your search or filters")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+                .font(.system(size: 14))
+                .foregroundColor(.claimTextMuted)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 60)
@@ -147,21 +152,21 @@ struct CategoryChip: View {
             HStack(spacing: 6) {
                 if let icon = icon {
                     Image(systemName: icon)
-                        .font(.caption)
+                        .font(.system(size: 12, weight: .semibold))
                 }
                 Text(title)
-                    .font(.subheadline)
-                    .fontWeight(isSelected ? .semibold : .regular)
+                    .font(.system(size: 14, weight: isSelected ? .bold : .medium))
             }
-            .foregroundColor(isSelected ? .white : .primary)
+            .foregroundColor(isSelected ? .white : .claimTextPrimary)
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
-            .background(isSelected ? Color("Primary") : Color.white)
+            .background(isSelected ? LinearGradient.claimPrimaryGradient : LinearGradient(colors: [.white, .white], startPoint: .leading, endPoint: .trailing))
             .cornerRadius(20)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(isSelected ? Color.clear : Color.gray.opacity(0.2), lineWidth: 1)
+                    .stroke(isSelected ? Color.clear : Color.claimBorder, lineWidth: 1)
             )
+            .claimShadowSmall()
         }
         .buttonStyle(.plain)
     }
@@ -174,44 +179,55 @@ struct FeaturedResourceCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Image(systemName: resource.icon)
-                    .font(.title2)
-                    .foregroundColor(Color("Primary"))
+                GradientIconView(
+                    systemName: resource.icon,
+                    size: 44,
+                    iconSize: 20,
+                    gradient: resource.gradient
+                )
 
                 Spacer()
 
-                Text("\(resource.readTime) min")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                HStack(spacing: 4) {
+                    Image(systemName: "clock")
+                        .font(.system(size: 10))
+                    Text("\(resource.readTime) min")
+                        .font(.system(size: 11, weight: .medium))
+                }
+                .foregroundColor(.claimTextMuted)
             }
 
             Text(resource.title)
-                .font(.headline)
-                .foregroundColor(.primary)
+                .font(.system(size: 15, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
+                .multilineTextAlignment(.leading)
 
             Text(resource.summary)
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .font(.system(size: 12))
+                .foregroundColor(.claimTextSecondary)
                 .lineLimit(2)
 
             Spacer()
 
             Text(resource.category.displayName)
-                .font(.caption2)
-                .fontWeight(.semibold)
-                .foregroundColor(Color("Primary"))
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
-                .background(Color("Primary").opacity(0.1))
-                .cornerRadius(4)
+                .font(.system(size: 11, weight: .bold))
+                .foregroundColor(.claimPrimary)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(Color.claimPrimary.opacity(0.1))
+                .cornerRadius(6)
         }
-        .frame(width: 200, height: 180)
-        .padding()
+        .frame(width: 200, height: 190)
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 }
 
@@ -220,46 +236,45 @@ struct ResourceListCard: View {
     let resource: LegalResource
 
     var body: some View {
-        HStack(spacing: 16) {
-            Image(systemName: resource.icon)
-                .font(.title2)
-                .foregroundColor(Color("Primary"))
-                .frame(width: 50, height: 50)
-                .background(Color("Primary").opacity(0.1))
-                .cornerRadius(12)
+        HStack(spacing: 14) {
+            GradientIconView(
+                systemName: resource.icon,
+                size: 50,
+                iconSize: 22,
+                gradient: resource.gradient
+            )
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text(resource.title)
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.primary)
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
                     .lineLimit(2)
 
-                HStack {
+                HStack(spacing: 8) {
                     Text(resource.category.displayName)
-                        .font(.caption)
-                        .foregroundColor(Color("Primary"))
-
-                    Text("•")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.claimPrimary)
 
                     Text("\(resource.readTime) min read")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .font(.system(size: 12))
+                        .foregroundColor(.claimTextMuted)
                 }
             }
 
             Spacer()
 
             Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundColor(.claimTextMuted)
         }
-        .padding()
+        .padding(14)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.03), radius: 5, y: 2)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 }
 

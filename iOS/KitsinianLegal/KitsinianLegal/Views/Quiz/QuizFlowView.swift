@@ -1,42 +1,69 @@
 //
 //  QuizFlowView.swift
-//  KitsinianLegal
+//  ClaimIt
 //
 
 import SwiftUI
 
 struct QuizFlowView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var appState: AppState
     @StateObject private var viewModel = QuizViewModel()
     @State private var showingResult = false
 
     var body: some View {
         VStack(spacing: 0) {
             // Progress Bar
-            ProgressView(value: viewModel.progress)
-                .tint(Color("Primary"))
-                .padding(.horizontal)
-                .padding(.top, 8)
+            VStack(spacing: 8) {
+                HStack {
+                    Text("Step \(viewModel.questionHistory.count + 1)")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(.claimPrimary)
+
+                    Spacer()
+
+                    Text("\(Int(viewModel.progress * 100))%")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(.claimTextMuted)
+                }
+
+                GeometryReader { geometry in
+                    ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color.claimBorder)
+                            .frame(height: 8)
+
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(LinearGradient.claimPrimaryGradient)
+                            .frame(width: geometry.size.width * viewModel.progress, height: 8)
+                    }
+                }
+                .frame(height: 8)
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 16)
+            .padding(.bottom, 20)
 
             if viewModel.isComplete {
                 QuizResultView(result: viewModel.result)
             } else if let currentQuestion = viewModel.currentQuestion {
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 24) {
                         // Question
-                        VStack(alignment: .leading, spacing: 8) {
+                        VStack(alignment: .leading, spacing: 10) {
                             Text(currentQuestion.text)
-                                .font(.title2)
-                                .fontWeight(.semibold)
+                                .font(.system(size: 24, weight: .heavy))
+                                .foregroundColor(.claimTextPrimary)
+                                .lineSpacing(2)
 
                             if let subtext = currentQuestion.subtext {
                                 Text(subtext)
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
+                                    .font(.system(size: 15, weight: .medium))
+                                    .foregroundColor(.claimTextSecondary)
+                                    .lineSpacing(4)
                             }
                         }
-                        .padding(.top, 24)
-                        .padding(.horizontal)
+                        .padding(.horizontal, 20)
 
                         // Options
                         VStack(spacing: 12) {
@@ -49,14 +76,15 @@ struct QuizFlowView: View {
                                 }
                             }
                         }
-                        .padding(.horizontal)
+                        .padding(.horizontal, 16)
 
                         Spacer(minLength: 100)
                     }
+                    .padding(.top, 8)
                 }
             }
         }
-        .background(Color("Background"))
+        .background(Color.claimBackground)
         .navigationTitle("Case Evaluation")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(viewModel.questionHistory.count > 0)
@@ -68,10 +96,20 @@ struct QuizFlowView: View {
                     }) {
                         HStack(spacing: 4) {
                             Image(systemName: "chevron.left")
+                                .font(.system(size: 14, weight: .semibold))
                             Text("Back")
+                                .font(.system(size: 16, weight: .medium))
                         }
+                        .foregroundColor(.claimPrimary)
                     }
                 }
+            }
+        }
+        .onAppear {
+            // If coming from onboarding with pre-selected incident
+            if let incidentType = appState.selectedIncidentType {
+                viewModel.setIncidentType(incidentType)
+                appState.selectedIncidentType = nil
             }
         }
     }
@@ -85,33 +123,41 @@ struct QuizOptionButton: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 16) {
+            HStack(spacing: 14) {
                 if let icon = option.icon {
-                    Image(systemName: icon)
-                        .font(.title2)
-                        .foregroundColor(isSelected ? .white : Color("Primary"))
-                        .frame(width: 44, height: 44)
-                        .background(isSelected ? Color("Primary") : Color("Primary").opacity(0.1))
-                        .cornerRadius(10)
+                    GradientIconView(
+                        systemName: icon,
+                        size: 48,
+                        iconSize: 22,
+                        gradient: isSelected ? LinearGradient.claimAccentGradient : LinearGradient.claimPrimaryGradient
+                    )
                 }
 
                 Text(option.text)
-                    .font(.body)
-                    .fontWeight(.medium)
-                    .foregroundColor(isSelected ? .white : .primary)
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundColor(.claimTextPrimary)
                     .multilineTextAlignment(.leading)
 
                 Spacer()
 
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(.white)
+                        .font(.system(size: 24))
+                        .foregroundColor(.claimAccent)
+                } else {
+                    Circle()
+                        .stroke(Color.claimBorder, lineWidth: 2)
+                        .frame(width: 24, height: 24)
                 }
             }
-            .padding()
-            .background(isSelected ? Color("Primary") : Color.white)
-            .cornerRadius(12)
-            .shadow(color: .black.opacity(0.05), radius: 5, y: 2)
+            .padding(16)
+            .background(isSelected ? Color(hex: "FFF5F0") : Color.white)
+            .cornerRadius(16)
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(isSelected ? Color.claimAccent : Color.claimBorder, lineWidth: isSelected ? 2 : 1)
+            )
+            .claimShadowSmall()
         }
         .buttonStyle(.plain)
     }
@@ -133,6 +179,26 @@ class QuizViewModel: ObservableObject {
     var progress: Double {
         let totalQuestions = 4.0  // Average path length
         return min(Double(questionHistory.count + 1) / totalQuestions, 1.0)
+    }
+
+    func setIncidentType(_ incidentType: String) {
+        // Map incident type to appropriate question flow
+        switch incidentType {
+        case "car-accident":
+            currentQuestionId = "car_accident_details"
+        case "injury":
+            currentQuestionId = "injury_details"
+        case "slip-fall":
+            currentQuestionId = "premises_details"
+        case "insurance":
+            currentQuestionId = "insurance_details"
+        case "lemon":
+            currentQuestionId = "lemon_details"
+        case "property":
+            currentQuestionId = "property_details"
+        default:
+            currentQuestionId = "main_category"
+        }
     }
 
     func selectOption(_ option: QuizOption) {
@@ -214,5 +280,6 @@ class QuizViewModel: ObservableObject {
 #Preview {
     NavigationStack {
         QuizFlowView()
+            .environmentObject(AppState())
     }
 }

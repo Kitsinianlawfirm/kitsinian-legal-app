@@ -1,6 +1,6 @@
 //
 //  PracticeAreasListView.swift
-//  KitsinianLegal
+//  ClaimIt
 //
 
 import SwiftUI
@@ -21,13 +21,13 @@ struct PracticeAreasListView: View {
 
     var title: String {
         if let category = category {
-            return category == .inHouse ? "What We Handle" : "Referral Network"
+            return category == .inHouse ? "We Fight For" : "Referral Network"
         }
         return "Practice Areas"
     }
 
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(spacing: 24) {
                 // Header description
                 headerSection
@@ -44,7 +44,7 @@ struct PracticeAreasListView: View {
             }
             .padding(.bottom, 32)
         }
-        .background(Color("Background"))
+        .background(Color.claimBackground)
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.large)
     }
@@ -54,125 +54,140 @@ struct PracticeAreasListView: View {
         VStack(alignment: .leading, spacing: 12) {
             if category == .inHouse {
                 Text("We handle these cases directly with no upfront fees. You only pay if we win.")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineSpacing(4)
             } else if category == .referral {
                 Text("For cases outside our focus, we connect you with trusted California attorneys who specialize in these areas.")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineSpacing(4)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal)
+        .padding(.horizontal, 20)
         .padding(.top, 8)
     }
 
     // MARK: - Areas List
     private var areasListSection: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 10) {
             ForEach(areas) { area in
                 NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
-                    PracticeAreaCard(practiceArea: area)
+                    PracticeAreaListCard(practiceArea: area)
                 }
             }
         }
-        .padding(.horizontal)
+        .padding(.horizontal, 16)
     }
 
     // MARK: - In-House Section
     private var inHouseSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Image(systemName: "checkmark.shield.fill")
-                    .foregroundColor(Color("Primary"))
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(spacing: 10) {
+                GradientIconView(
+                    systemName: "checkmark.shield.fill",
+                    size: 36,
+                    iconSize: 16,
+                    gradient: LinearGradient.claimPrimaryGradient
+                )
                 Text("We Handle Directly")
-                    .font(.headline)
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 20)
 
-            VStack(spacing: 12) {
+            VStack(spacing: 10) {
                 ForEach(PracticeArea.inHouseAreas) { area in
                     NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
-                        PracticeAreaCard(practiceArea: area)
+                        PracticeAreaListCard(practiceArea: area)
                     }
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 16)
         }
     }
 
     // MARK: - Referral Section
     private var referralSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Image(systemName: "person.2.fill")
-                    .foregroundColor(Color("Secondary"))
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(spacing: 10) {
+                GradientIconView(
+                    systemName: "person.2.fill",
+                    size: 36,
+                    iconSize: 16,
+                    gradient: LinearGradient.claimAccentGradient
+                )
                 Text("Trusted Referral Network")
-                    .font(.headline)
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 20)
 
-            VStack(spacing: 12) {
+            VStack(spacing: 10) {
                 ForEach(PracticeArea.referralAreas) { area in
                     NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
-                        PracticeAreaCard(practiceArea: area)
+                        PracticeAreaListCard(practiceArea: area)
                     }
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 16)
         }
     }
 }
 
-// MARK: - Practice Area Card
-struct PracticeAreaCard: View {
+// MARK: - Practice Area List Card
+struct PracticeAreaListCard: View {
     let practiceArea: PracticeArea
 
     var body: some View {
-        HStack(spacing: 16) {
-            Image(systemName: practiceArea.icon)
-                .font(.title2)
-                .foregroundColor(practiceArea.category == .inHouse ? Color("Primary") : Color("Secondary"))
-                .frame(width: 50, height: 50)
-                .background(
-                    (practiceArea.category == .inHouse ? Color("Primary") : Color("Secondary")).opacity(0.1)
-                )
-                .cornerRadius(12)
+        HStack(spacing: 14) {
+            GradientIconView(
+                systemName: practiceArea.icon,
+                size: 50,
+                iconSize: 22,
+                gradient: practiceArea.category == .inHouse
+                    ? LinearGradient.claimPrimaryGradient
+                    : LinearGradient.claimAccentGradient
+            )
 
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
+            VStack(alignment: .leading, spacing: 5) {
+                HStack(spacing: 8) {
                     Text(practiceArea.name)
-                        .font(.headline)
-                        .foregroundColor(.primary)
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundColor(.claimTextPrimary)
 
                     if practiceArea.category == .inHouse {
                         Text("We Handle")
-                            .font(.caption2)
-                            .fontWeight(.semibold)
+                            .font(.system(size: 9, weight: .bold))
                             .foregroundColor(.white)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
-                            .background(Color("Primary"))
-                            .cornerRadius(4)
+                            .background(LinearGradient.claimSuccessGradient)
+                            .cornerRadius(5)
                     }
                 }
 
                 Text(practiceArea.shortDescription)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .font(.system(size: 13))
+                    .foregroundColor(.claimTextSecondary)
                     .lineLimit(2)
             }
 
             Spacer()
 
             Image(systemName: "chevron.right")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundColor(.claimTextMuted)
         }
-        .padding()
+        .padding(14)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 8, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 }
 

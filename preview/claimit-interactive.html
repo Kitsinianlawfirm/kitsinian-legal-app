@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClaimIt - Interactive Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066FF;
+            --primary-light: #4D94FF;
+            --primary-dark: #0052CC;
+            --accent: #FF6B35;
+            --accent-light: #FF8F66;
+            --success: #00C48C;
+            --bg-gradient-start: #0066FF;
+            --bg-gradient-end: #00D4FF;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-primary: #1A1A2E;
+            --text-secondary: #6B7280;
+            --shadow-color: rgba(0, 102, 255, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .instructions {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .instructions span {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin: 0 4px;
+        }
+
+        /* iPhone Frame */
+        .iphone {
+            width: 390px;
+            height: 844px;
+            background: #1a1a1a;
+            border-radius: 55px;
+            padding: 14px;
+            box-shadow:
+                0 50px 100px rgba(0,0,0,0.4),
+                inset 0 0 0 2px #333;
+        }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 42px;
+            overflow: hidden;
+            position: relative;
+            background: #F0F7FF;
+        }
+
+        .dynamic-island {
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 20px;
+            position: absolute;
+            top: 11px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+
+        .status-bar {
+            height: 54px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0 28px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+        }
+
+        .status-bar.light { color: white; }
+        .status-bar.dark { color: #1a1a1a; }
+
+        /* Screen Container */
+        .screen-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            overflow-y: auto;
+            padding-top: 54px;
+            padding-bottom: 90px;
+        }
+
+        .screen.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+
+        .screen::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Tab Bar */
+        .tab-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.5);
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding-top: 12px;
+            z-index: 100;
+        }
+
+        .tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-secondary);
+            font-size: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            color: var(--primary);
+        }
+
+        .tab-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            transition: transform 0.3s ease;
+        }
+
+        .tab.active .tab-icon {
+            transform: scale(1.15);
+        }
+
+        /* ==================== HOME SCREEN ==================== */
+        .home-screen {
+            background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 45%, #F0F7FF 45%);
+        }
+
+        .hero {
+            padding: 20px 20px 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 14px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+        }
+
+        .stat { text-align: center; }
+        .stat-value { font-size: 22px; font-weight: 800; color: white; }
+        .stat-label { font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 2px; }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px var(--shadow-color);
+            margin: -20px 16px 16px;
+            padding: 20px;
+        }
+
+        /* Primary Button */
+        .btn-primary {
+            width: 100%;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4); }
+            50% { box-shadow: 0 8px 32px rgba(255, 107, 53, 0.6); }
+        }
+
+        .pulse { animation: pulse 2s ease-in-out infinite; }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 20px 12px;
+        }
+
+        .section-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+        .section-link { font-size: 14px; font-weight: 600; color: var(--primary); cursor: pointer; }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            padding: 0 20px 20px;
+            overflow-x: auto;
+        }
+
+        .quick-action {
+            min-width: 100px;
+            padding: 16px;
+            background: white;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .quick-action:hover { transform: translateY(-4px); }
+
+        .quick-action-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .quick-action h4 { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+        .quick-action p { font-size: 11px; color: var(--text-secondary); }
+
+        /* Practice Cards */
+        .practice-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: white;
+            margin: 0 16px 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .practice-card:hover { transform: translateX(4px); }
+
+        .practice-icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--bg-gradient-end) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+
+        .practice-info { flex: 1; }
+        .practice-info h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-primary {
+            font-size: 9px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--success) 0%, #00E6A0 100%);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .practice-info p { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+        .chevron { color: var(--primary); font-size: 18px; font-weight: 600; }
+
+        /* Referral Scroll */
+        .referral-scroll {
+            display: flex;
+            gap: 12px;
+            padding: 0 20px 20px;
+            overflow-x: auto;
+        }
+
+        .referral-card {
+            min-width: 130px;
+            padding: 20px 16px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .referral-card:hover { transform: translateY(-4px); }
+
+        .referral-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8F66 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .referral-card h4 { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+
+        /* ==================== CLAIM SCREEN ==================== */
+        .claim-screen { background: #F0F7FF; }
+
+        .progress-container { padding: 16px 20px 0; }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(0, 102, 255, 0.15);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--bg-gradient-end) 100%);
+            border-radius: 3px;
+            width: 33%;
+            transition: width 0.5s ease;
+        }
+
+        .question-container { padding: 24px 20px; }
+
+        .question-text {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .question-subtext {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-option:hover {
+            transform: translateX(6px);
+            border-color: var(--primary);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(0,102,255,0.1) 0%, rgba(0,212,255,0.1) 100%);
+        }
+
+        .quiz-option-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .quiz-option span { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+
+        /* ==================== LEARN SCREEN ==================== */
+        .learn-screen { background: #F0F7FF; }
+
+        .learn-header {
+            padding: 20px 20px 0;
+        }
+
+        .learn-header h1 { font-size: 34px; font-weight: 800; color: var(--text-primary); }
+        .learn-header p { font-size: 15px; color: var(--text-secondary); margin-top: 4px; }
+
+        .category-scroll {
+            display: flex;
+            gap: 8px;
+            padding: 16px 20px;
+            overflow-x: auto;
+        }
+
+        .category-chip {
+            padding: 10px 18px;
+            background: white;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            color: var(--text-secondary);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-chip:hover { border-color: var(--primary); }
+
+        .category-chip.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 102, 255, 0.3);
+        }
+
+        .resource-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: white;
+            margin: 0 16px 12px;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .resource-card:hover { transform: translateX(4px); }
+
+        .resource-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #00C48C 0%, #00E6A0 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .resource-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .resource-meta { font-size: 12px; color: var(--text-secondary); }
+        .resource-meta span { color: var(--primary); font-weight: 600; }
+
+        /* ==================== CONTACT SCREEN ==================== */
+        .contact-screen { background: #F0F7FF; }
+
+        .contact-header {
+            text-align: center;
+            padding: 30px 20px 20px;
+        }
+
+        .contact-header h1 { font-size: 32px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; }
+        .contact-header p { font-size: 15px; color: var(--text-secondary); }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px;
+            background: white;
+            margin: 0 16px 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-card:hover { transform: scale(1.02); }
+
+        .contact-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+
+        .contact-icon.blue { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); }
+        .contact-icon.green { background: linear-gradient(135deg, #00C48C 0%, #00E6A0 100%); }
+        .contact-icon.orange { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); }
+
+        .contact-info { flex: 1; }
+        .contact-info h4 { font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+        .contact-info p { font-size: 13px; color: var(--text-secondary); }
+
+        .contact-action {
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .contact-action.blue { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); }
+        .contact-action.green { background: linear-gradient(135deg, #00C48C 0%, #00E6A0 100%); }
+        .contact-action.orange { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); }
+
+        .office-card {
+            background: white;
+            margin: 20px 16px;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+        }
+
+        .office-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .office-row {
+            display: flex;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid #F0F4F8;
+        }
+
+        .office-row:last-child { border-bottom: none; }
+        .office-row-icon { font-size: 24px; }
+        .office-row h4 { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+        .office-row p { font-size: 13px; color: var(--text-secondary); }
+
+        /* Spacer */
+        .spacer { height: 30px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 ClaimIt</h1>
+        <p>Get What You Deserve</p>
+    </div>
+
+    <div class="instructions">
+        <span>👆 Tap the tabs</span> at the bottom to navigate
+    </div>
+
+    <div class="iphone">
+        <div class="iphone-screen">
+            <div class="dynamic-island"></div>
+
+            <!-- Status Bar - changes based on screen -->
+            <div class="status-bar light" id="status-bar">
+                <span>9:41</span>
+                <span>📶 📡 🔋</span>
+            </div>
+
+            <div class="screen-container">
+                <!-- HOME SCREEN -->
+                <div class="screen home-screen active" id="screen-home">
+                    <div class="hero">
+                        <div class="hero-badge">⚡ Free Case Evaluation</div>
+                        <h1>Get What You<br>Deserve</h1>
+                        <p>Find out if you have a case in 2 minutes</p>
+                        <div class="stats-row">
+                            <div class="stat">
+                                <div class="stat-value">$50M+</div>
+                                <div class="stat-label">Recovered</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">5000+</div>
+                                <div class="stat-label">Cases</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">98%</div>
+                                <div class="stat-label">Success</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <button class="btn-primary pulse" onclick="switchTab('claim')">
+                            <span style="font-size: 20px;">⚡</span>
+                            Start My Free Claim Review
+                        </button>
+                    </div>
+
+                    <div class="section-header">
+                        <span class="section-title">Quick Actions</span>
+                    </div>
+                    <div class="quick-actions">
+                        <div class="quick-action" onclick="switchTab('contact')">
+                            <div class="quick-action-icon">📞</div>
+                            <h4>Call Now</h4>
+                            <p>Talk to us</p>
+                        </div>
+                        <div class="quick-action">
+                            <div class="quick-action-icon">💬</div>
+                            <h4>Live Chat</h4>
+                            <p>Instant help</p>
+                        </div>
+                        <div class="quick-action" onclick="switchTab('learn')">
+                            <div class="quick-action-icon">📚</div>
+                            <h4>Guides</h4>
+                            <p>Free resources</p>
+                        </div>
+                        <div class="quick-action">
+                            <div class="quick-action-icon">📍</div>
+                            <h4>Track Case</h4>
+                            <p>Status updates</p>
+                        </div>
+                    </div>
+
+                    <div class="section-header">
+                        <span class="section-title">We Fight For</span>
+                        <span class="section-link">See All →</span>
+                    </div>
+
+                    <div class="practice-card">
+                        <div class="practice-icon">🩹</div>
+                        <div class="practice-info">
+                            <h4>Personal Injury <span class="badge-primary">Top</span></h4>
+                            <p>Accidents, negligence, pain & suffering</p>
+                        </div>
+                        <span class="chevron">›</span>
+                    </div>
+
+                    <div class="practice-card">
+                        <div class="practice-icon">🏢</div>
+                        <div class="practice-info">
+                            <h4>Premises Liability</h4>
+                            <p>Slip & fall, unsafe properties</p>
+                        </div>
+                        <span class="chevron">›</span>
+                    </div>
+
+                    <div class="practice-card">
+                        <div class="practice-icon">🚗</div>
+                        <div class="practice-info">
+                            <h4>Property Damage</h4>
+                            <p>Vehicle damage, total loss claims</p>
+                        </div>
+                        <span class="chevron">›</span>
+                    </div>
+
+                    <div class="practice-card">
+                        <div class="practice-icon">🛡️</div>
+                        <div class="practice-info">
+                            <h4>Insurance Bad Faith</h4>
+                            <p>Denied claims, lowball offers</p>
+                        </div>
+                        <span class="chevron">›</span>
+                    </div>
+
+                    <div class="practice-card">
+                        <div class="practice-icon">🍋</div>
+                        <div class="practice-info">
+                            <h4>Lemon Law</h4>
+                            <p>Defective vehicles, buybacks</p>
+                        </div>
+                        <span class="chevron">›</span>
+                    </div>
+
+                    <div class="section-header">
+                        <span class="section-title">Referral Network</span>
+                        <span class="section-link">See All →</span>
+                    </div>
+
+                    <div class="referral-scroll">
+                        <div class="referral-card">
+                            <div class="referral-icon">👨‍👩‍👧</div>
+                            <h4>Family Law</h4>
+                        </div>
+                        <div class="referral-card">
+                            <div class="referral-icon">⚖️</div>
+                            <h4>Criminal</h4>
+                        </div>
+                        <div class="referral-card">
+                            <div class="referral-icon">💼</div>
+                            <h4>Employment</h4>
+                        </div>
+                        <div class="referral-card">
+                            <div class="referral-icon">🏠</div>
+                            <h4>Real Estate</h4>
+                        </div>
+                        <div class="referral-card">
+                            <div class="referral-icon">📄</div>
+                            <h4>Estate</h4>
+                        </div>
+                    </div>
+
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- CLAIM SCREEN -->
+                <div class="screen claim-screen" id="screen-claim">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="question-container">
+                        <div class="question-text">What happened to you?</div>
+                        <div class="question-subtext">Select the option that best describes your situation</div>
+
+                        <div class="quiz-option" onclick="selectOption(this)">
+                            <div class="quiz-option-icon">🚗</div>
+                            <span>Car or vehicle accident</span>
+                        </div>
+
+                        <div class="quiz-option" onclick="selectOption(this)">
+                            <div class="quiz-option-icon">🤕</div>
+                            <span>I was injured</span>
+                        </div>
+
+                        <div class="quiz-option" onclick="selectOption(this)">
+                            <div class="quiz-option-icon">⬇️</div>
+                            <span>Slip, trip, or fall</span>
+                        </div>
+
+                        <div class="quiz-option" onclick="selectOption(this)">
+                            <div class="quiz-option-icon">🛡️</div>
+                            <span>Insurance dispute</span>
+                        </div>
+
+                        <div class="quiz-option" onclick="selectOption(this)">
+                            <div class="quiz-option-icon">🚙</div>
+                            <span>Defective vehicle (Lemon)</span>
+                        </div>
+
+                        <div class="quiz-option" onclick="selectOption(this)">
+                            <div class="quiz-option-icon">💔</div>
+                            <span>Property was damaged</span>
+                        </div>
+
+                        <div class="quiz-option" onclick="selectOption(this)">
+                            <div class="quiz-option-icon">❓</div>
+                            <span>Something else</span>
+                        </div>
+                    </div>
+
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- LEARN SCREEN -->
+                <div class="screen learn-screen" id="screen-learn">
+                    <div class="learn-header">
+                        <h1>Learn</h1>
+                        <p>Know your rights. Win your case.</p>
+                    </div>
+
+                    <div class="category-scroll">
+                        <div class="category-chip active">🔥 Popular</div>
+                        <div class="category-chip">📖 Guides</div>
+                        <div class="category-chip">✅ Checklists</div>
+                        <div class="category-chip">⏰ Deadlines</div>
+                        <div class="category-chip">✊ Rights</div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">🚗</div>
+                        <div class="resource-info">
+                            <h4>After a Car Accident: Step-by-Step</h4>
+                            <div class="resource-meta"><span>Guide</span> • 8 min</div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">✅</div>
+                        <div class="resource-info">
+                            <h4>Injury Claim Checklist</h4>
+                            <div class="resource-meta"><span>Checklist</span> • 5 min</div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);">🍋</div>
+                        <div class="resource-info">
+                            <h4>California Lemon Law Guide</h4>
+                            <div class="resource-meta"><span>Guide</span> • 12 min</div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, #9333EA 0%, #A855F7 100%);">🛡️</div>
+                        <div class="resource-info">
+                            <h4>Fight Insurance Bad Faith</h4>
+                            <div class="resource-meta"><span>Know Your Rights</span> • 8 min</div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);">⏰</div>
+                        <div class="resource-info">
+                            <h4>Don't Miss These Deadlines</h4>
+                            <div class="resource-meta"><span>Timeline</span> • 6 min</div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);">📉</div>
+                        <div class="resource-info">
+                            <h4>Diminished Value Claims</h4>
+                            <div class="resource-meta"><span>Guide</span> • 8 min</div>
+                        </div>
+                    </div>
+
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- CONTACT SCREEN -->
+                <div class="screen contact-screen" id="screen-contact">
+                    <div class="contact-header">
+                        <h1>Let's Talk</h1>
+                        <p>Get your free consultation today</p>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon blue">📞</div>
+                        <div class="contact-info">
+                            <h4>Call Us Now</h4>
+                            <p>Speak with our team directly</p>
+                        </div>
+                        <div class="contact-action blue">Call</div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon green">💬</div>
+                        <div class="contact-info">
+                            <h4>Live Chat</h4>
+                            <p>Instant responses, 24/7</p>
+                        </div>
+                        <div class="contact-action green">Chat</div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon orange">📝</div>
+                        <div class="contact-info">
+                            <h4>Request Callback</h4>
+                            <p>We'll call you back in 1 hour</p>
+                        </div>
+                        <div class="contact-action orange">Request</div>
+                    </div>
+
+                    <div class="office-card">
+                        <h3>📍 Office</h3>
+
+                        <div class="office-row">
+                            <div class="office-row-icon">🏢</div>
+                            <div>
+                                <h4>Los Angeles, California</h4>
+                                <p>Serving all of Southern California</p>
+                            </div>
+                        </div>
+
+                        <div class="office-row">
+                            <div class="office-row-icon">🕐</div>
+                            <div>
+                                <h4>Available 24/7</h4>
+                                <p>For urgent matters anytime</p>
+                            </div>
+                        </div>
+
+                        <div class="office-row">
+                            <div class="office-row-icon">⚡</div>
+                            <div>
+                                <h4>Response Time</h4>
+                                <p>Usually within 1 hour</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spacer"></div>
+                </div>
+            </div>
+
+            <!-- Tab Bar -->
+            <div class="tab-bar">
+                <div class="tab active" id="tab-home" onclick="switchTab('home')">
+                    <div class="tab-icon">🏠</div>
+                    Home
+                </div>
+                <div class="tab" id="tab-claim" onclick="switchTab('claim')">
+                    <div class="tab-icon">⚡</div>
+                    Claim
+                </div>
+                <div class="tab" id="tab-learn" onclick="switchTab('learn')">
+                    <div class="tab-icon">📚</div>
+                    Learn
+                </div>
+                <div class="tab" id="tab-contact" onclick="switchTab('contact')">
+                    <div class="tab-icon">💬</div>
+                    Contact
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Remove active from all tabs and screens
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+            // Add active to selected
+            document.getElementById('tab-' + tabName).classList.add('active');
+            document.getElementById('screen-' + tabName).classList.add('active');
+
+            // Update status bar color
+            const statusBar = document.getElementById('status-bar');
+            if (tabName === 'home') {
+                statusBar.className = 'status-bar light';
+            } else {
+                statusBar.className = 'status-bar dark';
+            }
+
+            // Scroll screen to top
+            document.getElementById('screen-' + tabName).scrollTop = 0;
+        }
+
+        function selectOption(element) {
+            // Remove selected from all
+            document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+            // Add selected to clicked
+            element.classList.add('selected');
+
+            // Animate progress
+            const progress = document.getElementById('progress-fill');
+            const currentWidth = parseInt(progress.style.width) || 33;
+            progress.style.width = Math.min(currentWidth + 22, 100) + '%';
+        }
+
+        // Category chip selection
+        document.querySelectorAll('.category-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

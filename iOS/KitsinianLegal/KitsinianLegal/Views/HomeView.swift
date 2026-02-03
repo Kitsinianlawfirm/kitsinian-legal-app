@@ -1,367 +1,468 @@
 //
 //  HomeView.swift
-//  KitsinianLegal
+//  ClaimIt
 //
 
 import SwiftUI
 
 struct HomeView: View {
-    @State private var showingQuiz = false
-
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 24) {
-                    // Hero Section
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    // Hero Section with gradient
                     heroSection
 
-                    // Quick Actions
-                    quickActionsSection
+                    // Content
+                    VStack(spacing: 20) {
+                        // Quick Actions
+                        quickActionsSection
 
-                    // What We Handle Section
-                    whatWeHandleSection
+                        // What We Fight For
+                        whatWeFightForSection
 
-                    // Referral Network Section
-                    referralNetworkSection
+                        // Referral Network
+                        referralNetworkSection
 
-                    // Featured Resources Section
-                    featuredResourcesSection
+                        // Popular Resources
+                        popularResourcesSection
+                    }
+                    .padding(.top, -20)
+                    .padding(.bottom, 32)
                 }
-                .padding(.bottom, 32)
             }
-            .background(Color("Background"))
-            .navigationTitle("Kitsinian Law")
-            .navigationBarTitleDisplayMode(.large)
+            .background(Color.claimBackground)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    ClaimItLogo(size: 32, textColor: .claimTextPrimary)
+                }
+            }
         }
     }
 
     // MARK: - Hero Section
     private var heroSection: some View {
-        VStack(spacing: 16) {
-            Text("Need Legal Help?")
-                .font(.title2)
-                .fontWeight(.semibold)
+        ZStack(alignment: .bottom) {
+            // Gradient background
+            LinearGradient.claimHeroGradient
+                .frame(height: 280)
 
-            Text("Find out if you have a case in 2 minutes")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-
-            NavigationLink(destination: QuizStartView()) {
-                HStack {
-                    Image(systemName: "questionmark.circle.fill")
-                    Text("Start Free Case Evaluation")
+            VStack(spacing: 16) {
+                // Badge
+                HStack(spacing: 6) {
+                    Image(systemName: "bolt.fill")
+                        .font(.system(size: 12, weight: .bold))
+                    Text("Free Case Evaluation")
+                        .font(.system(size: 12, weight: .semibold))
                 }
-                .font(.headline)
                 .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 54)
-                .background(Color("Primary"))
-                .cornerRadius(12)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(.white.opacity(0.2))
+                .cornerRadius(20)
+
+                // Title
+                Text("Get What You\nDeserve")
+                    .font(.system(size: 30, weight: .heavy))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
+                    .lineSpacing(2)
+
+                // Subtitle
+                Text("Find out if you have a case in 2 minutes")
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundColor(.white.opacity(0.9))
+
+                // Stats Row
+                HStack(spacing: 10) {
+                    StatBadge(value: "$50M+", label: "Recovered")
+                    StatBadge(value: "5000+", label: "Cases")
+                    StatBadge(value: "98%", label: "Success")
+                }
+                .padding(.top, 8)
             }
+            .padding(.bottom, 50)
+
+            // CTA Card
+            VStack {
+                NavigationLink(destination: QuizStartView()) {
+                    HStack(spacing: 10) {
+                        Image(systemName: "bolt.fill")
+                            .font(.system(size: 18, weight: .bold))
+                        Text("Start My Free Claim Review")
+                            .font(.system(size: 16, weight: .bold))
+                    }
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 52)
+                    .background(LinearGradient.claimAccentGradient)
+                    .cornerRadius(14)
+                    .shadow(color: .claimAccent.opacity(0.35), radius: 12, y: 6)
+                }
+            }
+            .padding(16)
+            .background(Color.white)
+            .cornerRadius(20)
+            .claimShadowLarge()
+            .padding(.horizontal, 16)
+            .offset(y: 30)
         }
-        .padding(24)
-        .background(Color.white)
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
-        .padding(.horizontal)
     }
 
     // MARK: - Quick Actions
     private var quickActionsSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 12) {
             Text("Quick Actions")
-                .font(.headline)
-                .padding(.horizontal)
+                .font(.system(size: 17, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
+                .padding(.horizontal, 20)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    QuickActionCard(
+                HStack(spacing: 10) {
+                    QuickActionButton(
                         icon: "phone.fill",
                         title: "Call Now",
-                        subtitle: "Free consultation",
-                        color: Color("Primary")
+                        subtitle: "Talk to us"
                     ) {
                         if let url = URL(string: "tel://+1YOURNUMBER") {
                             UIApplication.shared.open(url)
                         }
                     }
 
-                    NavigationLink(destination: QuizStartView()) {
-                        QuickActionCardContent(
-                            icon: "questionmark.circle.fill",
-                            title: "Case Quiz",
-                            subtitle: "2 min evaluation",
-                            color: Color("Secondary")
-                        )
+                    NavigationLink(destination: ContactView()) {
+                        QuickActionContent(icon: "bubble.left.fill", title: "Live Chat", subtitle: "Instant help")
                     }
 
                     NavigationLink(destination: ResourceLibraryView()) {
-                        QuickActionCardContent(
-                            icon: "book.fill",
-                            title: "Resources",
-                            subtitle: "Free guides",
-                            color: .blue
-                        )
+                        QuickActionContent(icon: "book.fill", title: "Guides", subtitle: "Free resources")
                     }
 
-                    NavigationLink(destination: ContactView()) {
-                        QuickActionCardContent(
-                            icon: "envelope.fill",
-                            title: "Contact",
-                            subtitle: "Get in touch",
-                            color: .green
-                        )
+                    QuickActionButton(
+                        icon: "location.fill",
+                        title: "Track Case",
+                        subtitle: "Status updates"
+                    ) {
+                        // Track case action
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
             }
         }
+        .padding(.top, 40)
     }
 
-    // MARK: - What We Handle Section
-    private var whatWeHandleSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
+    // MARK: - What We Fight For
+    private var whatWeFightForSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("What We Handle")
-                    .font(.headline)
+                Text("We Fight For")
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
 
                 Spacer()
 
                 NavigationLink(destination: PracticeAreasListView(category: .inHouse)) {
-                    Text("See All")
-                        .font(.subheadline)
-                        .foregroundColor(Color("Primary"))
+                    HStack(spacing: 2) {
+                        Text("See All")
+                            .font(.system(size: 13, weight: .semibold))
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 11, weight: .semibold))
+                    }
+                    .foregroundColor(.claimPrimary)
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 20)
 
-            VStack(spacing: 12) {
-                ForEach(PracticeArea.inHouseAreas.prefix(3)) { area in
+            VStack(spacing: 10) {
+                ForEach(PracticeArea.inHouseAreas.prefix(5)) { area in
                     NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
-                        PracticeAreaRow(practiceArea: area)
+                        PracticeAreaCard(practiceArea: area, showTopBadge: area == PracticeArea.inHouseAreas.first)
                     }
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 16)
         }
     }
 
-    // MARK: - Referral Network Section
+    // MARK: - Referral Network
     private var referralNetworkSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("Referral Network")
-                    .font(.headline)
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
 
                 Spacer()
 
                 NavigationLink(destination: PracticeAreasListView(category: .referral)) {
-                    Text("See All")
-                        .font(.subheadline)
-                        .foregroundColor(Color("Primary"))
+                    HStack(spacing: 2) {
+                        Text("See All")
+                            .font(.system(size: 13, weight: .semibold))
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 11, weight: .semibold))
+                    }
+                    .foregroundColor(.claimPrimary)
                 }
             }
-            .padding(.horizontal)
-
-            Text("We partner with trusted California attorneys for cases outside our focus areas.")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .padding(.horizontal)
+            .padding(.horizontal, 20)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
+                HStack(spacing: 10) {
                     ForEach(PracticeArea.referralAreas.prefix(5)) { area in
                         NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
-                            ReferralAreaCard(practiceArea: area)
+                            ReferralCard(practiceArea: area)
                         }
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
             }
         }
     }
 
-    // MARK: - Featured Resources Section
-    private var featuredResourcesSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
+    // MARK: - Popular Resources
+    private var popularResourcesSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("Popular Resources")
-                    .font(.headline)
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
 
                 Spacer()
 
                 NavigationLink(destination: ResourceLibraryView()) {
-                    Text("See All")
-                        .font(.subheadline)
-                        .foregroundColor(Color("Primary"))
+                    HStack(spacing: 2) {
+                        Text("See All")
+                            .font(.system(size: 13, weight: .semibold))
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 11, weight: .semibold))
+                    }
+                    .foregroundColor(.claimPrimary)
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 20)
 
-            VStack(spacing: 12) {
+            VStack(spacing: 10) {
                 ForEach(LegalResource.featuredResources.prefix(3)) { resource in
                     NavigationLink(destination: ResourceDetailView(resource: resource)) {
-                        ResourceRow(resource: resource)
+                        ResourceCard(resource: resource)
                     }
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 16)
         }
     }
 }
 
-// MARK: - Quick Action Card
-struct QuickActionCard: View {
+// MARK: - Stat Badge
+struct StatBadge: View {
+    let value: String
+    let label: String
+
+    var body: some View {
+        VStack(spacing: 2) {
+            Text(value)
+                .font(.system(size: 20, weight: .heavy))
+                .foregroundColor(.white)
+            Text(label)
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(.white.opacity(0.85))
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(.white.opacity(0.15))
+        .cornerRadius(12)
+    }
+}
+
+// MARK: - Quick Action Button
+struct QuickActionButton: View {
     let icon: String
     let title: String
     let subtitle: String
-    let color: Color
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            QuickActionCardContent(icon: icon, title: title, subtitle: subtitle, color: color)
+            QuickActionContent(icon: icon, title: title, subtitle: subtitle)
         }
     }
 }
 
-struct QuickActionCardContent: View {
+struct QuickActionContent: View {
     let icon: String
     let title: String
     let subtitle: String
-    let color: Color
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Image(systemName: icon)
-                .font(.title2)
-                .foregroundColor(color)
+        VStack(spacing: 8) {
+            GradientIconView(systemName: icon, size: 44, iconSize: 20)
 
             Text(title)
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundColor(.primary)
+                .font(.system(size: 12, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
 
             Text(subtitle)
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(.claimTextMuted)
         }
-        .frame(width: 100, alignment: .leading)
-        .padding()
+        .frame(width: 90)
+        .padding(.vertical, 14)
+        .padding(.horizontal, 12)
         .background(Color.white)
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 5, y: 2)
+        .cornerRadius(16)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 }
 
-// MARK: - Practice Area Row
-struct PracticeAreaRow: View {
+// MARK: - Practice Area Card
+struct PracticeAreaCard: View {
     let practiceArea: PracticeArea
+    var showTopBadge: Bool = false
 
     var body: some View {
-        HStack(spacing: 16) {
-            Image(systemName: practiceArea.icon)
-                .font(.title2)
-                .foregroundColor(Color("Primary"))
-                .frame(width: 44, height: 44)
-                .background(Color("Primary").opacity(0.1))
-                .cornerRadius(10)
+        HStack(spacing: 14) {
+            GradientIconView(systemName: practiceArea.icon, size: 48, iconSize: 22)
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text(practiceArea.name)
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.primary)
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(spacing: 8) {
+                    Text(practiceArea.name)
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundColor(.claimTextPrimary)
+
+                    if showTopBadge {
+                        HStack(spacing: 3) {
+                            Image(systemName: "star.fill")
+                                .font(.system(size: 8, weight: .bold))
+                            Text("Top")
+                                .font(.system(size: 9, weight: .bold))
+                        }
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 3)
+                        .background(LinearGradient.claimSuccessGradient)
+                        .cornerRadius(5)
+                    }
+                }
 
                 Text(practiceArea.shortDescription)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .lineLimit(2)
+                    .font(.system(size: 13))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineLimit(1)
             }
 
             Spacer()
 
             Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundColor(.claimTextMuted)
         }
-        .padding()
+        .padding(14)
         .background(Color.white)
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.03), radius: 5, y: 2)
+        .cornerRadius(16)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 }
 
-// MARK: - Referral Area Card
-struct ReferralAreaCard: View {
+// MARK: - Referral Card
+struct ReferralCard: View {
     let practiceArea: PracticeArea
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Image(systemName: practiceArea.icon)
-                .font(.title2)
-                .foregroundColor(Color("Secondary"))
+        VStack(alignment: .leading, spacing: 10) {
+            GradientIconView(
+                systemName: practiceArea.icon,
+                size: 40,
+                iconSize: 18,
+                gradient: LinearGradient.claimAccentGradient
+            )
 
             Text(practiceArea.name)
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundColor(.primary)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
                 .lineLimit(2)
-                .fixedSize(horizontal: false, vertical: true)
+                .multilineTextAlignment(.leading)
         }
-        .frame(width: 120, height: 100, alignment: .topLeading)
-        .padding()
+        .frame(width: 110, alignment: .leading)
+        .padding(16)
         .background(Color.white)
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 5, y: 2)
+        .cornerRadius(16)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 }
 
-// MARK: - Resource Row
-struct ResourceRow: View {
+// MARK: - Resource Card
+struct ResourceCard: View {
     let resource: LegalResource
 
     var body: some View {
-        HStack(spacing: 16) {
-            Image(systemName: resource.icon)
-                .font(.title3)
-                .foregroundColor(.blue)
-                .frame(width: 40, height: 40)
-                .background(Color.blue.opacity(0.1))
-                .cornerRadius(8)
+        HStack(spacing: 14) {
+            GradientIconView(
+                systemName: resource.icon,
+                size: 50,
+                iconSize: 24,
+                gradient: resource.gradient
+            )
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(resource.title)
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                    .foregroundColor(.primary)
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
                     .lineLimit(1)
 
-                HStack {
+                HStack(spacing: 6) {
                     Text(resource.category.displayName)
-                        .font(.caption)
-                        .foregroundColor(Color("Primary"))
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.claimPrimary)
 
-                    Text("•")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-
-                    Text("\(resource.readTime) min read")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    Text("\(resource.readTime) min")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.claimTextMuted)
                 }
             }
 
             Spacer()
 
             Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundColor(.claimTextMuted)
         }
-        .padding()
+        .padding(14)
         .background(Color.white)
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.03), radius: 5, y: 2)
+        .cornerRadius(14)
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
+    }
+}
+
+// MARK: - Resource Gradient Extension
+extension LegalResource {
+    var gradient: LinearGradient {
+        switch category {
+        case .guide:
+            return LinearGradient.claimSuccessGradient
+        case .checklist:
+            return LinearGradient.claimPrimaryGradient
+        case .knowYourRights:
+            return LinearGradient(colors: [Color(hex: "9333EA"), Color(hex: "A855F7")], startPoint: .topLeading, endPoint: .bottomTrailing)
+        case .faq:
+            return LinearGradient(colors: [.claimWarning, Color(hex: "FBBF24")], startPoint: .topLeading, endPoint: .bottomTrailing)
+        }
     }
 }
 

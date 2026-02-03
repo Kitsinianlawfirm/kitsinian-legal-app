@@ -1,6 +1,6 @@
 //
 //  QuizResultView.swift
-//  KitsinianLegal
+//  ClaimIt
 //
 
 import SwiftUI
@@ -10,8 +10,8 @@ struct QuizResultView: View {
     @State private var showingContactForm = false
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 20) {
                 // Result Header
                 resultHeader
 
@@ -35,9 +35,9 @@ struct QuizResultView: View {
 
                 Spacer(minLength: 40)
             }
-            .padding()
+            .padding(16)
         }
-        .background(Color("Background"))
+        .background(Color.claimBackground)
         .sheet(isPresented: $showingContactForm) {
             NavigationStack {
                 LeadFormView(practiceArea: result?.practiceArea)
@@ -47,85 +47,114 @@ struct QuizResultView: View {
 
     // MARK: - Result Header
     private var resultHeader: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 20) {
             ZStack {
                 Circle()
-                    .fill(Color("Primary").opacity(0.1))
+                    .fill(Color.claimSuccess.opacity(0.15))
                     .frame(width: 100, height: 100)
 
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 50))
-                    .foregroundColor(Color("Primary"))
+                GradientIconView(
+                    systemName: "checkmark.circle.fill",
+                    size: 72,
+                    iconSize: 36,
+                    gradient: LinearGradient.claimSuccessGradient
+                )
             }
 
-            Text("We Can Help")
-                .font(.title)
-                .fontWeight(.bold)
+            Text("We Can Help!")
+                .font(.system(size: 28, weight: .heavy))
+                .foregroundColor(.claimTextPrimary)
 
             if let result = result {
-                HStack {
+                HStack(spacing: 8) {
                     Image(systemName: result.practiceArea.icon)
+                        .font(.system(size: 16, weight: .semibold))
                     Text(result.practiceArea.name)
+                        .font(.system(size: 16, weight: .bold))
                 }
-                .font(.headline)
-                .foregroundColor(Color("Primary"))
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(Color("Primary").opacity(0.1))
-                .cornerRadius(20)
+                .foregroundColor(.claimPrimary)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+                .background(Color.claimPrimary.opacity(0.1))
+                .cornerRadius(24)
             }
         }
-        .padding(.top, 20)
+        .padding(.vertical, 16)
     }
 
     // MARK: - Summary Card
     private func summaryCard(result: QuizResult) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Label("Your Situation", systemImage: "doc.text.fill")
-                .font(.headline)
-                .foregroundColor(Color("Primary"))
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(spacing: 10) {
+                GradientIconView(
+                    systemName: "doc.text.fill",
+                    size: 36,
+                    iconSize: 16,
+                    gradient: LinearGradient.claimPrimaryGradient
+                )
+                Text("Your Situation")
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
+            }
 
             Text(result.summary)
-                .font(.body)
-                .foregroundColor(.secondary)
+                .font(.system(size: 15, weight: .medium))
+                .foregroundColor(.claimTextSecondary)
+                .lineSpacing(4)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 
     // MARK: - Next Steps Card
     private func nextStepsCard(result: QuizResult) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("What Happens Next", systemImage: "arrow.right.circle.fill")
-                .font(.headline)
-                .foregroundColor(Color("Primary"))
+            HStack(spacing: 10) {
+                GradientIconView(
+                    systemName: "arrow.right.circle.fill",
+                    size: 36,
+                    iconSize: 16,
+                    gradient: LinearGradient.claimAccentGradient
+                )
+                Text("What Happens Next")
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
+            }
 
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 14) {
                 ForEach(Array(result.nextSteps.enumerated()), id: \.offset) { index, step in
-                    HStack(alignment: .top, spacing: 12) {
+                    HStack(alignment: .top, spacing: 14) {
                         Text("\(index + 1)")
-                            .font(.caption)
-                            .fontWeight(.bold)
+                            .font(.system(size: 13, weight: .bold))
                             .foregroundColor(.white)
-                            .frame(width: 24, height: 24)
-                            .background(Color("Primary"))
+                            .frame(width: 28, height: 28)
+                            .background(LinearGradient.claimPrimaryGradient)
                             .clipShape(Circle())
 
                         Text(step)
-                            .font(.subheadline)
-                            .foregroundColor(.primary)
+                            .font(.system(size: 15, weight: .medium))
+                            .foregroundColor(.claimTextPrimary)
+                            .padding(.top, 4)
                     }
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 
     // MARK: - CTA Buttons
@@ -134,16 +163,18 @@ struct QuizResultView: View {
             Button(action: {
                 showingContactForm = true
             }) {
-                HStack {
-                    Image(systemName: "envelope.fill")
+                HStack(spacing: 10) {
+                    Image(systemName: "bolt.fill")
+                        .font(.system(size: 18, weight: .bold))
                     Text("Request Free Consultation")
+                        .font(.system(size: 17, weight: .bold))
                 }
-                .font(.headline)
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 54)
-                .background(Color("Primary"))
-                .cornerRadius(12)
+                .background(LinearGradient.claimAccentGradient)
+                .cornerRadius(14)
+                .shadow(color: .claimAccent.opacity(0.35), radius: 12, y: 6)
             }
 
             Button(action: {
@@ -151,46 +182,56 @@ struct QuizResultView: View {
                     UIApplication.shared.open(url)
                 }
             }) {
-                HStack {
+                HStack(spacing: 10) {
                     Image(systemName: "phone.fill")
+                        .font(.system(size: 18, weight: .bold))
                     Text("Call Now")
+                        .font(.system(size: 17, weight: .bold))
                 }
-                .font(.headline)
-                .foregroundColor(Color("Primary"))
+                .foregroundColor(.claimPrimary)
                 .frame(maxWidth: .infinity)
                 .frame(height: 54)
                 .background(Color.white)
+                .cornerRadius(14)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color("Primary"), lineWidth: 2)
+                    RoundedRectangle(cornerRadius: 14)
+                        .stroke(Color.claimPrimary, lineWidth: 2)
                 )
-                .cornerRadius(12)
             }
         }
     }
 
     // MARK: - Practice Area Preview
     private func practiceAreaPreview(result: QuizResult) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 14) {
             Text("About This Practice Area")
-                .font(.headline)
+                .font(.system(size: 17, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
 
             Text(result.practiceArea.fullDescription)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.claimTextSecondary)
+                .lineSpacing(4)
 
             NavigationLink(destination: PracticeAreaDetailView(practiceArea: result.practiceArea)) {
-                Text("Learn More")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color("Primary"))
+                HStack(spacing: 6) {
+                    Text("Learn More")
+                        .font(.system(size: 14, weight: .bold))
+                    Image(systemName: "arrow.right")
+                        .font(.system(size: 12, weight: .bold))
+                }
+                .foregroundColor(.claimPrimary)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 }
 

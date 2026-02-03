@@ -1,6 +1,6 @@
 //
 //  LeadFormView.swift
-//  KitsinianLegal
+//  ClaimIt
 //
 
 import SwiftUI
@@ -18,7 +18,7 @@ struct LeadFormView: View {
     }
 
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(spacing: 24) {
                 // Header
                 headerSection
@@ -32,9 +32,9 @@ struct LeadFormView: View {
                 // Disclaimer
                 disclaimer
             }
-            .padding()
+            .padding(16)
         }
-        .background(Color("Background"))
+        .background(Color.claimBackground)
         .navigationTitle("Contact Us")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -42,6 +42,7 @@ struct LeadFormView: View {
                 Button("Cancel") {
                     dismiss()
                 }
+                .foregroundColor(.claimPrimary)
             }
         }
         .alert("Request Submitted", isPresented: $showingConfirmation) {
@@ -61,29 +62,30 @@ struct LeadFormView: View {
 
     // MARK: - Header Section
     private var headerSection: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 16) {
             if let area = practiceArea {
-                HStack {
+                HStack(spacing: 8) {
                     Image(systemName: area.icon)
+                        .font(.system(size: 14, weight: .semibold))
                     Text(area.name)
+                        .font(.system(size: 14, weight: .semibold))
                 }
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundColor(Color("Primary"))
+                .foregroundColor(.claimPrimary)
                 .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(Color("Primary").opacity(0.1))
+                .padding(.vertical, 10)
+                .background(Color.claimPrimary.opacity(0.1))
                 .cornerRadius(20)
             }
 
             Text("Tell us about your situation")
-                .font(.title3)
-                .fontWeight(.semibold)
+                .font(.system(size: 20, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
 
             Text("All information is confidential. We'll review your case and respond within 24 hours.")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.claimTextSecondary)
                 .multilineTextAlignment(.center)
+                .lineSpacing(4)
         }
     }
 
@@ -126,12 +128,12 @@ struct LeadFormView: View {
             .focused($focusedField, equals: .phone)
 
             // Preferred Contact Method
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 10) {
                 Text("Preferred Contact Method")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.claimTextPrimary)
 
-                HStack(spacing: 8) {
+                HStack(spacing: 10) {
                     ForEach(Lead.ContactMethod.allCases, id: \.self) { method in
                         ContactMethodButton(
                             method: method,
@@ -145,10 +147,10 @@ struct LeadFormView: View {
 
             // Practice Area (if not pre-selected)
             if practiceArea == nil {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 10) {
                     Text("What type of legal issue?")
-                        .font(.subheadline)
-                        .fontWeight(.medium)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(.claimTextPrimary)
 
                     Menu {
                         ForEach(PracticeArea.allAreas) { area in
@@ -160,27 +162,29 @@ struct LeadFormView: View {
                     } label: {
                         HStack {
                             Text(viewModel.selectedAreaName ?? "Select an option")
-                                .foregroundColor(viewModel.lead.practiceArea.isEmpty ? .secondary : .primary)
+                                .font(.system(size: 15))
+                                .foregroundColor(viewModel.lead.practiceArea.isEmpty ? .claimTextMuted : .claimTextPrimary)
                             Spacer()
                             Image(systemName: "chevron.down")
-                                .foregroundColor(.secondary)
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(.claimTextMuted)
                         }
-                        .padding()
+                        .padding(14)
                         .background(Color.white)
                         .cornerRadius(12)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                .stroke(Color.claimBorder, lineWidth: 1)
                         )
                     }
                 }
             }
 
             // Urgency
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 10) {
                 Text("How urgent is your matter?")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.claimTextPrimary)
 
                 VStack(spacing: 8) {
                     ForEach(Lead.Urgency.allCases, id: \.self) { urgency in
@@ -195,27 +199,32 @@ struct LeadFormView: View {
             }
 
             // Description
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 10) {
                 Text("Brief description (optional)")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.claimTextPrimary)
 
                 TextEditor(text: $viewModel.lead.description)
+                    .font(.system(size: 15))
                     .frame(height: 100)
-                    .padding(8)
+                    .padding(12)
                     .background(Color.white)
                     .cornerRadius(12)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                            .stroke(Color.claimBorder, lineWidth: 1)
                     )
                     .focused($focusedField, equals: .description)
             }
         }
-        .padding()
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 
     // MARK: - Submit Button
@@ -228,21 +237,27 @@ struct LeadFormView: View {
                 }
             }
         }) {
-            HStack {
+            HStack(spacing: 10) {
                 if viewModel.isSubmitting {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 } else {
                     Image(systemName: "paperplane.fill")
+                        .font(.system(size: 18, weight: .bold))
                     Text("Submit Request")
+                        .font(.system(size: 17, weight: .bold))
                 }
             }
-            .font(.headline)
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
             .frame(height: 54)
-            .background(viewModel.isFormValid ? Color("Primary") : Color.gray)
-            .cornerRadius(12)
+            .background(
+                viewModel.isFormValid
+                    ? LinearGradient.claimAccentGradient
+                    : LinearGradient(colors: [.gray, .gray], startPoint: .leading, endPoint: .trailing)
+            )
+            .cornerRadius(14)
+            .shadow(color: viewModel.isFormValid ? .claimAccent.opacity(0.35) : .clear, radius: 12, y: 6)
         }
         .disabled(!viewModel.isFormValid || viewModel.isSubmitting)
     }
@@ -250,9 +265,10 @@ struct LeadFormView: View {
     // MARK: - Disclaimer
     private var disclaimer: some View {
         Text("By submitting this form, you agree to be contacted regarding your legal matter. This does not create an attorney-client relationship.")
-            .font(.caption2)
-            .foregroundColor(.secondary)
+            .font(.system(size: 11, weight: .medium))
+            .foregroundColor(.claimTextMuted)
             .multilineTextAlignment(.center)
+            .lineSpacing(3)
     }
 }
 
@@ -266,19 +282,20 @@ struct FormTextField: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
-                .font(.subheadline)
-                .fontWeight(.medium)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundColor(.claimTextPrimary)
 
             TextField(placeholder, text: $text)
+                .font(.system(size: 15))
                 .keyboardType(keyboardType)
                 .textContentType(contentType)
                 .autocapitalization(keyboardType == .emailAddress ? .none : .words)
-                .padding()
+                .padding(14)
                 .background(Color.white)
                 .cornerRadius(12)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                        .stroke(Color.claimBorder, lineWidth: 1)
                 )
         }
     }
@@ -300,21 +317,22 @@ struct ContactMethodButton: View {
 
     var body: some View {
         Button(action: action) {
-            VStack(spacing: 4) {
+            VStack(spacing: 6) {
                 Image(systemName: method.icon)
-                    .font(.title3)
+                    .font(.system(size: 20, weight: .semibold))
                 Text(method.displayName)
-                    .font(.caption2)
+                    .font(.system(size: 11, weight: .semibold))
             }
-            .foregroundColor(isSelected ? .white : .primary)
+            .foregroundColor(isSelected ? .white : .claimTextPrimary)
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .background(isSelected ? Color("Primary") : Color.white)
+            .padding(.vertical, 14)
+            .background(isSelected ? LinearGradient.claimPrimaryGradient : LinearGradient(colors: [.white, .white], startPoint: .leading, endPoint: .trailing))
             .cornerRadius(12)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(isSelected ? Color.clear : Color.gray.opacity(0.2), lineWidth: 1)
+                    .stroke(isSelected ? Color.clear : Color.claimBorder, lineWidth: 1)
             )
+            .claimShadowSmall()
         }
         .buttonStyle(.plain)
     }
@@ -330,20 +348,21 @@ struct UrgencyButton: View {
         Button(action: action) {
             HStack {
                 Text(urgency.displayName)
-                    .font(.subheadline)
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundColor(.claimTextPrimary)
                 Spacer()
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(Color("Primary"))
+                        .font(.system(size: 20))
+                        .foregroundColor(.claimPrimary)
                 }
             }
-            .foregroundColor(.primary)
-            .padding()
-            .background(isSelected ? Color("Primary").opacity(0.1) : Color.white)
+            .padding(14)
+            .background(isSelected ? Color.claimPrimary.opacity(0.08) : Color.white)
             .cornerRadius(12)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(isSelected ? Color("Primary") : Color.gray.opacity(0.2), lineWidth: 1)
+                    .stroke(isSelected ? Color.claimPrimary : Color.claimBorder, lineWidth: isSelected ? 2 : 1)
             )
         }
         .buttonStyle(.plain)

@@ -1,6 +1,6 @@
 //
 //  PracticeAreaDetailView.swift
-//  KitsinianLegal
+//  ClaimIt
 //
 
 import SwiftUI
@@ -11,8 +11,8 @@ struct PracticeAreaDetailView: View {
     @State private var expandedFAQ: String?
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 20) {
                 // Header
                 headerSection
 
@@ -33,9 +33,9 @@ struct PracticeAreaDetailView: View {
 
                 Spacer(minLength: 40)
             }
-            .padding()
+            .padding(16)
         }
-        .background(Color("Background"))
+        .background(Color.claimBackground)
         .navigationTitle(practiceArea.name)
         .navigationBarTitleDisplayMode(.large)
         .sheet(isPresented: $showingContactForm) {
@@ -47,95 +47,137 @@ struct PracticeAreaDetailView: View {
 
     // MARK: - Header Section
     private var headerSection: some View {
-        VStack(spacing: 16) {
-            // Category Badge
-            HStack {
-                Image(systemName: practiceArea.category == .inHouse ? "checkmark.shield.fill" : "person.2.fill")
-                Text(practiceArea.category == .inHouse ? "We Handle Directly" : "Referral Network")
-            }
-            .font(.subheadline)
-            .fontWeight(.semibold)
-            .foregroundColor(practiceArea.category == .inHouse ? Color("Primary") : Color("Secondary"))
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
-            .background(
-                (practiceArea.category == .inHouse ? Color("Primary") : Color("Secondary")).opacity(0.1)
+        VStack(spacing: 20) {
+            // Icon
+            GradientIconView(
+                systemName: practiceArea.icon,
+                size: 72,
+                iconSize: 32,
+                gradient: practiceArea.category == .inHouse
+                    ? LinearGradient.claimPrimaryGradient
+                    : LinearGradient.claimAccentGradient
             )
-            .cornerRadius(20)
+
+            // Category Badge
+            HStack(spacing: 8) {
+                Image(systemName: practiceArea.category == .inHouse ? "checkmark.shield.fill" : "person.2.fill")
+                    .font(.system(size: 14, weight: .semibold))
+                Text(practiceArea.category == .inHouse ? "We Handle Directly" : "Referral Network")
+                    .font(.system(size: 14, weight: .bold))
+            }
+            .foregroundColor(practiceArea.category == .inHouse ? .claimPrimary : .claimAccent)
+            .padding(.horizontal, 18)
+            .padding(.vertical, 10)
+            .background(
+                (practiceArea.category == .inHouse ? Color.claimPrimary : Color.claimAccent).opacity(0.1)
+            )
+            .cornerRadius(24)
 
             // Description
             Text(practiceArea.fullDescription)
-                .font(.body)
-                .foregroundColor(.secondary)
+                .font(.system(size: 15, weight: .medium))
+                .foregroundColor(.claimTextSecondary)
                 .multilineTextAlignment(.center)
+                .lineSpacing(4)
         }
+        .padding(.vertical, 8)
     }
 
     // MARK: - What We Do Section
     private var whatWeDoSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label(practiceArea.category == .inHouse ? "What We Do" : "How We Help",
-                  systemImage: practiceArea.category == .inHouse ? "checkmark.circle.fill" : "arrow.right.circle.fill")
-                .font(.headline)
-                .foregroundColor(Color("Primary"))
+            HStack(spacing: 10) {
+                GradientIconView(
+                    systemName: practiceArea.category == .inHouse ? "checkmark.circle.fill" : "arrow.right.circle.fill",
+                    size: 36,
+                    iconSize: 16,
+                    gradient: LinearGradient.claimPrimaryGradient
+                )
+                Text(practiceArea.category == .inHouse ? "What We Do" : "How We Help")
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
+            }
 
             VStack(alignment: .leading, spacing: 12) {
                 ForEach(practiceArea.whatWeDo, id: \.self) { item in
                     HStack(alignment: .top, spacing: 12) {
-                        Image(systemName: "checkmark")
-                            .font(.caption)
-                            .fontWeight(.bold)
-                            .foregroundColor(Color("Primary"))
-                            .padding(.top, 2)
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(.claimSuccess)
 
                         Text(item)
-                            .font(.subheadline)
-                            .foregroundColor(.primary)
+                            .font(.system(size: 15, weight: .medium))
+                            .foregroundColor(.claimTextPrimary)
+                            .lineSpacing(3)
                     }
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 
     // MARK: - Common Causes Section
     private var commonCausesSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("Common Situations", systemImage: "list.bullet.circle.fill")
-                .font(.headline)
-                .foregroundColor(Color("Primary"))
+            HStack(spacing: 10) {
+                GradientIconView(
+                    systemName: "list.bullet.circle.fill",
+                    size: 36,
+                    iconSize: 16,
+                    gradient: LinearGradient.claimAccentGradient
+                )
+                Text("Common Situations")
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
+            }
 
             FlowLayout(spacing: 8) {
                 ForEach(practiceArea.commonCauses, id: \.self) { cause in
                     Text(cause)
-                        .font(.caption)
-                        .foregroundColor(.primary)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .background(Color("Background"))
-                        .cornerRadius(8)
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundColor(.claimTextPrimary)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(Color.claimBackground)
+                        .cornerRadius(10)
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 
     // MARK: - FAQ Section
     private var faqSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("Common Questions", systemImage: "questionmark.circle.fill")
-                .font(.headline)
-                .foregroundColor(Color("Primary"))
+            HStack(spacing: 10) {
+                GradientIconView(
+                    systemName: "questionmark.circle.fill",
+                    size: 36,
+                    iconSize: 16,
+                    gradient: LinearGradient.claimPrimaryGradient
+                )
+                Text("Common Questions")
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
+            }
 
-            VStack(spacing: 8) {
+            VStack(spacing: 10) {
                 ForEach(practiceArea.faq, id: \.question) { faq in
                     FAQDisclosureView(
                         faq: faq,
@@ -154,10 +196,14 @@ struct PracticeAreaDetailView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 
     // MARK: - Related Resources Section
@@ -166,42 +212,55 @@ struct PracticeAreaDetailView: View {
         let resources = LegalResource.resources(for: practiceArea.id)
         if !resources.isEmpty {
             VStack(alignment: .leading, spacing: 16) {
-                Label("Related Resources", systemImage: "book.fill")
-                    .font(.headline)
-                    .foregroundColor(Color("Primary"))
+                HStack(spacing: 10) {
+                    GradientIconView(
+                        systemName: "book.fill",
+                        size: 36,
+                        iconSize: 16,
+                        gradient: LinearGradient.claimSuccessGradient
+                    )
+                    Text("Related Resources")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundColor(.claimTextPrimary)
+                }
 
-                VStack(spacing: 8) {
+                VStack(spacing: 10) {
                     ForEach(resources.prefix(3)) { resource in
                         NavigationLink(destination: ResourceDetailView(resource: resource)) {
-                            HStack {
-                                VStack(alignment: .leading, spacing: 4) {
+                            HStack(spacing: 14) {
+                                VStack(alignment: .leading, spacing: 5) {
                                     Text(resource.title)
-                                        .font(.subheadline)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(.primary)
+                                        .font(.system(size: 15, weight: .semibold))
+                                        .foregroundColor(.claimTextPrimary)
                                         .lineLimit(1)
 
                                     Text("\(resource.readTime) min read")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.claimTextMuted)
                                 }
 
                                 Spacer()
 
                                 Image(systemName: "chevron.right")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(.claimTextMuted)
                             }
-                            .padding(.vertical, 8)
+                            .padding(14)
+                            .background(Color.claimBackground)
+                            .cornerRadius(12)
                         }
                     }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
+            .padding(16)
             .background(Color.white)
             .cornerRadius(16)
-            .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.claimBorder, lineWidth: 1)
+            )
+            .claimShadowSmall()
         }
     }
 
@@ -211,16 +270,18 @@ struct PracticeAreaDetailView: View {
             Button(action: {
                 showingContactForm = true
             }) {
-                HStack {
-                    Image(systemName: "envelope.fill")
+                HStack(spacing: 10) {
+                    Image(systemName: "bolt.fill")
+                        .font(.system(size: 18, weight: .bold))
                     Text(practiceArea.category == .inHouse ? "Get Free Consultation" : "Request Referral")
+                        .font(.system(size: 17, weight: .bold))
                 }
-                .font(.headline)
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 54)
-                .background(Color("Primary"))
-                .cornerRadius(12)
+                .background(LinearGradient.claimAccentGradient)
+                .cornerRadius(14)
+                .shadow(color: .claimAccent.opacity(0.35), radius: 12, y: 6)
             }
 
             Button(action: {
@@ -228,20 +289,21 @@ struct PracticeAreaDetailView: View {
                     UIApplication.shared.open(url)
                 }
             }) {
-                HStack {
+                HStack(spacing: 10) {
                     Image(systemName: "phone.fill")
+                        .font(.system(size: 18, weight: .bold))
                     Text("Call Now")
+                        .font(.system(size: 17, weight: .bold))
                 }
-                .font(.headline)
-                .foregroundColor(Color("Primary"))
+                .foregroundColor(.claimPrimary)
                 .frame(maxWidth: .infinity)
                 .frame(height: 54)
                 .background(Color.white)
+                .cornerRadius(14)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color("Primary"), lineWidth: 2)
+                    RoundedRectangle(cornerRadius: 14)
+                        .stroke(Color.claimPrimary, lineWidth: 2)
                 )
-                .cornerRadius(12)
             }
         }
     }
@@ -254,34 +316,34 @@ struct FAQDisclosureView: View {
     let onToggle: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 10) {
             Button(action: onToggle) {
-                HStack {
+                HStack(alignment: .top) {
                     Text(faq.question)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                        .foregroundColor(.primary)
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(.claimTextPrimary)
                         .multilineTextAlignment(.leading)
 
                     Spacer()
 
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.claimTextMuted)
+                        .padding(.top, 3)
                 }
             }
             .buttonStyle(.plain)
 
             if isExpanded {
                 Text(faq.answer)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .padding(.top, 4)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineSpacing(4)
             }
         }
-        .padding()
-        .background(Color("Background"))
-        .cornerRadius(8)
+        .padding(14)
+        .background(Color.claimBackground)
+        .cornerRadius(12)
     }
 }
 

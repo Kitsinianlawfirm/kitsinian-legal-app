@@ -1,6 +1,6 @@
 //
 //  ResourceDetailView.swift
-//  KitsinianLegal
+//  ClaimIt
 //
 
 import SwiftUI
@@ -10,8 +10,8 @@ struct ResourceDetailView: View {
     @State private var showingShareSheet = false
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 20) {
                 // Header
                 headerSection
 
@@ -26,9 +26,9 @@ struct ResourceDetailView: View {
 
                 Spacer(minLength: 40)
             }
-            .padding()
+            .padding(16)
         }
-        .background(Color("Background"))
+        .background(Color.claimBackground)
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -37,6 +37,7 @@ struct ResourceDetailView: View {
                     showingShareSheet = true
                 }) {
                     Image(systemName: "square.and.arrow.up")
+                        .foregroundColor(.claimPrimary)
                 }
             }
         }
@@ -50,36 +51,48 @@ struct ResourceDetailView: View {
         VStack(alignment: .leading, spacing: 16) {
             // Category & Read Time
             HStack {
-                Label(resource.category.displayName, systemImage: resource.category.icon)
-                    .font(.caption)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color("Primary"))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(Color("Primary").opacity(0.1))
-                    .cornerRadius(16)
+                HStack(spacing: 6) {
+                    Image(systemName: resource.category.icon)
+                        .font(.system(size: 12, weight: .semibold))
+                    Text(resource.category.displayName)
+                        .font(.system(size: 12, weight: .bold))
+                }
+                .foregroundColor(.claimPrimary)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(Color.claimPrimary.opacity(0.1))
+                .cornerRadius(16)
 
                 Spacer()
 
-                Label("\(resource.readTime) min read", systemImage: "clock")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                HStack(spacing: 6) {
+                    Image(systemName: "clock")
+                        .font(.system(size: 12))
+                    Text("\(resource.readTime) min read")
+                        .font(.system(size: 12, weight: .medium))
+                }
+                .foregroundColor(.claimTextMuted)
             }
 
             // Title
             Text(resource.title)
-                .font(.title2)
-                .fontWeight(.bold)
+                .font(.system(size: 24, weight: .heavy))
+                .foregroundColor(.claimTextPrimary)
 
             // Summary
             Text(resource.summary)
-                .font(.body)
-                .foregroundColor(.secondary)
+                .font(.system(size: 15, weight: .medium))
+                .foregroundColor(.claimTextSecondary)
+                .lineSpacing(4)
         }
-        .padding()
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 
     // MARK: - Content Section
@@ -87,82 +100,113 @@ struct ResourceDetailView: View {
         VStack(alignment: .leading, spacing: 16) {
             MarkdownView(content: resource.content)
         }
-        .padding()
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 
     // MARK: - Related Practice Areas
     private var relatedAreasSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Related Practice Areas")
-                .font(.headline)
+            HStack(spacing: 10) {
+                GradientIconView(
+                    systemName: "link",
+                    size: 32,
+                    iconSize: 14,
+                    gradient: LinearGradient.claimPrimaryGradient
+                )
+                Text("Related Practice Areas")
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
+            }
 
-            VStack(spacing: 8) {
+            VStack(spacing: 10) {
                 ForEach(resource.practiceAreas, id: \.self) { areaId in
                     if let area = PracticeArea.allAreas.first(where: { $0.id == areaId }) {
                         NavigationLink(destination: PracticeAreaDetailView(practiceArea: area)) {
-                            HStack {
-                                Image(systemName: area.icon)
-                                    .font(.title3)
-                                    .foregroundColor(Color("Primary"))
-                                    .frame(width: 36, height: 36)
-                                    .background(Color("Primary").opacity(0.1))
-                                    .cornerRadius(8)
+                            HStack(spacing: 14) {
+                                GradientIconView(
+                                    systemName: area.icon,
+                                    size: 40,
+                                    iconSize: 18,
+                                    gradient: LinearGradient.claimPrimaryGradient
+                                )
 
                                 Text(area.name)
-                                    .font(.subheadline)
-                                    .foregroundColor(.primary)
+                                    .font(.system(size: 15, weight: .semibold))
+                                    .foregroundColor(.claimTextPrimary)
 
                                 Spacer()
 
                                 Image(systemName: "chevron.right")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(.claimTextMuted)
                             }
-                            .padding()
-                            .background(Color("Background"))
+                            .padding(12)
+                            .background(Color.claimBackground)
                             .cornerRadius(12)
                         }
                     }
                 }
             }
         }
-        .padding()
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 
     // MARK: - CTA Section
     private var ctaSection: some View {
         VStack(spacing: 16) {
+            GradientIconView(
+                systemName: "bolt.fill",
+                size: 56,
+                iconSize: 26,
+                gradient: LinearGradient.claimAccentGradient
+            )
+
             Text("Need Legal Help?")
-                .font(.headline)
+                .font(.system(size: 20, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
 
             Text("If you're dealing with a situation like this, we're here to help.")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.claimTextSecondary)
                 .multilineTextAlignment(.center)
 
             NavigationLink(destination: QuizStartView()) {
-                HStack {
-                    Image(systemName: "questionmark.circle.fill")
+                HStack(spacing: 10) {
+                    Image(systemName: "bolt.fill")
+                        .font(.system(size: 18, weight: .bold))
                     Text("Start Free Case Evaluation")
+                        .font(.system(size: 17, weight: .bold))
                 }
-                .font(.headline)
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 54)
-                .background(Color("Primary"))
-                .cornerRadius(12)
+                .background(LinearGradient.claimAccentGradient)
+                .cornerRadius(14)
+                .shadow(color: .claimAccent.opacity(0.35), radius: 12, y: 6)
             }
         }
-        .padding()
+        .padding(20)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 }
 
@@ -219,62 +263,67 @@ struct MarkdownView: View {
         switch element.type {
         case .h1:
             Text(element.content)
-                .font(.title2)
-                .fontWeight(.bold)
+                .font(.system(size: 22, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
                 .padding(.top, 8)
 
         case .h2:
             Text(element.content)
-                .font(.title3)
-                .fontWeight(.semibold)
+                .font(.system(size: 18, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
                 .padding(.top, 6)
 
         case .h3:
             Text(element.content)
-                .font(.headline)
+                .font(.system(size: 16, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
                 .padding(.top, 4)
 
         case .paragraph:
             Text(formatInlineStyles(element.content))
-                .font(.body)
-                .foregroundColor(.primary)
+                .font(.system(size: 15))
+                .foregroundColor(.claimTextPrimary)
+                .lineSpacing(4)
 
         case .bullet:
-            HStack(alignment: .top, spacing: 8) {
-                Text("•")
-                    .foregroundColor(Color("Primary"))
+            HStack(alignment: .top, spacing: 10) {
+                Circle()
+                    .fill(Color.claimPrimary)
+                    .frame(width: 6, height: 6)
+                    .padding(.top, 7)
                 Text(formatInlineStyles(element.content))
-                    .font(.body)
+                    .font(.system(size: 15))
+                    .foregroundColor(.claimTextPrimary)
             }
 
         case .checkbox:
-            HStack(alignment: .top, spacing: 8) {
+            HStack(alignment: .top, spacing: 10) {
                 Image(systemName: element.isChecked ? "checkmark.square.fill" : "square")
-                    .foregroundColor(element.isChecked ? Color("Primary") : .secondary)
+                    .font(.system(size: 18))
+                    .foregroundColor(element.isChecked ? .claimSuccess : .claimTextMuted)
                 Text(element.content)
-                    .font(.body)
+                    .font(.system(size: 15))
                     .strikethrough(element.isChecked)
-                    .foregroundColor(element.isChecked ? .secondary : .primary)
+                    .foregroundColor(element.isChecked ? .claimTextMuted : .claimTextPrimary)
             }
 
         case .bold:
             Text(element.content)
-                .font(.body)
-                .fontWeight(.semibold)
+                .font(.system(size: 15, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
 
         case .tableRow:
             // Simplified table rendering
             if !element.content.contains("---") {
                 Text(element.content.replacingOccurrences(of: "|", with: "  "))
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    .font(.system(size: 13))
+                    .foregroundColor(.claimTextSecondary)
             }
         }
     }
 
     private func formatInlineStyles(_ text: String) -> AttributedString {
         var result = AttributedString(text)
-        // Basic formatting - could be enhanced
         return result
     }
 }

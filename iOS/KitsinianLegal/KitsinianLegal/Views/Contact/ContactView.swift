@@ -1,17 +1,16 @@
 //
 //  ContactView.swift
-//  KitsinianLegal
+//  ClaimIt
 //
 
 import SwiftUI
-import MapKit
 
 struct ContactView: View {
     @State private var showingLeadForm = false
 
     var body: some View {
         NavigationStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {
                     // Header
                     headerSection
@@ -27,9 +26,10 @@ struct ContactView: View {
 
                     Spacer(minLength: 40)
                 }
-                .padding()
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
             }
-            .background(Color("Background"))
+            .background(Color.claimBackground)
             .navigationTitle("Contact")
             .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $showingLeadForm) {
@@ -42,16 +42,25 @@ struct ContactView: View {
 
     // MARK: - Header Section
     private var headerSection: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 16) {
+            GradientIconView(
+                systemName: "bubble.left.and.bubble.right.fill",
+                size: 72,
+                iconSize: 32,
+                gradient: LinearGradient.claimPrimaryGradient
+            )
+
             Text("Get in Touch")
-                .font(.title2)
-                .fontWeight(.bold)
+                .font(.system(size: 26, weight: .heavy))
+                .foregroundColor(.claimTextPrimary)
 
             Text("We're here to help. Reach out for a free consultation about your legal matter.")
-                .font(.body)
-                .foregroundColor(.secondary)
+                .font(.system(size: 15, weight: .medium))
+                .foregroundColor(.claimTextSecondary)
                 .multilineTextAlignment(.center)
+                .lineSpacing(4)
         }
+        .padding(.vertical, 8)
     }
 
     // MARK: - Contact Methods
@@ -63,7 +72,7 @@ struct ContactView: View {
                 title: "Call Us",
                 subtitle: "Speak with our team directly",
                 actionText: "Call Now",
-                color: Color("Primary")
+                gradient: LinearGradient.claimSuccessGradient
             ) {
                 if let url = URL(string: "tel://+1YOURNUMBER") {
                     UIApplication.shared.open(url)
@@ -76,9 +85,9 @@ struct ContactView: View {
                 title: "Email Us",
                 subtitle: "We respond within 24 hours",
                 actionText: "Send Email",
-                color: .blue
+                gradient: LinearGradient.claimPrimaryGradient
             ) {
-                if let url = URL(string: "mailto:info@kitsinianlaw.com") {
+                if let url = URL(string: "mailto:info@claimit.com") {
                     UIApplication.shared.open(url)
                 }
             }
@@ -89,7 +98,7 @@ struct ContactView: View {
                 title: "Send a Message",
                 subtitle: "Tell us about your situation",
                 actionText: "Fill Out Form",
-                color: .green
+                gradient: LinearGradient.claimAccentGradient
             ) {
                 showingLeadForm = true
             }
@@ -99,108 +108,127 @@ struct ContactView: View {
     // MARK: - Office Info
     private var officeInfoSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("Office Information", systemImage: "building.2.fill")
-                .font(.headline)
-                .foregroundColor(Color("Primary"))
+            HStack(spacing: 10) {
+                GradientIconView(
+                    systemName: "building.2.fill",
+                    size: 36,
+                    iconSize: 16,
+                    gradient: LinearGradient.claimPrimaryGradient
+                )
+                Text("Office Information")
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
+            }
 
             VStack(alignment: .leading, spacing: 16) {
                 // Address
-                HStack(alignment: .top, spacing: 12) {
+                HStack(alignment: .top, spacing: 14) {
                     Image(systemName: "mappin.circle.fill")
-                        .font(.title3)
-                        .foregroundColor(Color("Primary"))
+                        .font(.system(size: 22, weight: .medium))
+                        .foregroundColor(.claimPrimary)
 
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Kitsinian Law Firm, APC")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
+                        Text("ClaimIt Legal")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundColor(.claimTextPrimary)
 
                         Text("Los Angeles, California")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                            .font(.system(size: 13))
+                            .foregroundColor(.claimTextSecondary)
                     }
                 }
 
                 Divider()
 
                 // Hours
-                HStack(alignment: .top, spacing: 12) {
+                HStack(alignment: .top, spacing: 14) {
                     Image(systemName: "clock.fill")
-                        .font(.title3)
-                        .foregroundColor(Color("Primary"))
+                        .font(.system(size: 22, weight: .medium))
+                        .foregroundColor(.claimPrimary)
 
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Office Hours")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundColor(.claimTextPrimary)
 
                         Text("Monday - Friday: 9:00 AM - 6:00 PM")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                            .font(.system(size: 13))
+                            .foregroundColor(.claimTextSecondary)
 
                         Text("Weekends: By appointment")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                            .font(.system(size: 13))
+                            .foregroundColor(.claimTextSecondary)
                     }
                 }
 
                 Divider()
 
                 // Service Area
-                HStack(alignment: .top, spacing: 12) {
+                HStack(alignment: .top, spacing: 14) {
                     Image(systemName: "map.fill")
-                        .font(.title3)
-                        .foregroundColor(Color("Primary"))
+                        .font(.system(size: 22, weight: .medium))
+                        .foregroundColor(.claimPrimary)
 
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Service Area")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundColor(.claimTextPrimary)
 
                         Text("Serving all of California with focus on Southern California")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                            .font(.system(size: 13))
+                            .foregroundColor(.claimTextSecondary)
                     }
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
+        .padding(16)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 
     // MARK: - Quick Form Section
     private var quickFormSection: some View {
         VStack(spacing: 16) {
             Text("Prefer us to contact you?")
-                .font(.headline)
+                .font(.system(size: 17, weight: .bold))
+                .foregroundColor(.claimTextPrimary)
 
             Text("Leave your information and we'll reach out within 24 hours.")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.claimTextSecondary)
                 .multilineTextAlignment(.center)
 
             Button(action: {
                 showingLeadForm = true
             }) {
-                HStack {
-                    Image(systemName: "envelope.fill")
+                HStack(spacing: 10) {
+                    Image(systemName: "bolt.fill")
+                        .font(.system(size: 18, weight: .bold))
                     Text("Request Callback")
+                        .font(.system(size: 17, weight: .bold))
                 }
-                .font(.headline)
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 54)
-                .background(Color("Primary"))
-                .cornerRadius(12)
+                .background(LinearGradient.claimAccentGradient)
+                .cornerRadius(14)
+                .shadow(color: .claimAccent.opacity(0.35), radius: 12, y: 6)
             }
         }
-        .padding()
+        .padding(20)
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 4)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.claimBorder, lineWidth: 1)
+        )
+        .claimShadowSmall()
     }
 }
 
@@ -210,44 +238,47 @@ struct ContactMethodCard: View {
     let title: String
     let subtitle: String
     let actionText: String
-    let color: Color
+    let gradient: LinearGradient
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 16) {
-                Image(systemName: icon)
-                    .font(.title2)
-                    .foregroundColor(color)
-                    .frame(width: 50, height: 50)
-                    .background(color.opacity(0.1))
-                    .cornerRadius(12)
+            HStack(spacing: 14) {
+                GradientIconView(
+                    systemName: icon,
+                    size: 50,
+                    iconSize: 22,
+                    gradient: gradient
+                )
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(title)
-                        .font(.headline)
-                        .foregroundColor(.primary)
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundColor(.claimTextPrimary)
 
                     Text(subtitle)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .font(.system(size: 13))
+                        .foregroundColor(.claimTextSecondary)
                 }
 
                 Spacer()
 
                 Text(actionText)
-                    .font(.caption)
-                    .fontWeight(.semibold)
-                    .foregroundColor(color)
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundColor(.claimPrimary)
                     .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(color.opacity(0.1))
-                    .cornerRadius(16)
+                    .padding(.vertical, 8)
+                    .background(Color.claimPrimary.opacity(0.1))
+                    .cornerRadius(8)
             }
-            .padding()
+            .padding(14)
             .background(Color.white)
             .cornerRadius(16)
-            .shadow(color: .black.opacity(0.05), radius: 8, y: 4)
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.claimBorder, lineWidth: 1)
+            )
+            .claimShadowSmall()
         }
         .buttonStyle(.plain)
     }
