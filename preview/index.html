@@ -708,7 +708,7 @@
             border: none;
             border-radius: 14px;
             color: white;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             letter-spacing: 0.3px;
             cursor: pointer;
@@ -724,6 +724,11 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateY(0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
         }
 
         .btn-primary:hover {
@@ -771,14 +776,12 @@
 
         /* Lightning bolt icon styling */
         .btn-primary .btn-icon {
-            display: inline-block;
-            margin-right: 8px;
-            vertical-align: middle;
+            flex-shrink: 0;
             filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.15));
         }
 
         .btn-primary .btn-text {
-            vertical-align: middle;
+            white-space: nowrap;
         }
 
         @keyframes shimmer {
