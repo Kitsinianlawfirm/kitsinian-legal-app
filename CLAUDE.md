@@ -783,13 +783,25 @@ services:
 - [x] Deploy backend to Render (Live: https://kitsinian-legal-api.onrender.com)
 - [x] Lead Docket integration (auto-syncs leads to CRM)
 - [x] AES-256-GCM encryption for PII data
-- [ ] Configure Lead Docket endpoint URL in Render
+- [x] Configure Lead Docket endpoint URL in Render
 - [ ] Configure SMTP email settings in Render
 - [ ] Create app icon (1024x1024)
 - [ ] Replace placeholder phone/email
 - [ ] Update Privacy Policy email
 - [ ] App Store submission
 - [ ] Port compliance features to iOS Swift code
+
+### In Progress (February 2026)
+- [x] **Accident Mode Phase 1** - HTML Prototype ✅ COMPLETE
+  - [x] Accident Mode Entry Banner (Home screen)
+  - [x] Safety Check screen
+  - [x] Photo Checklist screen (8 types)
+  - [x] Voice Recording screen
+  - [x] Witness Info form
+  - [x] Critical Reminders screen
+  - [x] Evidence Review screen
+  - [x] Submission Success screen
+  - [x] JavaScript functions for full flow
 
 ### Future Improvements (from Feb 2025 Audit)
 - [ ] Move CTA above fold on smaller screens (may improve conversion)
@@ -800,19 +812,154 @@ services:
 
 ---
 
-## Future Development: Accident Mode (Phase 2)
+## Accident Mode (NOW IN DEVELOPMENT)
 
-Post-crash guidance and evidence collection feature:
+**Status:** Phase 1 - HTML Prototype (Active)
+**Start Date:** February 3, 2026
+**Goal:** Post-crash evidence collection that connects directly to attorney
 
-1. **Safety Check** - 911 button, "I'm Safe" proceed
-2. **Photo Documentation** - Guided camera for 7 photo types
-3. **Voice Recording** - Verbal account with transcription
-4. **Auto-Captured Data** - GPS, timestamp, weather
-5. **Critical Reminders** - Don't admit fault, etc.
-6. **Witness Information** - Name/phone collection
-7. **Review & Submit** - E-signature retainer
+### Why This Feature Matters
 
-Mockup: `/preview/accident-mode-concept.html`
+No app currently combines: Crash Detection + Evidence Collection + Attorney Connection
+- Morgan & Morgan: Case management only, NO accident mode
+- Progressive/State Farm: Crash detection, NO evidence collection
+- AxiKit: Evidence forms, NO attorney connection
+- **ClaimIt: ALL THREE** ← Competitive moat
+
+### Implementation Phases
+
+#### Phase 1: HTML Prototype ✅ COMPLETE (February 3, 2026)
+Interactive mockup in `preview/index.html` - fully functional prototype
+
+**8 Screens Built:**
+1. ✅ **Accident Mode Entry** - Red emergency banner on Home tab
+2. ✅ **Safety Check** - "Are you safe?" + 911 button
+3. ✅ **Photo Checklist** - 8 required photos with capture state
+4. ✅ **Voice Recording** - Record button with timer + tips
+5. ✅ **Witness Info** - Add/remove witnesses form
+6. ✅ **Critical Reminders** - DO's and DON'Ts checklists
+7. ✅ **Evidence Review** - Summary with timestamps
+8. ✅ **Submission Success** - Confirmation + next steps
+
+**JavaScript Functions Implemented:**
+- `enterAccidentMode()` / `exitAccidentMode()`
+- `accidentGoToStep(step)` - Navigation with progress
+- `capturePhoto(index, type)` - Photo capture simulation
+- `toggleRecording()` - Voice recording with timer
+- `addWitness()` / `removeWitness()` - Witness management
+- `submitEvidence()` - Submission with loading state
+
+#### Phase 2: iOS Native (4-6 weeks)
+New Swift files for camera, microphone, GPS integration
+
+```
+iOS/KitsinianLegal/Views/AccidentMode/
+├── AccidentModeEntryView.swift
+├── SafetyCheckView.swift
+├── PhotoCaptureView.swift        # AVFoundation camera
+├── VoiceRecordingView.swift      # Speech framework
+├── WitnessFormView.swift
+├── RemindersView.swift
+├── EvidenceReviewView.swift
+└── SubmissionSuccessView.swift
+
+iOS/KitsinianLegal/Services/
+├── CrashDetectionService.swift   # CoreMotion @ 100Hz
+├── PhotoCaptureService.swift
+├── AudioRecordingService.swift
+├── LocationService.swift
+└── EvidenceUploadService.swift
+```
+
+#### Phase 3: Backend Enhancements (1-2 weeks)
+New API endpoints and database tables
+
+```sql
+-- New tables for accident evidence
+CREATE TABLE accident_reports (
+    id UUID PRIMARY KEY,
+    lead_id UUID REFERENCES leads(id),
+    gps_latitude DECIMAL(10, 8),
+    gps_longitude DECIMAL(11, 8),
+    weather_conditions TEXT,
+    timestamp TIMESTAMP WITH TIME ZONE,
+    safety_checklist JSONB,
+    status VARCHAR(50) DEFAULT 'collecting',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE accident_photos (
+    id UUID PRIMARY KEY,
+    accident_id UUID REFERENCES accident_reports(id),
+    photo_type VARCHAR(50),  -- 'scene', 'damage-front', etc.
+    storage_url TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE accident_witnesses (
+    id UUID PRIMARY KEY,
+    accident_id UUID REFERENCES accident_reports(id),
+    name VARCHAR(200),
+    phone VARCHAR(20),
+    email VARCHAR(255)
+);
+```
+
+#### Phase 4: Advanced Features (Future)
+- Crash Detection API (CoreMotion or SafetyKit)
+- AI damage assessment from photos
+- Voice activation ("Hey ClaimIt")
+- Auto-notify emergency contacts
+- Pain diary integration
+
+### Photo Checklist (8 Required Types)
+
+| # | Type | Purpose |
+|---|------|---------|
+| 1 | Scene Overview | Wide shot showing full accident scene |
+| 2 | Your Vehicle - Front | Document all front damage |
+| 3 | Your Vehicle - Side | Document side damage |
+| 4 | Your Vehicle - Rear | Document rear damage |
+| 5 | Other Vehicle Damage | Their vehicle's condition |
+| 6 | License Plates | Both vehicles |
+| 7 | Insurance Cards | Both drivers |
+| 8 | Road Conditions | Signs, weather, hazards |
+
+### Critical Reminders (Legal Protection)
+
+**DO:**
+- ✅ Check for injuries first
+- ✅ Call 911 if anyone is hurt
+- ✅ Take photos of EVERYTHING
+- ✅ Get witness contact info
+- ✅ Get police report number
+- ✅ Seek medical attention within 24 hours
+
+**DON'T:**
+- ❌ Admit fault or apologize
+- ❌ Sign anything at the scene
+- ❌ Give recorded statement to insurance
+- ❌ Accept first settlement offer
+- ❌ Post about accident on social media
+
+### Technical Notes
+
+**Crash Detection Strategy:**
+- Primary: CoreMotion at 100Hz (works on ALL iPhones)
+- Enhanced: SafetyKit entitlement (iPhone 14+ only)
+- Algorithm: >4G acceleration + sudden GPS speed change
+
+**Evidence Storage:**
+- Photos: Cloudinary or AWS S3 (encrypted at rest)
+- Audio: Same + AWS Transcribe for transcription
+- Local: AES-256 encrypted before upload
+
+**UX Principles for Emergency:**
+- Large touch targets (60px+ buttons)
+- High contrast colors (red/white/green)
+- Minimal text, maximum icons
+- Offline-capable (queue uploads)
+- Voice activation option
 
 ---
 
@@ -916,4 +1063,4 @@ open /Users/hkitsinian/kitsinian-legal-app/iOS/KitsinianLegal/KitsinianLegal.xco
 
 ---
 
-*Last Updated: February 3, 2025*
+*Last Updated: February 3, 2026*

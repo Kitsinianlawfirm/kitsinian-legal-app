@@ -2067,6 +2067,86 @@
             margin-bottom: 0;
         }
 
+        /* Accident Mode Consent Card */
+        .consent-card {
+            background: linear-gradient(135deg, #FFF5F0 0%, #FFF9F7 100%);
+            border: 2px solid #FFE4D6;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .consent-icon-container {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8855 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            color: white;
+        }
+
+        .consent-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 8px 0;
+        }
+
+        .consent-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0 0 16px 0;
+        }
+
+        .consent-features {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+            margin-bottom: 16px;
+        }
+
+        .consent-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .consent-feature svg {
+            color: var(--success);
+            flex-shrink: 0;
+        }
+
+        .consent-toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .consent-toggle-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .consent-legal-text {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-top: 16px;
+            text-align: center;
+        }
+
         /* Modal Styles - Glassmorphism */
         .modal-overlay {
             position: absolute;
@@ -2226,6 +2306,127 @@
 
         .modal-btn.secondary:active {
             background: var(--bg-secondary);
+        }
+
+        /* Evidence Reminder Modal Styles */
+        .evidence-reminder-modal .reminder-modal-content {
+            max-width: 380px;
+            text-align: left;
+        }
+
+        .reminder-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .reminder-modal-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .reminder-header h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .reminder-intro {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .reminder-body {
+            margin-bottom: 24px;
+        }
+
+        .reminder-message {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .reminder-evidence-box {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+
+        .reminder-evidence-box h4 {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .reminder-summary-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .reminder-benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .benefit-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--success);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .reminder-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .reminder-actions .modal-btn {
+            margin-bottom: 0;
+        }
+
+        .reminder-dismiss-link {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 13px;
+            cursor: pointer;
+            padding: 8px;
+            text-decoration: underline;
+        }
+
+        .reminder-dismiss-link:hover {
+            color: var(--text-secondary);
+        }
+
+        .reminder-disclaimer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 11px;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-light);
         }
 
         /* Sign-in Divider */
@@ -3339,6 +3540,57 @@
             font-size: 11px;
             color: var(--text-muted);
         }
+
+        /* Accident Mode Settings */
+        .accident-mode-settings {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 16px 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .accident-mode-settings h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .accident-mode-settings h4 svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent);
+        }
+
+        .accident-mode-settings .settings-description {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .accident-mode-settings .notif-toggle {
+            border-bottom: none;
+            padding: 12px 0 8px;
+        }
+
+        .accident-mode-note {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        /* Dark mode */
+        .device-screen.dark-mode .accident-mode-settings {
+            background: var(--dark-card-bg);
+        }
+
         .toggle-switch {
             width: 48px;
             height: 28px;
@@ -5481,6 +5733,1535 @@
             bottom: 0;
             overflow: hidden;
         }
+
+        /* ============================================
+           ACCIDENT MODE STYLES
+           ============================================ */
+
+        /* Emergency Banner on Home Screen */
+        .accident-mode-banner {
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 0 16px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
+        .accident-mode-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+        }
+
+        .accident-mode-banner:active {
+            transform: translateY(0);
+        }
+
+        .accident-banner-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .accident-banner-icon svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+
+        .accident-banner-content {
+            flex: 1;
+        }
+
+        .accident-banner-content h4 {
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            margin: 0 0 2px 0;
+        }
+
+        .accident-banner-content p {
+            color: rgba(255,255,255,0.85);
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .accident-banner-arrow {
+            color: white;
+            opacity: 0.7;
+        }
+
+        /* Accident Mode Screen Container */
+        .accident-mode-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #0F172A;
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .accident-mode-screen.active {
+            display: flex;
+        }
+
+        /* Accident Mode Header */
+        .accident-header {
+            background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+            padding: 60px 20px 20px;
+            text-align: center;
+        }
+
+        .accident-header h1 {
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 0 4px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .accident-header p {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* Accident Mode Content */
+        .accident-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* Safety Check Screen */
+        .safety-check-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100%;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .safety-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(220, 38, 38, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            animation: pulse-safety 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-safety {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(220, 38, 38, 0); }
+        }
+
+        .safety-icon svg {
+            width: 50px;
+            height: 50px;
+            color: #DC2626;
+        }
+
+        .safety-question {
+            color: white;
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 0 12px 0;
+        }
+
+        .safety-subtext {
+            color: rgba(255,255,255,0.7);
+            font-size: 16px;
+            margin: 0 0 32px 0;
+            max-width: 280px;
+        }
+
+        .btn-emergency {
+            width: 100%;
+            max-width: 300px;
+            padding: 20px;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-bottom: 16px;
+        }
+
+        .btn-emergency.btn-911 {
+            background: #DC2626;
+            color: white;
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+        }
+
+        .btn-emergency.btn-911:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(220, 38, 38, 0.5);
+        }
+
+        .btn-emergency.btn-safe {
+            background: #059669;
+            color: white;
+            box-shadow: 0 8px 24px rgba(5, 150, 105, 0.4);
+        }
+
+        .btn-emergency.btn-safe:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(5, 150, 105, 0.5);
+        }
+
+        .btn-emergency svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Progress Bar */
+        .accident-progress {
+            display: flex;
+            gap: 8px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .progress-step {
+            flex: 1;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            transition: background 0.3s ease;
+        }
+
+        .progress-step.completed {
+            background: #059669;
+        }
+
+        .progress-step.active {
+            background: #0066FF;
+        }
+
+        /* Photo Checklist */
+        .photo-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .photo-item {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .photo-item:hover {
+            background: rgba(255,255,255,0.12);
+        }
+
+        .photo-item.captured {
+            border-color: #059669;
+            background: rgba(5, 150, 105, 0.15);
+        }
+
+        .photo-item-number {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .photo-item.captured .photo-item-number {
+            background: #059669;
+        }
+
+        .photo-item.captured .photo-item-number::after {
+            content: '✓';
+        }
+
+        .photo-item.captured .photo-item-number span {
+            display: none;
+        }
+
+        .photo-item-content {
+            flex: 1;
+        }
+
+        .photo-item-content h4 {
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0 0 2px 0;
+        }
+
+        .photo-item-content p {
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .photo-item-action {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .photo-item.captured .photo-item-action {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .photo-item-action svg {
+            width: 20px;
+            height: 20px;
+            color: white;
+        }
+
+        /* Photo Counter */
+        .photo-counter {
+            text-align: center;
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .photo-counter-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .photo-counter-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+
+        /* Voice Recording */
+        .voice-recorder {
+            text-align: center;
+            padding: 24px;
+        }
+
+        .record-button {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #DC2626;
+            border: 4px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 8px 32px rgba(220, 38, 38, 0.4);
+        }
+
+        .record-button:hover {
+            transform: scale(1.05);
+        }
+
+        .record-button.recording {
+            animation: pulse-record 1s ease-in-out infinite;
+            background: #B91C1C;
+        }
+
+        @keyframes pulse-record {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.6); }
+            50% { box-shadow: 0 0 0 20px rgba(220, 38, 38, 0); }
+        }
+
+        .record-button svg {
+            width: 48px;
+            height: 48px;
+            color: white;
+        }
+
+        .record-timer {
+            font-size: 36px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .record-status {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+
+        /* Voice Prompts */
+        .voice-prompts {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 24px;
+        }
+
+        .voice-prompts h4 {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .voice-prompts ul {
+            margin: 0;
+            padding: 0 0 0 20px;
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+        }
+
+        .voice-prompts li {
+            margin-bottom: 6px;
+        }
+
+        .voice-prompts.warning {
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .voice-prompts.warning h4 {
+            color: #FCA5A5;
+        }
+
+        /* Witness Form */
+        .witness-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .witness-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .witness-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .witness-card-header h4 {
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .witness-remove {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .accident-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 15px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        .accident-input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .accident-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .btn-add-witness {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 12px;
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-add-witness:hover {
+            border-color: var(--primary);
+            color: white;
+            background: rgba(0, 102, 255, 0.1);
+        }
+
+        /* Critical Reminders */
+        .reminders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .reminder-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .reminder-section h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reminder-section.do h4 {
+            color: #34D399;
+        }
+
+        .reminder-section.dont h4 {
+            color: #FCA5A5;
+        }
+
+        .reminder-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            color: rgba(255,255,255,0.85);
+            font-size: 14px;
+        }
+
+        .reminder-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .reminder-section.do .reminder-item svg {
+            color: #34D399;
+        }
+
+        .reminder-section.dont .reminder-item svg {
+            color: #FCA5A5;
+        }
+
+        /* Evidence Review */
+        .evidence-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .evidence-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .evidence-section h4 {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .photo-thumb {
+            aspect-ratio: 1;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-thumb svg {
+            width: 24px;
+            height: 24px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .photo-thumb.has-photo {
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+
+        .photo-thumb.has-photo svg {
+            color: white;
+        }
+
+        .auto-data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .auto-data-item {
+            background: rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .auto-data-item label {
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .auto-data-item span {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Success Screen */
+        .success-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100%;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #059669, #047857);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            animation: success-pop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes success-pop {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+
+        .success-icon svg {
+            width: 50px;
+            height: 50px;
+            color: white;
+        }
+
+        .success-title {
+            color: white;
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 0 12px 0;
+        }
+
+        .success-message {
+            color: rgba(255,255,255,0.7);
+            font-size: 16px;
+            margin: 0 0 32px 0;
+            max-width: 300px;
+        }
+
+        /* Accident Mode Footer */
+        .accident-footer {
+            padding: 16px 20px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .btn-accident-primary {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+        }
+
+        .btn-accident-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4);
+        }
+
+        .btn-accident-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-accident-secondary {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-accident-secondary:hover {
+            border-color: rgba(255,255,255,0.5);
+            color: white;
+        }
+
+        /* Close Button */
+        .accident-close {
+            position: absolute;
+            top: 52px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.2s ease;
+        }
+
+        .accident-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Step Title in Content */
+        .step-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+        }
+
+        .step-subtitle {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            margin: 0 0 20px 0;
+        }
+
+        /* Additional Accident Mode Styles */
+
+        .accident-exit-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .accident-exit-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .accident-progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            width: 100%;
+        }
+
+        .accident-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0066FF 0%, #00D4FF 100%);
+            transition: width 0.3s ease;
+        }
+
+        .accident-step {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title-accident {
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            text-align: center;
+        }
+
+        .section-subtitle-accident {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            margin: 0 0 24px 0;
+            text-align: center;
+        }
+
+        .photo-item-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .photo-item.captured .photo-item-icon {
+            background: #059669;
+            color: white;
+        }
+
+        .photo-item-info {
+            flex: 1;
+        }
+
+        .photo-item-info h4 {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 2px 0;
+        }
+
+        .photo-item-info p {
+            color: rgba(255,255,255,0.5);
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .photo-item-status {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .photo-item-status .check-icon {
+            opacity: 0;
+            color: #059669;
+            transition: opacity 0.2s ease;
+        }
+
+        .photo-item.captured .photo-item-status .check-icon {
+            opacity: 1;
+        }
+
+        .photo-counter {
+            text-align: center;
+            padding: 12px;
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 16px;
+        }
+
+        .accident-nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .accident-nav-buttons .btn-accident-secondary {
+            flex: 1;
+            margin-top: 0;
+        }
+
+        .accident-nav-buttons .btn-accident-primary {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .recorder-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .recorder-circle {
+            width: 100px;
+            height: 100px;
+            background: rgba(220, 38, 38, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .recorder-circle.recording {
+            background: rgba(220, 38, 38, 0.4);
+            animation: pulse-recorder 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-recorder {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .recorder-circle svg {
+            color: #DC2626;
+        }
+
+        .recorder-timer {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .record-button {
+            width: 100%;
+            max-width: 200px;
+            padding: 16px 24px;
+            background: #DC2626;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4);
+        }
+
+        .record-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(220, 38, 38, 0.5);
+        }
+
+        .record-button.recording {
+            background: #991B1B;
+            animation: pulse-btn 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse-btn {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.5); }
+            50% { box-shadow: 0 0 0 12px rgba(220, 38, 38, 0); }
+        }
+
+        .recording-tip {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 24px;
+            text-align: left;
+        }
+
+        .recording-tip strong {
+            color: white;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .recording-tip ul {
+            margin: 0;
+            padding-left: 20px;
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+        }
+
+        .recording-tip li {
+            margin-bottom: 4px;
+        }
+
+        .witness-input-group {
+            margin-bottom: 12px;
+        }
+
+        .witness-input-group label {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .witness-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .witness-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .witness-card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .witness-card-info strong {
+            color: white;
+            font-size: 15px;
+        }
+
+        .witness-card-info span {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+        }
+
+        .witness-remove-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 8px;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .witness-remove-btn:hover {
+            background: rgba(220, 38, 38, 0.3);
+            color: #FCA5A5;
+        }
+
+        .witness-skip-note {
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            margin-top: 16px;
+        }
+
+        .do-section {
+            border-left: 4px solid #059669;
+        }
+
+        .dont-section {
+            border-left: 4px solid #DC2626;
+        }
+
+        .do-header {
+            color: #34D399 !important;
+        }
+
+        .dont-header {
+            color: #FCA5A5 !important;
+        }
+
+        .reminder-icon {
+            font-size: 18px;
+        }
+
+        .reminder-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+        }
+
+        .reminder-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .reminder-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .reminder-item span {
+            color: rgba(255,255,255,0.85);
+            font-size: 14px;
+        }
+
+        .reminder-item.dont span {
+            text-decoration: none;
+        }
+
+        .reminder-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: #059669;
+            cursor: pointer;
+        }
+
+        .reminder-item.dont .reminder-checkbox {
+            accent-color: #DC2626;
+        }
+
+        .evidence-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .evidence-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .evidence-icon {
+            font-size: 20px;
+        }
+
+        .evidence-title {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .evidence-card-content {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            padding-left: 30px;
+        }
+
+        .submit-disclaimer {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 16px;
+            background: rgba(0, 102, 255, 0.1);
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .submit-disclaimer svg {
+            color: #60A5FA;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .submit-disclaimer span {
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+        }
+
+        .btn-submit-evidence {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit-evidence .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Compact Evidence Summary */
+        .evidence-summary-compact {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+        }
+
+        .evidence-summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+        }
+
+        .evidence-summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .evidence-summary-row span:first-child {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .evidence-summary-row span:last-child {
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Distribution Options */
+        .distribution-options {
+            margin: 20px 0;
+        }
+
+        .distribution-title {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .distribution-option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .distribution-option:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .distribution-option.selected {
+            background: rgba(0, 196, 140, 0.15);
+            border-color: #00C48C;
+        }
+
+        .distribution-icon {
+            font-size: 28px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .distribution-content {
+            flex: 1;
+        }
+
+        .distribution-content h4 {
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0 0 4px 0;
+        }
+
+        .distribution-content p {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .distribution-check {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+
+        .distribution-option.selected .distribution-check {
+            opacity: 1;
+            background: #00C48C;
+        }
+
+        .distribution-check svg {
+            color: white;
+        }
+
+        /* Distribution Email Input */
+        .distribution-email-input {
+            margin: 16px 0;
+        }
+
+        .distribution-email-input label {
+            display: block;
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .distribution-email-input input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .distribution-email-input input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .distribution-email-input input:focus {
+            outline: none;
+            border-color: #00C48C;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .email-note {
+            color: rgba(255,255,255,0.5);
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        /* Reminder Notice (shown after self-save) */
+        .reminder-notice {
+            display: flex;
+            gap: 14px;
+            padding: 18px;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.15) 0%, rgba(0, 196, 140, 0.1) 100%);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            border-radius: 16px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .reminder-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .reminder-content h4 {
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0 0 6px 0;
+        }
+
+        .reminder-content p {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            margin: 0 0 12px 0;
+            line-height: 1.4;
+        }
+
+        .btn-reminder-cta {
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #0066FF 0%, #0052CC 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-reminder-cta:hover {
+            transform: scale(1.02);
+        }
+
+        .success-container-accident {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100%;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .success-icon-accident {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #059669, #047857);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            animation: success-bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes success-bounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .success-icon-accident svg {
+            color: white;
+        }
+
+        .success-title-accident {
+            color: white;
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 0 12px 0;
+        }
+
+        .success-subtitle-accident {
+            color: rgba(255,255,255,0.7);
+            font-size: 16px;
+            margin: 0 0 32px 0;
+        }
+
+        .next-steps-accident {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            max-width: 320px;
+            text-align: left;
+        }
+
+        .next-steps-accident h3 {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 16px 0;
+            text-align: center;
+        }
+
+        .next-step-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            color: rgba(255,255,255,0.85);
+            font-size: 14px;
+        }
+
+        .next-step-number {
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .emergency-contact-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .emergency-contact-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            margin: 0 0 8px 0;
+        }
+
+        .emergency-phone {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .emergency-phone svg {
+            color: #34D399;
+        }
     </style>
 </head>
 <body>
@@ -5932,6 +7713,72 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Screen 3: Accident Mode Consent -->
+                <div class="onboarding-screen" id="onboarding-3" style="display: none;">
+                    <div class="onboarding-logo" style="margin-bottom: 8px;">
+                        <svg style="width: 40px; height: 40px;"><use href="#logo-mark"/></svg>
+                    </div>
+
+                    <div class="onboarding-question">
+                        <h2>One More Thing 🚨</h2>
+                        <p>Be prepared if you're ever in an accident</p>
+                    </div>
+
+                    <div class="onboarding-content">
+                        <div class="consent-card">
+                            <div class="consent-icon-container">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                    <line x1="12" y1="9" x2="12" y2="13"/>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                </svg>
+                            </div>
+                            <h3>Accident Mode</h3>
+                            <p class="consent-description">If you're in a car accident, instantly capture photos, record what happened, and connect with our legal team.</p>
+
+                            <div class="consent-features">
+                                <div class="consent-feature">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Guided photo checklist</span>
+                                </div>
+                                <div class="consent-feature">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Voice recording</span>
+                                </div>
+                                <div class="consent-feature">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>2-hour attorney response</span>
+                                </div>
+                            </div>
+
+                            <div class="consent-toggle-row">
+                                <span class="consent-toggle-label">Enable Accident Mode</span>
+                                <div class="toggle-switch active" id="accident-consent-toggle" onclick="toggleAccidentConsent(this)"></div>
+                            </div>
+                        </div>
+
+                        <p class="consent-legal-text">
+                            By enabling, you consent to ClaimIt showing an emergency banner on the home screen. Your data stays on your device unless you choose to share it. This does not create an attorney-client relationship.
+                            <br><br>
+                            <span style="font-size: 10px; opacity: 0.7;">ADVERTISEMENT: Kitsinian Law Firm, APC, Los Angeles, CA</span>
+                        </p>
+                    </div>
+
+                    <div class="onboarding-cta">
+                        <div class="onboarding-dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot active"></div>
+                        </div>
+                        <button class="btn-onboarding accent" onclick="completeOnboardingWithConsent()">
+                            Continue
+                        </button>
+                        <div class="skip-link">
+                            <a href="#" onclick="skipOnboarding(); return false;">Skip for now</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="status-bar light" id="status-bar">
@@ -5988,6 +7835,26 @@
                             <div class="stat"><div class="stat-value">$50M+</div><div class="stat-label">Recovered</div></div>
                             <div class="stat"><div class="stat-value">5000+</div><div class="stat-label">Cases</div></div>
                             <div class="stat" onclick="showLegalDisclaimer()"><div class="stat-value">98%</div><div class="stat-label">Success</div><div class="stat-disclaimer">*Results vary</div></div>
+                        </div>
+                    </div>
+
+                    <!-- Accident Mode Emergency Banner (shown when user opts in) -->
+                    <div class="accident-mode-banner" id="accident-mode-banner" onclick="enterAccidentMode()" role="button" tabindex="0" aria-label="Enter Accident Mode - emergency evidence collection" style="display: none;">
+                        <div class="accident-banner-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                        <div class="accident-banner-content">
+                            <h4>🚨 Just Had an Accident?</h4>
+                            <p>Tap here to collect evidence & protect your case</p>
+                        </div>
+                        <div class="accident-banner-arrow">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
                         </div>
                     </div>
 
@@ -6460,6 +8327,27 @@
                                     <div class="toggle-switch" onclick="toggleSwitch(this)" data-pref="push"></div>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Accident Mode Settings -->
+                        <div class="accident-mode-settings">
+                            <h4>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                    <line x1="12" y1="9" x2="12" y2="13"/>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                </svg>
+                                Accident Mode
+                            </h4>
+                            <p class="settings-description">Emergency evidence collection if you're in a car accident</p>
+                            <div class="notif-toggle">
+                                <div class="notif-toggle-label">
+                                    <h5>Enable Accident Mode</h5>
+                                    <p>Show emergency banner on Home screen</p>
+                                </div>
+                                <div class="toggle-switch" id="accident-settings-toggle" onclick="toggleAccidentModeFromSettings(this)" data-pref="accident-mode"></div>
+                            </div>
+                            <p class="accident-mode-note">When enabled, you'll see a quick-access banner to collect photos, voice recordings, and witness info immediately after an accident.</p>
                         </div>
                     </div>
                     <div class="spacer"></div>
@@ -7320,6 +9208,638 @@
                 </div>
             </div>
 
+            <!-- ACCIDENT MODE FULL SCREEN -->
+            <div class="accident-mode-screen" id="accident-mode-screen" role="dialog" aria-modal="true" aria-label="Accident Mode - Emergency Evidence Collection">
+
+                <!-- Accident Mode Header -->
+                <div class="accident-header">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <button class="accident-exit-btn" onclick="exitAccidentMode()" aria-label="Exit Accident Mode">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                        <h1>🚨 ACCIDENT MODE</h1>
+                        <div style="width: 40px;"></div>
+                    </div>
+                    <p id="accident-step-indicator">Step 1 of 7</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="accident-progress-bar">
+                    <div class="accident-progress-fill" id="accident-progress-fill" style="width: 14%;"></div>
+                </div>
+
+                <!-- Accident Mode Content Container -->
+                <div class="accident-content">
+
+                    <!-- STEP 1: Safety Check -->
+                    <div class="accident-step" id="accident-step-1">
+                        <div class="safety-check-container">
+                            <div class="safety-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="safety-question">Are You Safe?</h2>
+                            <p class="safety-subtext">Your safety comes first. If anyone is injured, call 911 immediately.</p>
+
+                            <button class="btn-emergency btn-911" onclick="call911()">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                                Call 911
+                            </button>
+
+                            <button class="btn-emergency btn-safe" onclick="accidentGoToStep(2)">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                I'm Safe - Continue
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Photo Checklist -->
+                    <div class="accident-step" id="accident-step-2" style="display: none;">
+                        <h2 class="section-title-accident">📸 Photo Checklist</h2>
+                        <p class="section-subtitle-accident">Capture these 8 photos to protect your case</p>
+
+                        <div class="photo-checklist" id="photo-checklist">
+                            <div class="photo-item" onclick="capturePhoto(0, 'Scene Overview')" data-captured="false">
+                                <div class="photo-item-number">1</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Scene Overview</h4>
+                                    <p>Wide shot showing full accident scene</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(1, 'Your Vehicle - Front')" data-captured="false">
+                                <div class="photo-item-number">2</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"></path>
+                                        <line x1="9" y1="17" x2="15" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Your Vehicle - Front</h4>
+                                    <p>Document all front damage</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(2, 'Your Vehicle - Side')" data-captured="false">
+                                <div class="photo-item-number">3</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"></path>
+                                        <line x1="9" y1="17" x2="15" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Your Vehicle - Side</h4>
+                                    <p>Document side damage</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(3, 'Your Vehicle - Rear')" data-captured="false">
+                                <div class="photo-item-number">4</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"></path>
+                                        <line x1="9" y1="17" x2="15" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Your Vehicle - Rear</h4>
+                                    <p>Document rear damage</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(4, 'Other Vehicle Damage')" data-captured="false">
+                                <div class="photo-item-number">5</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"></path>
+                                        <line x1="9" y1="17" x2="15" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Other Vehicle Damage</h4>
+                                    <p>Their vehicle's condition</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(5, 'License Plates')" data-captured="false">
+                                <div class="photo-item-number">6</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                                        <path d="M7 12h10"></path>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>License Plates</h4>
+                                    <p>Both vehicles' plates</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(6, 'Insurance Cards')" data-captured="false">
+                                <div class="photo-item-number">7</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Insurance Cards</h4>
+                                    <p>Both drivers' insurance</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(7, 'Road Conditions')" data-captured="false">
+                                <div class="photo-item-number">8</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 19l4-14h8l4 14"></path>
+                                        <path d="M9 19h6"></path>
+                                        <path d="M8 5v3"></path>
+                                        <path d="M16 5v3"></path>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Road Conditions</h4>
+                                    <p>Signs, weather, hazards</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="photo-counter" id="photo-counter">0 of 8 photos captured</div>
+
+                        <div class="accident-nav-buttons">
+                            <button class="btn-accident-secondary" onclick="accidentGoToStep(1)">← Back</button>
+                            <button class="btn-accident-primary" onclick="accidentGoToStep(3)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Voice Recording -->
+                    <div class="accident-step" id="accident-step-3" style="display: none;">
+                        <h2 class="section-title-accident">🎙️ Record Your Statement</h2>
+                        <p class="section-subtitle-accident">Describe what happened while it's fresh in your memory</p>
+
+                        <div class="voice-recorder">
+                            <div class="recorder-visual" id="recorder-visual">
+                                <div class="recorder-circle" id="recorder-circle">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                                    </svg>
+                                </div>
+                                <div class="recorder-timer" id="recorder-timer">0:00</div>
+                            </div>
+
+                            <button class="record-button" id="record-button" onclick="toggleRecording()">
+                                <span id="record-btn-text">Tap to Record</span>
+                            </button>
+
+                            <div class="recording-tip">
+                                <strong>💡 Recording Tips:</strong>
+                                <ul>
+                                    <li>Describe what you saw and heard</li>
+                                    <li>Mention weather and road conditions</li>
+                                    <li>Note the time and location</li>
+                                    <li>Don't admit fault or speculate</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accident-nav-buttons">
+                            <button class="btn-accident-secondary" onclick="accidentGoToStep(2)">← Back</button>
+                            <button class="btn-accident-primary" onclick="accidentGoToStep(4)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Witness Information -->
+                    <div class="accident-step" id="accident-step-4" style="display: none;">
+                        <h2 class="section-title-accident">👥 Witness Information</h2>
+                        <p class="section-subtitle-accident">Collect contact info from anyone who saw the accident</p>
+
+                        <div class="witness-form">
+                            <div class="witness-input-group">
+                                <label for="witness-name">Name</label>
+                                <input type="text" id="witness-name" placeholder="Witness full name" class="accident-input">
+                            </div>
+                            <div class="witness-input-group">
+                                <label for="witness-phone">Phone</label>
+                                <input type="tel" id="witness-phone" placeholder="(555) 123-4567" class="accident-input" maxlength="14">
+                            </div>
+                            <div class="witness-input-group">
+                                <label for="witness-email">Email (optional)</label>
+                                <input type="email" id="witness-email" placeholder="email@example.com" class="accident-input">
+                            </div>
+                            <button class="btn-add-witness" onclick="addWitness()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                                Add Witness
+                            </button>
+                        </div>
+
+                        <div class="witness-list" id="witness-list">
+                            <!-- Witnesses will be added here -->
+                        </div>
+
+                        <p class="witness-skip-note">No witnesses? You can skip this step.</p>
+
+                        <div class="accident-nav-buttons">
+                            <button class="btn-accident-secondary" onclick="accidentGoToStep(3)">← Back</button>
+                            <button class="btn-accident-primary" onclick="accidentGoToStep(5)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: Critical Reminders -->
+                    <div class="accident-step" id="accident-step-5" style="display: none;">
+                        <h2 class="section-title-accident">⚠️ Critical Reminders</h2>
+                        <p class="section-subtitle-accident">Protect your case - review these important tips</p>
+
+                        <div class="reminder-section do-section">
+                            <h3 class="reminder-header do-header">
+                                <span class="reminder-icon">✅</span> DO These Things
+                            </h3>
+                            <div class="reminder-list">
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Check for injuries first</span>
+                                </label>
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Call 911 if anyone is hurt</span>
+                                </label>
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Take photos of EVERYTHING</span>
+                                </label>
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Get witness contact info</span>
+                                </label>
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Get police report number</span>
+                                </label>
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Seek medical attention within 24 hours</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="reminder-section dont-section">
+                            <h3 class="reminder-header dont-header">
+                                <span class="reminder-icon">❌</span> DON'T Do These Things
+                            </h3>
+                            <div class="reminder-list">
+                                <label class="reminder-item dont">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Admit fault or apologize</span>
+                                </label>
+                                <label class="reminder-item dont">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Sign anything at the scene</span>
+                                </label>
+                                <label class="reminder-item dont">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Give recorded statement to insurance</span>
+                                </label>
+                                <label class="reminder-item dont">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Accept first settlement offer</span>
+                                </label>
+                                <label class="reminder-item dont">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Post about accident on social media</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="accident-nav-buttons">
+                            <button class="btn-accident-secondary" onclick="accidentGoToStep(4)">← Back</button>
+                            <button class="btn-accident-primary" onclick="accidentGoToStep(6)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 6: Evidence Review & Distribution -->
+                    <div class="accident-step" id="accident-step-6" style="display: none;">
+                        <h2 class="section-title-accident">📋 Your Evidence Package</h2>
+                        <p class="section-subtitle-accident">Choose how you'd like to save and share</p>
+
+                        <!-- Compact Evidence Summary -->
+                        <div class="evidence-summary-compact">
+                            <div class="evidence-summary-row">
+                                <span>📸 Photos</span>
+                                <span id="evidence-photos-count-compact">0 captured</span>
+                            </div>
+                            <div class="evidence-summary-row">
+                                <span>🎙️ Recording</span>
+                                <span id="evidence-recording-compact">None</span>
+                            </div>
+                            <div class="evidence-summary-row">
+                                <span>👥 Witnesses</span>
+                                <span id="evidence-witnesses-compact">0 added</span>
+                            </div>
+                            <div class="evidence-summary-row">
+                                <span>📍 Location</span>
+                                <span id="evidence-location-compact">Captured</span>
+                            </div>
+                            <div class="evidence-summary-row">
+                                <span>🕐 Timestamp</span>
+                                <span id="evidence-timestamp-compact">-</span>
+                            </div>
+                        </div>
+
+                        <!-- Distribution Options -->
+                        <div class="distribution-options">
+                            <h3 class="distribution-title">What would you like to do?</h3>
+
+                            <div class="distribution-option" id="dist-option-self" onclick="selectDistribution('self')">
+                                <div class="distribution-icon">📧</div>
+                                <div class="distribution-content">
+                                    <h4>Email to Myself</h4>
+                                    <p>Save evidence as a ZIP file for your records</p>
+                                </div>
+                                <div class="distribution-check">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="distribution-option" id="dist-option-lawyer" onclick="selectDistribution('lawyer')">
+                                <div class="distribution-icon">⚖️</div>
+                                <div class="distribution-content">
+                                    <h4>Send to Attorney</h4>
+                                    <p>Get a free case review from our legal team</p>
+                                </div>
+                                <div class="distribution-check">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="distribution-option selected" id="dist-option-both" onclick="selectDistribution('both')">
+                                <div class="distribution-icon">✨</div>
+                                <div class="distribution-content">
+                                    <h4>Both</h4>
+                                    <p>Keep a copy and get legal help (Recommended)</p>
+                                </div>
+                                <div class="distribution-check">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email Input (shown when self or both selected) -->
+                        <div class="distribution-email-input" id="distribution-email-section">
+                            <label for="evidence-email">Your email address</label>
+                            <input type="email" id="evidence-email" placeholder="you@example.com" autocomplete="email">
+                            <p class="email-note">We'll send your evidence package as a secure ZIP file</p>
+                        </div>
+
+                        <div class="submit-disclaimer">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <span id="submit-disclaimer-text">Your evidence will be securely encrypted.</span>
+                        </div>
+
+                        <div class="accident-nav-buttons">
+                            <button class="btn-accident-secondary" onclick="accidentGoToStep(5)">← Back</button>
+                            <button class="btn-accident-primary btn-submit-evidence" id="submit-evidence-btn" onclick="submitEvidence()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                                <span id="submit-btn-text">Send Evidence</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 7: Success (Dynamic based on distribution choice) -->
+                    <div class="accident-step" id="accident-step-7" style="display: none;">
+                        <div class="success-container-accident">
+                            <div class="success-icon-accident">
+                                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <h2 class="success-title-accident" id="success-title">Evidence Saved!</h2>
+                            <p class="success-subtitle-accident" id="success-subtitle">Check your email for the evidence package.</p>
+
+                            <!-- Content for "self" only -->
+                            <div class="next-steps-accident" id="success-self-content" style="display: none;">
+                                <h3>Your Evidence is Safe</h3>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">1</span>
+                                    <span>Check your email for the ZIP file</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">2</span>
+                                    <span>Download and save to a safe location</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">3</span>
+                                    <span>Keep for insurance or legal needs</span>
+                                </div>
+
+                                <div class="reminder-notice" id="reminder-notice">
+                                    <div class="reminder-icon">💡</div>
+                                    <div class="reminder-content">
+                                        <h4>Want a Free Case Review?</h4>
+                                        <p>Our attorneys can review your evidence and let you know if you have a case - at no cost.</p>
+                                        <button class="btn-reminder-cta" onclick="sendToLawyerLater()">
+                                            Send to Attorney
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Content for "lawyer" only -->
+                            <div class="next-steps-accident" id="success-lawyer-content" style="display: none;">
+                                <h3>What Happens Next?</h3>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">1</span>
+                                    <span>Our team reviews your evidence</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">2</span>
+                                    <span>We'll call you within 2 hours</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">3</span>
+                                    <span>We handle everything from here</span>
+                                </div>
+                            </div>
+
+                            <!-- Content for "both" -->
+                            <div class="next-steps-accident" id="success-both-content" style="display: none;">
+                                <h3>You're All Set!</h3>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">📧</span>
+                                    <span>Evidence package sent to your email</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">⚖️</span>
+                                    <span>Legal team reviewing your case</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">📞</span>
+                                    <span>We'll call you within 2 hours</span>
+                                </div>
+                            </div>
+
+                            <div class="emergency-contact-card">
+                                <p>Need immediate help?</p>
+                                <a href="tel:+12135550123" class="emergency-phone">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                    </svg>
+                                    (213) 555-0123
+                                </a>
+                            </div>
+
+                            <button class="btn-accident-primary" onclick="exitAccidentMode()" style="margin-top: 24px;">
+                                Return to Home
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- EVIDENCE REMINDER MODAL (24-48 hours after self-save) -->
+            <div class="modal-overlay evidence-reminder-modal" id="evidence-reminder-modal" onclick="hideReminderModal()" role="dialog" aria-modal="true" aria-labelledby="reminder-modal-title" style="display: none;">
+                <div class="modal-content reminder-modal-content" onclick="event.stopPropagation()">
+                    <button class="modal-close" onclick="hideReminderModal()" aria-label="Close reminder">×</button>
+
+                    <div class="reminder-header">
+                        <div class="reminder-modal-icon">💡</div>
+                        <h2 id="reminder-modal-title">How Are You Feeling?</h2>
+                        <p class="reminder-intro">We hope you're recovering well from your accident.</p>
+                    </div>
+
+                    <div class="reminder-body">
+                        <p class="reminder-message">
+                            You saved accident evidence but haven't connected with a legal professional yet.
+                            Our attorneys can provide a <strong>free, no-obligation case review</strong>.
+                        </p>
+
+                        <div class="reminder-evidence-box">
+                            <h4>Your Saved Evidence</h4>
+                            <div id="reminder-evidence-summary">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+
+                        <div class="reminder-benefits">
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Free case evaluation</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>No obligation to proceed</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Response within 2 hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reminder-actions">
+                        <button class="modal-btn primary" onclick="sendEvidenceFromReminder()">
+                            Yes, Review My Case
+                        </button>
+                        <button class="modal-btn secondary" onclick="dismissReminder(false)">
+                            Remind Me Later
+                        </button>
+                        <button class="reminder-dismiss-link" onclick="dismissReminder(true)">
+                            No thanks, I don't need help
+                        </button>
+                    </div>
+
+                    <p class="reminder-disclaimer">
+                        <span style="font-size: 10px;">ADVERTISEMENT: Kitsinian Law Firm, APC, Los Angeles, CA. This does not create an attorney-client relationship.</span>
+                    </p>
+                </div>
+            </div>
+
             <!-- SIGN-IN MODAL -->
             <div class="modal-overlay" id="signin-modal" onclick="hideSignInModal()" role="dialog" aria-modal="true" aria-labelledby="signin-modal-title">
                 <div class="modal-content" onclick="event.stopPropagation()">
@@ -7817,14 +10337,34 @@
             btn.style.pointerEvents = 'all';
         }
 
+        // Accident Mode consent state
+        let accidentModeConsent = true; // Default ON
+
         function startQuizFromOnboarding() {
             if (!selectedOnboardingOption) return;
 
-            // Store the answer
+            // Store the answer for later
             quizAnswers['step1'] = selectedOnboardingOption;
             quizAnswers.caseType = selectedOnboardingOption;
 
-            // Populate Step 2 with dynamic questions
+            // Navigate to onboarding-3 (Accident Mode consent)
+            document.getElementById('onboarding-2').style.display = 'none';
+            document.getElementById('onboarding-3').style.display = 'block';
+        }
+
+        function toggleAccidentConsent(element) {
+            element.classList.toggle('active');
+            accidentModeConsent = element.classList.contains('active');
+        }
+
+        function completeOnboardingWithConsent() {
+            // Save accident mode preference
+            localStorage.setItem('accidentModeEnabled', accidentModeConsent ? 'true' : 'false');
+
+            // Show/hide the banner on home screen based on preference
+            updateAccidentBannerVisibility();
+
+            // Now complete the quiz setup
             const config = step2Questions[selectedOnboardingOption];
             if (config) {
                 document.getElementById('step2-question').textContent = config.question;
@@ -7853,7 +10393,36 @@
             }, 100);
         }
 
+        function updateAccidentBannerVisibility() {
+            const banner = document.getElementById('accident-mode-banner');
+            const isEnabled = localStorage.getItem('accidentModeEnabled') === 'true';
+            if (banner) {
+                banner.style.display = isEnabled ? 'flex' : 'none';
+            }
+
+            // Also sync the settings toggle
+            const settingsToggle = document.getElementById('accident-settings-toggle');
+            if (settingsToggle) {
+                if (isEnabled) {
+                    settingsToggle.classList.add('active');
+                } else {
+                    settingsToggle.classList.remove('active');
+                }
+            }
+        }
+
+        function toggleAccidentModeFromSettings(element) {
+            element.classList.toggle('active');
+            const isEnabled = element.classList.contains('active');
+            localStorage.setItem('accidentModeEnabled', isEnabled ? 'true' : 'false');
+            updateAccidentBannerVisibility();
+            showToast(isEnabled ? 'Accident Mode enabled' : 'Accident Mode disabled', 'success');
+        }
+
         function skipOnboarding() {
+            // Save default accident mode preference (enabled)
+            localStorage.setItem('accidentModeEnabled', 'true');
+            updateAccidentBannerVisibility();
             document.getElementById('onboarding').classList.add('hidden');
         }
 
@@ -8637,6 +11206,11 @@
             initializeSocialProof();
         }
 
+        // Initialize accident mode banner visibility on load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAccidentBannerVisibility();
+        });
+
         // ==================== ENHANCED SUBMIT WITH ACHIEVEMENTS ====================
 
         // Override submitLead to show achievement
@@ -8786,6 +11360,580 @@
                 }
             });
         });
+
+        // ========================================
+        // ACCIDENT MODE FUNCTIONS
+        // ========================================
+
+        let accidentModeActive = false;
+        let currentAccidentStep = 1;
+        let accidentPhotos = [false, false, false, false, false, false, false, false];
+        let accidentWitnesses = [];
+        let isRecording = false;
+        let recordingTime = 0;
+        let recordingInterval = null;
+        let hasRecording = false;
+
+        // Enter Accident Mode
+        function enterAccidentMode() {
+            accidentModeActive = true;
+            currentAccidentStep = 1;
+            const screen = document.getElementById('accident-mode-screen');
+            screen.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Reset all state
+            accidentPhotos = [false, false, false, false, false, false, false, false];
+            accidentWitnesses = [];
+            hasRecording = false;
+            isRecording = false;
+            recordingTime = 0;
+
+            // Reset UI
+            resetPhotoChecklist();
+            document.getElementById('witness-list').innerHTML = '';
+            document.querySelectorAll('.reminder-checkbox').forEach(cb => cb.checked = false);
+
+            // Update timestamp
+            updateEvidenceTimestamp();
+
+            // Show step 1
+            accidentGoToStep(1);
+
+            showToast('Accident Mode activated - Stay calm', 'info');
+        }
+
+        // Exit Accident Mode
+        function exitAccidentMode() {
+            if (accidentModeActive && currentAccidentStep < 7) {
+                if (!confirm('Are you sure you want to exit? Your evidence will not be saved.')) {
+                    return;
+                }
+            }
+
+            accidentModeActive = false;
+            const screen = document.getElementById('accident-mode-screen');
+            screen.classList.remove('active');
+            document.body.style.overflow = '';
+
+            // Stop recording if active
+            if (isRecording) {
+                toggleRecording();
+            }
+        }
+
+        // Navigate between accident steps
+        function accidentGoToStep(step) {
+            // Hide all steps
+            for (let i = 1; i <= 7; i++) {
+                const stepEl = document.getElementById('accident-step-' + i);
+                if (stepEl) {
+                    stepEl.style.display = 'none';
+                }
+            }
+
+            // Show target step
+            const targetStep = document.getElementById('accident-step-' + step);
+            if (targetStep) {
+                targetStep.style.display = 'block';
+            }
+
+            currentAccidentStep = step;
+
+            // Update progress
+            const progress = Math.round((step / 7) * 100);
+            document.getElementById('accident-progress-fill').style.width = progress + '%';
+            document.getElementById('accident-step-indicator').textContent = 'Step ' + step + ' of 7';
+
+            // Update evidence review if on step 6
+            if (step === 6) {
+                updateEvidenceReview();
+                updateEvidenceSummaryCompact();
+                selectDistribution('both'); // Default to "both" option
+            }
+        }
+
+        // Call 911
+        function call911() {
+            if (confirm('This will open your phone dialer to call 911. Continue?')) {
+                window.location.href = 'tel:911';
+            }
+        }
+
+        // Capture photo (simulated for prototype)
+        function capturePhoto(index, photoType) {
+            const photoItems = document.querySelectorAll('.photo-item');
+            const item = photoItems[index];
+
+            if (!item) return;
+
+            // Toggle captured state
+            const wasCaptured = accidentPhotos[index];
+            accidentPhotos[index] = !wasCaptured;
+
+            if (accidentPhotos[index]) {
+                item.classList.add('captured');
+                item.setAttribute('data-captured', 'true');
+                showToast(photoType + ' captured!', 'success');
+            } else {
+                item.classList.remove('captured');
+                item.setAttribute('data-captured', 'false');
+            }
+
+            updatePhotoCounter();
+        }
+
+        // Reset photo checklist
+        function resetPhotoChecklist() {
+            const photoItems = document.querySelectorAll('.photo-item');
+            photoItems.forEach((item, index) => {
+                item.classList.remove('captured');
+                item.setAttribute('data-captured', 'false');
+                accidentPhotos[index] = false;
+            });
+            updatePhotoCounter();
+        }
+
+        // Update photo counter
+        function updatePhotoCounter() {
+            const count = accidentPhotos.filter(p => p).length;
+            document.getElementById('photo-counter').textContent = count + ' of 8 photos captured';
+        }
+
+        // Toggle voice recording
+        function toggleRecording() {
+            const button = document.getElementById('record-button');
+            const btnText = document.getElementById('record-btn-text');
+            const circle = document.getElementById('recorder-circle');
+            const timer = document.getElementById('recorder-timer');
+
+            if (!isRecording) {
+                // Start recording
+                isRecording = true;
+                hasRecording = true;
+                recordingTime = 0;
+                button.classList.add('recording');
+                circle.classList.add('recording');
+                btnText.textContent = 'Tap to Stop';
+
+                recordingInterval = setInterval(() => {
+                    recordingTime++;
+                    const minutes = Math.floor(recordingTime / 60);
+                    const seconds = recordingTime % 60;
+                    timer.textContent = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+                }, 1000);
+
+                showToast('Recording started...', 'info');
+            } else {
+                // Stop recording
+                isRecording = false;
+                button.classList.remove('recording');
+                circle.classList.remove('recording');
+                btnText.textContent = 'Tap to Record Again';
+
+                clearInterval(recordingInterval);
+                showToast('Recording saved!', 'success');
+            }
+        }
+
+        // Format phone number for witness input
+        function formatWitnessPhone(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length > 10) value = value.substring(0, 10);
+
+            if (value.length > 6) {
+                input.value = '(' + value.substring(0, 3) + ') ' + value.substring(3, 6) + '-' + value.substring(6);
+            } else if (value.length > 3) {
+                input.value = '(' + value.substring(0, 3) + ') ' + value.substring(3);
+            } else if (value.length > 0) {
+                input.value = '(' + value;
+            }
+        }
+
+        // Add witness
+        function addWitness() {
+            const nameInput = document.getElementById('witness-name');
+            const phoneInput = document.getElementById('witness-phone');
+            const emailInput = document.getElementById('witness-email');
+
+            const name = nameInput.value.trim();
+            const phone = phoneInput.value.trim();
+            const email = emailInput.value.trim();
+
+            if (!name) {
+                showToast('Please enter witness name', 'error');
+                nameInput.focus();
+                return;
+            }
+
+            if (!phone || phone.replace(/\D/g, '').length < 10) {
+                showToast('Please enter valid phone number', 'error');
+                phoneInput.focus();
+                return;
+            }
+
+            const witness = { name, phone, email, id: Date.now() };
+            accidentWitnesses.push(witness);
+
+            renderWitnessList();
+
+            // Clear inputs
+            nameInput.value = '';
+            phoneInput.value = '';
+            emailInput.value = '';
+
+            showToast('Witness added!', 'success');
+        }
+
+        // Render witness list
+        function renderWitnessList() {
+            const container = document.getElementById('witness-list');
+            container.innerHTML = accidentWitnesses.map((w, index) => `
+                <div class="witness-card">
+                    <div class="witness-card-info">
+                        <strong>${escapeHtml(w.name)}</strong>
+                        <span>${escapeHtml(w.phone)}</span>
+                        ${w.email ? '<span>' + escapeHtml(w.email) + '</span>' : ''}
+                    </div>
+                    <button class="witness-remove-btn" onclick="removeWitness(${index})" aria-label="Remove witness">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Remove witness
+        function removeWitness(index) {
+            accidentWitnesses.splice(index, 1);
+            renderWitnessList();
+            showToast('Witness removed', 'info');
+        }
+
+        // Update reminder progress
+        function updateReminderProgress() {
+            // Visual feedback only for prototype
+            const checkboxes = document.querySelectorAll('.reminder-checkbox:checked');
+            if (checkboxes.length > 0) {
+                // Could add progress indicator here
+            }
+        }
+
+        // Update evidence review
+        function updateEvidenceReview() {
+            const photoCount = accidentPhotos.filter(p => p).length;
+            document.getElementById('evidence-photos-count').textContent = photoCount + ' photos captured';
+
+            const recordingStatus = hasRecording ?
+                'Recording saved (' + document.getElementById('recorder-timer').textContent + ')' :
+                'No recording';
+            document.getElementById('evidence-recording-status').textContent = recordingStatus;
+
+            document.getElementById('evidence-witnesses-count').textContent =
+                accidentWitnesses.length + ' witness' + (accidentWitnesses.length !== 1 ? 'es' : '') + ' added';
+
+            updateEvidenceTimestamp();
+        }
+
+        // Update evidence timestamp
+        function updateEvidenceTimestamp() {
+            const now = new Date();
+            const formatted = now.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+            const timestampEl = document.getElementById('evidence-timestamp');
+            if (timestampEl) {
+                timestampEl.textContent = formatted;
+            }
+        }
+
+        // Distribution selection state
+        let selectedDistribution = 'both'; // Default to "both"
+
+        // Select distribution option
+        function selectDistribution(option) {
+            selectedDistribution = option;
+
+            // Update visual selection
+            ['self', 'lawyer', 'both'].forEach(opt => {
+                const el = document.getElementById('dist-option-' + opt);
+                if (el) {
+                    el.classList.toggle('selected', opt === option);
+                }
+            });
+
+            // Show/hide email input based on selection
+            const emailSection = document.getElementById('distribution-email-section');
+            if (emailSection) {
+                emailSection.style.display = (option === 'self' || option === 'both') ? 'block' : 'none';
+            }
+
+            // Update disclaimer text and button text
+            const disclaimerText = document.getElementById('submit-disclaimer-text');
+            const submitBtnText = document.getElementById('submit-btn-text');
+
+            if (option === 'self') {
+                disclaimerText.textContent = 'Your evidence will be securely packaged and emailed to you.';
+                submitBtnText.textContent = 'Email My Evidence';
+            } else if (option === 'lawyer') {
+                disclaimerText.textContent = 'Your evidence will be securely encrypted and sent to our legal team.';
+                submitBtnText.textContent = 'Send to Attorney';
+            } else {
+                disclaimerText.textContent = 'Your evidence will be sent to you and our legal team.';
+                submitBtnText.textContent = 'Send Evidence';
+            }
+        }
+
+        // Update compact evidence summary
+        function updateEvidenceSummaryCompact() {
+            const photoCount = accidentPhotos.filter(p => p).length;
+
+            const photosEl = document.getElementById('evidence-photos-count-compact');
+            if (photosEl) photosEl.textContent = photoCount + ' captured';
+
+            const recordingEl = document.getElementById('evidence-recording-compact');
+            if (recordingEl) recordingEl.textContent = hasRecording ? 'Recorded' : 'None';
+
+            const witnessesEl = document.getElementById('evidence-witnesses-compact');
+            if (witnessesEl) witnessesEl.textContent = accidentWitnesses.length + ' added';
+
+            const timestampEl = document.getElementById('evidence-timestamp-compact');
+            if (timestampEl) {
+                const now = new Date();
+                timestampEl.textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            }
+        }
+
+        // Submit evidence (handles distribution options)
+        function submitEvidence() {
+            const photoCount = accidentPhotos.filter(p => p).length;
+
+            if (photoCount === 0 && !hasRecording && accidentWitnesses.length === 0) {
+                if (!confirm('You haven\'t collected any evidence. Submit anyway?')) {
+                    return;
+                }
+            }
+
+            // Check email if required
+            if (selectedDistribution === 'self' || selectedDistribution === 'both') {
+                const emailInput = document.getElementById('evidence-email');
+                const email = emailInput?.value?.trim();
+                if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showToast('Please enter a valid email address', 'error');
+                    emailInput?.focus();
+                    return;
+                }
+            }
+
+            // Show loading state
+            const submitBtn = document.getElementById('submit-evidence-btn');
+            const submitBtnText = document.getElementById('submit-btn-text');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> Processing...';
+
+            // Simulate submission delay
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    <span id="submit-btn-text">Send Evidence</span>
+                `;
+
+                // Update success screen based on distribution choice
+                updateSuccessScreen();
+
+                // Store reminder if only saved to self (for 24-48 hour follow-up)
+                if (selectedDistribution === 'self') {
+                    scheduleEvidenceReminder();
+                }
+
+                // Go to success screen
+                accidentGoToStep(7);
+
+                // Show appropriate toast
+                if (selectedDistribution === 'self') {
+                    showToast('Evidence package sent to your email!', 'success');
+                } else if (selectedDistribution === 'lawyer') {
+                    showToast('Evidence sent to our legal team!', 'success');
+                } else {
+                    showToast('Evidence saved and sent to legal team!', 'success');
+                }
+            }, 2000);
+        }
+
+        // Update success screen based on distribution choice
+        function updateSuccessScreen() {
+            const title = document.getElementById('success-title');
+            const subtitle = document.getElementById('success-subtitle');
+            const selfContent = document.getElementById('success-self-content');
+            const lawyerContent = document.getElementById('success-lawyer-content');
+            const bothContent = document.getElementById('success-both-content');
+
+            // Hide all content sections
+            if (selfContent) selfContent.style.display = 'none';
+            if (lawyerContent) lawyerContent.style.display = 'none';
+            if (bothContent) bothContent.style.display = 'none';
+
+            if (selectedDistribution === 'self') {
+                title.textContent = 'Evidence Saved!';
+                subtitle.textContent = 'Check your email for the secure evidence package.';
+                if (selfContent) selfContent.style.display = 'block';
+            } else if (selectedDistribution === 'lawyer') {
+                title.textContent = 'Evidence Submitted!';
+                subtitle.textContent = 'Our legal team will review your case within 2 hours.';
+                if (lawyerContent) lawyerContent.style.display = 'block';
+            } else {
+                title.textContent = "You're Protected!";
+                subtitle.textContent = 'Evidence saved to your email and sent to our legal team.';
+                if (bothContent) bothContent.style.display = 'block';
+            }
+        }
+
+        // Schedule gentle reminder (24-48 hours after self-save)
+        function scheduleEvidenceReminder() {
+            // Store timestamp for reminder system
+            const reminderData = {
+                timestamp: Date.now(),
+                email: document.getElementById('evidence-email')?.value,
+                photoCount: accidentPhotos.filter(p => p).length,
+                hasRecording: hasRecording,
+                witnessCount: accidentWitnesses.length
+            };
+            localStorage.setItem('evidenceReminder', JSON.stringify(reminderData));
+
+            // In production, this would trigger a push notification or email
+            // For prototype, just log it
+            console.log('Reminder scheduled for evidence follow-up:', reminderData);
+        }
+
+        // Send to lawyer after initially saving only to self
+        function sendToLawyerLater() {
+            const reminderNotice = document.getElementById('reminder-notice');
+            if (reminderNotice) {
+                reminderNotice.innerHTML = `
+                    <div class="reminder-icon">✅</div>
+                    <div class="reminder-content">
+                        <h4>Sent to Legal Team!</h4>
+                        <p>Our attorneys will review your evidence and contact you within 2 hours.</p>
+                    </div>
+                `;
+            }
+
+            // Clear the reminder since they've now sent to lawyer
+            localStorage.removeItem('evidenceReminder');
+
+            showToast('Evidence sent to our legal team!', 'success');
+        }
+
+        // Check for pending evidence reminder on app load
+        function checkEvidenceReminder() {
+            const reminderJSON = localStorage.getItem('evidenceReminder');
+            if (!reminderJSON) return;
+
+            const reminder = JSON.parse(reminderJSON);
+            const hoursSinceAccident = (Date.now() - reminder.timestamp) / (1000 * 60 * 60);
+
+            // Show reminder if 24-48 hours have passed
+            // For prototype demo, we'll also show if it's been more than 10 seconds
+            const shouldShowReminder = hoursSinceAccident >= 24 ||
+                (window.location.search.includes('demo=reminder')); // Demo mode for testing
+
+            if (shouldShowReminder) {
+                showEvidenceReminderModal(reminder);
+            }
+        }
+
+        // Show gentle reminder modal
+        function showEvidenceReminderModal(reminder) {
+            const modal = document.getElementById('evidence-reminder-modal');
+            if (modal) {
+                // Update modal content with evidence summary
+                const evidenceSummary = document.getElementById('reminder-evidence-summary');
+                if (evidenceSummary) {
+                    evidenceSummary.innerHTML = `
+                        <div class="reminder-summary-item">
+                            <span>📸</span>
+                            <span>${reminder.photoCount} photos</span>
+                        </div>
+                        <div class="reminder-summary-item">
+                            <span>🎙️</span>
+                            <span>${reminder.hasRecording ? 'Voice recording' : 'No recording'}</span>
+                        </div>
+                        <div class="reminder-summary-item">
+                            <span>👥</span>
+                            <span>${reminder.witnessCount} witnesses</span>
+                        </div>
+                    `;
+                }
+                modal.style.display = 'flex';
+            }
+        }
+
+        // Hide reminder modal
+        function hideReminderModal() {
+            const modal = document.getElementById('evidence-reminder-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Send evidence from reminder modal
+        function sendEvidenceFromReminder() {
+            hideReminderModal();
+            localStorage.removeItem('evidenceReminder');
+            showToast('Evidence sent to our legal team for review!', 'success');
+        }
+
+        // Dismiss reminder (ask again later or dismiss permanently)
+        function dismissReminder(permanent = false) {
+            hideReminderModal();
+            if (permanent) {
+                localStorage.removeItem('evidenceReminder');
+            } else {
+                // Update timestamp to delay next reminder by 24 hours
+                const reminderJSON = localStorage.getItem('evidenceReminder');
+                if (reminderJSON) {
+                    const reminder = JSON.parse(reminderJSON);
+                    reminder.timestamp = Date.now();
+                    localStorage.setItem('evidenceReminder', JSON.stringify(reminder));
+                }
+            }
+        }
+
+        // Add event listener for witness phone formatting
+        document.addEventListener('DOMContentLoaded', function() {
+            const witnessPhoneInput = document.getElementById('witness-phone');
+            if (witnessPhoneInput) {
+                witnessPhoneInput.addEventListener('input', function() {
+                    formatWitnessPhone(this);
+                });
+            }
+
+            // Check for pending evidence reminder (24-48 hours after self-save)
+            // Small delay to let app fully load first
+            setTimeout(checkEvidenceReminder, 1000);
+        });
+
+        // Handle Escape key for accident mode
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && accidentModeActive) {
+                exitAccidentMode();
+            }
+        });
+
+        // ========================================
+        // END ACCIDENT MODE FUNCTIONS
+        // ========================================
 
         // Skip to main content link
         document.addEventListener('DOMContentLoaded', function() {
