@@ -99,30 +99,29 @@ const createLead = async (req, res) => {
       logger.error('Failed to send lead confirmation email:', emailError);
     }
 
-    // Sync to Lead Docket CRM (if configured)
-    let leadDocketResult = null;
-    try {
-      leadDocketResult = await leadDocketService.sendToLeadDocket({
-        id,
-        firstName,
-        lastName,
-        email,
-        phone,
-        preferredContact,
-        practiceArea,
-        practiceAreaCategory,
-        urgency,
-        description,
-        quizAnswers,
-        source,
-        createdAt
-      });
-    } catch (ldError) {
+    // Sync to Lead Docket CRM (fire-and-forget - don't block response)
+    // Lead is already saved to database, so we can respond immediately
+    leadDocketService.sendToLeadDocket({
+      id,
+      firstName,
+      lastName,
+      email,
+      phone,
+      preferredContact,
+      practiceArea,
+      practiceAreaCategory,
+      urgency,
+      description,
+      quizAnswers,
+      source,
+      createdAt
+    }).then(result => {
+      logger.info('Lead Docket sync completed', { id, success: result?.success });
+    }).catch(ldError => {
       logger.error('Failed to sync lead to Lead Docket:', ldError);
-      // Don't fail the request if Lead Docket sync fails
-    }
+    });
 
-    logger.info('New lead created', { id, practiceArea, urgency, leadDocket: leadDocketResult?.success });
+    logger.info('New lead created', { id, practiceArea, urgency });
 
     res.status(201).json({
       success: true,
@@ -135,10 +134,7 @@ const createLead = async (req, res) => {
     logger.error('Error creating lead:', error);
     res.status(500).json({
       success: false,
-      message: 'Failed to submit your request. Please try again.',
-      // Temporarily include error for debugging
-      errorType: error.name,
-      errorDetail: error.message
+      message: 'Failed to submit your request. Please try again.'
     });
   }
 };
