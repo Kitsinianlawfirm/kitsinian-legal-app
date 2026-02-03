@@ -92,20 +92,23 @@
 | Home | `screen-home` | Hero, quick actions, practice areas |
 | Claim | `screen-claim` | Quiz flow for case evaluation |
 | Learn | `screen-learn` | Resource library and articles |
+| Accident | `screen-accident` | Accident Mode settings & manual entry |
 | Account | `screen-account` | User profile, case tracking |
-| Onboarding | `onboarding` | 2-screen welcome flow |
+| Onboarding | `onboarding` | Legal agreement + welcome flow |
 
 ### Navigation Flow
 
 ```
 App Launch
     └── Onboarding (if first time)
-        ├── Screen 1: Welcome, trust badges, value props
-        └── Screen 2: Incident type selection → Claim tab
-    └── Tab Navigation (4 tabs)
+        ├── Screen 1: Legal Agreement (scroll-to-accept, CA Rule 7.3 consent)
+        ├── Screen 2: Welcome, trust badges, value props
+        └── Screen 3: Incident type selection → Claim tab
+    └── Tab Navigation (5 tabs)
         ├── Home → Practice area detail screens
         ├── Claim → Quiz flow (5 steps)
         ├── Learn → Article detail screens
+        ├── Accident → Accident Mode settings, manual entry
         └── Account → My Cases, sign in/out
 
 Detail Screens (slide from right):
@@ -198,10 +201,19 @@ Status badges: `.submitted`, `.under-review`, `.qualified`, `.matched`, `.retain
 - `startQuizWithTopic(topic)` - Start quiz from article CTA
 
 **Onboarding:**
-- `nextOnboarding()` - Go from screen 1 to screen 2
+- `checkLegalScroll()` - Check if user scrolled to bottom of legal agreement
+- `proceedFromConsent()` - User agreed to terms, proceed to welcome screen
+- `nextOnboarding()` - Go from welcome to incident selection
 - `selectOnboardingOption(element, value)` - Select incident type
 - `startQuizFromOnboarding()` - Complete onboarding and start quiz
 - `skipOnboarding()` - Skip directly to home
+
+**Accident Mode:**
+- `enterAccidentMode()` - Enter emergency evidence collection flow
+- `exitAccidentMode()` - Exit and return to normal app
+- `toggleAccidentMode(element)` - Toggle accident mode on/off from Accident tab
+- `updateAccidentBannerVisibility()` - Sync UI state across all accident mode controls
+- `accidentGoToStep(step)` - Navigate through accident mode steps
 
 **Authentication:**
 - `toggleSignIn()` - Show account or sign-in modal
@@ -776,6 +788,9 @@ services:
 - [x] My Cases tracking with status badges
 - [x] Compliance features (Privacy, Terms, Disclaimers)
 - [x] Accessibility improvements
+- [x] Scroll-to-accept legal agreement with CA Rule 7.3 consent
+- [x] Accident Mode tab with settings and manual entry
+- [x] Dark mode support
 
 ### Pending
 - [ ] Install Xcode for iOS development
@@ -793,7 +808,8 @@ services:
 
 ### In Progress (February 2026)
 - [x] **Accident Mode Phase 1** - HTML Prototype ✅ COMPLETE
-  - [x] Accident Mode Entry Banner (Home screen)
+  - [x] Dedicated Accident Mode tab (between Learn and Account)
+  - [x] Accident Mode screen with status, toggle, and manual entry
   - [x] Safety Check screen
   - [x] Photo Checklist screen (8 types)
   - [x] Voice Recording screen
@@ -802,6 +818,11 @@ services:
   - [x] Evidence Review screen
   - [x] Submission Success screen
   - [x] JavaScript functions for full flow
+- [x] **Legal Compliance Updates** ✅ COMPLETE
+  - [x] Scroll-to-accept legal agreement (onboarding screen 1)
+  - [x] CA Rule 7.3 consent to attorney solicitation language
+  - [x] Accident Mode enabled by default on agreement acceptance
+  - [x] Toggle to disable Accident Mode in Settings or Accident tab
 
 ### Future Improvements (from Feb 2025 Audit)
 - [ ] Move CTA above fold on smaller screens (may improve conversion)
@@ -812,9 +833,9 @@ services:
 
 ---
 
-## Accident Mode (NOW IN DEVELOPMENT)
+## Accident Mode (PHASE 1 COMPLETE)
 
-**Status:** Phase 1 - HTML Prototype (Active)
+**Status:** Phase 1 - HTML Prototype ✅ COMPLETE
 **Start Date:** February 3, 2026
 **Goal:** Post-crash evidence collection that connects directly to attorney
 
@@ -826,13 +847,18 @@ No app currently combines: Crash Detection + Evidence Collection + Attorney Conn
 - AxiKit: Evidence forms, NO attorney connection
 - **ClaimIt: ALL THREE** ← Competitive moat
 
+### Access Points
+- **Accident Tab** - Dedicated tab in bottom navigation (between Learn and Account)
+- **Phone Notification** - When crash is detected, notification links directly to Accident Mode
+- **Manual Entry** - "Enter Accident Mode Now" button in Accident tab
+
 ### Implementation Phases
 
 #### Phase 1: HTML Prototype ✅ COMPLETE (February 3, 2026)
 Interactive mockup in `preview/index.html` - fully functional prototype
 
-**8 Screens Built:**
-1. ✅ **Accident Mode Entry** - Red emergency banner on Home tab
+**9 Screens Built:**
+1. ✅ **Accident Tab Screen** - Settings, toggle, status, manual entry button
 2. ✅ **Safety Check** - "Are you safe?" + 911 button
 3. ✅ **Photo Checklist** - 8 required photos with capture state
 4. ✅ **Voice Recording** - Record button with timer + tips
@@ -843,6 +869,8 @@ Interactive mockup in `preview/index.html` - fully functional prototype
 
 **JavaScript Functions Implemented:**
 - `enterAccidentMode()` / `exitAccidentMode()`
+- `toggleAccidentMode(element)` - Enable/disable from Accident tab
+- `updateAccidentBannerVisibility()` - Sync UI state
 - `accidentGoToStep(step)` - Navigation with progress
 - `capturePhoto(index, type)` - Photo capture simulation
 - `toggleRecording()` - Voice recording with timer
