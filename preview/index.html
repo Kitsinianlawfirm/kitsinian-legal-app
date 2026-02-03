@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClaimIt - Full Interactive Preview</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -4241,6 +4242,9 @@
     </style>
 </head>
 <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="visually-hidden" style="position: absolute; top: -40px; left: 0; background: var(--primary); color: white; padding: 8px 16px; z-index: 10000; text-decoration: none; font-weight: 600;" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
+
     <!-- SVG Icon Definitions -->
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <defs>
@@ -4696,7 +4700,7 @@
             </div>
 
             <!-- Toast Container -->
-            <div class="toast-container" id="toastContainer">
+            <div class="toast-container" id="toastContainer" role="status" aria-live="polite" aria-atomic="true">
                 <div class="toast" id="toast">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
@@ -4706,7 +4710,7 @@
                 </div>
             </div>
 
-            <div class="screen-container">
+            <div class="screen-container" id="main-content" role="main">
                 <!-- HOME SCREEN -->
                 <div class="screen home-screen active" id="screen-home">
                     <div class="hero">
@@ -4815,9 +4819,9 @@
                         <span class="section-title">Quick Actions</span>
                     </div>
                     <div class="quick-actions">
-                        <div class="quick-action" onclick="switchTab('claim')"><div class="quick-action-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-lightning"/></svg></div><h4>New Claim</h4><p>Start review</p></div>
-                        <div class="quick-action" onclick="switchTab('learn')"><div class="quick-action-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-book"/></svg></div><h4>Guides</h4><p>Free resources</p></div>
-                        <div class="quick-action" onclick="switchTab('account')"><div class="quick-action-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-briefcase"/></svg></div><h4>My Cases</h4><p>Track status</p></div>
+                        <div class="quick-action" onclick="switchTab('claim')" tabindex="0" role="button" aria-label="Start a new claim" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('claim');}"><div class="quick-action-icon"><svg style="width: 26px; height: 26px; color: white;" aria-hidden="true"><use href="#icon-lightning"/></svg></div><h4>New Claim</h4><p>Start review</p></div>
+                        <div class="quick-action" onclick="switchTab('learn')" tabindex="0" role="button" aria-label="View legal guides" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('learn');}"><div class="quick-action-icon"><svg style="width: 26px; height: 26px; color: white;" aria-hidden="true"><use href="#icon-book"/></svg></div><h4>Guides</h4><p>Free resources</p></div>
+                        <div class="quick-action" onclick="switchTab('account')" tabindex="0" role="button" aria-label="View my cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('account');}"><div class="quick-action-icon"><svg style="width: 26px; height: 26px; color: white;" aria-hidden="true"><use href="#icon-briefcase"/></svg></div><h4>My Cases</h4><p>Track status</p></div>
                     </div>
 
                     <div class="section-header">
@@ -4826,11 +4830,11 @@
                     </div>
 
                     <div class="practice-cards-container">
-                        <div class="practice-card" onclick="showArticle('pa-personal-injury')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-injury"/></svg></div><div class="practice-info"><h4>Personal Injury <span class="badge-primary"><svg style="width: 10px; height: 10px; color: white;"><use href="#icon-star"/></svg> Top</span></h4><p>Accidents, negligence, pain & suffering</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
-                        <div class="practice-card" onclick="showArticle('pa-premises-liability')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-building"/></svg></div><div class="practice-info"><h4>Premises Liability</h4><p>Slip & fall, unsafe properties</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
-                        <div class="practice-card" onclick="showArticle('pa-property-damage')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-property"/></svg></div><div class="practice-info"><h4>Property Damage</h4><p>Fire, water, theft, vehicle damage</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
-                        <div class="practice-card" onclick="showArticle('pa-insurance-bad-faith')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-shield"/></svg></div><div class="practice-info"><h4>Insurance Bad Faith</h4><p>Denied claims, lowball offers</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
-                        <div class="practice-card" onclick="showArticle('pa-lemon-law')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-lemon"/></svg></div><div class="practice-info"><h4>Lemon Law</h4><p>Defective vehicles, buybacks</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-personal-injury')" tabindex="0" role="button" aria-label="Learn about Personal Injury cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showArticle('pa-personal-injury');}"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;" aria-hidden="true"><use href="#icon-injury"/></svg></div><div class="practice-info"><h4>Personal Injury <span class="badge-primary"><svg style="width: 10px; height: 10px; color: white;" aria-hidden="true"><use href="#icon-star"/></svg> Top</span></h4><p>Accidents, negligence, pain & suffering</p></div><span class="chevron" aria-hidden="true"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-premises-liability')" tabindex="0" role="button" aria-label="Learn about Premises Liability cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showArticle('pa-premises-liability');}"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;" aria-hidden="true"><use href="#icon-building"/></svg></div><div class="practice-info"><h4>Premises Liability</h4><p>Slip & fall, unsafe properties</p></div><span class="chevron" aria-hidden="true"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-property-damage')" tabindex="0" role="button" aria-label="Learn about Property Damage cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showArticle('pa-property-damage');}"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;" aria-hidden="true"><use href="#icon-property"/></svg></div><div class="practice-info"><h4>Property Damage</h4><p>Fire, water, theft, vehicle damage</p></div><span class="chevron" aria-hidden="true"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-insurance-bad-faith')" tabindex="0" role="button" aria-label="Learn about Insurance Bad Faith cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showArticle('pa-insurance-bad-faith');}"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;" aria-hidden="true"><use href="#icon-shield"/></svg></div><div class="practice-info"><h4>Insurance Bad Faith</h4><p>Denied claims, lowball offers</p></div><span class="chevron" aria-hidden="true"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-lemon-law')" tabindex="0" role="button" aria-label="Learn about Lemon Law cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showArticle('pa-lemon-law');}"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;" aria-hidden="true"><use href="#icon-lemon"/></svg></div><div class="practice-info"><h4>Lemon Law</h4><p>Defective vehicles, buybacks</p></div><span class="chevron" aria-hidden="true"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
                     </div>
 
                     <div class="section-header">
@@ -4968,14 +4972,14 @@
                             <div class="form-group">
                                 <div class="form-input-wrapper">
                                     <label for="lead-name" class="visually-hidden">Full Name</label>
-                                    <input type="text" id="lead-name" placeholder="Your Full Name" class="form-input" aria-label="Full Name" required oninput="validateInput(this, 'name')">
+                                    <input type="text" id="lead-name" placeholder="Your Full Name *" class="form-input" aria-label="Full Name (required)" required maxlength="100" autocomplete="name" oninput="validateInput(this, 'name')">
                                     <svg class="validation-icon"><use href="#icon-check-circle"/></svg>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="form-input-wrapper">
                                     <label for="lead-phone" class="visually-hidden">Phone Number</label>
-                                    <input type="tel" id="lead-phone" placeholder="Phone Number" class="form-input" aria-label="Phone Number" required oninput="formatPhoneNumber(this)">
+                                    <input type="tel" id="lead-phone" placeholder="Phone Number *" class="form-input" aria-label="Phone Number (required)" required maxlength="14" autocomplete="tel" oninput="formatPhoneNumber(this)">
                                     <svg class="validation-icon"><use href="#icon-check-circle"/></svg>
                                 </div>
                                 <div class="form-hint">We'll call to discuss your case</div>
@@ -4983,13 +4987,13 @@
                             <div class="form-group">
                                 <div class="form-input-wrapper">
                                     <label for="lead-email" class="visually-hidden">Email Address</label>
-                                    <input type="email" id="lead-email" placeholder="Email Address" class="form-input" aria-label="Email Address" oninput="validateInput(this, 'email')">
+                                    <input type="email" id="lead-email" placeholder="Email Address" class="form-input" aria-label="Email Address" maxlength="254" autocomplete="email" oninput="validateInput(this, 'email')">
                                     <svg class="validation-icon"><use href="#icon-check-circle"/></svg>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="lead-description" class="visually-hidden">Case Description</label>
-                                <textarea id="lead-description" placeholder="Tell us more for faster review (optional)..." class="form-textarea" aria-label="Case Description"></textarea>
+                                <textarea id="lead-description" placeholder="Tell us more for faster review (optional)..." class="form-textarea" aria-label="Case Description" maxlength="2000"></textarea>
                             </div>
 
                             <!-- Document Upload Area -->
@@ -6050,6 +6054,14 @@
     </div>
 
     <script>
+        // Security: HTML escape function to prevent XSS
+        function escapeHtml(text) {
+            if (typeof text !== 'string') return text;
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
         let currentDevice = 'iphone';
         let currentScreen = 'home';
         let articleOpen = false;
@@ -6360,7 +6372,8 @@
             quizAnswers.email = email;
             quizAnswers.description = description;
 
-            console.log('Lead submitted:', quizAnswers);
+            // Note: In production, submit to secure backend API here
+            // console.log('Lead submitted:', quizAnswers); // Removed for security - do not log sensitive user data
 
             // Get case type from step 1 answer
             const caseTypeMap = {
@@ -6699,14 +6712,14 @@
                     const attInitial = caseItem.attorney.name.split(' ').map(n => n[0]).join('');
                     attorneyHtml = `
                         <div class="attorney-card">
-                            <div class="attorney-avatar">${attInitial}</div>
+                            <div class="attorney-avatar">${escapeHtml(attInitial)}</div>
                             <div class="attorney-info">
-                                <h4>${caseItem.attorney.name}</h4>
+                                <h4>${escapeHtml(caseItem.attorney.name)}</h4>
                                 <p>Your Attorney</p>
                             </div>
                             <div class="attorney-contact">
-                                <button class="attorney-contact-btn" onclick="showToast('Calling ${caseItem.attorney.phone}...', 'success')">
-                                    <svg style="width: 16px; height: 16px;"><use href="#icon-phone"/></svg>
+                                <button class="attorney-contact-btn" onclick="showToast('Calling ${escapeHtml(caseItem.attorney.phone)}...', 'success')" aria-label="Call attorney">
+                                    <svg style="width: 16px; height: 16px;" aria-hidden="true"><use href="#icon-phone"/></svg>
                                 </button>
                             </div>
                         </div>
@@ -6717,8 +6730,8 @@
                     <div class="case-card">
                         <div class="case-card-header">
                             <div>
-                                <div class="case-type">${caseItem.type}</div>
-                                <div class="case-date">Submitted ${formattedDate}</div>
+                                <div class="case-type">${escapeHtml(caseItem.type)}</div>
+                                <div class="case-date">Submitted ${escapeHtml(formattedDate)}</div>
                             </div>
                             <span class="case-status-badge ${caseItem.status}">${config.label}</span>
                         </div>
@@ -7300,31 +7313,31 @@
     </script>
 
     <!-- SIGN-IN MODAL -->
-    <div class="modal-overlay" id="signin-modal" onclick="hideSignInModal()">
+    <div class="modal-overlay" id="signin-modal" onclick="hideSignInModal()" role="dialog" aria-modal="true" aria-labelledby="signin-modal-title">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="hideSignInModal()">×</button>
+            <button class="modal-close" onclick="hideSignInModal()" aria-label="Close sign in dialog">×</button>
             <div class="modal-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">
                 <svg style="width: 32px; height: 32px; color: white;"><use href="#icon-user"/></svg>
             </div>
-            <h2>Sign In</h2>
+            <h2 id="signin-modal-title">Sign In</h2>
             <p>Access your submitted cases and track their status.</p>
             <label for="signin-phone" class="visually-hidden">Phone Number</label>
-            <input type="tel" id="signin-phone" class="modal-input" placeholder="Phone Number" aria-label="Phone Number">
+            <input type="tel" id="signin-phone" class="modal-input" placeholder="Phone Number" aria-label="Phone Number" maxlength="14" autocomplete="tel">
             <label for="signin-email" class="visually-hidden">Email Address</label>
-            <input type="email" id="signin-email" class="modal-input" placeholder="Email (optional)" aria-label="Email Address">
+            <input type="email" id="signin-email" class="modal-input" placeholder="Email (optional)" aria-label="Email Address" maxlength="254" autocomplete="email">
             <button class="modal-btn primary" onclick="signIn()">Sign In</button>
             <p class="modal-help">New here? Submit a claim to create an account automatically.</p>
         </div>
     </div>
 
     <!-- SAVE PROGRESS MODAL -->
-    <div class="modal-overlay" id="save-progress-modal" onclick="hideSaveProgressModal()">
+    <div class="modal-overlay" id="save-progress-modal" onclick="hideSaveProgressModal()" role="dialog" aria-modal="true" aria-labelledby="save-progress-modal-title">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="hideSaveProgressModal()">×</button>
+            <button class="modal-close" onclick="hideSaveProgressModal()" aria-label="Close save progress dialog">×</button>
             <div class="modal-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">
                 <svg style="width: 32px; height: 32px; color: white;"><use href="#icon-document"/></svg>
             </div>
-            <h2>Save Your Progress</h2>
+            <h2 id="save-progress-modal-title">Save Your Progress</h2>
             <p>We'll send you a link to continue where you left off.</p>
             <div class="save-method-tabs">
                 <button class="save-tab active" onclick="showSaveMethod('sms')">Text Me</button>
@@ -7332,12 +7345,12 @@
             </div>
             <div class="save-method" id="save-method-sms">
                 <label for="save-phone" class="visually-hidden">Phone Number</label>
-                <input type="tel" id="save-phone" class="modal-input" placeholder="Phone Number" aria-label="Phone Number">
+                <input type="tel" id="save-phone" class="modal-input" placeholder="Phone Number" aria-label="Phone Number" maxlength="14" autocomplete="tel">
                 <button class="modal-btn primary" onclick="saveProgress('sms')">Send Link</button>
             </div>
             <div class="save-method hidden" id="save-method-email">
                 <label for="save-email" class="visually-hidden">Email Address</label>
-                <input type="email" id="save-email" class="modal-input" placeholder="Email Address" aria-label="Email Address">
+                <input type="email" id="save-email" class="modal-input" placeholder="Email Address" aria-label="Email Address" maxlength="254" autocomplete="email">
                 <button class="modal-btn primary" onclick="saveProgress('email')">Send Link</button>
             </div>
         </div>
