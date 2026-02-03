@@ -783,6 +783,72 @@ Mockup: `/preview/accident-mode-concept.html`
 
 ---
 
+## Vision Board: Innovative Features (Feb 2025)
+
+Strategic feature ideas to differentiate ClaimIt from competitors. Organized by feasibility.
+
+### 🏆 Game-Changing Features (Requires iOS Developer)
+
+| Feature | Description | Why It's Unique |
+|---------|-------------|-----------------|
+| **Crash Detection Auto-Launch** | Use Apple's crash detection API (iOS 16+) to auto-launch Emergency Mode | No legal app uses this API - first mover advantage |
+| **AI Case Value Estimator** | Analyze injury type, location, insurance company to show realistic settlement range | Lawyers keep this vague - transparency builds trust |
+| **Live Case Tracker** | Domino's Pizza Tracker for lawsuits - real-time status updates | Every law firm is a black box - radical transparency |
+| **AI Insurance Tactics Decoder** | Upload insurance letters, AI identifies manipulation tactics and lowball offers | Levels playing field against billion-dollar insurers |
+| **Dashcam Integration** | Connect to Garmin, Nextbase, Tesla - auto-upload footage when accident detected | Evidence preserved with attorney-client privilege |
+
+### ⚠️ Moderate Complexity (Possible with Help)
+
+| Feature | Description | What's Needed |
+|---------|-------------|---------------|
+| **Injury Progression Tracker** | Daily check-ins: pain level, photos, symptoms - builds medical timeline | Database, photo storage, notifications |
+| **Guardian Angel Mode** | Emergency contacts notified on crash, can track case progress | Twilio SMS API, backend |
+| **Settlement Comparison Tool** | "Your offer: $15K / Similar cases: $45-80K / Verdict: REJECT" | Data tables (can be static initially) |
+| **AI Letter Analyzer** | Upload insurance letter, get plain-English explanation + recommended response | OpenAI API integration |
+| **Referral System** | Unique codes, track referrals, reward successful referrals | Backend + tracking logic |
+
+### ✅ Achievable Now (With Claude's Help)
+
+| Feature | Description | Effort |
+|---------|-------------|--------|
+| **Static Settlement Estimator** | Hardcoded data ranges by injury type and location | 1 day |
+| **Insurance Tactics Guide** | Educational content on common tactics (not AI, just informative) | 1 day |
+| **Simple Injury Journal** | localStorage-based daily logging, export to PDF | 1-2 days |
+| **Claim Stories Feed** | User-submitted success stories (simple form + display) | 2 days |
+| **Case Status Page** | Manual status updates (not real-time, but functional) | 1 day |
+
+### 💡 Advanced/Future Ideas
+
+- **AI Negotiation Coach** - Real-time suggestions when insurance calls
+- **Blockchain Evidence** - Tamper-proof photo verification with timestamps
+- **Rideshare Driver Mode** - Special features for Uber/Lyft drivers (high accident risk)
+- **Witness Network** - "Were you near [location] at [time]? Be a witness"
+- **Insurance Company Ratings** - Crowdsourced data on claim denial rates, settlement times
+- **Attorney Transparency Score** - Real metrics: cases won, avg settlement, time to resolution
+
+### 🎯 Strategic Recommendations
+
+**The Core Insight:** ClaimIt shouldn't be a lead gen form. It should be an **accident companion**:
+- **BEFORE** accident → Installed as "insurance" against the unknown
+- **DURING** accident → Crash detect, evidence capture, emergency mode
+- **AFTER** accident → Injury tracking, case management, AI guidance
+- **RESOLUTION** → Settlement comparison, community celebration
+
+**Recommended Build Order:**
+1. Deploy web app live (validate demand first)
+2. Add Injury Progression Tracker (daily engagement)
+3. Add Settlement Estimator (transparency differentiator)
+4. Build Accident Mode (true technical moat)
+5. Consider iOS native app only after web validation
+
+**Cost Estimates:**
+- Web app with simple features: $0-50/month (doable with Claude)
+- Basic iOS app (Upwork/Fiverr): $5,000-20,000
+- Advanced iOS app with AI features: $30,000-100,000+
+- No-code app builders (FlutterFlow, Adalo): $50-200/month
+
+---
+
 ## Commands Reference
 
 ```bash
