@@ -226,6 +226,12 @@ Browser-based design mockups for iteration:
   - visually-hidden labels for screen readers
   - prefers-reduced-motion CSS support
   - Minimum 44px touch targets
+- [x] **UI/Branding Refinements** (Feb 2025)
+  - ClaimIt logo (shield + text) added to Home, Learn, Account screens
+  - Gold "It" text for brand consistency
+  - Centered hero logo alignment
+  - Native in-app referral modal (replaces browser confirm dialog)
+  - Referral network directs users to questionnaire flow
 
 ### Pending
 - [ ] User to install Xcode for iOS development
@@ -247,6 +253,8 @@ Browser-based design mockups for iteration:
 4. **v4 (claimit-full.html):** Full article content, interactive checklists
 5. **v5 (iOS update):** Full iOS SwiftUI code updated to match ClaimIt design
 6. **v6 (index.html):** Sign-in/account system, My Cases tracking
+7. **v7 (index.html):** Adaptive quiz with case-type-specific questions
+8. **v8 (index.html):** Compliance fixes, branding refinements, native modals
 7. **v7 (index.html):** Adaptive quiz with case-type-specific questions
 
 ### User Feedback Applied
