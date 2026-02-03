@@ -743,6 +743,28 @@
         }
         .legal-footer-links a:hover { text-decoration: underline; }
 
+        /* Powered By Section */
+        .powered-by {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-light);
+        }
+        .powered-by span {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .powered-by img {
+            height: 16px;
+            width: auto;
+            opacity: 0.6;
+        }
+
         /* Accessibility: Reduce motion */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -1153,7 +1175,7 @@
             color: var(--text-primary);
         }
         .header-logo .highlight {
-            color: var(--accent);
+            color: var(--brand-gold);
         }
         /* White text for dark backgrounds (account screen) */
         .account-header .header-logo span {
@@ -4116,6 +4138,19 @@
             color: var(--primary-light);
         }
 
+        .device-screen.dark-mode .powered-by {
+            border-top-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .powered-by span {
+            color: var(--dark-text-muted);
+        }
+
+        .device-screen.dark-mode .powered-by img {
+            filter: invert(1);
+            opacity: 0.5;
+        }
+
         /* Form Labels - Dark Mode */
         .device-screen.dark-mode .form-label,
         .device-screen.dark-mode label {
@@ -5935,6 +5970,10 @@
                             <a href="#" onclick="showTermsModal(); return false;">Terms of Service</a>
                             <a href="#" onclick="showLegalDisclaimer(); return false;">Disclaimers</a>
                             <a href="#" onclick="showPrivacyModal(); return false;">Do Not Sell My Info</a>
+                        </div>
+                        <div class="powered-by">
+                            <span>Powered by</span>
+                            <img src="klf-logo.png" alt="Kitsinian Law Firm, APC">
                         </div>
                     </div>
 
