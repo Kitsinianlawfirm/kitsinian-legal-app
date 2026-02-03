@@ -75,10 +75,20 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
-  console.log(`🚀 Kitsinian Legal API running on port ${PORT}`);
-});
+// Import database to get migration promise
+const db = require('./config/database');
+
+// Start server after migrations complete
+const startServer = async () => {
+  // Wait for database migrations
+  await db.migrationPromise;
+
+  app.listen(PORT, () => {
+    logger.info(`Server running on port ${PORT}`);
+    console.log(`🚀 Kitsinian Legal API running on port ${PORT}`);
+  });
+};
+
+startServer();
 
 module.exports = app;

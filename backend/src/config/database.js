@@ -26,6 +26,8 @@ pool.on('error', (err) => {
 // Auto-migrate: create tables if they don't exist
 const runMigrations = async () => {
   try {
+    logger.info('Running database migrations...');
+
     await pool.query(`
       CREATE TABLE IF NOT EXISTS leads (
         id UUID PRIMARY KEY,
@@ -53,16 +55,19 @@ const runMigrations = async () => {
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_leads_created_at ON leads(created_at DESC);`);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_leads_urgency ON leads(urgency);`);
 
-    logger.info('Database migrations completed');
+    logger.info('Database migrations completed successfully');
+    return true;
   } catch (error) {
     logger.error('Migration error:', error);
+    return false;
   }
 };
 
-// Run migrations on startup
-runMigrations();
+// Export migration promise for server to await
+const migrationPromise = runMigrations();
 
 module.exports = {
   query: (text, params) => pool.query(text, params),
-  pool
+  pool,
+  migrationPromise
 };
