@@ -868,6 +868,11 @@
         .quick-action h4 { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
         .quick-action p { font-size: 10px; color: var(--text-muted); font-weight: 500; }
 
+        /* Container for practice cards */
+        .practice-cards-container {
+            padding: 0;
+        }
+
         .practice-card {
             display: flex;
             align-items: center;
@@ -1029,6 +1034,11 @@
         }
 
         .category-chip.active svg { color: white; }
+
+        /* Resources grid container */
+        .resources-grid {
+            padding: 0;
+        }
 
         .resource-card {
             display: flex;
@@ -3397,6 +3407,598 @@
         .toast svg { width: 20px; height: 20px; flex-shrink: 0; }
         .toast.success svg { color: var(--success); }
         .toast.error svg { color: #EF4444; }
+
+        /* ==================== DEVICE TOGGLE ==================== */
+        .device-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .device-toggle-container {
+            display: flex;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .device-toggle-btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 21px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .device-toggle-btn:hover {
+            color: white;
+        }
+
+        .device-toggle-btn.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .device-toggle-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ==================== iPad Frame ==================== */
+        .ipad {
+            width: 820px;
+            height: 1180px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 20px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.4), inset 0 0 0 2px #333;
+            display: none;
+        }
+
+        .ipad.active {
+            display: block;
+        }
+
+        .ipad-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            background: var(--page-bg);
+        }
+
+        /* iPad has a different notch/camera area */
+        .ipad .dynamic-island {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            top: 16px;
+        }
+
+        .ipad .status-bar {
+            height: 44px;
+            padding: 0 20px 6px;
+        }
+
+        /* Hide iPhone when iPad is active */
+        .iphone.hidden {
+            display: none;
+        }
+
+        /* ==================== iPad Tablet Layout ==================== */
+        .ipad .screen {
+            padding-top: 44px;
+            padding-bottom: 0;
+        }
+
+        /* iPad Sidebar Navigation */
+        .ipad .tab-bar {
+            position: absolute;
+            left: 0;
+            top: 44px;
+            bottom: 0;
+            width: 80px;
+            height: auto;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px 8px;
+            gap: 8px;
+            border-top: none;
+            border-right: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .ipad .tab {
+            flex-direction: column;
+            padding: 14px 8px;
+            min-width: auto;
+            width: 100%;
+            border-radius: 14px;
+        }
+
+        .ipad .tab-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .ipad .tab-icon svg {
+            width: 28px !important;
+            height: 28px !important;
+        }
+
+        .ipad .tab span {
+            font-size: 11px;
+        }
+
+        /* iPad Screen Container - offset for sidebar */
+        .ipad .screen-container {
+            left: 80px;
+            right: 0;
+        }
+
+        .ipad .screen {
+            padding-bottom: 40px;
+        }
+
+        /* iPad: Larger hero */
+        .ipad .hero {
+            padding: 30px 40px 50px;
+        }
+
+        .ipad .hero h1 {
+            font-size: 42px;
+        }
+
+        .ipad .hero p {
+            font-size: 18px;
+        }
+
+        .ipad .hero-logo svg {
+            width: 56px !important;
+            height: 56px !important;
+        }
+
+        .ipad .hero-logo-text {
+            font-size: 36px;
+        }
+
+        .ipad .stats-row {
+            gap: 20px;
+        }
+
+        .ipad .stat {
+            padding: 16px 28px;
+        }
+
+        .ipad .stat-value {
+            font-size: 28px;
+        }
+
+        .ipad .stat-label {
+            font-size: 13px;
+        }
+
+        /* iPad: Glass card */
+        .ipad .glass-card {
+            margin: -24px 40px 24px;
+            padding: 24px;
+        }
+
+        .ipad .btn-primary {
+            font-size: 20px;
+            padding: 22px 32px;
+        }
+
+        .ipad .cta-subtext {
+            font-size: 14px;
+        }
+
+        /* iPad: Trust seals - horizontal layout */
+        .ipad .trust-seals {
+            flex-direction: row;
+            justify-content: center;
+            gap: 24px;
+            padding: 20px 40px;
+        }
+
+        .ipad .trust-seal {
+            min-width: 120px;
+        }
+
+        /* iPad: Section headers */
+        .ipad .section-header {
+            padding: 28px 40px 16px;
+        }
+
+        .ipad .section-title {
+            font-size: 22px;
+        }
+
+        .ipad .section-link {
+            font-size: 15px;
+        }
+
+        /* iPad: Quick actions - 2 column grid */
+        .ipad .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 0 40px 24px;
+            overflow-x: visible;
+        }
+
+        .ipad .quick-action {
+            min-width: auto;
+            padding: 20px 16px;
+        }
+
+        .ipad .quick-action-icon {
+            width: 56px;
+            height: 56px;
+        }
+
+        .ipad .quick-action h4 {
+            font-size: 15px;
+        }
+
+        .ipad .quick-action p {
+            font-size: 12px;
+        }
+
+        /* iPad: Practice cards - 2 column grid */
+        .ipad .practice-cards-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            padding: 0 40px;
+        }
+
+        .ipad .practice-card {
+            margin: 0;
+            padding: 18px 20px;
+        }
+
+        .ipad .practice-icon {
+            width: 56px;
+            height: 56px;
+        }
+
+        .ipad .practice-info h4 {
+            font-size: 17px;
+        }
+
+        .ipad .practice-info p {
+            font-size: 14px;
+        }
+
+        /* iPad: Referral scroll - grid */
+        .ipad .referral-scroll {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 0 40px 30px;
+            overflow-x: visible;
+        }
+
+        .ipad .referral-card {
+            min-width: auto;
+            padding: 20px 16px;
+        }
+
+        .ipad .referral-icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        .ipad .referral-card h4 {
+            font-size: 15px;
+        }
+
+        /* iPad: Learn screen */
+        .ipad .learn-header {
+            padding: 30px 40px 0;
+        }
+
+        .ipad .learn-header h1 {
+            font-size: 34px;
+        }
+
+        .ipad .learn-header p {
+            font-size: 16px;
+        }
+
+        .ipad .header-logo span {
+            font-size: 22px;
+        }
+
+        .ipad .category-chips {
+            padding: 16px 40px;
+            gap: 12px;
+        }
+
+        .ipad .category-chip {
+            padding: 12px 20px;
+            font-size: 15px;
+        }
+
+        /* iPad: Resource cards - 2 column grid */
+        .ipad .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 0 40px 30px;
+        }
+
+        .ipad .resource-card {
+            margin: 0;
+            padding: 20px;
+        }
+
+        .ipad .resource-icon {
+            width: 52px;
+            height: 52px;
+        }
+
+        .ipad .resource-info h4 {
+            font-size: 17px;
+        }
+
+        .ipad .resource-info p {
+            font-size: 14px;
+        }
+
+        .ipad .resource-tag {
+            font-size: 12px;
+            padding: 5px 12px;
+        }
+
+        /* iPad: Account screen */
+        .ipad .account-header {
+            padding: 30px 40px !important;
+        }
+
+        .ipad .account-header h1 {
+            font-size: 34px !important;
+        }
+
+        .ipad .signin-prompt,
+        .ipad .cases-list {
+            padding: 0 40px;
+        }
+
+        .ipad .user-profile-card {
+            padding: 24px;
+        }
+
+        .ipad .user-avatar {
+            width: 70px;
+            height: 70px;
+            font-size: 28px;
+        }
+
+        .ipad #user-name {
+            font-size: 22px;
+        }
+
+        .ipad #user-phone {
+            font-size: 15px;
+        }
+
+        /* iPad: Cases list - 2 column */
+        .ipad .cases-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .ipad .case-card {
+            margin: 0;
+            padding: 20px;
+        }
+
+        .ipad .case-type {
+            font-size: 17px;
+        }
+
+        /* iPad: Quiz/Claim screen */
+        .ipad .claim-screen {
+            padding: 20px 40px;
+        }
+
+        .ipad .question-container {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .ipad .question-text {
+            font-size: 28px;
+        }
+
+        .ipad .question-subtext {
+            font-size: 16px;
+        }
+
+        .ipad .quiz-step {
+            padding: 20px 0;
+        }
+
+        .ipad .quiz-option {
+            padding: 20px 24px;
+            font-size: 17px;
+        }
+
+        .ipad .quiz-option-icon {
+            width: 52px;
+            height: 52px;
+        }
+
+        .ipad .progress-container {
+            padding: 20px 0;
+        }
+
+        .ipad .progress-text {
+            font-size: 15px;
+        }
+
+        /* iPad: Article/Detail screens */
+        .ipad .article-content {
+            padding: 0 60px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .ipad .article-content h2 {
+            font-size: 26px;
+        }
+
+        .ipad .article-content h3 {
+            font-size: 20px;
+        }
+
+        .ipad .article-content p,
+        .ipad .article-content li {
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .ipad .detail-header {
+            padding: 0 60px 30px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .ipad .detail-title {
+            font-size: 34px;
+        }
+
+        .ipad .detail-meta {
+            font-size: 16px;
+        }
+
+        .ipad .back-btn {
+            padding: 16px 40px;
+            font-size: 18px;
+        }
+
+        /* iPad: Legal footer */
+        .ipad .legal-footer {
+            padding: 24px 40px;
+        }
+
+        .ipad .legal-footer p {
+            font-size: 12px;
+        }
+
+        .ipad .legal-footer-links a {
+            font-size: 12px;
+        }
+
+        /* iPad: Onboarding */
+        .ipad .onboarding-overlay {
+            padding: 60px 80px;
+        }
+
+        .ipad .onboarding-logo h1 {
+            font-size: 48px;
+        }
+
+        .ipad .onboarding-logo .tagline {
+            font-size: 20px;
+        }
+
+        .ipad .trust-badges {
+            gap: 30px;
+        }
+
+        .ipad .trust-badge .value {
+            font-size: 36px;
+        }
+
+        .ipad .trust-badge .label {
+            font-size: 14px;
+        }
+
+        .ipad .value-props {
+            gap: 20px;
+        }
+
+        .ipad .value-prop {
+            padding: 20px 24px;
+            font-size: 17px;
+        }
+
+        .ipad .btn-onboarding {
+            font-size: 18px;
+            padding: 18px 36px;
+        }
+
+        .ipad .onboarding-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .ipad .onboarding-option {
+            padding: 24px 20px;
+        }
+
+        .ipad .onboarding-option .icon svg {
+            width: 40px !important;
+            height: 40px !important;
+        }
+
+        .ipad .onboarding-option .label {
+            font-size: 15px;
+        }
+
+        /* iPad: Modal styling */
+        .ipad .legal-modal-content {
+            max-width: 600px;
+            padding: 30px;
+        }
+
+        .ipad .legal-modal-content h2 {
+            font-size: 24px;
+        }
+
+        .ipad .legal-modal-content p,
+        .ipad .legal-modal-content li {
+            font-size: 15px;
+        }
+
+        /* iPad: Form inputs */
+        .ipad .form-input {
+            padding: 18px;
+            font-size: 17px;
+        }
+
+        .ipad textarea.form-input {
+            min-height: 140px;
+        }
+
+        .ipad .form-label {
+            font-size: 15px;
+        }
+
+        /* iPad: Adjust screen container for sidebar */
+        .ipad .screen-container {
+            position: absolute;
+            top: 0;
+            left: 80px;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -3686,7 +4288,27 @@
         <span>👆 Tap tabs</span> to navigate • <span>📖 Tap guides</span> to read content
     </div>
 
-    <div class="iphone">
+    <!-- Device Toggle -->
+    <div class="device-toggle">
+        <div class="device-toggle-container">
+            <button class="device-toggle-btn active" id="toggle-iphone" onclick="switchDevice('iphone')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="5" y="2" width="14" height="20" rx="3"/>
+                    <line x1="12" y1="18" x2="12" y2="18"/>
+                </svg>
+                iPhone
+            </button>
+            <button class="device-toggle-btn" id="toggle-ipad" onclick="switchDevice('ipad')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="18" rx="2"/>
+                    <circle cx="12" cy="17" r="1"/>
+                </svg>
+                iPad
+            </button>
+        </div>
+    </div>
+
+    <div class="iphone" id="iphone-frame">
         <div class="iphone-screen">
             <div class="dynamic-island"></div>
 
@@ -3964,11 +4586,13 @@
                         <span class="section-link" onclick="switchTab('learn')" role="button" tabindex="0">See All <svg style="width: 12px; height: 12px;"><use href="#icon-chevron"/></svg></span>
                     </div>
 
-                    <div class="practice-card" onclick="showArticle('pa-personal-injury')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-injury"/></svg></div><div class="practice-info"><h4>Personal Injury <span class="badge-primary"><svg style="width: 10px; height: 10px; color: white;"><use href="#icon-star"/></svg> Top</span></h4><p>Accidents, negligence, pain & suffering</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
-                    <div class="practice-card" onclick="showArticle('pa-premises-liability')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-building"/></svg></div><div class="practice-info"><h4>Premises Liability</h4><p>Slip & fall, unsafe properties</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
-                    <div class="practice-card" onclick="showArticle('pa-property-damage')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-property"/></svg></div><div class="practice-info"><h4>Property Damage</h4><p>Fire, water, theft, vehicle damage</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
-                    <div class="practice-card" onclick="showArticle('pa-insurance-bad-faith')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-shield"/></svg></div><div class="practice-info"><h4>Insurance Bad Faith</h4><p>Denied claims, lowball offers</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
-                    <div class="practice-card" onclick="showArticle('pa-lemon-law')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-lemon"/></svg></div><div class="practice-info"><h4>Lemon Law</h4><p>Defective vehicles, buybacks</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                    <div class="practice-cards-container">
+                        <div class="practice-card" onclick="showArticle('pa-personal-injury')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-injury"/></svg></div><div class="practice-info"><h4>Personal Injury <span class="badge-primary"><svg style="width: 10px; height: 10px; color: white;"><use href="#icon-star"/></svg> Top</span></h4><p>Accidents, negligence, pain & suffering</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-premises-liability')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-building"/></svg></div><div class="practice-info"><h4>Premises Liability</h4><p>Slip & fall, unsafe properties</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-property-damage')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-property"/></svg></div><div class="practice-info"><h4>Property Damage</h4><p>Fire, water, theft, vehicle damage</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-insurance-bad-faith')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-shield"/></svg></div><div class="practice-info"><h4>Insurance Bad Faith</h4><p>Denied claims, lowball offers</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-lemon-law')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-lemon"/></svg></div><div class="practice-info"><h4>Lemon Law</h4><p>Defective vehicles, buybacks</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                    </div>
 
                     <div class="section-header">
                         <span class="section-title">Referral Network</span>
@@ -4216,36 +4840,38 @@
                         <div class="header-logo"><svg style="width: 28px; height: 28px;"><use href="#logo-mark"/></svg><span>Claim<span class="highlight">It</span></span></div>
                         <h1>Learn</h1><p>The knowledge they don't want you to have.</p>
                     </div>
-                    <div class="category-scroll">
+                    <div class="category-scroll category-chips">
                         <div class="category-chip active"><svg style="width: 14px; height: 14px;"><use href="#icon-star"/></svg> Popular</div>
                         <div class="category-chip"><svg style="width: 14px; height: 14px;"><use href="#icon-book"/></svg> Guides</div>
                         <div class="category-chip"><svg style="width: 14px; height: 14px;"><use href="#icon-check"/></svg> Checklists</div>
                         <div class="category-chip"><svg style="width: 14px; height: 14px;"><use href="#icon-alarm"/></svg> Deadlines</div>
                     </div>
 
-                    <div class="resource-card" onclick="showArticle('car-accident')">
-                        <div class="resource-icon" style="background: linear-gradient(135deg, #00C48C 0%, #00E6A0 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-car"/></svg></div>
-                        <div class="resource-info"><h4>After a Car Accident: Step-by-Step</h4><div class="resource-meta"><span>Guide</span> • 8 min</div></div>
-                    </div>
+                    <div class="resources-grid">
+                        <div class="resource-card" onclick="showArticle('car-accident')">
+                            <div class="resource-icon" style="background: linear-gradient(135deg, #00C48C 0%, #00E6A0 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-car"/></svg></div>
+                            <div class="resource-info"><h4>After a Car Accident: Step-by-Step</h4><div class="resource-meta"><span>Guide</span> • 8 min</div></div>
+                        </div>
 
-                    <div class="resource-card" onclick="showArticle('checklist')">
-                        <div class="resource-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-check"/></svg></div>
-                        <div class="resource-info"><h4>Injury Claim Checklist</h4><div class="resource-meta"><span>Checklist</span> • 5 min</div></div>
-                    </div>
+                        <div class="resource-card" onclick="showArticle('checklist')">
+                            <div class="resource-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-check"/></svg></div>
+                            <div class="resource-info"><h4>Injury Claim Checklist</h4><div class="resource-meta"><span>Checklist</span> • 5 min</div></div>
+                        </div>
 
-                    <div class="resource-card" onclick="showArticle('lemon-law')">
-                        <div class="resource-icon" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-lemon"/></svg></div>
-                        <div class="resource-info"><h4>California Lemon Law Guide</h4><div class="resource-meta"><span>Guide</span> • 12 min</div></div>
-                    </div>
+                        <div class="resource-card" onclick="showArticle('lemon-law')">
+                            <div class="resource-icon" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-lemon"/></svg></div>
+                            <div class="resource-info"><h4>California Lemon Law Guide</h4><div class="resource-meta"><span>Guide</span> • 12 min</div></div>
+                        </div>
 
-                    <div class="resource-card" onclick="showArticle('insurance')">
-                        <div class="resource-icon" style="background: linear-gradient(135deg, #9333EA 0%, #A855F7 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-shield"/></svg></div>
-                        <div class="resource-info"><h4>Fight Insurance Bad Faith</h4><div class="resource-meta"><span>Know Your Rights</span> • 8 min</div></div>
-                    </div>
+                        <div class="resource-card" onclick="showArticle('insurance')">
+                            <div class="resource-icon" style="background: linear-gradient(135deg, #9333EA 0%, #A855F7 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-shield"/></svg></div>
+                            <div class="resource-info"><h4>Fight Insurance Bad Faith</h4><div class="resource-meta"><span>Know Your Rights</span> • 8 min</div></div>
+                        </div>
 
-                    <div class="resource-card" onclick="showArticle('deadlines')">
-                        <div class="resource-icon" style="background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-alarm"/></svg></div>
-                        <div class="resource-info"><h4>Don't Miss These Deadlines</h4><div class="resource-meta"><span>Timeline</span> • 6 min</div></div>
+                        <div class="resource-card" onclick="showArticle('deadlines')">
+                            <div class="resource-icon" style="background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-alarm"/></svg></div>
+                            <div class="resource-info"><h4>Don't Miss These Deadlines</h4><div class="resource-meta"><span>Timeline</span> • 6 min</div></div>
+                        </div>
                     </div>
                     <div class="spacer"></div>
                 </div>
@@ -5184,7 +5810,15 @@
         </div>
     </div>
 
+    <!-- iPad Frame (content cloned via JS) -->
+    <div class="ipad" id="ipad-frame">
+        <div class="ipad-screen" id="ipad-screen">
+            <!-- Content will be cloned from iPhone -->
+        </div>
+    </div>
+
     <script>
+        let currentDevice = 'iphone';
         let currentScreen = 'home';
         let articleOpen = false;
         let currentQuizStep = 1;
@@ -6408,6 +7042,174 @@
             setTimeout(() => {
                 showAchievement('formSubmitted');
             }, 500);
+        };
+
+        // ==================== DEVICE SWITCHING ====================
+
+        function switchDevice(device) {
+            if (device === currentDevice) return;
+
+            currentDevice = device;
+
+            // Update toggle buttons
+            document.querySelectorAll('.device-toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('toggle-' + device).classList.add('active');
+
+            const iphoneFrame = document.getElementById('iphone-frame');
+            const ipadFrame = document.getElementById('ipad-frame');
+
+            if (device === 'ipad') {
+                // Clone iPhone content to iPad if not already done
+                const ipadScreen = document.getElementById('ipad-screen');
+                if (!ipadScreen.hasChildNodes() || ipadScreen.children.length === 0) {
+                    const iphoneScreen = document.querySelector('.iphone-screen');
+                    ipadScreen.innerHTML = iphoneScreen.innerHTML;
+
+                    // Re-initialize event listeners for iPad content
+                    initializeIPadContent();
+                }
+
+                iphoneFrame.classList.add('hidden');
+                ipadFrame.classList.add('active');
+
+                // Sync the current state
+                syncDeviceState('ipad');
+            } else {
+                ipadFrame.classList.remove('active');
+                iphoneFrame.classList.remove('hidden');
+
+                // Sync state back
+                syncDeviceState('iphone');
+            }
+        }
+
+        function initializeIPadContent() {
+            const ipadScreen = document.getElementById('ipad-screen');
+
+            // Re-bind tab navigation
+            ipadScreen.querySelectorAll('.tab').forEach(tab => {
+                const tabName = tab.id.replace('tab-', '');
+                tab.onclick = function() { switchTabInDevice('ipad', tabName); };
+            });
+
+            // Re-bind quick actions
+            ipadScreen.querySelectorAll('.quick-action').forEach(action => {
+                const topic = action.getAttribute('data-topic');
+                if (topic) {
+                    action.onclick = function() { startQuizWithTopic(topic); };
+                }
+            });
+
+            // Re-bind article links
+            ipadScreen.querySelectorAll('[onclick*="showArticle"]').forEach(el => {
+                const onclick = el.getAttribute('onclick');
+                el.onclick = function() { eval(onclick); };
+            });
+
+            // Re-bind other interactive elements
+            ipadScreen.querySelectorAll('[onclick]').forEach(el => {
+                const onclick = el.getAttribute('onclick');
+                if (onclick && !el.classList.contains('tab')) {
+                    el.onclick = function(e) {
+                        e.stopPropagation();
+                        eval(onclick);
+                    };
+                }
+            });
+        }
+
+        function switchTabInDevice(device, tabName) {
+            // Use the same switchTab function but target the specific device
+            const container = device === 'ipad' ? document.getElementById('ipad-screen') : document.querySelector('.iphone-screen');
+
+            if (articleOpen) return;
+
+            container.querySelectorAll('.tab').forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            container.querySelectorAll('.screen:not(.detail-screen)').forEach(s => s.classList.remove('active'));
+
+            const activeTab = container.querySelector('#tab-' + tabName);
+            if (activeTab) {
+                activeTab.classList.add('active');
+                activeTab.setAttribute('aria-selected', 'true');
+            }
+
+            const activeScreen = container.querySelector('#screen-' + tabName);
+            if (activeScreen) {
+                activeScreen.classList.add('active');
+            }
+
+            const statusBar = container.querySelector('.status-bar');
+            if (statusBar) {
+                statusBar.className = tabName === 'home' ? 'status-bar light' : 'status-bar dark';
+            }
+
+            if (activeScreen) {
+                activeScreen.scrollTop = 0;
+            }
+
+            currentScreen = tabName;
+
+            if (tabName === 'account') {
+                updateAccountUI();
+            }
+        }
+
+        function syncDeviceState(targetDevice) {
+            // Sync the current screen state between devices
+            const targetContainer = targetDevice === 'ipad'
+                ? document.getElementById('ipad-screen')
+                : document.querySelector('.iphone-screen');
+
+            if (!targetContainer) return;
+
+            // Sync active tab
+            targetContainer.querySelectorAll('.tab').forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            targetContainer.querySelectorAll('.screen:not(.detail-screen)').forEach(s => s.classList.remove('active'));
+
+            const activeTab = targetContainer.querySelector('#tab-' + currentScreen);
+            if (activeTab) {
+                activeTab.classList.add('active');
+                activeTab.setAttribute('aria-selected', 'true');
+            }
+
+            const activeScreen = targetContainer.querySelector('#screen-' + currentScreen);
+            if (activeScreen) {
+                activeScreen.classList.add('active');
+            }
+
+            const statusBar = targetContainer.querySelector('.status-bar');
+            if (statusBar) {
+                statusBar.className = currentScreen === 'home' ? 'status-bar light' : 'status-bar dark';
+            }
+
+            // Sync onboarding state
+            const onboarding = targetContainer.querySelector('#onboarding');
+            if (onboarding) {
+                const iphoneOnboarding = document.querySelector('.iphone-screen #onboarding');
+                if (iphoneOnboarding && iphoneOnboarding.classList.contains('hidden')) {
+                    onboarding.classList.add('hidden');
+                }
+            }
+        }
+
+        // Override the original switchTab to work with both devices
+        const originalSwitchTab = switchTab;
+        switchTab = function(tabName) {
+            originalSwitchTab(tabName);
+
+            // Also sync to iPad if it exists and has content
+            const ipadScreen = document.getElementById('ipad-screen');
+            if (ipadScreen && ipadScreen.hasChildNodes() && ipadScreen.children.length > 0) {
+                syncDeviceState('ipad');
+            }
         };
     </script>
 
