@@ -123,6 +123,17 @@
             --radius-2xl: 20px;
             --radius-3xl: 24px;
             --radius-full: 9999px;
+
+            /* Dark Mode Colors */
+            --dark-bg: #0F172A;
+            --dark-bg-secondary: #1E293B;
+            --dark-card-bg: #1E293B;
+            --dark-card-bg-elevated: #334155;
+            --dark-text-primary: #F8FAFC;
+            --dark-text-secondary: #CBD5E1;
+            --dark-text-muted: #64748B;
+            --dark-border-color: #334155;
+            --dark-border-light: #475569;
         }
 
         body {
@@ -2034,20 +2045,21 @@
             margin-bottom: 0;
         }
 
-        /* Modal Styles */
+        /* Modal Styles - Glassmorphism */
         .modal-overlay {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(15, 23, 42, 0.7);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 10000;
             padding: 20px;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .modal-overlay.active {
@@ -2055,14 +2067,37 @@
         }
 
         .modal-content {
-            background: white;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
             padding: 32px 24px;
             max-width: 340px;
             width: 100%;
             text-align: center;
             position: relative;
             animation: modalIn 0.3s ease;
+        }
+
+        /* Dark mode glass variant */
+        .device-screen.dark-mode .modal-content {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .device-screen.dark-mode .modal-content h2 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .modal-content p {
+            color: var(--dark-text-secondary);
         }
 
         @keyframes modalIn {
@@ -2169,6 +2204,70 @@
 
         .modal-btn.secondary:active {
             background: var(--bg-secondary);
+        }
+
+        /* Sign-in Divider */
+        .signin-divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .signin-divider::before,
+        .signin-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .signin-divider span {
+            padding: 0 12px;
+        }
+
+        /* Apple Sign-in Button */
+        .apple-signin-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #000;
+            color: #fff;
+            border: none;
+            min-height: 48px;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .apple-signin-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .apple-signin-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Dark mode variant for Apple button */
+        .device-screen.dark-mode .apple-signin-btn {
+            background: #fff;
+            color: #000;
+        }
+
+        .device-screen.dark-mode .signin-divider {
+            color: var(--dark-text-muted);
+        }
+
+        .device-screen.dark-mode .signin-divider::before,
+        .device-screen.dark-mode .signin-divider::after {
+            background: var(--dark-border-color);
         }
 
         .modal-help {
@@ -2963,6 +3062,10 @@
             0% { stroke-dashoffset: 50; }
             100% { stroke-dashoffset: 0; }
         }
+        @keyframes successGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 196, 140, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 196, 140, 0.6); }
+        }
         .success-animation {
             width: 100px;
             height: 100px;
@@ -2974,10 +3077,11 @@
             height: 100%;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--success) 0%, #00E6A0 100%);
-            animation: successPulse 0.5s ease-out forwards;
+            animation: successPulse 0.5s ease-out forwards, successGlow 2s ease-in-out 0.5s infinite;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 40px rgba(0, 196, 140, 0.4);
         }
         .success-check {
             width: 40px;
@@ -3777,6 +3881,840 @@
         .device-toggle-btn svg {
             width: 18px;
             height: 18px;
+        }
+
+        /* ==================== DARK MODE THEME ==================== */
+        .device-screen.dark-mode {
+            --page-bg: var(--dark-bg);
+            --card-bg: var(--dark-card-bg);
+            --text-primary: var(--dark-text-primary);
+            --text-secondary: var(--dark-text-secondary);
+            --text-muted: var(--dark-text-muted);
+            --border-color: var(--dark-border-color);
+            --border-light: var(--dark-border-light);
+            --bg-secondary: var(--dark-bg-secondary);
+        }
+
+        .device-screen.dark-mode .screen {
+            background: var(--dark-bg);
+        }
+
+        .device-screen.dark-mode .card,
+        .device-screen.dark-mode .quiz-option,
+        .device-screen.dark-mode .article-card,
+        .device-screen.dark-mode .case-card,
+        .device-screen.dark-mode .success-card,
+        .device-screen.dark-mode .post-submit-options {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .quiz-option:hover {
+            background: var(--dark-card-bg-elevated);
+        }
+
+        .device-screen.dark-mode .question-text,
+        .device-screen.dark-mode .detail-title,
+        .device-screen.dark-mode .card h4,
+        .device-screen.dark-mode .success-card h4,
+        .device-screen.dark-mode h2,
+        .device-screen.dark-mode h3 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .question-subtext,
+        .device-screen.dark-mode .option-label,
+        .device-screen.dark-mode .card p,
+        .device-screen.dark-mode .article-content p {
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .tab-bar {
+            background: rgba(30, 41, 59, 0.95);
+            border-top-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .tab {
+            color: var(--dark-text-muted);
+        }
+
+        .device-screen.dark-mode .tab:hover {
+            color: var(--dark-text-secondary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .device-screen.dark-mode .tab.active {
+            color: var(--primary-light);
+            background: rgba(0, 102, 255, 0.15);
+        }
+
+        .device-screen.dark-mode .form-group input,
+        .device-screen.dark-mode .form-group textarea,
+        .device-screen.dark-mode .modal-input {
+            background: var(--dark-card-bg-elevated);
+            border-color: var(--dark-border-color);
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .form-group input::placeholder,
+        .device-screen.dark-mode .form-group textarea::placeholder,
+        .device-screen.dark-mode .modal-input::placeholder {
+            color: var(--dark-text-muted);
+        }
+
+        .device-screen.dark-mode .progress-track {
+            background: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .back-btn {
+            color: var(--primary-light);
+        }
+
+        .device-screen.dark-mode .article-content h2 {
+            border-top-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .faq-item {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .notification-option {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .notification-option h5 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .notification-option p {
+            color: var(--dark-text-muted);
+        }
+
+        .device-screen.dark-mode .success-step {
+            background: var(--dark-card-bg-elevated);
+        }
+
+        .device-screen.dark-mode .success-step span:last-child {
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .glass-card {
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .device-screen.dark-mode .trust-seal {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .trust-seal h5,
+        .device-screen.dark-mode .trust-seal p {
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .social-proof-feed {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .proof-item {
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .home-section h2,
+        .device-screen.dark-mode .section-title {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .practice-area-card,
+        .device-screen.dark-mode .category-chip {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .practice-area-card h3 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .practice-area-card p {
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .category-chip {
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .category-chip.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Quick Actions - Dark Mode */
+        .device-screen.dark-mode .quick-action {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .quick-action h4 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .quick-action p {
+            color: var(--dark-text-muted);
+        }
+
+        /* Resource Cards - Dark Mode */
+        .device-screen.dark-mode .resource-card {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .resource-info h3 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .resource-info p,
+        .device-screen.dark-mode .resource-meta {
+            color: var(--dark-text-muted);
+        }
+
+        /* Learn Screen - Dark Mode */
+        .device-screen.dark-mode .learn-screen {
+            background: var(--dark-bg);
+        }
+
+        .device-screen.dark-mode .learn-header h1 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .learn-header p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Section Headers - Dark Mode */
+        .device-screen.dark-mode .section-title {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .section-link {
+            color: var(--primary-light);
+        }
+
+        /* Legal Footer - Dark Mode */
+        .device-screen.dark-mode .legal-footer {
+            background: var(--dark-bg-secondary);
+            border-top-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .legal-footer p {
+            color: var(--dark-text-muted);
+        }
+
+        .device-screen.dark-mode .legal-footer-links a {
+            color: var(--primary-light);
+        }
+
+        /* Form Labels - Dark Mode */
+        .device-screen.dark-mode .form-label,
+        .device-screen.dark-mode label {
+            color: var(--dark-text-secondary);
+        }
+
+        /* CTA Subtext - Dark Mode */
+        .device-screen.dark-mode .cta-subtext {
+            color: var(--dark-text-muted);
+        }
+
+        /* Glass Card - Dark Mode */
+        .device-screen.dark-mode .glass-card {
+            background: var(--dark-card-bg);
+            border: 1px solid var(--dark-border-color);
+        }
+
+        /* Account Screen - Dark Mode */
+        .device-screen.dark-mode .account-screen {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 35%, var(--dark-bg) 35%);
+        }
+
+        .device-screen.dark-mode .signin-prompt {
+            background: var(--dark-card-bg);
+        }
+
+        .device-screen.dark-mode .signin-prompt h2 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .signin-prompt p {
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .account-documents,
+        .device-screen.dark-mode .user-profile-card {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .account-documents h3,
+        .device-screen.dark-mode .user-profile-card h3 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .document-item {
+            background: var(--dark-card-bg-elevated);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .document-item span {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Claim Screen - Dark Mode */
+        .device-screen.dark-mode .claim-screen {
+            background: var(--dark-bg);
+        }
+
+        .device-screen.dark-mode .progress-bar {
+            background: var(--dark-border-color);
+        }
+
+        /* Detail/Article Screens - Dark Mode */
+        .device-screen.dark-mode .detail-screen {
+            background: var(--dark-bg);
+        }
+
+        .device-screen.dark-mode .detail-meta {
+            color: var(--dark-text-muted);
+        }
+
+        .device-screen.dark-mode .article-content h3 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .article-content ul li,
+        .device-screen.dark-mode .article-content ol li {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Info Box/Callout - Dark Mode */
+        .device-screen.dark-mode .info-box,
+        .device-screen.dark-mode .callout,
+        .device-screen.dark-mode .tip-box {
+            background: var(--dark-card-bg-elevated);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .info-box p,
+        .device-screen.dark-mode .callout p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Related Articles - Dark Mode */
+        .device-screen.dark-mode .related-article-card {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .related-article-card h4 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .related-article-card p {
+            color: var(--dark-text-muted);
+        }
+
+        /* Quiz Option Labels - Dark Mode */
+        .device-screen.dark-mode .quiz-option .option-title,
+        .device-screen.dark-mode .quiz-option h4 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .quiz-option .option-desc {
+            color: var(--dark-text-muted);
+        }
+
+        /* Selected Quiz Option - Dark Mode */
+        .device-screen.dark-mode .quiz-option.selected {
+            background: rgba(0, 102, 255, 0.15);
+            border-color: var(--primary);
+        }
+
+        /* Toast - Dark Mode */
+        .device-screen.dark-mode .toast {
+            background: var(--dark-card-bg-elevated);
+            color: var(--dark-text-primary);
+            border-color: var(--dark-border-color);
+        }
+
+        /* Social Proof - Dark Mode */
+        .device-screen.dark-mode .social-proof-header span {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Trust Seals - Dark Mode */
+        .device-screen.dark-mode .trust-seals {
+            background: transparent;
+        }
+
+        .device-screen.dark-mode .seal-icon {
+            background: var(--dark-card-bg-elevated);
+        }
+
+        /* Referral Modal - Dark Mode */
+        .device-screen.dark-mode .referral-info-card {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .referral-info-card h4 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .referral-info-card p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Step Numbers in Success Card - Dark Mode */
+        .device-screen.dark-mode .step-number {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* File Upload - Dark Mode */
+        .device-screen.dark-mode .file-upload-area {
+            background: var(--dark-card-bg-elevated);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .file-upload-area p {
+            color: var(--dark-text-muted);
+        }
+
+        /* Practice Card - Dark Mode */
+        .device-screen.dark-mode .practice-card {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .practice-card h3 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .practice-card p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Header Logo Text - Dark Mode (for screens with light bg) */
+        .device-screen.dark-mode .header-logo span {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .header-logo .highlight {
+            color: var(--brand-gold);
+        }
+
+        /* Modal Input Focus - Dark Mode */
+        .device-screen.dark-mode .modal-input:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+        }
+
+        /* Scrollbar - Dark Mode */
+        .device-screen.dark-mode ::-webkit-scrollbar-track {
+            background: var(--dark-bg-secondary);
+        }
+
+        .device-screen.dark-mode ::-webkit-scrollbar-thumb {
+            background: var(--dark-border-light);
+        }
+
+        /* User Info - Dark Mode */
+        .device-screen.dark-mode .user-info h3 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .user-info p {
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .signout-link {
+            color: var(--dark-text-muted);
+        }
+
+        /* Case Card - Dark Mode */
+        .device-screen.dark-mode .case-card {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .case-type {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .case-date {
+            color: var(--dark-text-muted);
+        }
+
+        .device-screen.dark-mode .case-status-text {
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .case-progress-step {
+            background: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .case-progress-step.completed {
+            background: var(--success);
+        }
+
+        /* Attorney Card - Dark Mode */
+        .device-screen.dark-mode .attorney-card {
+            background: linear-gradient(135deg, rgba(0, 196, 140, 0.15) 0%, rgba(0, 230, 160, 0.1) 100%);
+        }
+
+        .device-screen.dark-mode .attorney-info h4 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .attorney-info p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* FAQ - Dark Mode */
+        .device-screen.dark-mode .faq-question:hover {
+            background: var(--dark-bg-secondary);
+        }
+
+        .device-screen.dark-mode .faq-question:active {
+            background: var(--dark-card-bg-elevated);
+        }
+
+        .device-screen.dark-mode .faq-question span {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .faq-toggle {
+            color: var(--dark-text-muted);
+        }
+
+        .device-screen.dark-mode .faq-answer p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Document Upload - Dark Mode */
+        .device-screen.dark-mode .document-upload-area {
+            border-color: var(--dark-border-color);
+            background: var(--dark-card-bg);
+        }
+
+        .device-screen.dark-mode .document-upload-area p {
+            color: var(--dark-text-muted);
+        }
+
+        /* Empty State - Dark Mode */
+        .device-screen.dark-mode .empty-state h3 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .empty-state p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Disclaimer/Terms Modal Text - Dark Mode */
+        .device-screen.dark-mode .modal-content ul li,
+        .device-screen.dark-mode .modal-content ol li {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Button Secondary - Dark Mode */
+        .device-screen.dark-mode .btn-secondary,
+        .device-screen.dark-mode .modal-btn.secondary {
+            background: var(--dark-card-bg-elevated);
+            color: var(--dark-text-primary);
+            border-color: var(--dark-border-color);
+        }
+
+        /* Achievement Popup - Dark Mode */
+        .device-screen.dark-mode .achievement-popup {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .achievement-popup h3 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .achievement-popup p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Status Bar in Dark Mode (when on light screens) */
+        .device-screen.dark-mode .status-bar.dark {
+            color: var(--dark-text-primary);
+        }
+
+        /* ==================== ADDITIONAL DARK MODE FIXES ==================== */
+
+        /* How It Works Card - Dark Mode */
+        .device-screen.dark-mode .how-it-works {
+            background: var(--dark-card-bg) !important;
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .how-it-works h3,
+        .device-screen.dark-mode .how-it-works h4 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .how-it-works p {
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .step-connector {
+            background: var(--dark-border-color);
+        }
+
+        /* Category Chips - Dark Mode */
+        .device-screen.dark-mode .category-chip {
+            background: var(--dark-card-bg) !important;
+            border-color: var(--dark-border-color);
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .category-chip.active {
+            background: var(--primary) !important;
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Legal Modal - Dark Mode */
+        .device-screen.dark-mode .legal-modal-content {
+            background: var(--dark-card-bg) !important;
+        }
+
+        .device-screen.dark-mode .legal-modal-content h2 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .legal-modal-content p,
+        .device-screen.dark-mode .legal-modal-content li {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Office Card - Dark Mode */
+        .device-screen.dark-mode .office-card {
+            background: var(--dark-card-bg) !important;
+            border-color: var(--dark-border-color);
+        }
+
+        /* Onboarding Options - Dark Mode */
+        .device-screen.dark-mode .onboarding-option {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .device-screen.dark-mode .onboarding-option.selected {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border-color: white;
+        }
+
+        /* Save Progress Modal - Dark Mode */
+        .device-screen.dark-mode .save-progress-content {
+            background: var(--dark-card-bg) !important;
+        }
+
+        /* Notification Preferences - Dark Mode */
+        .device-screen.dark-mode .notification-prefs {
+            background: var(--dark-card-bg) !important;
+            border-color: var(--dark-border-color);
+        }
+
+        /* Case Strength Card - Dark Mode */
+        .device-screen.dark-mode .case-strength {
+            background: var(--dark-card-bg) !important;
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .case-strength h4 {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .case-strength p {
+            color: var(--dark-text-secondary);
+        }
+
+        /* Social Proof Feed - Dark Mode */
+        .device-screen.dark-mode .social-proof-feed {
+            background: var(--dark-card-bg) !important;
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .proof-item strong {
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .proof-time {
+            color: var(--dark-text-muted);
+        }
+
+        /* Article CTA Button - Dark Mode */
+        .device-screen.dark-mode .article-cta button {
+            background: var(--dark-card-bg) !important;
+            border-color: var(--dark-border-color);
+            color: var(--dark-text-primary);
+        }
+
+        /* Info/Tip Boxes - Dark Mode */
+        .device-screen.dark-mode .info-box,
+        .device-screen.dark-mode .tip-box,
+        .device-screen.dark-mode .warning-box {
+            background: var(--dark-card-bg-elevated) !important;
+            border-color: var(--dark-border-color);
+        }
+
+        /* Quick Action Cards - Force Dark Mode */
+        .device-screen.dark-mode .quick-action {
+            background: var(--dark-card-bg) !important;
+            border-color: var(--dark-border-color);
+        }
+
+        /* Resource Cards - Force Dark Mode */
+        .device-screen.dark-mode .resource-card {
+            background: var(--dark-card-bg) !important;
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .resource-card h3,
+        .device-screen.dark-mode .resource-card h4 {
+            color: var(--dark-text-primary);
+        }
+
+        /* Home Section Cards - Dark Mode */
+        .device-screen.dark-mode .home-section {
+            background: transparent;
+        }
+
+        /* Practice Card - Force Dark Mode */
+        .device-screen.dark-mode .practice-card {
+            background: var(--dark-card-bg) !important;
+            border-color: var(--dark-border-color);
+        }
+
+        /* Referral Card - Dark Mode */
+        .device-screen.dark-mode .referral-card {
+            background: var(--dark-card-bg) !important;
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .referral-card h4 {
+            color: var(--dark-text-primary);
+        }
+
+        /* Learn Screen Background - Dark Mode */
+        .device-screen.dark-mode .learn-screen {
+            background: var(--dark-bg) !important;
+        }
+
+        /* Claim Screen Background - Dark Mode */
+        .device-screen.dark-mode .claim-screen {
+            background: var(--dark-bg) !important;
+        }
+
+        /* Global override for any remaining white backgrounds in dark mode */
+        .device-screen.dark-mode .card,
+        .device-screen.dark-mode [class*="-card"]:not(.article-cta-card) {
+            background: var(--dark-card-bg);
+            border-color: var(--dark-border-color);
+        }
+
+        /* ==================== HERO VALUE PROPS - ALWAYS DARK TEXT ==================== */
+        /* These white cards in the hero section need dark text regardless of mode */
+        .device-screen.dark-mode .value-prop {
+            background: white !important;
+        }
+
+        .device-screen.dark-mode .value-prop-text {
+            color: #111827 !important;
+        }
+
+        /* Hero stat cards - keep white bg with dark text */
+        .device-screen.dark-mode .hero-stat-card,
+        .device-screen.dark-mode .stat-card,
+        .device-screen.dark-mode .trust-stat {
+            background: rgba(255, 255, 255, 0.95) !important;
+        }
+
+        .device-screen.dark-mode .hero-stat-card span,
+        .device-screen.dark-mode .stat-card span,
+        .device-screen.dark-mode .trust-stat span {
+            color: #111827 !important;
+        }
+
+        /* Onboarding value props - keep dark text on white cards */
+        .device-screen.dark-mode .onboarding-value-prop,
+        .device-screen.dark-mode .onboarding .value-prop {
+            background: white !important;
+        }
+
+        .device-screen.dark-mode .onboarding-value-prop span,
+        .device-screen.dark-mode .onboarding .value-prop-text {
+            color: #111827 !important;
+        }
+
+        /* Trust badges in hero - maintain readability */
+        .device-screen.dark-mode .trust-badge-text,
+        .device-screen.dark-mode .hero .trust-seal p,
+        .device-screen.dark-mode .hero .trust-seal h5 {
+            color: #4B5563 !important;
+        }
+
+        /* ==================== LEARN SCREEN - DARK MODE FIXES ==================== */
+
+        /* Resource card category labels - use lighter blue for contrast */
+        .device-screen.dark-mode .resource-meta span {
+            color: var(--primary-light) !important;
+        }
+
+        /* Resource card titles - ensure high contrast */
+        .device-screen.dark-mode .resource-info h4 {
+            color: var(--dark-text-primary) !important;
+        }
+
+        /* Resource card meta text (time) */
+        .device-screen.dark-mode .resource-meta {
+            color: var(--dark-text-muted) !important;
+        }
+
+        /* Category scroll container */
+        .device-screen.dark-mode .category-scroll {
+            background: transparent;
+        }
+
+        /* Header logo text in Learn/Account screens */
+        .device-screen.dark-mode .learn-screen .header-logo span,
+        .device-screen.dark-mode .account-screen .header-logo span {
+            color: var(--dark-text-primary) !important;
+        }
+
+        /* Keep highlight gold in dark mode */
+        .device-screen.dark-mode .learn-screen .header-logo .highlight,
+        .device-screen.dark-mode .account-screen .header-logo .highlight {
+            color: var(--brand-gold) !important;
+        }
+
+        /* Learn header titles and subtitles */
+        .device-screen.dark-mode .learn-header h1 {
+            color: var(--dark-text-primary) !important;
+        }
+
+        .device-screen.dark-mode .learn-header p {
+            color: var(--dark-text-secondary) !important;
+        }
+
+        /* Resources grid background */
+        .device-screen.dark-mode .resources-grid {
+            background: transparent;
         }
 
         /* ==================== Tablet Layout ==================== */
@@ -4604,6 +5542,28 @@
                     <circle cx="12" cy="17" r="1"/>
                 </svg>
                 iPad
+            </button>
+        </div>
+        <div class="device-toggle-container" style="margin-left: 16px;">
+            <button class="device-toggle-btn active" id="toggle-light" onclick="toggleTheme('light')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                Light
+            </button>
+            <button class="device-toggle-btn" id="toggle-dark" onclick="toggleTheme('dark')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                Dark
             </button>
         </div>
     </div>
@@ -6126,6 +7086,7 @@
         let quizAnswers = {};
         let currentOnboardingScreen = 1;
         let selectedOnboardingOption = null;
+        let isDarkMode = false;
 
         // User auth state
         let isSignedIn = false;
@@ -6354,6 +7315,15 @@
             document.getElementById('progress-fill').style.width = progressSteps[stepNum] + '%';
             currentQuizStep = stepNum;
             document.getElementById('screen-claim').scrollTop = 0;
+
+            // Launch confetti on success step
+            if (stepNum === 5) {
+                setTimeout(() => {
+                    if (confetti && confetti.burst) {
+                        confetti.burst(window.innerWidth / 2, window.innerHeight / 3);
+                    }
+                }, 300);
+            }
         }
 
         function selectAndAdvance(element, value, nextStep) {
@@ -6666,6 +7636,29 @@
             userCases = [];
             updateSignInButton();
             updateAccountUI();
+        }
+
+        function signInWithApple() {
+            // Demo: simulate Apple sign-in
+            showToast('Apple Sign-in coming in native app!', 'info');
+
+            // For demo purposes, sign in with mock data
+            setTimeout(() => {
+                isSignedIn = true;
+                currentUser = {
+                    name: 'Apple User',
+                    email: 'user@icloud.com',
+                    phone: ''
+                };
+
+                // Load mock cases for demo
+                userCases = [...mockCases];
+
+                hideSignInModal();
+                updateSignInButton();
+                updateAccountUI();
+                showToast('Signed in successfully!', 'success');
+            }, 500);
         }
 
         function updateSignInButton() {
@@ -7355,7 +8348,9 @@
 
             // Update toggle buttons
             document.querySelectorAll('.device-toggle-btn').forEach(btn => {
-                btn.classList.remove('active');
+                if (btn.id.startsWith('toggle-i')) { // Only update device buttons, not theme buttons
+                    btn.classList.remove('active');
+                }
             });
             document.getElementById('toggle-' + device).classList.add('active');
 
@@ -7365,6 +8360,21 @@
                 deviceFrame.classList.add('tablet');
             } else {
                 deviceFrame.classList.remove('tablet');
+            }
+        }
+
+        function toggleTheme(theme) {
+            const screen = document.querySelector('.device-screen');
+            isDarkMode = theme === 'dark';
+
+            if (isDarkMode) {
+                screen.classList.add('dark-mode');
+                document.getElementById('toggle-dark').classList.add('active');
+                document.getElementById('toggle-light').classList.remove('active');
+            } else {
+                screen.classList.remove('dark-mode');
+                document.getElementById('toggle-light').classList.add('active');
+                document.getElementById('toggle-dark').classList.remove('active');
             }
         }
     </script>
@@ -7383,6 +8393,18 @@
             <label for="signin-email" class="visually-hidden">Email Address</label>
             <input type="email" id="signin-email" class="modal-input" placeholder="Email (optional)" aria-label="Email Address" maxlength="254" autocomplete="email">
             <button class="modal-btn primary" onclick="signIn()">Sign In</button>
+
+            <div class="signin-divider">
+                <span>or continue with</span>
+            </div>
+
+            <button class="apple-signin-btn" onclick="signInWithApple()">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                </svg>
+                Sign in with Apple
+            </button>
+
             <p class="modal-help">New here? Submit a claim to create an account automatically.</p>
         </div>
     </div>
