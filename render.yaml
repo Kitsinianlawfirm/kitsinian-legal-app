@@ -1,0 +1,44 @@
+# Render Blueprint for deployment
+# https://render.com/docs/blueprint-spec
+
+services:
+  # Web Service (API)
+  - type: web
+    name: kitsinian-legal-api
+    env: node
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kitsinian-legal-db
+          property: connectionString
+      - key: ADMIN_API_KEY
+        generateValue: true
+      - key: ENCRYPTION_KEY
+        generateValue: true
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: LEAD_NOTIFICATION_EMAIL
+        sync: false
+
+databases:
+  - name: kitsinian-legal-db
+    databaseName: kitsinian_legal
+    user: kitsinian
+    region: oregon
+    plan: free
