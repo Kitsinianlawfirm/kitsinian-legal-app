@@ -7602,8 +7602,8 @@
 
             <!-- ONBOARDING OVERLAY -->
             <div class="onboarding-overlay" id="onboarding">
-                <!-- Screen 1: Trust & Value (now Screen 2) -->
-                <div class="onboarding-screen" id="onboarding-1" style="display: none;">
+                <!-- Screen 2: Trust & Value (Welcome) -->
+                <div class="onboarding-screen" id="onboarding-1">
                     <div class="onboarding-logo">
                         <svg class="logo-icon" style="width: 56px; height: 56px;"><use href="#logo-mark"/></svg>
                         <h1>Claim<span style="color: var(--brand-gold);">It</span></h1>
@@ -10351,8 +10351,10 @@
             updateAccidentBannerVisibility();
 
             // Go from consent (onboarding-3) to welcome (onboarding-1)
-            document.getElementById('onboarding-3').style.display = 'none';
-            document.getElementById('onboarding-1').style.display = 'block';
+            // Use class-based transitions like nextOnboarding()
+            document.getElementById('onboarding-3').classList.remove('active');
+            document.getElementById('onboarding-3').classList.add('exit-left');
+            document.getElementById('onboarding-1').classList.add('active');
         }
 
         function toggleAccidentConsent(element) {
