@@ -3268,6 +3268,13 @@
             border-color: var(--primary);
         }
 
+        /* Account Sections Row (stacked on mobile, side-by-side on tablet) */
+        .account-sections-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
         /* Account Document Upload Section */
         .account-documents {
             background: white;
@@ -5100,6 +5107,124 @@
             font-size: 17px;
         }
 
+        /* iPad: Account screen - Enhanced layout */
+        .device-frame.tablet .account-screen {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 30%, var(--page-bg) 30%);
+        }
+
+        .device-frame.tablet .signin-prompt {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .device-frame.tablet .signin-prompt-icon {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 28px;
+        }
+
+        .device-frame.tablet .signin-prompt-icon svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .device-frame.tablet .signin-prompt h2 {
+            font-size: 26px;
+            margin-bottom: 12px;
+        }
+
+        .device-frame.tablet .signin-prompt p {
+            font-size: 16px;
+            margin-bottom: 32px;
+            max-width: 380px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .device-frame.tablet .signin-prompt .btn-signin {
+            padding: 16px 40px;
+            font-size: 17px;
+            border-radius: 14px;
+        }
+
+        .device-frame.tablet .user-profile-card {
+            max-width: 650px;
+            margin: -20px auto 24px;
+            padding: 24px 28px;
+        }
+
+        .device-frame.tablet .cases-list {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .device-frame.tablet .cases-section-header {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .device-frame.tablet .cases-container {
+            margin-bottom: 24px;
+        }
+
+        /* iPad: Account - Documents & Notifications side by side */
+        .device-frame.tablet .account-sections-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 0;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .device-frame.tablet .account-documents,
+        .device-frame.tablet .notification-prefs {
+            margin: 0;
+            padding: 20px 24px;
+        }
+
+        .device-frame.tablet .account-documents h4,
+        .device-frame.tablet .notification-prefs h4 {
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        .device-frame.tablet .account-documents h4 svg,
+        .device-frame.tablet .notification-prefs h4 svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .device-frame.tablet .document-upload-area {
+            padding: 28px 20px;
+        }
+
+        .device-frame.tablet .document-upload-area h4 {
+            font-size: 15px;
+        }
+
+        .device-frame.tablet .document-upload-area p {
+            font-size: 13px;
+        }
+
+        .device-frame.tablet .notif-toggle {
+            padding: 14px 0;
+        }
+
+        .device-frame.tablet .notif-toggle-label h5 {
+            font-size: 15px;
+        }
+
+        .device-frame.tablet .notif-toggle-label p {
+            font-size: 12px;
+        }
+
+        .device-frame.tablet .toggle-switch {
+            width: 52px;
+            height: 30px;
+        }
+
         /* iPad: Quiz/Claim screen */
         .device-frame.tablet .claim-screen {
             padding: 20px 40px;
@@ -6232,40 +6357,41 @@
                             <!-- Cases will be dynamically inserted here -->
                         </div>
 
-                        <!-- Document Upload Section -->
-                        <div class="account-documents">
-                            <h4><svg style="width: 16px; height: 16px;"><use href="#icon-upload"/></svg> Upload Documents</h4>
-                            <div class="document-upload-area" id="account-upload-area" onclick="document.getElementById('account-file-input').click()">
-                                <input type="file" id="account-file-input" multiple accept="image/*,.pdf" style="display:none" onchange="handleAccountFileUpload(this)">
-                                <svg><use href="#icon-upload"/></svg>
-                                <h4>Upload supporting documents</h4>
-                                <p>Photos, medical records, receipts</p>
+                        <!-- Document Upload & Notification Preferences (side-by-side on tablet) -->
+                        <div class="account-sections-row">
+                            <div class="account-documents">
+                                <h4><svg style="width: 16px; height: 16px;"><use href="#icon-upload"/></svg> Upload Documents</h4>
+                                <div class="document-upload-area" id="account-upload-area" onclick="document.getElementById('account-file-input').click()">
+                                    <input type="file" id="account-file-input" multiple accept="image/*,.pdf" style="display:none" onchange="handleAccountFileUpload(this)">
+                                    <svg><use href="#icon-upload"/></svg>
+                                    <h4>Upload supporting documents</h4>
+                                    <p>Photos, medical records, receipts</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Notification Preferences -->
-                        <div class="notification-prefs">
-                            <h4><svg><use href="#icon-bell"/></svg> Notification Preferences</h4>
-                            <div class="notif-toggle">
-                                <div class="notif-toggle-label">
-                                    <h5>SMS Updates</h5>
-                                    <p>Get text message updates</p>
+                            <div class="notification-prefs">
+                                <h4><svg><use href="#icon-bell"/></svg> Notification Preferences</h4>
+                                <div class="notif-toggle">
+                                    <div class="notif-toggle-label">
+                                        <h5>SMS Updates</h5>
+                                        <p>Get text message updates</p>
+                                    </div>
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)" data-pref="sms"></div>
                                 </div>
-                                <div class="toggle-switch active" onclick="toggleSwitch(this)" data-pref="sms"></div>
-                            </div>
-                            <div class="notif-toggle">
-                                <div class="notif-toggle-label">
-                                    <h5>Email Updates</h5>
-                                    <p>Receive detailed email notifications</p>
+                                <div class="notif-toggle">
+                                    <div class="notif-toggle-label">
+                                        <h5>Email Updates</h5>
+                                        <p>Receive detailed email notifications</p>
+                                    </div>
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)" data-pref="email"></div>
                                 </div>
-                                <div class="toggle-switch active" onclick="toggleSwitch(this)" data-pref="email"></div>
-                            </div>
-                            <div class="notif-toggle">
-                                <div class="notif-toggle-label">
-                                    <h5>Push Notifications</h5>
-                                    <p>Instant alerts when status changes</p>
+                                <div class="notif-toggle">
+                                    <div class="notif-toggle-label">
+                                        <h5>Push Notifications</h5>
+                                        <p>Instant alerts when status changes</p>
+                                    </div>
+                                    <div class="toggle-switch" onclick="toggleSwitch(this)" data-pref="push"></div>
                                 </div>
-                                <div class="toggle-switch" onclick="toggleSwitch(this)" data-pref="push"></div>
                             </div>
                         </div>
                     </div>
