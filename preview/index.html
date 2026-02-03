@@ -3673,7 +3673,8 @@
                 'insurance': 'Insurance Dispute',
                 'lemon': 'Lemon Law',
                 'property': 'Property Damage',
-                'other': 'Other'
+                'other': 'Other',
+                'referral': quizAnswers.referralArea || 'Referral'
             };
             const caseType = caseTypeMap[quizAnswers.step1] || 'General Inquiry';
 
@@ -4030,7 +4031,10 @@
             container.innerHTML = html;
         }
 
+        let currentReferralArea = '';
+
         function showReferralInfo(areaName) {
+            currentReferralArea = areaName;
             document.getElementById('referral-area-name').textContent = areaName;
             document.getElementById('referral-area-desc').textContent = 'We partner with trusted California attorneys who specialize in ' + areaName.toLowerCase() + '.';
             document.getElementById('referral-modal').classList.add('active');
@@ -4042,7 +4046,17 @@
 
         function startReferralQuiz() {
             hideReferralModal();
+            // Set quiz answers for referral
+            quizAnswers = {
+                step1: 'referral',
+                caseType: 'referral',
+                referralArea: currentReferralArea
+            };
+            // Switch to claim tab and go directly to contact form (step 4)
             switchTab('claim');
+            setTimeout(() => {
+                goToStep(4);
+            }, 100);
         }
 
         // Legal Modal Functions
