@@ -524,12 +524,16 @@
         .hero p { font-size: 15px; opacity: 0.9; margin-bottom: 16px; font-weight: 500; }
 
         .hero-logo {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
             margin: 0 auto 12px;
-            width: fit-content;
+            position: relative;
+        }
+        .hero-logo svg {
+            position: absolute;
+            right: 100%;
+            margin-right: 8px;
         }
         .hero-logo-text {
             font-size: 28px;
