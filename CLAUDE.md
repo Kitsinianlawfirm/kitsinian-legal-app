@@ -758,6 +758,13 @@ services:
 - [ ] App Store submission
 - [ ] Port compliance features to iOS Swift code
 
+### Future Improvements (from Feb 2025 Audit)
+- [ ] Move CTA above fold on smaller screens (may improve conversion)
+- [ ] Add loading/disabled state to form submit button
+- [ ] Reduce 52 `!important` declarations in CSS (code quality)
+- [ ] Replace 190 inline onclick handlers with event delegation (code quality)
+- [ ] Split monolithic 332KB index.html into separate CSS/JS/HTML for production
+
 ---
 
 ## Future Development: Accident Mode (Phase 2)
