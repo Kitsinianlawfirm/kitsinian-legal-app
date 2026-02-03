@@ -3420,13 +3420,17 @@
                 <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" fill="currentColor"/>
             </symbol>
 
-            <!-- Injury/Personal Injury - person with injury star burst -->
+            <!-- Injury/Personal Injury - person with arm in sling/bandage -->
             <symbol id="icon-injury" viewBox="0 0 24 24">
-                <!-- Person silhouette -->
-                <circle cx="10" cy="4.5" r="3" fill="currentColor"/>
-                <path d="M10 9c-2.5 0-4.5 1.5-4.5 3.5V18h2v-4h.5v7h2v-7h2v7h2v-7h.5v4h2v-5.5c0-2-2-3.5-4.5-3.5z" fill="currentColor"/>
-                <!-- Injury indicator - star burst -->
-                <path d="M19 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z" fill="currentColor"/>
+                <!-- Head -->
+                <circle cx="12" cy="4" r="3" fill="currentColor"/>
+                <!-- Body with arm sling -->
+                <path d="M15.5 22v-6h1.5v-4c0-1.66-1.34-3-3-3h-4c-1.66 0-3 1.34-3 3v4h1.5v6h2v-6h1v6h2v-6h1v6h1.5z" fill="currentColor"/>
+                <!-- Bandage/sling across chest -->
+                <path d="M9 13l6-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <!-- Small medical cross -->
+                <rect x="17" y="2" width="5" height="5" rx="1" fill="currentColor" opacity="0.8"/>
+                <path d="M19.5 3v3M18 4.5h3" stroke="white" stroke-width="1"/>
             </symbol>
 
             <!-- Slip/Fall -->
@@ -3440,15 +3444,12 @@
                 <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" fill="currentColor"/>
             </symbol>
 
-            <!-- Lemon - classic lemon shape with leaf -->
+            <!-- Lemon - horizontal lemon shape with pointed ends -->
             <symbol id="icon-lemon" viewBox="0 0 24 24">
-                <!-- Lemon body - oval citrus shape -->
-                <ellipse cx="12" cy="13" rx="7" ry="8" fill="currentColor"/>
-                <!-- Lemon highlight -->
-                <ellipse cx="10" cy="11" rx="2" ry="3" fill="currentColor" opacity="0.3"/>
-                <!-- Stem and leaf -->
-                <path d="M12 5V3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M12 3c1.5 0 3-.5 3-1.5S14 1 12 1" fill="currentColor" opacity="0.7"/>
+                <!-- Classic horizontal lemon shape -->
+                <path d="M2 12c0-3 2-5 4-6s4-1 6-1 4 0 6 1 4 3 4 6-2 5-4 6-4 1-6 1-4 0-6-1-4-3-4-6z" fill="currentColor"/>
+                <!-- Leaf on top -->
+                <path d="M12 5c-1-2 0-4 2-4s2 1 1 2-2 2-3 2z" fill="currentColor" opacity="0.7"/>
             </symbol>
 
             <!-- Property Damage - house with fire/damage -->
@@ -3965,7 +3966,7 @@
 
                     <div class="practice-card" onclick="showArticle('pa-personal-injury')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-injury"/></svg></div><div class="practice-info"><h4>Personal Injury <span class="badge-primary"><svg style="width: 10px; height: 10px; color: white;"><use href="#icon-star"/></svg> Top</span></h4><p>Accidents, negligence, pain & suffering</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
                     <div class="practice-card" onclick="showArticle('pa-premises-liability')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-building"/></svg></div><div class="practice-info"><h4>Premises Liability</h4><p>Slip & fall, unsafe properties</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
-                    <div class="practice-card" onclick="showArticle('pa-property-damage')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-car"/></svg></div><div class="practice-info"><h4>Property Damage</h4><p>Vehicle damage, total loss claims</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                    <div class="practice-card" onclick="showArticle('pa-property-damage')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-property"/></svg></div><div class="practice-info"><h4>Property Damage</h4><p>Fire, water, theft, vehicle damage</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
                     <div class="practice-card" onclick="showArticle('pa-insurance-bad-faith')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-shield"/></svg></div><div class="practice-info"><h4>Insurance Bad Faith</h4><p>Denied claims, lowball offers</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
                     <div class="practice-card" onclick="showArticle('pa-lemon-law')"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;"><use href="#icon-lemon"/></svg></div><div class="practice-info"><h4>Lemon Law</h4><p>Defective vehicles, buybacks</p></div><span class="chevron"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
 
