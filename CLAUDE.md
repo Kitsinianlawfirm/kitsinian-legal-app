@@ -210,14 +210,32 @@ Browser-based design mockups for iteration:
   - Lemon: problem (engine, electrical, safety, recurring)
   - Property: type (vehicle, fire, water, theft)
   - Streamlined to 4 questions + contact form
+- [x] **Compliance & Legal Disclaimers** (Feb 2025)
+  - Privacy Policy modal with CCPA rights
+  - Terms of Service modal
+  - Legal Disclaimers modal (success rate, no fee explanation)
+  - "Do Not Sell My Info" CCPA link
+  - Legal footer on home screen
+  - Disclaimers on statistics ("98% Success" - *Results vary)
+  - "No Fee Unless We Win" clarification with asterisk
+  - Form disclaimer with links to Terms/Privacy
+- [x] **Accessibility Improvements** (Feb 2025)
+  - Semantic nav element for tab bar
+  - ARIA labels on all form inputs
+  - aria-selected on tab navigation
+  - visually-hidden labels for screen readers
+  - prefers-reduced-motion CSS support
+  - Minimum 44px touch targets
 
 ### Pending
 - [ ] User to install Xcode for iOS development
 - [ ] User to create Apple Developer account
 - [ ] Deploy backend to Render
 - [ ] Create app icon (1024x1024)
-- [ ] Replace placeholder phone numbers with real ones
+- [ ] Replace placeholder phone numbers/emails with real ones
+- [ ] Update Privacy Policy email (privacy@kitsinian.com) to real address
 - [ ] App Store submission
+- [ ] Port iOS Swift code to match HTML preview compliance features
 
 ---
 
