@@ -82,13 +82,20 @@ async function sendToLeadDocket(lead) {
       practiceArea: lead.practiceArea
     });
 
+    // Add timeout to prevent hanging (10 seconds)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
     const response = await fetch(endpointUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: formBody
+      body: formBody,
+      signal: controller.signal
     });
+
+    clearTimeout(timeoutId);
 
     const result = await response.json();
 

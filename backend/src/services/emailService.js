@@ -6,16 +6,28 @@
 const nodemailer = require('nodemailer');
 const { logger } = require('../utils/logger');
 
-// Create transporter
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT) || 587,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
+// Create transporter with timeouts to prevent hanging
+const createTransporter = () => {
+  // Skip if SMTP not configured
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    return null;
   }
-});
+
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST || 'smtp.gmail.com',
+    port: parseInt(process.env.SMTP_PORT) || 587,
+    secure: false,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS
+    },
+    connectionTimeout: 5000, // 5 seconds
+    greetingTimeout: 5000,
+    socketTimeout: 10000
+  });
+};
+
+const transporter = createTransporter();
 
 // Practice area display names
 const practiceAreaNames = {
@@ -123,6 +135,12 @@ const sendNewLeadNotification = async (lead) => {
     `
   };
 
+  // Skip if SMTP not configured
+  if (!transporter) {
+    logger.warn('Email not sent - SMTP not configured', { leadId: id });
+    return;
+  }
+
   try {
     await transporter.sendMail(mailOptions);
     logger.info('Lead notification email sent', { leadId: id });
@@ -182,6 +200,12 @@ const sendLeadConfirmation = async ({ email, firstName, practiceArea }) => {
       </div>
     `
   };
+
+  // Skip if SMTP not configured
+  if (!transporter) {
+    logger.warn('Confirmation email not sent - SMTP not configured', { email });
+    return;
+  }
 
   try {
     await transporter.sendMail(mailOptions);
