@@ -233,13 +233,16 @@
             left: 0;
             right: 0;
             height: 85px;
-            background: white;
-            border-top: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
             display: flex;
             justify-content: space-around;
-            align-items: flex-start;
-            padding-top: 10px;
+            align-items: center;
+            padding: 8px 8px 20px;
             z-index: 100;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
         }
 
         .tab-bar.hidden { display: none; }
@@ -250,26 +253,46 @@
             align-items: center;
             gap: 4px;
             color: var(--text-muted);
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
-            padding: 4px 12px;
+            padding: 8px 16px;
+            background: none;
+            border: none;
+            border-radius: 12px;
+            min-width: 64px;
         }
 
-        .tab:hover { color: var(--text-secondary); }
-        .tab.active { color: var(--primary); }
+        .tab:hover {
+            color: var(--text-secondary);
+            background: rgba(0, 102, 255, 0.05);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            background: rgba(0, 102, 255, 0.1);
+        }
 
         .tab-icon {
-            width: 26px;
-            height: 26px;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: transform 0.2s ease;
+            pointer-events: none;
+        }
+
+        .tab-icon * {
+            pointer-events: none;
         }
 
         .tab.active .tab-icon { transform: scale(1.1); }
+
+        .tab span {
+            pointer-events: none;
+        }
 
         /* Back Button */
         .back-btn {
@@ -1601,10 +1624,16 @@
             font-weight: 500;
             text-decoration: none;
             cursor: pointer;
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
         }
 
-        .skip-link a:hover {
+        .skip-link a:hover,
+        .skip-link a:active {
             color: white;
+            background: rgba(255,255,255,0.1);
         }
 
         .onboarding-dots {
@@ -3629,7 +3658,7 @@
                             Check If You Qualify <svg style="width: 20px; height: 20px; color: var(--primary);"><use href="#icon-arrow-right"/></svg>
                         </button>
                         <div class="skip-link">
-                            <a onclick="skipOnboarding()">I'll explore first</a>
+                            <a href="#" onclick="skipOnboarding(); return false;">I'll explore first</a>
                         </div>
                     </div>
                 </div>
@@ -3687,7 +3716,7 @@
                             <svg style="width: 22px; height: 22px; color: white;"><use href="#icon-lightning"/></svg> Calculate My Compensation
                         </button>
                         <div class="skip-link">
-                            <a onclick="skipOnboarding()">Skip for now</a>
+                            <a href="#" onclick="skipOnboarding(); return false;">Skip for now</a>
                         </div>
                     </div>
                 </div>
@@ -4951,10 +4980,22 @@
 
             <!-- Tab Bar -->
             <nav class="tab-bar" id="tab-bar" role="navigation" aria-label="Main navigation">
-                <button class="tab active" id="tab-home" onclick="switchTab('home')" role="tab" aria-selected="true" aria-label="Home"><div class="tab-icon" aria-hidden="true"><svg style="width: 24px; height: 24px;"><use href="#icon-home"/></svg></div>Home</button>
-                <button class="tab" id="tab-claim" onclick="switchTab('claim')" role="tab" aria-selected="false" aria-label="Start a claim"><div class="tab-icon" aria-hidden="true"><svg style="width: 24px; height: 24px;"><use href="#icon-lightning"/></svg></div>Claim</button>
-                <button class="tab" id="tab-learn" onclick="switchTab('learn')" role="tab" aria-selected="false" aria-label="Learning resources"><div class="tab-icon" aria-hidden="true"><svg style="width: 24px; height: 24px;"><use href="#icon-book"/></svg></div>Learn</button>
-                <button class="tab" id="tab-account" onclick="switchTab('account')" role="tab" aria-selected="false" aria-label="Your account"><div class="tab-icon" aria-hidden="true"><svg style="width: 24px; height: 24px;"><use href="#icon-user"/></svg></div>Account</button>
+                <button class="tab active" id="tab-home" onclick="switchTab('home')" role="tab" aria-selected="true" aria-label="Home">
+                    <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-home"/></svg></div>
+                    <span>Home</span>
+                </button>
+                <button class="tab" id="tab-claim" onclick="switchTab('claim')" role="tab" aria-selected="false" aria-label="Start a claim">
+                    <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-lightning"/></svg></div>
+                    <span>Claim</span>
+                </button>
+                <button class="tab" id="tab-learn" onclick="switchTab('learn')" role="tab" aria-selected="false" aria-label="Learning resources">
+                    <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-book"/></svg></div>
+                    <span>Learn</span>
+                </button>
+                <button class="tab" id="tab-account" onclick="switchTab('account')" role="tab" aria-selected="false" aria-label="Your account">
+                    <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-user"/></svg></div>
+                    <span>Account</span>
+                </button>
             </nav>
 
             <!-- PRIVACY POLICY MODAL -->
