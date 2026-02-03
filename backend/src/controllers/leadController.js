@@ -135,7 +135,10 @@ const createLead = async (req, res) => {
     logger.error('Error creating lead:', error);
     res.status(500).json({
       success: false,
-      message: 'Failed to submit your request. Please try again.'
+      message: 'Failed to submit your request. Please try again.',
+      // Temporarily include error for debugging
+      errorType: error.name,
+      errorDetail: error.message
     });
   }
 };
