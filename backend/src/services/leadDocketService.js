@@ -13,38 +13,44 @@ const { logger } = require('../utils/logger');
 /**
  * Maps ClaimIt lead data to Lead Docket field format
  *
- * Note: Field names in Lead Docket are configurable. These mappings
- * should match your Lead Docket integration settings. After your first
- * test submission, check the Notes section of the created Opportunity
- * in Lead Docket to verify field mapping.
+ * Field mapping matches Kitsinian Law's Lead Docket integration:
+ * - First → First Name
+ * - Last → Last Name
+ * - Phone → Mobile Phone
+ * - Email → Email
+ * - Summary → Summary (contains case details)
  */
 function mapLeadToLeadDocket(lead) {
+  // Build a comprehensive summary with all case details
+  const summaryParts = [];
+
+  if (lead.practiceArea) {
+    summaryParts.push(`Practice Area: ${lead.practiceArea}`);
+  }
+  if (lead.practiceAreaCategory) {
+    summaryParts.push(`Category: ${lead.practiceAreaCategory}`);
+  }
+  if (lead.urgency) {
+    summaryParts.push(`Urgency: ${lead.urgency}`);
+  }
+  if (lead.preferredContact) {
+    summaryParts.push(`Preferred Contact: ${lead.preferredContact}`);
+  }
+  if (lead.description) {
+    summaryParts.push(`\nDescription: ${lead.description}`);
+  }
+  if (lead.quizAnswers && Object.keys(lead.quizAnswers).length > 0) {
+    summaryParts.push(`\nQuiz Answers: ${JSON.stringify(lead.quizAnswers)}`);
+  }
+  summaryParts.push(`\nSource: ClaimIt App (${lead.source || 'ios_app'})`);
+  summaryParts.push(`ClaimIt Lead ID: ${lead.id}`);
+
   return {
-    // Contact Information
-    FirstName: lead.firstName,
-    LastName: lead.lastName,
-    FullName: `${lead.firstName} ${lead.lastName}`,
+    First: lead.firstName,
+    Last: lead.lastName,
+    Phone: lead.phone,
     Email: lead.email,
-    PrimaryPhoneNum: lead.phone,
-    PrimaryPhoneNumType: lead.preferredContact === 'text' ? 'Cell' : 'Phone',
-
-    // Case Information
-    Case_Type: lead.practiceArea || '',
-    Case_Category: lead.practiceAreaCategory || '',
-    Date_of_Incident: lead.incidentDate || '',
-    Description: lead.description || '',
-    Urgency: lead.urgency || 'normal',
-
-    // Source Tracking
-    Source: 'ClaimIt App',
-    Source_Detail: lead.source || 'ios_app',
-
-    // Quiz Answers (as JSON string for notes)
-    Quiz_Answers: lead.quizAnswers ? JSON.stringify(lead.quizAnswers) : '',
-
-    // Internal Reference
-    ClaimIt_Lead_ID: lead.id,
-    Submission_Date: lead.createdAt || new Date().toISOString()
+    Summary: summaryParts.join('\n')
   };
 }
 
