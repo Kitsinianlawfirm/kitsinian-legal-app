@@ -28,13 +28,14 @@ const runMigrations = async () => {
   try {
     logger.info('Running database migrations...');
 
+    // Create leads table if it doesn't exist
     await pool.query(`
       CREATE TABLE IF NOT EXISTS leads (
         id UUID PRIMARY KEY,
         first_name VARCHAR(100) NOT NULL,
         last_name VARCHAR(100) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        phone VARCHAR(20) NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT NOT NULL,
         preferred_contact VARCHAR(20) DEFAULT 'phone',
         practice_area VARCHAR(100),
         practice_area_category VARCHAR(50),
@@ -49,6 +50,10 @@ const runMigrations = async () => {
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       );
     `);
+
+    // Alter existing columns to TEXT if they're too small for encrypted values
+    await pool.query(`ALTER TABLE leads ALTER COLUMN email TYPE TEXT;`).catch(() => {});
+    await pool.query(`ALTER TABLE leads ALTER COLUMN phone TYPE TEXT;`).catch(() => {});
 
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_leads_status ON leads(status);`);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_leads_practice_area ON leads(practice_area);`);

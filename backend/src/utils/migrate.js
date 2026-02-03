@@ -11,14 +11,14 @@ const migrate = async () => {
   try {
     console.log('Running migrations...');
 
-    // Create leads table
+    // Create leads table (email/phone are TEXT to accommodate encrypted values)
     await pool.query(`
       CREATE TABLE IF NOT EXISTS leads (
         id UUID PRIMARY KEY,
         first_name VARCHAR(100) NOT NULL,
         last_name VARCHAR(100) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        phone VARCHAR(20) NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT NOT NULL,
         preferred_contact VARCHAR(20) DEFAULT 'phone',
         practice_area VARCHAR(100),
         practice_area_category VARCHAR(50),
@@ -33,6 +33,10 @@ const migrate = async () => {
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       );
     `);
+
+    // Alter existing columns to TEXT if they're too small for encrypted values
+    await pool.query(`ALTER TABLE leads ALTER COLUMN email TYPE TEXT;`).catch(() => {});
+    await pool.query(`ALTER TABLE leads ALTER COLUMN phone TYPE TEXT;`).catch(() => {});
 
     // Create indexes
     await pool.query(`
