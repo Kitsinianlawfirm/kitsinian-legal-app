@@ -2404,60 +2404,46 @@
                         <div class="question-container">
                             <div class="question-text">What happened to you?</div>
                             <div class="question-subtext">Select the option that best describes your situation</div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'car-accident', 2)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-car"/></svg></div><span>Car or vehicle accident</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'injury', 2)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-injury"/></svg></div><span>I was injured</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'slip-fall', 2)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-fall"/></svg></div><span>Slip, trip, or fall</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'insurance', 2)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-shield"/></svg></div><span>Insurance dispute</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'lemon', 2)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-lemon"/></svg></div><span>Defective vehicle (Lemon)</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'property', 2)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-property"/></svg></div><span>Property was damaged</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'other', 2)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-question"/></svg></div><span>Something else</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'car-accident')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-car"/></svg></div><span>Car or vehicle accident</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'injury')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-injury"/></svg></div><span>I was injured</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'slip-fall')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-fall"/></svg></div><span>Slip, trip, or fall</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'insurance')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-shield"/></svg></div><span>Insurance dispute</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'lemon')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-lemon"/></svg></div><span>Defective vehicle (Lemon)</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'property')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-property"/></svg></div><span>Property was damaged</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'other')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-question"/></svg></div><span>Something else</span></div>
                         </div>
                     </div>
 
-                    <!-- Step 2: When did it happen -->
+                    <!-- Step 2: Dynamic - Details based on case type -->
                     <div class="quiz-step" id="quiz-step-2">
                         <div class="question-container">
                             <button class="quiz-back-btn" onclick="goToStep(1)">Back</button>
-                            <div class="question-text">When did this happen?</div>
-                            <div class="question-subtext">This helps us understand your timeline</div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'recent', 3)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-calendar"/></svg></div><span>Within the last week</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, '1month', 3)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-calendar"/></svg></div><span>Within the last month</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, '6months', 3)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-clock"/></svg></div><span>1-6 months ago</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, '1year', 3)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-clock"/></svg></div><span>6-12 months ago</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'over1year', 3)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-alarm"/></svg></div><span>Over a year ago</span></div>
+                            <div class="question-text" id="step2-question">Tell us more</div>
+                            <div class="question-subtext" id="step2-subtext">Select the option that applies</div>
+                            <div id="step2-options">
+                                <!-- Options populated dynamically -->
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Step 3: Were you injured -->
+                    <!-- Step 3: When did it happen -->
                     <div class="quiz-step" id="quiz-step-3">
                         <div class="question-container">
                             <button class="quiz-back-btn" onclick="goToStep(2)">Back</button>
-                            <div class="question-text">Were you injured?</div>
-                            <div class="question-subtext">Even minor injuries may be compensable</div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'yes-serious', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-hospital"/></svg></div><span>Yes, serious injuries</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'yes-minor', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-bandage"/></svg></div><span>Yes, minor injuries</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'unsure', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-thinking"/></svg></div><span>I'm not sure yet</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'no-injury', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-hand"/></svg></div><span>No injuries, just property damage</span></div>
+                            <div class="question-text">When did this happen?</div>
+                            <div class="question-subtext">This helps us check important deadlines</div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'recent', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-calendar"/></svg></div><span>Within the last week</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, '1month', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-calendar"/></svg></div><span>Within the last month</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, '6months', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-clock"/></svg></div><span>1-6 months ago</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, '1year', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-clock"/></svg></div><span>6-12 months ago</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'over1year', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-alarm"/></svg></div><span>Over a year ago</span></div>
                         </div>
                     </div>
 
-                    <!-- Step 4: Have you spoken to insurance -->
+                    <!-- Step 4: Contact Form -->
                     <div class="quiz-step" id="quiz-step-4">
                         <div class="question-container">
                             <button class="quiz-back-btn" onclick="goToStep(3)">Back</button>
-                            <div class="question-text">Have you talked to an insurance company?</div>
-                            <div class="question-subtext">This helps us understand your case status</div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'no-contact', 5)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-chat"/></svg></div><span>No, not yet</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'filed-claim', 5)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-document"/></svg></div><span>Yes, I filed a claim</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'denied', 5)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-denied"/></svg></div><span>Yes, and they denied me</span></div>
-                            <div class="quiz-option" onclick="selectAndAdvance(this, 'lowball', 5)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-lowball"/></svg></div><span>Yes, but their offer is too low</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Step 5: Contact Form -->
-                    <div class="quiz-step" id="quiz-step-5">
-                        <div class="question-container">
-                            <button class="quiz-back-btn" onclick="goToStep(4)">Back</button>
                             <div class="question-text">Almost done!</div>
                             <div class="question-subtext">Enter your info for a free case evaluation</div>
 
@@ -2482,8 +2468,8 @@
                         </div>
                     </div>
 
-                    <!-- Step 6: Success -->
-                    <div class="quiz-step" id="quiz-step-6">
+                    <!-- Step 5: Success -->
+                    <div class="quiz-step" id="quiz-step-5">
                         <div class="question-container success-container">
                             <div class="success-icon"><svg style="width: 80px; height: 80px; color: var(--success);"><use href="#icon-shield"/></svg></div>
                             <div class="question-text">We Got Your Info!</div>
@@ -2854,6 +2840,253 @@
                         <button onclick="startQuizWithTopic('other')">Check My Deadline</button>
                     </div>
                 </div>
+
+                <!-- PRACTICE AREA: Personal Injury -->
+                <div class="screen detail-screen" id="article-pa-personal-injury">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
+                        <h1 class="detail-title">Personal Injury</h1>
+                        <div class="detail-meta">No Fee Unless We Win</div>
+                    </div>
+                    <div class="article-content">
+                        <p>If you've been injured due to someone else's negligence, you deserve compensation. We fight aggressively to get you the maximum recovery.</p>
+
+                        <h2>What We Handle</h2>
+                        <ul>
+                            <li>Car, truck, and motorcycle accidents</li>
+                            <li>Pedestrian and bicycle accidents</li>
+                            <li>Dog bites and animal attacks</li>
+                            <li>Assault and battery injuries</li>
+                            <li>Wrongful death claims</li>
+                        </ul>
+
+                        <h2>Types of Compensation</h2>
+                        <ul>
+                            <li><strong>Medical expenses:</strong> Past, present, and future</li>
+                            <li><strong>Lost wages:</strong> Time missed from work</li>
+                            <li><strong>Pain & suffering:</strong> Physical and emotional</li>
+                            <li><strong>Loss of enjoyment:</strong> Impact on quality of life</li>
+                            <li><strong>Property damage:</strong> Vehicle and personal items</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <p><strong>Important:</strong> California law gives you 2 years from the date of injury to file a lawsuit. Don't wait—evidence can disappear and memories fade.</p>
+                        </div>
+
+                        <h2>Why Choose Us?</h2>
+                        <ul>
+                            <li>Millions recovered for clients</li>
+                            <li>Free initial consultation</li>
+                            <li>No fee unless we win your case</li>
+                            <li>24/7 availability for urgent cases</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Injured? Let's Talk.</h3>
+                        <p>Get your free case evaluation today</p>
+                        <button onclick="startQuizWithTopic('injury')">Start My Claim Review</button>
+                    </div>
+                </div>
+
+                <!-- PRACTICE AREA: Premises Liability -->
+                <div class="screen detail-screen" id="article-pa-premises-liability">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
+                        <h1 class="detail-title">Premises Liability</h1>
+                        <div class="detail-meta">No Fee Unless We Win</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Property owners have a legal duty to maintain safe conditions. When they fail and you're injured, we hold them accountable.</p>
+
+                        <h2>Common Cases We Handle</h2>
+                        <ul>
+                            <li>Slip and fall accidents</li>
+                            <li>Trip hazards and uneven surfaces</li>
+                            <li>Inadequate lighting injuries</li>
+                            <li>Swimming pool accidents</li>
+                            <li>Negligent security incidents</li>
+                            <li>Construction site injuries</li>
+                        </ul>
+
+                        <h2>Who Can Be Held Liable?</h2>
+                        <ul>
+                            <li><strong>Property owners:</strong> Residential or commercial</li>
+                            <li><strong>Business operators:</strong> Stores, restaurants, hotels</li>
+                            <li><strong>Property managers:</strong> Apartments, condos</li>
+                            <li><strong>Government entities:</strong> Public buildings, sidewalks</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <p><strong>Act Fast:</strong> Claims against government entities have shorter deadlines—often just 6 months. Contact us immediately if injured on public property.</p>
+                        </div>
+
+                        <h2>What You Need to Prove</h2>
+                        <ul>
+                            <li>The property had a dangerous condition</li>
+                            <li>The owner knew or should have known</li>
+                            <li>They failed to fix it or warn visitors</li>
+                            <li>The condition caused your injury</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Injured on someone's property?</h3>
+                        <p>Free consultation—we'll review your case</p>
+                        <button onclick="startQuizWithTopic('slip-fall')">Start My Claim Review</button>
+                    </div>
+                </div>
+
+                <!-- PRACTICE AREA: Property Damage -->
+                <div class="screen detail-screen" id="article-pa-property-damage">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
+                        <h1 class="detail-title">Property Damage</h1>
+                        <div class="detail-meta">No Fee Unless We Win</div>
+                    </div>
+                    <div class="article-content">
+                        <p>When your vehicle or property is damaged in an accident, insurance companies often try to pay as little as possible. We fight to get you fair compensation.</p>
+
+                        <h2>Types of Claims</h2>
+                        <ul>
+                            <li>Vehicle damage from accidents</li>
+                            <li>Total loss claims</li>
+                            <li>Diminished value claims</li>
+                            <li>Personal property damage</li>
+                            <li>Electronics and valuables</li>
+                        </ul>
+
+                        <h2>What You Can Recover</h2>
+                        <ul>
+                            <li><strong>Repair costs:</strong> Full cost to fix your vehicle</li>
+                            <li><strong>Replacement value:</strong> If your vehicle is totaled</li>
+                            <li><strong>Rental car:</strong> While yours is being repaired</li>
+                            <li><strong>Diminished value:</strong> Decrease in resale value</li>
+                            <li><strong>Personal items:</strong> Things damaged in the accident</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <p><strong>Pro Tip:</strong> Don't accept the first offer from insurance. They typically lowball by 20-40%. Get your own estimate and let us negotiate.</p>
+                        </div>
+
+                        <h2>Insurance Tactics to Watch For</h2>
+                        <ul>
+                            <li>Undervaluing your vehicle</li>
+                            <li>Using cheap aftermarket parts</li>
+                            <li>Denying rental car coverage</li>
+                            <li>Ignoring diminished value</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Property damage dispute?</h3>
+                        <p>We'll help you get fair compensation</p>
+                        <button onclick="startQuizWithTopic('property')">Start My Claim Review</button>
+                    </div>
+                </div>
+
+                <!-- PRACTICE AREA: Insurance Bad Faith -->
+                <div class="screen detail-screen" id="article-pa-insurance-bad-faith">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
+                        <h1 class="detail-title">Insurance Bad Faith</h1>
+                        <div class="detail-meta">No Fee Unless We Win</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Insurance companies have a legal duty to act in good faith. When they don't, you can sue them for bad faith and potentially recover additional damages.</p>
+
+                        <h2>Signs of Bad Faith</h2>
+                        <ul>
+                            <li>Unreasonable claim denial</li>
+                            <li>Excessive delays in processing</li>
+                            <li>Lowball settlement offers</li>
+                            <li>Failure to investigate properly</li>
+                            <li>Constantly changing their position</li>
+                            <li>Misrepresenting policy terms</li>
+                        </ul>
+
+                        <h2>Your Rights Under California Law</h2>
+                        <ul>
+                            <li><strong>15 days:</strong> To acknowledge your claim</li>
+                            <li><strong>40 days:</strong> To accept or deny after proof</li>
+                            <li><strong>30 days:</strong> To pay after settlement</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <p><strong>Document Everything:</strong> Keep records of all communications with your insurer—emails, letters, phone call notes with dates and names.</p>
+                        </div>
+
+                        <h2>What You Can Recover</h2>
+                        <ul>
+                            <li>Your original claim amount</li>
+                            <li>Emotional distress damages</li>
+                            <li>Attorney fees</li>
+                            <li>Punitive damages (in severe cases)</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Insurance treating you unfairly?</h3>
+                        <p>We'll hold them accountable</p>
+                        <button onclick="startQuizWithTopic('insurance')">Start My Claim Review</button>
+                    </div>
+                </div>
+
+                <!-- PRACTICE AREA: Lemon Law -->
+                <div class="screen detail-screen" id="article-pa-lemon-law">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);">We Handle Directly</div>
+                        <h1 class="detail-title">Lemon Law</h1>
+                        <div class="detail-meta">Manufacturer Pays Our Fees</div>
+                    </div>
+                    <div class="article-content">
+                        <p>California's Lemon Law is one of the strongest in the country. If you're stuck with a defective vehicle, we can help you get a refund or replacement.</p>
+
+                        <h2>Does Your Vehicle Qualify?</h2>
+                        <ul>
+                            <li><strong>2+ repair attempts</strong> for a safety defect, OR</li>
+                            <li><strong>4+ repair attempts</strong> for any substantial defect, OR</li>
+                            <li>Vehicle in shop <strong>30+ days</strong> total</li>
+                        </ul>
+
+                        <h2>Covered Vehicles</h2>
+                        <ul>
+                            <li>New cars, trucks, SUVs</li>
+                            <li>Used vehicles under warranty</li>
+                            <li>Leased vehicles</li>
+                            <li>Certified pre-owned</li>
+                            <li>RVs and motorcycles</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <p><strong>Great News:</strong> Under California law, the manufacturer pays your attorney fees if you win. There's NO cost to you!</p>
+                        </div>
+
+                        <h2>What You Can Get</h2>
+                        <h3>Buyback (Refund)</h3>
+                        <ul>
+                            <li>Full purchase price</li>
+                            <li>Down payment returned</li>
+                            <li>Monthly payments made</li>
+                            <li>Registration and taxes</li>
+                            <li>Incidental costs (towing, rentals)</li>
+                        </ul>
+
+                        <h3>OR Replacement</h3>
+                        <p>A new vehicle of equal value that's acceptable to you.</p>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Stuck with a lemon?</h3>
+                        <p>Find out if you qualify for a buyback</p>
+                        <button onclick="startQuizWithTopic('lemon')">Check My Vehicle</button>
+                    </div>
+                </div>
             </div>
 
             <!-- Tab Bar -->
@@ -2904,12 +3137,94 @@
         ];
 
         const progressSteps = {
-            1: 16,
-            2: 33,
-            3: 50,
-            4: 67,
-            5: 85,
-            6: 100
+            1: 20,
+            2: 40,
+            3: 60,
+            4: 80,
+            5: 100
+        };
+
+        // Dynamic questions for Step 2 based on case type
+        const step2Questions = {
+            'car-accident': {
+                question: 'What was your role in the accident?',
+                subtext: 'This helps us understand your situation',
+                options: [
+                    { value: 'driver', label: 'I was driving', icon: 'car' },
+                    { value: 'passenger', label: 'I was a passenger', icon: 'injury' },
+                    { value: 'pedestrian', label: 'Pedestrian or cyclist', icon: 'fall' },
+                    { value: 'parked', label: 'My parked car was hit', icon: 'property' },
+                    { value: 'rideshare', label: 'Uber/Lyft accident', icon: 'car' }
+                ]
+            },
+            'injury': {
+                question: 'How were you injured?',
+                subtext: 'Select the cause of your injury',
+                options: [
+                    { value: 'work-accident', label: 'Accident at work', icon: 'work' },
+                    { value: 'medical', label: 'Medical malpractice', icon: 'hospital' },
+                    { value: 'product', label: 'Defective product', icon: 'denied' },
+                    { value: 'dog-bite', label: 'Dog bite or animal attack', icon: 'injury' },
+                    { value: 'assault', label: 'Assault or battery', icon: 'injury' },
+                    { value: 'other-injury', label: 'Other injury', icon: 'question' }
+                ]
+            },
+            'slip-fall': {
+                question: 'Where did you fall?',
+                subtext: 'The location affects who may be liable',
+                options: [
+                    { value: 'store', label: 'Store or business', icon: 'building' },
+                    { value: 'apartment', label: 'Apartment or rental', icon: 'home' },
+                    { value: 'sidewalk', label: 'Sidewalk or public area', icon: 'location' },
+                    { value: 'workplace', label: 'At my workplace', icon: 'work' },
+                    { value: 'private', label: 'Private residence', icon: 'home' },
+                    { value: 'other-location', label: 'Other location', icon: 'question' }
+                ]
+            },
+            'insurance': {
+                question: "What's happening with your claim?",
+                subtext: 'Tell us about the dispute',
+                options: [
+                    { value: 'denied', label: 'My claim was denied', icon: 'denied' },
+                    { value: 'delayed', label: 'Unreasonable delays', icon: 'clock' },
+                    { value: 'lowball', label: 'Lowball settlement offer', icon: 'lowball' },
+                    { value: 'cancelled', label: 'Policy cancelled unfairly', icon: 'denied' },
+                    { value: 'other-insurance', label: 'Other dispute', icon: 'question' }
+                ]
+            },
+            'lemon': {
+                question: "What's wrong with your vehicle?",
+                subtext: 'Select the main issue',
+                options: [
+                    { value: 'engine', label: 'Engine or transmission', icon: 'car' },
+                    { value: 'electrical', label: 'Electrical problems', icon: 'lightning' },
+                    { value: 'safety', label: 'Safety defects (brakes, steering)', icon: 'shield' },
+                    { value: 'recurring', label: 'Same problem keeps returning', icon: 'alarm' },
+                    { value: 'multiple', label: 'Multiple different issues', icon: 'question' }
+                ]
+            },
+            'property': {
+                question: 'What type of property damage?',
+                subtext: 'Select what was damaged',
+                options: [
+                    { value: 'vehicle-damage', label: 'Vehicle from accident', icon: 'car' },
+                    { value: 'fire', label: 'Fire damage', icon: 'alarm' },
+                    { value: 'water', label: 'Water or flood damage', icon: 'property' },
+                    { value: 'theft', label: 'Theft or vandalism', icon: 'denied' },
+                    { value: 'other-damage', label: 'Other property damage', icon: 'question' }
+                ]
+            },
+            'other': {
+                question: 'What type of legal help do you need?',
+                subtext: 'We can connect you with the right attorney',
+                options: [
+                    { value: 'employment', label: 'Employment or workplace issue', icon: 'work' },
+                    { value: 'family', label: 'Family law matter', icon: 'family' },
+                    { value: 'criminal', label: 'Criminal defense', icon: 'gavel' },
+                    { value: 'business', label: 'Business dispute', icon: 'document' },
+                    { value: 'other-legal', label: 'Something else', icon: 'question' }
+                ]
+            }
         };
 
         function switchTab(tabName) {
@@ -2987,6 +3302,41 @@
             }, 200);
         }
 
+        function selectCaseType(element, caseType) {
+            // Highlight selected option
+            const parentStep = element.closest('.quiz-step');
+            if (parentStep) {
+                parentStep.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+            }
+            element.classList.add('selected');
+
+            // Store case type
+            quizAnswers.step1 = caseType;
+            quizAnswers.caseType = caseType;
+
+            // Populate Step 2 with dynamic questions
+            const config = step2Questions[caseType];
+            if (config) {
+                document.getElementById('step2-question').textContent = config.question;
+                document.getElementById('step2-subtext').textContent = config.subtext;
+
+                const optionsContainer = document.getElementById('step2-options');
+                optionsContainer.innerHTML = config.options.map(opt => `
+                    <div class="quiz-option" onclick="selectAndAdvance(this, '${opt.value}', 3)">
+                        <div class="quiz-option-icon">
+                            <svg style="width: 26px; height: 26px; color: white;"><use href="#icon-${opt.icon}"/></svg>
+                        </div>
+                        <span>${opt.label}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Advance to step 2
+            setTimeout(() => {
+                goToStep(2);
+            }, 200);
+        }
+
         function submitLead() {
             const name = document.getElementById('lead-name').value;
             const phone = document.getElementById('lead-phone').value;
@@ -3045,7 +3395,7 @@
             console.log('Case created:', newCase);
 
             // Go to success step
-            goToStep(6);
+            goToStep(5);
         }
 
         function resetQuiz() {
@@ -3060,6 +3410,9 @@
 
             // Clear selections
             document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+
+            // Clear dynamic Step 2 options
+            document.getElementById('step2-options').innerHTML = '';
 
             // Go back to step 1
             goToStep(1);
@@ -3108,6 +3461,24 @@
 
             // Store the answer
             quizAnswers['step1'] = selectedOnboardingOption;
+            quizAnswers.caseType = selectedOnboardingOption;
+
+            // Populate Step 2 with dynamic questions
+            const config = step2Questions[selectedOnboardingOption];
+            if (config) {
+                document.getElementById('step2-question').textContent = config.question;
+                document.getElementById('step2-subtext').textContent = config.subtext;
+
+                const optionsContainer = document.getElementById('step2-options');
+                optionsContainer.innerHTML = config.options.map(opt => `
+                    <div class="quiz-option" onclick="selectAndAdvance(this, '${opt.value}', 3)">
+                        <div class="quiz-option-icon">
+                            <svg style="width: 26px; height: 26px; color: white;"><use href="#icon-${opt.icon}"/></svg>
+                        </div>
+                        <span>${opt.label}</span>
+                    </div>
+                `).join('');
+            }
 
             // Hide onboarding
             document.getElementById('onboarding').classList.add('hidden');
@@ -3135,6 +3506,24 @@
 
             // Store the topic as step 1 answer
             quizAnswers.step1 = topic;
+            quizAnswers.caseType = topic;
+
+            // Populate Step 2 with dynamic questions
+            const config = step2Questions[topic];
+            if (config) {
+                document.getElementById('step2-question').textContent = config.question;
+                document.getElementById('step2-subtext').textContent = config.subtext;
+
+                const optionsContainer = document.getElementById('step2-options');
+                optionsContainer.innerHTML = config.options.map(opt => `
+                    <div class="quiz-option" onclick="selectAndAdvance(this, '${opt.value}', 3)">
+                        <div class="quiz-option-icon">
+                            <svg style="width: 26px; height: 26px; color: white;"><use href="#icon-${opt.icon}"/></svg>
+                        </div>
+                        <span>${opt.label}</span>
+                    </div>
+                `).join('');
+            }
 
             // Switch to claim tab
             switchTab('claim');
@@ -3351,253 +3740,6 @@
             <input type="email" id="signin-email" class="modal-input" placeholder="Email (optional)">
             <button class="modal-btn primary" onclick="signIn()">Sign In</button>
             <p class="modal-help">New here? Submit a claim to create an account automatically.</p>
-        </div>
-    </div>
-
-    <!-- PRACTICE AREA: Personal Injury -->
-    <div class="screen detail-screen" id="article-pa-personal-injury">
-        <button class="back-btn" onclick="hideArticle()">← Back</button>
-        <div class="detail-header">
-            <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
-            <h1 class="detail-title">Personal Injury</h1>
-            <div class="detail-meta">No Fee Unless We Win</div>
-        </div>
-        <div class="article-content">
-            <p>If you've been injured due to someone else's negligence, you deserve compensation. We fight aggressively to get you the maximum recovery.</p>
-
-            <h2>What We Handle</h2>
-            <ul>
-                <li>✅ Car, truck, and motorcycle accidents</li>
-                <li>✅ Pedestrian and bicycle accidents</li>
-                <li>✅ Dog bites and animal attacks</li>
-                <li>✅ Assault and battery injuries</li>
-                <li>✅ Wrongful death claims</li>
-            </ul>
-
-            <h2>Types of Compensation</h2>
-            <ul>
-                <li><strong>Medical expenses:</strong> Past, present, and future</li>
-                <li><strong>Lost wages:</strong> Time missed from work</li>
-                <li><strong>Pain & suffering:</strong> Physical and emotional</li>
-                <li><strong>Loss of enjoyment:</strong> Impact on quality of life</li>
-                <li><strong>Property damage:</strong> Vehicle and personal items</li>
-            </ul>
-
-            <div class="tip-box">
-                <p><strong>💡 Important:</strong> California law gives you 2 years from the date of injury to file a lawsuit. Don't wait—evidence can disappear and memories fade.</p>
-            </div>
-
-            <h2>Why Choose Us?</h2>
-            <ul>
-                <li>🏆 Millions recovered for clients</li>
-                <li>⚖️ Free initial consultation</li>
-                <li>💪 No fee unless we win your case</li>
-                <li>📱 24/7 availability for urgent cases</li>
-            </ul>
-        </div>
-
-        <div class="article-cta">
-            <h3>Injured? Let's Talk.</h3>
-            <p>Get your free case evaluation today</p>
-            <button onclick="startQuizWithTopic('injury')">Start My Claim Review</button>
-        </div>
-    </div>
-
-    <!-- PRACTICE AREA: Premises Liability -->
-    <div class="screen detail-screen" id="article-pa-premises-liability">
-        <button class="back-btn" onclick="hideArticle()">← Back</button>
-        <div class="detail-header">
-            <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
-            <h1 class="detail-title">Premises Liability</h1>
-            <div class="detail-meta">No Fee Unless We Win</div>
-        </div>
-        <div class="article-content">
-            <p>Property owners have a legal duty to maintain safe conditions. When they fail and you're injured, we hold them accountable.</p>
-
-            <h2>Common Cases We Handle</h2>
-            <ul>
-                <li>🏬 Slip and fall accidents</li>
-                <li>🚧 Trip hazards and uneven surfaces</li>
-                <li>💡 Inadequate lighting injuries</li>
-                <li>🏊 Swimming pool accidents</li>
-                <li>🔒 Negligent security incidents</li>
-                <li>🏗️ Construction site injuries</li>
-            </ul>
-
-            <h2>Who Can Be Held Liable?</h2>
-            <ul>
-                <li><strong>Property owners:</strong> Residential or commercial</li>
-                <li><strong>Business operators:</strong> Stores, restaurants, hotels</li>
-                <li><strong>Property managers:</strong> Apartments, condos</li>
-                <li><strong>Government entities:</strong> Public buildings, sidewalks</li>
-            </ul>
-
-            <div class="warning-box">
-                <p><strong>⚠️ Act Fast:</strong> Claims against government entities have shorter deadlines—often just 6 months. Contact us immediately if injured on public property.</p>
-            </div>
-
-            <h2>What You Need to Prove</h2>
-            <ul>
-                <li>The property had a dangerous condition</li>
-                <li>The owner knew or should have known</li>
-                <li>They failed to fix it or warn visitors</li>
-                <li>The condition caused your injury</li>
-            </ul>
-        </div>
-
-        <div class="article-cta">
-            <h3>Injured on someone's property?</h3>
-            <p>Free consultation—we'll review your case</p>
-            <button onclick="startQuizWithTopic('slip-fall')">Start My Claim Review</button>
-        </div>
-    </div>
-
-    <!-- PRACTICE AREA: Property Damage -->
-    <div class="screen detail-screen" id="article-pa-property-damage">
-        <button class="back-btn" onclick="hideArticle()">← Back</button>
-        <div class="detail-header">
-            <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
-            <h1 class="detail-title">Property Damage</h1>
-            <div class="detail-meta">No Fee Unless We Win</div>
-        </div>
-        <div class="article-content">
-            <p>When your vehicle or property is damaged in an accident, insurance companies often try to pay as little as possible. We fight to get you fair compensation.</p>
-
-            <h2>Types of Claims</h2>
-            <ul>
-                <li>🚗 Vehicle damage from accidents</li>
-                <li>💥 Total loss claims</li>
-                <li>🔧 Diminished value claims</li>
-                <li>🏠 Personal property damage</li>
-                <li>📱 Electronics and valuables</li>
-            </ul>
-
-            <h2>What You Can Recover</h2>
-            <ul>
-                <li><strong>Repair costs:</strong> Full cost to fix your vehicle</li>
-                <li><strong>Replacement value:</strong> If your vehicle is totaled</li>
-                <li><strong>Rental car:</strong> While yours is being repaired</li>
-                <li><strong>Diminished value:</strong> Decrease in resale value</li>
-                <li><strong>Personal items:</strong> Things damaged in the accident</li>
-            </ul>
-
-            <div class="tip-box">
-                <p><strong>💡 Pro Tip:</strong> Don't accept the first offer from insurance. They typically lowball by 20-40%. Get your own estimate and let us negotiate.</p>
-            </div>
-
-            <h2>Insurance Tactics to Watch For</h2>
-            <ul>
-                <li>❌ Undervaluing your vehicle</li>
-                <li>❌ Using cheap aftermarket parts</li>
-                <li>❌ Denying rental car coverage</li>
-                <li>❌ Ignoring diminished value</li>
-            </ul>
-        </div>
-
-        <div class="article-cta">
-            <h3>Property damage dispute?</h3>
-            <p>We'll help you get fair compensation</p>
-            <button onclick="startQuizWithTopic('property')">Start My Claim Review</button>
-        </div>
-    </div>
-
-    <!-- PRACTICE AREA: Insurance Bad Faith -->
-    <div class="screen detail-screen" id="article-pa-insurance-bad-faith">
-        <button class="back-btn" onclick="hideArticle()">← Back</button>
-        <div class="detail-header">
-            <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
-            <h1 class="detail-title">Insurance Bad Faith</h1>
-            <div class="detail-meta">No Fee Unless We Win</div>
-        </div>
-        <div class="article-content">
-            <p>Insurance companies have a legal duty to act in good faith. When they don't, you can sue them for bad faith and potentially recover additional damages.</p>
-
-            <h2>Signs of Bad Faith</h2>
-            <ul>
-                <li>🚫 Unreasonable claim denial</li>
-                <li>⏰ Excessive delays in processing</li>
-                <li>💰 Lowball settlement offers</li>
-                <li>📝 Failure to investigate properly</li>
-                <li>🔄 Constantly changing their position</li>
-                <li>⚠️ Misrepresenting policy terms</li>
-            </ul>
-
-            <h2>Your Rights Under California Law</h2>
-            <ul>
-                <li><strong>15 days:</strong> To acknowledge your claim</li>
-                <li><strong>40 days:</strong> To accept or deny after proof</li>
-                <li><strong>30 days:</strong> To pay after settlement</li>
-            </ul>
-
-            <div class="warning-box">
-                <p><strong>⚠️ Document Everything:</strong> Keep records of all communications with your insurer—emails, letters, phone call notes with dates and names.</p>
-            </div>
-
-            <h2>What You Can Recover</h2>
-            <ul>
-                <li>✅ Your original claim amount</li>
-                <li>✅ Emotional distress damages</li>
-                <li>✅ Attorney fees</li>
-                <li>✅ Punitive damages (in severe cases)</li>
-            </ul>
-        </div>
-
-        <div class="article-cta">
-            <h3>Insurance treating you unfairly?</h3>
-            <p>We'll hold them accountable</p>
-            <button onclick="startQuizWithTopic('insurance')">Start My Claim Review</button>
-        </div>
-    </div>
-
-    <!-- PRACTICE AREA: Lemon Law -->
-    <div class="screen detail-screen" id="article-pa-lemon-law">
-        <button class="back-btn" onclick="hideArticle()">← Back</button>
-        <div class="detail-header">
-            <div class="detail-category" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);">🍋 We Handle Directly</div>
-            <h1 class="detail-title">Lemon Law</h1>
-            <div class="detail-meta">Manufacturer Pays Our Fees</div>
-        </div>
-        <div class="article-content">
-            <p>California's Lemon Law is one of the strongest in the country. If you're stuck with a defective vehicle, we can help you get a refund or replacement.</p>
-
-            <h2>Does Your Vehicle Qualify?</h2>
-            <ul>
-                <li>🔧 <strong>2+ repair attempts</strong> for a safety defect, OR</li>
-                <li>🔧 <strong>4+ repair attempts</strong> for any substantial defect, OR</li>
-                <li>📅 Vehicle in shop <strong>30+ days</strong> total</li>
-            </ul>
-
-            <h2>Covered Vehicles</h2>
-            <ul>
-                <li>✅ New cars, trucks, SUVs</li>
-                <li>✅ Used vehicles under warranty</li>
-                <li>✅ Leased vehicles</li>
-                <li>✅ Certified pre-owned</li>
-                <li>✅ RVs and motorcycles</li>
-            </ul>
-
-            <div class="tip-box">
-                <p><strong>💡 Great News:</strong> Under California law, the manufacturer pays your attorney fees if you win. There's NO cost to you!</p>
-            </div>
-
-            <h2>What You Can Get</h2>
-            <h3>Buyback (Refund)</h3>
-            <ul>
-                <li>Full purchase price</li>
-                <li>Down payment returned</li>
-                <li>Monthly payments made</li>
-                <li>Registration and taxes</li>
-                <li>Incidental costs (towing, rentals)</li>
-            </ul>
-
-            <h3>OR Replacement</h3>
-            <p>A new vehicle of equal value that's acceptable to you.</p>
-        </div>
-
-        <div class="article-cta">
-            <h3>Stuck with a lemon?</h3>
-            <p>Find out if you qualify for a buyback</p>
-            <button onclick="startQuizWithTopic('lemon')">Check My Vehicle</button>
         </div>
     </div>
 </body>
