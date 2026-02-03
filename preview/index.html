@@ -522,13 +522,15 @@
         }
         .bolt-i {
             color: #FFD700;
-            vertical-align: middle;
-            margin: 0 -2px;
+            vertical-align: baseline;
+            margin: 0 -3px 0 -2px;
+            display: inline-block;
         }
         .bolt-i-sm {
             color: var(--accent);
-            vertical-align: middle;
-            margin: 0 -1px;
+            vertical-align: baseline;
+            margin: 0 -2px 0 -1px;
+            display: inline-block;
         }
         .account-header .bolt-i-sm {
             color: #FFD700;
@@ -2317,6 +2319,11 @@
                 <path d="M7 2v11h3v9l7-12h-4l4-8z" fill="currentColor"/>
             </symbol>
 
+            <!-- Sleek Bolt (from shield logo) -->
+            <symbol id="bolt-sleek" viewBox="0 0 24 24">
+                <path d="M13 2L6 13h5l-2 9 9-12h-6l4-8z" fill="currentColor"/>
+            </symbol>
+
             <!-- Family -->
             <symbol id="icon-family" viewBox="0 0 24 24">
                 <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A2.01 2.01 0 0018.06 7h-.12c-.78 0-1.49.46-1.82 1.17L14 13h-4l-2.12-4.83A2.01 2.01 0 006.06 7h-.12c-.78 0-1.49.46-1.82 1.17L1.5 16H4v6h4v-6h2v6h4v-6h2v6h4zM6 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2z" fill="currentColor"/>
@@ -2521,7 +2528,7 @@
                     <div class="hero">
                         <div class="hero-logo">
                             <svg style="width: 44px; height: 44px;"><use href="#logo-mark"/></svg>
-                            <span class="hero-logo-text">Claim<span class="highlight">It</span></span>
+                            <span class="hero-logo-text">Claim<span class="highlight"><svg class="bolt-i" viewBox="0 0 24 24" style="width: 22px; height: 22px;"><use href="#bolt-sleek"/></svg>t</span></span>
                         </div>
                         <h1>Get What You<br>Deserve</h1>
                         <p>Find out if you have a case in 2 minutes</p>
@@ -2687,7 +2694,7 @@
                 <!-- LEARN SCREEN -->
                 <div class="screen learn-screen" id="screen-learn">
                     <div class="learn-header">
-                        <div class="header-logo"><svg style="width: 28px; height: 28px;"><use href="#logo-mark"/></svg><span>Claim<span class="highlight">It</span></span></div>
+                        <div class="header-logo"><svg style="width: 28px; height: 28px;"><use href="#logo-mark"/></svg><span>Claim<span class="highlight"><svg class="bolt-i-sm" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><use href="#bolt-sleek"/></svg>t</span></span></div>
                         <h1>Learn</h1><p>Know your rights. Win your case.</p>
                     </div>
                     <div class="category-scroll">
@@ -2727,7 +2734,7 @@
                 <!-- ACCOUNT SCREEN -->
                 <div class="screen account-screen" id="screen-account">
                     <div class="account-header">
-                        <div class="header-logo"><svg style="width: 28px; height: 28px;"><use href="#logo-mark"/></svg><span>Claim<span class="highlight">It</span></span></div>
+                        <div class="header-logo"><svg style="width: 28px; height: 28px;"><use href="#logo-mark"/></svg><span>Claim<span class="highlight"><svg class="bolt-i-sm" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><use href="#bolt-sleek"/></svg>t</span></span></div>
                         <h1>My Cases</h1>
                         <p>Track your claim evaluations</p>
                     </div>
