@@ -514,6 +514,118 @@
         }
         .stat-value { font-size: 20px; font-weight: 800; color: white; }
         .stat-label { font-size: 10px; color: rgba(255,255,255,0.85); margin-top: 2px; font-weight: 500; }
+        .stat-disclaimer { font-size: 8px; color: rgba(255,255,255,0.6); margin-top: 1px; cursor: help; text-decoration: underline dotted; }
+
+        /* Legal Footer */
+        .legal-footer {
+            padding: 16px 20px;
+            background: var(--page-bg);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .legal-footer p {
+            font-size: 10px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        .legal-footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .legal-footer-links a {
+            font-size: 10px;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .legal-footer-links a:hover { text-decoration: underline; }
+
+        /* Accessibility: Reduce motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Legal Modal */
+        .legal-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+        .legal-modal.active { display: flex; }
+        .legal-modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .legal-modal-content h2 {
+            font-size: 22px;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        .legal-modal-content h3 {
+            font-size: 16px;
+            margin: 20px 0 10px;
+            color: var(--text-primary);
+        }
+        .legal-modal-content p, .legal-modal-content li {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .legal-modal-content ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+        .legal-modal-close {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Accessibility: Screen reader only */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Minimum touch target size */
+        button, .tab, .quick-action, .practice-card, .resource-card {
+            min-height: 44px;
+        }
 
         .glass-card {
             background: var(--card-bg);
@@ -1138,6 +1250,10 @@
             text-align: center;
             margin-top: 16px;
             line-height: 1.5;
+        }
+        .form-disclaimer a {
+            color: var(--primary);
+            text-decoration: underline;
         }
 
         /* Success Styles */
@@ -2351,7 +2467,7 @@
                         <div class="stats-row">
                             <div class="stat"><div class="stat-value">$50M+</div><div class="stat-label">Recovered</div></div>
                             <div class="stat"><div class="stat-value">5000+</div><div class="stat-label">Cases</div></div>
-                            <div class="stat"><div class="stat-value">98%</div><div class="stat-label">Success</div></div>
+                            <div class="stat" onclick="showLegalDisclaimer()"><div class="stat-value">98%</div><div class="stat-label">Success</div><div class="stat-disclaimer">*Results vary</div></div>
                         </div>
                     </div>
 
@@ -2392,6 +2508,18 @@
                         <div class="referral-card" onclick="showReferralInfo('Employment Law')"><div class="referral-icon"><svg style="width: 24px; height: 24px; color: white;"><use href="#icon-work"/></svg></div><h4>Employment</h4></div>
                         <div class="referral-card" onclick="showReferralInfo('Real Estate Law')"><div class="referral-icon"><svg style="width: 24px; height: 24px; color: white;"><use href="#icon-home"/></svg></div><h4>Real Estate</h4></div>
                     </div>
+
+                    <!-- Legal Footer -->
+                    <div class="legal-footer">
+                        <p>© 2025 Kitsinian Law Firm, APC. This is attorney advertising. Results vary based on individual circumstances. Using this app does not create an attorney-client relationship.</p>
+                        <div class="legal-footer-links">
+                            <a href="#" onclick="showPrivacyModal(); return false;">Privacy Policy</a>
+                            <a href="#" onclick="showTermsModal(); return false;">Terms of Service</a>
+                            <a href="#" onclick="showLegalDisclaimer(); return false;">Disclaimers</a>
+                            <a href="#" onclick="showPrivacyModal(); return false;">Do Not Sell My Info</a>
+                        </div>
+                    </div>
+
                     <div class="spacer"></div>
                 </div>
 
@@ -2448,23 +2576,27 @@
                             <div class="question-subtext">Enter your info for a free case evaluation</div>
 
                             <div class="form-group">
-                                <input type="text" id="lead-name" placeholder="Your Full Name" class="form-input">
+                                <label for="lead-name" class="visually-hidden">Full Name</label>
+                                <input type="text" id="lead-name" placeholder="Your Full Name" class="form-input" aria-label="Full Name" required>
                             </div>
                             <div class="form-group">
-                                <input type="tel" id="lead-phone" placeholder="Phone Number" class="form-input">
+                                <label for="lead-phone" class="visually-hidden">Phone Number</label>
+                                <input type="tel" id="lead-phone" placeholder="Phone Number" class="form-input" aria-label="Phone Number" required>
                             </div>
                             <div class="form-group">
-                                <input type="email" id="lead-email" placeholder="Email Address" class="form-input">
+                                <label for="lead-email" class="visually-hidden">Email Address</label>
+                                <input type="email" id="lead-email" placeholder="Email Address" class="form-input" aria-label="Email Address">
                             </div>
                             <div class="form-group">
-                                <textarea id="lead-description" placeholder="Briefly describe what happened..." class="form-textarea"></textarea>
+                                <label for="lead-description" class="visually-hidden">Case Description</label>
+                                <textarea id="lead-description" placeholder="Briefly describe what happened..." class="form-textarea" aria-label="Case Description"></textarea>
                             </div>
 
-                            <button class="btn-submit" onclick="submitLead()">
-                                <svg style="width: 22px; height: 22px; color: white;"><use href="#icon-lightning"/></svg> Get My Free Evaluation
+                            <button class="btn-submit" onclick="submitLead()" aria-label="Submit for free case evaluation">
+                                <svg style="width: 22px; height: 22px; color: white;" aria-hidden="true"><use href="#icon-lightning"/></svg> Get My Free Evaluation
                             </button>
 
-                            <p class="form-disclaimer">By submitting, you agree to be contacted about your case. Free consultation, no obligation.</p>
+                            <p class="form-disclaimer">By submitting, you agree to our <a href="#" onclick="showTermsModal(); return false;">Terms</a> and <a href="#" onclick="showPrivacyModal(); return false;">Privacy Policy</a>. Free consultation, no obligation.</p>
                         </div>
                     </div>
 
@@ -2847,7 +2979,7 @@
                     <div class="detail-header">
                         <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
                         <h1 class="detail-title">Personal Injury</h1>
-                        <div class="detail-meta">No Fee Unless We Win</div>
+                        <div class="detail-meta" onclick="showNoFeeDisclaimer()" style="cursor: help;">No Fee Unless We Win*</div>
                     </div>
                     <div class="article-content">
                         <p>If you've been injured due to someone else's negligence, you deserve compensation. We fight aggressively to get you the maximum recovery.</p>
@@ -2896,7 +3028,7 @@
                     <div class="detail-header">
                         <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
                         <h1 class="detail-title">Premises Liability</h1>
-                        <div class="detail-meta">No Fee Unless We Win</div>
+                        <div class="detail-meta" onclick="showNoFeeDisclaimer()" style="cursor: help;">No Fee Unless We Win*</div>
                     </div>
                     <div class="article-content">
                         <p>Property owners have a legal duty to maintain safe conditions. When they fail and you're injured, we hold them accountable.</p>
@@ -2945,7 +3077,7 @@
                     <div class="detail-header">
                         <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
                         <h1 class="detail-title">Property Damage</h1>
-                        <div class="detail-meta">No Fee Unless We Win</div>
+                        <div class="detail-meta" onclick="showNoFeeDisclaimer()" style="cursor: help;">No Fee Unless We Win*</div>
                     </div>
                     <div class="article-content">
                         <p>When your vehicle or property is damaged in an accident, insurance companies often try to pay as little as possible. We fight to get you fair compensation.</p>
@@ -2994,7 +3126,7 @@
                     <div class="detail-header">
                         <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
                         <h1 class="detail-title">Insurance Bad Faith</h1>
-                        <div class="detail-meta">No Fee Unless We Win</div>
+                        <div class="detail-meta" onclick="showNoFeeDisclaimer()" style="cursor: help;">No Fee Unless We Win*</div>
                     </div>
                     <div class="article-content">
                         <p>Insurance companies have a legal duty to act in good faith. When they don't, you can sue them for bad faith and potentially recover additional damages.</p>
@@ -3090,12 +3222,12 @@
             </div>
 
             <!-- Tab Bar -->
-            <div class="tab-bar" id="tab-bar">
-                <div class="tab active" id="tab-home" onclick="switchTab('home')"><div class="tab-icon"><svg style="width: 24px; height: 24px;"><use href="#icon-home"/></svg></div>Home</div>
-                <div class="tab" id="tab-claim" onclick="switchTab('claim')"><div class="tab-icon"><svg style="width: 24px; height: 24px;"><use href="#icon-lightning"/></svg></div>Claim</div>
-                <div class="tab" id="tab-learn" onclick="switchTab('learn')"><div class="tab-icon"><svg style="width: 24px; height: 24px;"><use href="#icon-book"/></svg></div>Learn</div>
-                <div class="tab" id="tab-account" onclick="switchTab('account')"><div class="tab-icon"><svg style="width: 24px; height: 24px;"><use href="#icon-user"/></svg></div>Account</div>
-            </div>
+            <nav class="tab-bar" id="tab-bar" role="navigation" aria-label="Main navigation">
+                <button class="tab active" id="tab-home" onclick="switchTab('home')" role="tab" aria-selected="true" aria-label="Home"><div class="tab-icon" aria-hidden="true"><svg style="width: 24px; height: 24px;"><use href="#icon-home"/></svg></div>Home</button>
+                <button class="tab" id="tab-claim" onclick="switchTab('claim')" role="tab" aria-selected="false" aria-label="Start a claim"><div class="tab-icon" aria-hidden="true"><svg style="width: 24px; height: 24px;"><use href="#icon-lightning"/></svg></div>Claim</button>
+                <button class="tab" id="tab-learn" onclick="switchTab('learn')" role="tab" aria-selected="false" aria-label="Learning resources"><div class="tab-icon" aria-hidden="true"><svg style="width: 24px; height: 24px;"><use href="#icon-book"/></svg></div>Learn</button>
+                <button class="tab" id="tab-account" onclick="switchTab('account')" role="tab" aria-selected="false" aria-label="Your account"><div class="tab-icon" aria-hidden="true"><svg style="width: 24px; height: 24px;"><use href="#icon-user"/></svg></div>Account</button>
+            </nav>
         </div>
     </div>
 
@@ -3230,10 +3362,15 @@
         function switchTab(tabName) {
             if (articleOpen) return;
 
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
             document.querySelectorAll('.screen:not(.detail-screen)').forEach(s => s.classList.remove('active'));
 
-            document.getElementById('tab-' + tabName).classList.add('active');
+            const activeTab = document.getElementById('tab-' + tabName);
+            activeTab.classList.add('active');
+            activeTab.setAttribute('aria-selected', 'true');
             document.getElementById('screen-' + tabName).classList.add('active');
 
             const statusBar = document.getElementById('status-bar');
@@ -3725,6 +3862,35 @@
         function showReferralInfo(areaName) {
             alert('Referral Network: ' + areaName + '\\n\\nWe partner with trusted California attorneys who specialize in ' + areaName.toLowerCase() + '. Contact us to get connected with a qualified specialist.');
         }
+
+        // Legal Modal Functions
+        function showPrivacyModal() {
+            document.getElementById('privacy-modal').classList.add('active');
+        }
+
+        function hidePrivacyModal() {
+            document.getElementById('privacy-modal').classList.remove('active');
+        }
+
+        function showTermsModal() {
+            document.getElementById('terms-modal').classList.add('active');
+        }
+
+        function hideTermsModal() {
+            document.getElementById('terms-modal').classList.remove('active');
+        }
+
+        function showLegalDisclaimer() {
+            document.getElementById('disclaimer-modal').classList.add('active');
+        }
+
+        function showNoFeeDisclaimer() {
+            document.getElementById('disclaimer-modal').classList.add('active');
+        }
+
+        function hideDisclaimerModal() {
+            document.getElementById('disclaimer-modal').classList.remove('active');
+        }
     </script>
 
     <!-- SIGN-IN MODAL -->
@@ -3736,10 +3902,135 @@
             </div>
             <h2>Sign In</h2>
             <p>Access your submitted cases and track their status.</p>
-            <input type="tel" id="signin-phone" class="modal-input" placeholder="Phone Number">
-            <input type="email" id="signin-email" class="modal-input" placeholder="Email (optional)">
+            <label for="signin-phone" class="visually-hidden">Phone Number</label>
+            <input type="tel" id="signin-phone" class="modal-input" placeholder="Phone Number" aria-label="Phone Number">
+            <label for="signin-email" class="visually-hidden">Email Address</label>
+            <input type="email" id="signin-email" class="modal-input" placeholder="Email (optional)" aria-label="Email Address">
             <button class="modal-btn primary" onclick="signIn()">Sign In</button>
             <p class="modal-help">New here? Submit a claim to create an account automatically.</p>
+        </div>
+    </div>
+
+    <!-- PRIVACY POLICY MODAL -->
+    <div class="legal-modal" id="privacy-modal" onclick="hidePrivacyModal()">
+        <div class="legal-modal-content" onclick="event.stopPropagation()">
+            <h2>Privacy Policy</h2>
+            <p><strong>Effective Date:</strong> February 2, 2025</p>
+            <p>Kitsinian Law Firm, APC ("we," "us," or "our") operates the ClaimIt mobile application. This Privacy Policy explains how we collect, use, disclose, and protect your information.</p>
+
+            <h3>Information We Collect</h3>
+            <ul>
+                <li><strong>Contact Information:</strong> Name, phone number, email address when you submit a claim or create an account</li>
+                <li><strong>Case Information:</strong> Details about your legal matter that you provide through our questionnaire</li>
+                <li><strong>Device Information:</strong> Device type, operating system, and app usage data</li>
+            </ul>
+
+            <h3>How We Use Your Information</h3>
+            <ul>
+                <li>To evaluate your potential legal case</li>
+                <li>To contact you regarding your inquiry</li>
+                <li>To match you with appropriate legal representation</li>
+                <li>To improve our services</li>
+            </ul>
+
+            <h3>Information Sharing</h3>
+            <p>We do not sell your personal information. We may share your information with:</p>
+            <ul>
+                <li>Attorneys within our referral network (with your consent)</li>
+                <li>Service providers who assist our operations</li>
+                <li>As required by law</li>
+            </ul>
+
+            <h3>California Privacy Rights (CCPA)</h3>
+            <p>California residents have the right to:</p>
+            <ul>
+                <li>Know what personal information we collect</li>
+                <li>Request deletion of your personal information</li>
+                <li>Opt-out of the sale of personal information (we do not sell your data)</li>
+                <li>Non-discrimination for exercising your rights</li>
+            </ul>
+            <p>To exercise these rights, contact us at privacy@kitsinian.com or call (213) 555-0100.</p>
+
+            <h3>Data Security</h3>
+            <p>We implement appropriate security measures to protect your personal information. However, no method of transmission over the Internet is 100% secure.</p>
+
+            <h3>Contact Us</h3>
+            <p>Questions about this Privacy Policy? Contact us at:<br>
+            Kitsinian Law Firm, APC<br>
+            Email: privacy@kitsinian.com<br>
+            Phone: (213) 555-0100</p>
+
+            <button class="legal-modal-close" onclick="hidePrivacyModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- TERMS OF SERVICE MODAL -->
+    <div class="legal-modal" id="terms-modal" onclick="hideTermsModal()">
+        <div class="legal-modal-content" onclick="event.stopPropagation()">
+            <h2>Terms of Service</h2>
+            <p><strong>Effective Date:</strong> February 2, 2025</p>
+
+            <h3>Acceptance of Terms</h3>
+            <p>By using the ClaimIt application, you agree to these Terms of Service. If you do not agree, please do not use the application.</p>
+
+            <h3>Nature of Service</h3>
+            <p><strong>Important:</strong> ClaimIt is an informational tool designed to help you understand your potential legal options. Using this app does not create an attorney-client relationship. An attorney-client relationship is only formed when you sign a written retainer agreement with Kitsinian Law Firm, APC or another attorney.</p>
+
+            <h3>No Legal Advice</h3>
+            <p>The information provided through this app is for general informational purposes only and should not be construed as legal advice. Every legal situation is unique, and you should consult with a licensed attorney for advice specific to your situation.</p>
+
+            <h3>No Guarantees</h3>
+            <p>Past results do not guarantee future outcomes. The statistics displayed in this app (including success rates and amounts recovered) represent historical data and do not guarantee similar results for your case. Each case is evaluated on its own merits.</p>
+
+            <h3>Fee Arrangements</h3>
+            <p>"No Fee Unless We Win" means we do not charge attorney's fees unless we recover money for you. However, you may still be responsible for certain case costs and expenses (such as filing fees, expert witness fees, and medical record costs) regardless of the outcome, unless otherwise specified in your retainer agreement.</p>
+
+            <h3>Eligibility</h3>
+            <p>You must be at least 18 years old to use this application. If you are under 18, please have a parent or guardian contact us on your behalf.</p>
+
+            <h3>Accuracy of Information</h3>
+            <p>You agree to provide accurate and complete information when using this app. Providing false or misleading information may result in termination of services.</p>
+
+            <h3>Limitation of Liability</h3>
+            <p>To the fullest extent permitted by law, Kitsinian Law Firm, APC shall not be liable for any indirect, incidental, or consequential damages arising from your use of this application.</p>
+
+            <h3>Governing Law</h3>
+            <p>These Terms are governed by the laws of the State of California.</p>
+
+            <h3>Contact</h3>
+            <p>Questions? Contact us at:<br>
+            Kitsinian Law Firm, APC<br>
+            Email: legal@kitsinian.com<br>
+            Phone: (213) 555-0100</p>
+
+            <button class="legal-modal-close" onclick="hideTermsModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- DISCLAIMER MODAL -->
+    <div class="legal-modal" id="disclaimer-modal" onclick="hideDisclaimerModal()">
+        <div class="legal-modal-content" onclick="event.stopPropagation()">
+            <h2>Legal Disclaimers</h2>
+
+            <h3>Success Rate Disclaimer</h3>
+            <p>The success rate displayed represents historical data from cases handled by Kitsinian Law Firm, APC. <strong>Past results do not guarantee future outcomes.</strong> Each case is unique and will be evaluated on its own merits. The outcome of your case depends on many factors including the specific facts, applicable law, and available evidence.</p>
+
+            <h3>"No Fee Unless We Win" Explanation</h3>
+            <p>When we say "No Fee Unless We Win," we mean:</p>
+            <ul>
+                <li>We do not charge attorney's fees unless we recover money for you</li>
+                <li>You may still be responsible for case costs and expenses (such as court filing fees, expert witness fees, deposition costs, and medical record fees)</li>
+                <li>Specific fee arrangements are detailed in your retainer agreement</li>
+                <li>Some cases may require an advance for costs, which will be discussed before any agreement is signed</li>
+            </ul>
+
+            <h3>Attorney Advertising</h3>
+            <p>This application is attorney advertising. Kitsinian Law Firm, APC is responsible for its content. Principal office: Los Angeles, California.</p>
+
+            <h3>No Attorney-Client Relationship</h3>
+            <p>Using this application or submitting a claim evaluation request does not create an attorney-client relationship. Such a relationship is only formed when you sign a written retainer agreement.</p>
+
+            <button class="legal-modal-close" onclick="hideDisclaimerModal()">Close</button>
         </div>
     </div>
 </body>
