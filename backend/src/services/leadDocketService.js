@@ -11,48 +11,46 @@
 const { logger } = require('../utils/logger');
 
 /**
- * Maps ClaimIt lead data to Lead Docket field format
+ * Maps ClaimIt lead data to Lead Docket standard field format
  *
- * Field mapping matches Kitsinian Law's Lead Docket integration (same as Zapier):
- * - Firstname → First Name
- * - Lastname → Last Name
+ * Uses Lead Docket's 5 standard/default fields:
+ * - First → First Name
+ * - Last → Last Name
  * - Phone → Phone
  * - Email → Email
- * - Comment → Case details/description
- * - Case_Type → Practice area indicator
+ * - Summary → All case details combined
  */
 function mapLeadToLeadDocket(lead) {
-  // Build comment with all case details (similar to Zapier's "Comment" field)
-  const commentParts = [];
+  // Build summary with all case details
+  const summaryParts = [];
 
   if (lead.practiceArea) {
-    commentParts.push(`Practice Area: ${lead.practiceArea}`);
+    summaryParts.push(`Practice Area: ${lead.practiceArea}`);
   }
   if (lead.practiceAreaCategory) {
-    commentParts.push(`Category: ${lead.practiceAreaCategory}`);
+    summaryParts.push(`Category: ${lead.practiceAreaCategory}`);
   }
   if (lead.urgency) {
-    commentParts.push(`Urgency: ${lead.urgency}`);
+    summaryParts.push(`Urgency: ${lead.urgency}`);
   }
   if (lead.preferredContact) {
-    commentParts.push(`Preferred Contact: ${lead.preferredContact}`);
+    summaryParts.push(`Preferred Contact: ${lead.preferredContact}`);
   }
   if (lead.description) {
-    commentParts.push(`Description: ${lead.description}`);
+    summaryParts.push(`Description: ${lead.description}`);
   }
   if (lead.quizAnswers && Object.keys(lead.quizAnswers).length > 0) {
-    commentParts.push(`Quiz Answers: ${JSON.stringify(lead.quizAnswers)}`);
+    summaryParts.push(`Quiz Answers: ${JSON.stringify(lead.quizAnswers)}`);
   }
-  commentParts.push(`Source: ClaimIt App (${lead.source || 'ios_app'})`);
-  commentParts.push(`ClaimIt Lead ID: ${lead.id}`);
+  summaryParts.push(`Source: ClaimIt App (${lead.source || 'ios_app'})`);
+  summaryParts.push(`ClaimIt Lead ID: ${lead.id}`);
 
   return {
-    Firstname: lead.firstName,
-    Lastname: lead.lastName,
+    First: lead.firstName,
+    Last: lead.lastName,
     Phone: lead.phone,
     Email: lead.email,
-    Comment: commentParts.join(' | '),
-    Case_Type: '3'  // Same as Zapier config
+    Summary: summaryParts.join(' | ')
   };
 }
 
