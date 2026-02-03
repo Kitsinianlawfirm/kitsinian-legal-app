@@ -8063,20 +8063,6 @@
                                 <span>Scroll down to continue</span>
                             </div>
 
-                            <!-- Consent Options -->
-                            <div class="consent-options">
-                                <div class="consent-option">
-                                    <input type="checkbox" id="consent-accident-mode" checked>
-                                    <div class="consent-option-content">
-                                        <label class="consent-option-label" for="consent-accident-mode">
-                                            Enable Accident Mode
-                                            <span class="consent-optional">(Recommended)</span>
-                                        </label>
-                                        <p class="consent-option-desc">Get instant access to emergency evidence collection if you're ever in an accident. Includes photo checklist, voice recording, and witness info capture. You can disable this anytime in Settings.</p>
-                                    </div>
-                                </div>
-                            </div>
-
                             <button class="btn-agree" id="btn-agree-continue" onclick="proceedFromConsent()" disabled>
                                 I Have Read and Agree
                             </button>
@@ -10666,15 +10652,12 @@
 
         // Proceed from legal agreement (screen 1) to welcome screen (screen 2)
         function proceedFromConsent() {
-            // Check if user opted into Accident Mode
-            const accidentModeCheckbox = document.getElementById('consent-accident-mode');
-            const accidentModeEnabled = accidentModeCheckbox ? accidentModeCheckbox.checked : false;
-
-            // Store user's preferences
-            localStorage.setItem('accidentModeEnabled', accidentModeEnabled.toString());
+            // User agreed to terms - Accident Mode enabled by default
+            // User can toggle it off in Settings if they choose
+            localStorage.setItem('accidentModeEnabled', 'true');
             localStorage.setItem('userAgreedToTerms', 'true');
 
-            // Update banner visibility based on user's choice
+            // Update banner visibility
             updateAccidentBannerVisibility();
 
             // Go from consent (onboarding-3) to welcome (onboarding-1)
