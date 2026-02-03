@@ -68,6 +68,58 @@
             --space-6: 24px;
             --space-7: 32px;
             --space-8: 40px;
+
+            /* Extended Colors - Light Backgrounds */
+            --primary-bg-light: #F0F7FF;
+            --accent-bg-light: #FFF5F0;
+            --success-bg-light: #F0FDF4;
+            --success-bg-lighter: #DCFCE7;
+
+            /* Brand Colors */
+            --brand-gold: #FFD700;
+            --purple: #8B5CF6;
+            --purple-light: #A78BFA;
+
+            /* Status Badge Colors */
+            --status-submitted-bg: #E5E7EB;
+            --status-submitted-text: #4B5563;
+            --status-review-bg: #DBEAFE;
+            --status-review-text: #1D4ED8;
+            --status-qualified-bg: #D1FAE5;
+            --status-qualified-text: #059669;
+            --status-matched-bg: #FEF3C7;
+            --status-matched-text: #D97706;
+            --status-retained-bg: #D1FAE5;
+            --status-retained-text: #059669;
+
+            /* Typography Scale */
+            --font-size-xs: 10px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-md: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 28px;
+            --font-size-4xl: 34px;
+            --font-size-5xl: 42px;
+
+            /* Extended Spacing */
+            --space-1-5: 6px;
+            --space-2-5: 10px;
+            --space-3-5: 14px;
+            --space-10: 48px;
+            --space-12: 56px;
+            --space-16: 80px;
+
+            /* Border Radius Scale */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-2xl: 20px;
+            --radius-3xl: 24px;
+            --radius-full: 9999px;
         }
 
         body {
@@ -420,7 +472,7 @@
             color: var(--text-primary);
             margin: 24px 0 12px;
             padding-top: 16px;
-            border-top: 1px solid #E5E7EB;
+            border-top: 1px solid var(--border-color);
         }
 
         .article-content h2:first-child {
@@ -611,10 +663,10 @@
             letter-spacing: -0.5px;
         }
         .hero-logo-text .highlight {
-            color: #FFD700;
+            color: var(--brand-gold);
         }
         .bolt-i {
-            color: #FFD700;
+            color: var(--brand-gold);
             vertical-align: middle;
             margin: 0 -4px 0 -3px;
             display: inline-block;
@@ -630,7 +682,7 @@
             top: -1px;
         }
         .account-header .bolt-i-sm {
-            color: #FFD700;
+            color: var(--brand-gold);
         }
 
         .stats-row {
@@ -775,7 +827,7 @@
             padding: 18px 24px;
             background: linear-gradient(145deg, #FF7B45 0%, var(--accent) 30%, #E85A25 70%, #FF6B35 100%);
             border: none;
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             color: white;
             font-size: 17px;
             font-weight: 700;
@@ -831,7 +883,7 @@
             right: 0;
             height: 50%;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
-            border-radius: 14px 14px 0 0;
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
             pointer-events: none;
         }
 
@@ -986,7 +1038,7 @@
             width: 48px;
             height: 48px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1092,7 +1144,7 @@
             color: white;
         }
         .account-header .header-logo .highlight {
-            color: #FFD700;
+            color: var(--brand-gold);
         }
 
         .category-scroll {
@@ -1148,7 +1200,7 @@
             padding: var(--space-3) var(--space-4);
             background: white;
             margin: 0 var(--space-4) var(--space-2);
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             box-shadow: var(--shadow-sm);
             cursor: pointer;
             min-height: 72px;
@@ -1173,7 +1225,7 @@
         .resource-icon {
             width: 50px;
             height: 50px;
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1236,7 +1288,7 @@
         .contact-icon {
             width: 50px;
             height: 50px;
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1244,7 +1296,7 @@
         }
 
         .contact-icon.blue { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); }
-        .contact-icon.green { background: linear-gradient(135deg, #00C48C 0%, #00D9A0 100%); }
+        .contact-icon.green { background: linear-gradient(135deg, var(--success) 0%, #00D9A0 100%); }
         .contact-icon.orange { background: linear-gradient(135deg, var(--accent) 0%, #FF8855 100%); }
 
         .contact-info { flex: 1; min-width: 0; }
@@ -1267,7 +1319,7 @@
         .office-card {
             background: white;
             margin: 16px 16px;
-            border-radius: 18px;
+            border-radius: var(--radius-xl);
             padding: 20px;
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--border-color);
@@ -1340,7 +1392,7 @@
             gap: var(--space-3);
             padding: var(--space-3) var(--space-4);
             background: white;
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             margin-bottom: var(--space-2);
             box-shadow: var(--shadow-sm);
             border: 2px solid var(--border-color);
@@ -1426,7 +1478,7 @@
         }
 
         .claimit-logo-text .highlight {
-            color: #FFD700;
+            color: var(--brand-gold);
         }
 
         /* Quiz Step Visibility */
@@ -1474,7 +1526,7 @@
             width: 100%;
             padding: var(--space-4) var(--space-4);
             border: 2px solid var(--border-color);
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             font-size: 16px;
             font-family: inherit;
             background: white;
@@ -1493,7 +1545,7 @@
             width: 100%;
             padding: var(--space-4) var(--space-4);
             border: 2px solid var(--border-color);
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             font-size: 16px;
             font-family: inherit;
             background: white;
@@ -1622,7 +1674,7 @@
             padding: 16px 24px;
             background: white;
             border: 2px solid var(--primary);
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             color: var(--primary);
             font-size: 16px;
             font-weight: 700;
@@ -1763,7 +1815,7 @@
             gap: 14px;
             padding: 14px 16px;
             background: white;
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             margin-bottom: 10px;
             box-shadow: var(--shadow-sm);
         }
@@ -1796,7 +1848,7 @@
             padding: var(--space-4) var(--space-6);
             background: white;
             border: none;
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             color: var(--primary);
             font-size: 17px;
             font-weight: 700;
@@ -2298,28 +2350,28 @@
         }
 
         .case-status-badge.submitted {
-            background: #E5E7EB;
-            color: #4B5563;
+            background: var(--status-submitted-bg);
+            color: var(--status-submitted-text);
         }
 
         .case-status-badge.under-review {
-            background: #DBEAFE;
-            color: #1D4ED8;
+            background: var(--status-review-bg);
+            color: var(--status-review-text);
         }
 
         .case-status-badge.qualified {
-            background: #D1FAE5;
-            color: #059669;
+            background: var(--status-qualified-bg);
+            color: var(--status-qualified-text);
         }
 
         .case-status-badge.matched {
-            background: #FEF3C7;
-            color: #D97706;
+            background: var(--status-matched-bg);
+            color: var(--status-matched-text);
         }
 
         .case-status-badge.retained {
-            background: #D1FAE5;
-            color: #059669;
+            background: var(--status-retained-bg);
+            color: var(--status-retained-text);
         }
 
         .case-progress {
@@ -2331,7 +2383,7 @@
         .case-progress-step {
             flex: 1;
             height: 4px;
-            background: #E5E7EB;
+            background: var(--border-color);
             border-radius: 2px;
         }
 
@@ -2503,7 +2555,7 @@
             border-color: var(--success);
         }
         .form-input.invalid {
-            border-color: #EF4444;
+            border-color: var(--error);
         }
         .form-input-wrapper {
             position: relative;
@@ -2641,7 +2693,7 @@
         }
         .faq-item {
             background: white;
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             margin-bottom: 10px;
             box-shadow: var(--shadow-sm);
             overflow: hidden;
@@ -2701,7 +2753,7 @@
         /* Document Upload */
         .document-upload-area {
             border: 2px dashed var(--border-color);
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             padding: 20px;
             text-align: center;
             cursor: pointer;
@@ -2849,8 +2901,8 @@
         }
         .related-articles {
             padding: 20px;
-            background: #F8FAFC;
-            border-radius: 16px;
+            background: var(--page-bg);
+            border-radius: var(--radius-xl);
             margin: 20px;
         }
         .related-articles h3 {
@@ -2953,7 +3005,7 @@
             align-items: center;
             gap: 12px;
             padding: 12px;
-            background: #F8FAFC;
+            background: var(--page-bg);
             border-radius: 10px;
             margin-bottom: 8px;
             cursor: pointer;
@@ -3153,7 +3205,7 @@
             width: 48px;
             height: 28px;
             background: var(--border-color);
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             position: relative;
             cursor: pointer;
             transition: background 0.3s;
@@ -3317,7 +3369,7 @@
         .live-dot {
             width: 8px;
             height: 8px;
-            background: #00C48C;
+            background: var(--success);
             border-radius: 50%;
             animation: livePulse 2s ease-in-out infinite;
         }
@@ -3391,7 +3443,7 @@
             gap: 6px;
             padding: var(--space-3) var(--space-4);
             background: white;
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
             box-shadow: var(--shadow-sm);
             cursor: pointer;
             transition: transform var(--duration-fast) var(--ease-out),
@@ -3485,7 +3537,7 @@
 
         .strength-meter {
             height: 10px;
-            background: #E5E7EB;
+            background: var(--border-color);
             border-radius: 5px;
             overflow: hidden;
             margin-bottom: 12px;
@@ -3526,18 +3578,18 @@
             align-items: center;
             gap: 6px;
             padding: 8px 10px;
-            background: #F8FAFC;
-            border-radius: 8px;
+            background: var(--page-bg);
+            border-radius: var(--radius-md);
             transition: background-color var(--duration-normal) var(--ease-smooth);
         }
 
-        .strength-factor.complete { background: #F0FDF4; }
+        .strength-factor.complete { background: var(--success-bg-light); }
 
         .factor-check {
             width: 18px;
             height: 18px;
             border-radius: 50%;
-            border: 2px solid #E5E7EB;
+            border: 2px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -3596,7 +3648,7 @@
             width: 70px;
             height: 70px;
             margin: 0 auto 14px;
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            background: linear-gradient(135deg, var(--brand-gold) 0%, #FFA500 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -3667,7 +3719,7 @@
 
         .toast svg { width: 20px; height: 20px; flex-shrink: 0; }
         .toast.success svg { color: var(--success); }
-        .toast.error svg { color: #EF4444; }
+        .toast.error svg { color: var(--error); }
 
         /* ==================== DEVICE TOGGLE ==================== */
         .device-toggle {
@@ -3763,7 +3815,7 @@
             padding: 14px 8px;
             min-width: auto;
             width: 100%;
-            border-radius: 14px;
+            border-radius: var(--radius-xl);
         }
 
         .device-frame.tablet .tab-icon {
@@ -4522,7 +4574,7 @@
     <div class="header">
         <h1 style="display: flex; align-items: center; justify-content: center; gap: 12px;">
             <svg class="claimit-logo-icon" style="width: 48px; height: 48px;"><use href="#logo-mark"/></svg>
-            Claim<span style="color: #FFD700;">It</span>
+            Claim<span style="color: var(--brand-gold);">It</span>
         </h1>
         <p>Get What You Deserve</p>
     </div>
@@ -4561,7 +4613,7 @@
                 <div class="onboarding-screen active" id="onboarding-1">
                     <div class="onboarding-logo">
                         <svg class="logo-icon" style="width: 56px; height: 56px;"><use href="#logo-mark"/></svg>
-                        <h1>Claim<span style="color: #FFD700;">It</span></h1>
+                        <h1>Claim<span style="color: var(--brand-gold);">It</span></h1>
                         <div class="tagline">Your Fight. Our Fury.</div>
                     </div>
 
