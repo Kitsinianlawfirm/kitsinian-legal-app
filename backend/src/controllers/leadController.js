@@ -7,6 +7,10 @@ const { v4: uuidv4 } = require('uuid');
 const db = require('../config/database');
 const emailService = require('../services/emailService');
 const { logger } = require('../utils/logger');
+const { encrypt, decrypt, encryptFields, decryptFields } = require('../utils/encryption');
+
+// Fields that contain PII and should be encrypted
+const SENSITIVE_FIELDS = ['email', 'phone', 'description'];
 
 // Simple auth middleware - replace with proper auth in production
 const authMiddleware = (req, res, next) => {
@@ -39,7 +43,14 @@ const createLead = async (req, res) => {
     const id = uuidv4();
     const createdAt = new Date();
 
-    // Insert into database
+    // Encrypt sensitive PII before storing (AES-256-GCM)
+    const encryptedEmail = encrypt(email);
+    const encryptedPhone = encrypt(phone);
+    const encryptedDescription = encrypt(description);
+
+    logger.info('Encrypting sensitive lead data', { id });
+
+    // Insert into database with encrypted fields
     const query = `
       INSERT INTO leads (
         id, first_name, last_name, email, phone,
@@ -50,9 +61,9 @@ const createLead = async (req, res) => {
     `;
 
     const values = [
-      id, firstName, lastName, email, phone,
+      id, firstName, lastName, encryptedEmail, encryptedPhone,
       preferredContact, practiceArea, practiceAreaCategory,
-      urgency, description, JSON.stringify(quizAnswers), source, createdAt, 'new'
+      urgency, encryptedDescription, JSON.stringify(quizAnswers), source, createdAt, 'new'
     ];
 
     const result = await db.query(query, values);
@@ -138,10 +149,15 @@ const getLeads = async (req, res) => {
 
     const result = await db.query(query, values);
 
+    // Decrypt sensitive fields before returning
+    const decryptedLeads = result.rows.map(lead =>
+      decryptFields(lead, SENSITIVE_FIELDS)
+    );
+
     res.json({
       success: true,
-      count: result.rows.length,
-      leads: result.rows
+      count: decryptedLeads.length,
+      leads: decryptedLeads
     });
 
   } catch (error) {
@@ -161,9 +177,12 @@ const getLeadById = async (req, res) => {
       return res.status(404).json({ error: 'Lead not found' });
     }
 
+    // Decrypt sensitive fields before returning
+    const decryptedLead = decryptFields(result.rows[0], SENSITIVE_FIELDS);
+
     res.json({
       success: true,
-      lead: result.rows[0]
+      lead: decryptedLead
     });
 
   } catch (error) {
