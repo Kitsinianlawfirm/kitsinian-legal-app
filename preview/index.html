@@ -2297,6 +2297,68 @@
             box-shadow: 0 4px 16px rgba(0, 196, 140, 0.3);
         }
 
+        /* Consent Options in Legal Agreement */
+        .consent-options {
+            margin: 16px 0;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .consent-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+        }
+
+        .consent-option:not(:last-child) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .consent-option input[type="checkbox"] {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: #00C48C;
+            cursor: pointer;
+        }
+
+        .consent-option-content {
+            flex: 1;
+        }
+
+        .consent-option-label {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            cursor: pointer;
+        }
+
+        .consent-option-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .consent-required {
+            color: #F87171;
+            font-size: 11px;
+            font-weight: 500;
+            margin-left: 4px;
+        }
+
+        .consent-optional {
+            color: #60A5FA;
+            font-size: 11px;
+            font-weight: 500;
+            margin-left: 4px;
+        }
+
         .legal-agreement-footer .btn-agree:not(:disabled):hover {
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(0, 196, 140, 0.4);
@@ -7969,6 +8031,25 @@
                                 <li>Privacy inquiries: privacy@claimit.com</li>
                             </ul>
 
+                            <h3>Consent to Attorney Contact</h3>
+                            <p><strong>California Rule of Professional Conduct 7.3</strong></p>
+                            <p>By using this application and providing your contact information, you expressly consent to be contacted by Kitsinian Law Firm, APC, and/or attorneys in our referral network regarding your potential legal matter.</p>
+
+                            <h4>You Consent to the Following:</h4>
+                            <ul>
+                                <li><strong>Direct Contact:</strong> You consent to receive telephone calls, text messages, and/or emails regarding your legal inquiry, even if your number is on a Do Not Call registry.</li>
+                                <li><strong>Written Solicitation:</strong> You understand that this communication constitutes a written solicitation of professional employment pursuant to California Rules of Professional Conduct Rule 7.3.</li>
+                                <li><strong>Attorney Advertising:</strong> You acknowledge that this application and all communications from Kitsinian Law Firm, APC constitute attorney advertising.</li>
+                                <li><strong>Referral Network:</strong> If your case is outside our practice areas, you consent to having your information shared with qualified attorneys in our referral network who may contact you.</li>
+                            </ul>
+
+                            <h4>Your Rights</h4>
+                            <ul>
+                                <li>You may withdraw consent at any time by contacting us at optout@claimit.com</li>
+                                <li>Withdrawing consent does not affect any attorney-client relationship already established</li>
+                                <li>You are under no obligation to hire any attorney who contacts you</li>
+                            </ul>
+
                             <div class="legal-agreement-scroll-end" id="legal-scroll-end">
                                 <p>— End of Agreement —</p>
                             </div>
@@ -7981,6 +8062,21 @@
                                 </svg>
                                 <span>Scroll down to continue</span>
                             </div>
+
+                            <!-- Consent Options -->
+                            <div class="consent-options">
+                                <div class="consent-option">
+                                    <input type="checkbox" id="consent-accident-mode" checked>
+                                    <div class="consent-option-content">
+                                        <label class="consent-option-label" for="consent-accident-mode">
+                                            Enable Accident Mode
+                                            <span class="consent-optional">(Recommended)</span>
+                                        </label>
+                                        <p class="consent-option-desc">Get instant access to emergency evidence collection if you're ever in an accident. Includes photo checklist, voice recording, and witness info capture. You can disable this anytime in Settings.</p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <button class="btn-agree" id="btn-agree-continue" onclick="proceedFromConsent()" disabled>
                                 I Have Read and Agree
                             </button>
@@ -10570,11 +10666,15 @@
 
         // Proceed from legal agreement (screen 1) to welcome screen (screen 2)
         function proceedFromConsent() {
-            // User agreed to terms - enable Accident Mode by default
-            localStorage.setItem('accidentModeEnabled', 'true');
+            // Check if user opted into Accident Mode
+            const accidentModeCheckbox = document.getElementById('consent-accident-mode');
+            const accidentModeEnabled = accidentModeCheckbox ? accidentModeCheckbox.checked : false;
+
+            // Store user's preferences
+            localStorage.setItem('accidentModeEnabled', accidentModeEnabled.toString());
             localStorage.setItem('userAgreedToTerms', 'true');
 
-            // Update banner visibility
+            // Update banner visibility based on user's choice
             updateAccidentBannerVisibility();
 
             // Go from consent (onboarding-3) to welcome (onboarding-1)
