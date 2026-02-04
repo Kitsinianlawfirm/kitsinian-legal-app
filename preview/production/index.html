@@ -1,0 +1,2840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClaimIt - Full Interactive Preview</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230066FF'/%3E%3Cpath d='M17.5 6L10 17h5.5l-1 9L22 15h-5.5l1-9z' fill='%23F59E0B'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230066FF'/%3E%3Cpath d='M98 30L52 95h35l-7 55 53-70h-35l7-50z' fill='%23F59E0B'/%3E%3C/svg%3E">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+</head>
+<body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="visually-hidden" style="position: absolute; top: -40px; left: 0; background: var(--primary); color: white; padding: 8px 16px; z-index: 10000; text-decoration: none; font-weight: 600;" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
+
+    <!-- SVG Icon Definitions -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <defs>
+            <!-- ClaimIt Logo Mark - Shield with Lightning Bolt -->
+            <symbol id="logo-mark" viewBox="0 0 64 64">
+                <path d="M32 4L8 16v20c0 14 10.5 22 24 28 13.5-6 24-14 24-28V16L32 4z" fill="url(#logo-gradient)"/>
+                <path d="M36 18L26 34h8l-4 14 14-18h-9l5-12h-4z" fill="white"/>
+                <defs>
+                    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FFD700"/>
+                        <stop offset="100%" style="stop-color:#FFA500"/>
+                    </linearGradient>
+                </defs>
+            </symbol>
+
+            <!-- Car/Vehicle -->
+            <symbol id="icon-car" viewBox="0 0 24 24">
+                <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Injury/Personal Injury - First Aid Kit -->
+            <symbol id="icon-injury" viewBox="0 0 24 24">
+                <!-- First aid kit box -->
+                <rect x="2" y="7" width="20" height="14" rx="2" fill="currentColor"/>
+                <!-- Handle on top -->
+                <path d="M8 7V5c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v2" stroke="currentColor" stroke-width="2" fill="none"/>
+                <!-- Medical cross -->
+                <rect x="10" y="10" width="4" height="8" rx="0.5" fill="white"/>
+                <rect x="7" y="12" width="10" height="4" rx="0.5" fill="white"/>
+            </symbol>
+
+            <!-- Slip/Fall -->
+            <symbol id="icon-fall" viewBox="0 0 24 24">
+                <circle cx="12" cy="4" r="2.5" fill="currentColor"/>
+                <path d="M10.5 8.5L7 11l1.5 1.5 2.5-2 1 4.5-4 4 1.5 1.5L13 17l1-4 2 1.5V20h2v-7l-3.5-2.5-.5-2 2 1.5 2-2L14 6l-3.5 2.5z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Shield/Insurance -->
+            <symbol id="icon-shield" viewBox="0 0 24 24">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Lemon - Clean distinct silhouette -->
+            <symbol id="icon-lemon" viewBox="0 0 24 24">
+                <!-- Lemon body - distinct pointed oval shape -->
+                <path d="M12 4C8 4 4 7 3 12c-1 5 2 8 9 8s10-3 9-8c-1-5-5-8-9-8z" fill="currentColor"/>
+                <!-- Pointed tip on right -->
+                <path d="M21 12c1-1 2-.5 2 0s-1 1-2 0z" fill="currentColor"/>
+                <!-- Leaf -->
+                <path d="M11 4c-1-2 1-3 3-2s2 2 0 3c-1 0-2 0-3-1z" fill="currentColor" opacity="0.7"/>
+            </symbol>
+
+            <!-- Property Damage - house with fire/damage -->
+            <symbol id="icon-property" viewBox="0 0 24 24">
+                <!-- House outline -->
+                <path d="M12 3L2 12h3v8h14v-8h3L12 3zm6 16H6v-7.81l6-5.4 6 5.4V19z" fill="currentColor"/>
+                <!-- Fire flames -->
+                <path d="M10 14c0 1.5.5 2.5 1.5 3 .3-1 .5-1.5 1-2 .3.8.5 1.5.5 2 1-.5 1.5-1.5 1.5-3 0-2-1.5-3-2.5-4-1 1-2 2-2 4z" fill="currentColor" opacity="0.7"/>
+                <!-- Water drops -->
+                <ellipse cx="8" cy="16" rx="1" ry="1.5" fill="currentColor" opacity="0.5"/>
+                <ellipse cx="16" cy="17" rx="1" ry="1.5" fill="currentColor" opacity="0.5"/>
+            </symbol>
+
+            <!-- Question/Other -->
+            <symbol id="icon-question" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Money/No Fees -->
+            <symbol id="icon-money" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Clock/Time -->
+            <symbol id="icon-clock" viewBox="0 0 24 24">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Handshake/Trust -->
+            <symbol id="icon-handshake" viewBox="0 0 24 24">
+                <path d="M12.22 19.85c-.18.18-.5.21-.71 0L6.5 14.84a.996.996 0 010-1.41l5.01-5.01c.18-.18.44-.29.71-.29h4.59c.55 0 1 .45 1 1v4.59c0 .27-.11.52-.29.71l-5.3 5.42zM8.5 9.5L3.21 14.79c-.39.39-.39 1.02 0 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L12 14l-3.5-4.5zm7 0l2.79-2.79c.39-.39.39-1.02 0-1.41l-2.59-2.59c-.39-.39-1.02-.39-1.41 0L12 5l3.5 4.5z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Phone -->
+            <symbol id="icon-phone" viewBox="0 0 24 24">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Chat -->
+            <symbol id="icon-chat" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z" fill="currentColor"/>
+                <path d="M7 9h10v2H7zm0-3h10v2H7z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Book/Guide -->
+            <symbol id="icon-book" viewBox="0 0 24 24">
+                <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Location/Track -->
+            <symbol id="icon-location" viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Checkmark -->
+            <symbol id="icon-check" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Calendar -->
+            <symbol id="icon-calendar" viewBox="0 0 24 24">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Hospital/Serious -->
+            <symbol id="icon-hospital" viewBox="0 0 24 24">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Bandage/Minor -->
+            <symbol id="icon-bandage" viewBox="0 0 24 24">
+                <path d="M17.73 12.02l3.98-3.98c.39-.39.39-1.02 0-1.41l-4.34-4.34c-.39-.39-1.02-.39-1.41 0l-3.98 3.98L8 2.29C7.8 2.1 7.55 2 7.29 2c-.25 0-.51.1-.7.29L2.25 6.63c-.39.39-.39 1.02 0 1.41l3.98 3.98L2.25 16c-.39.39-.39 1.02 0 1.41l4.34 4.34c.39.39 1.02.39 1.41 0l3.98-3.98 3.98 3.98c.2.2.45.29.71.29.26 0 .51-.1.71-.29l4.34-4.34c.39-.39.39-1.02 0-1.41l-3.99-3.98zM12 9c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-4.71 1.96L3.66 7.34l3.63-3.63 3.62 3.62-3.62 3.63zM10 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2 2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2-4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2.66 9.34l-3.63-3.62 3.63-3.63 3.62 3.62-3.62 3.63z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Thinking/Unsure -->
+            <symbol id="icon-thinking" viewBox="0 0 24 24">
+                <circle cx="15.5" cy="9.5" r="1.5" fill="currentColor"/>
+                <circle cx="8.5" cy="9.5" r="1.5" fill="currentColor"/>
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-6c-2.33 0-4.32 1.45-5.12 3.5h1.67c.69-1.19 1.97-2 3.45-2s2.75.81 3.45 2h1.67c-.8-2.05-2.79-3.5-5.12-3.5z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Hand/Stop -->
+            <symbol id="icon-hand" viewBox="0 0 24 24">
+                <path d="M10.5 13H8v-3h2.5V7.5h3V10H16v3h-2.5v2.5h-3V13zM12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Document/File -->
+            <symbol id="icon-document" viewBox="0 0 24 24">
+                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" fill="currentColor"/>
+            </symbol>
+
+            <!-- X/Denied -->
+            <symbol id="icon-denied" viewBox="0 0 24 24">
+                <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Low Offer -->
+            <symbol id="icon-lowball" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Building/Office -->
+            <symbol id="icon-building" viewBox="0 0 24 24">
+                <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Clock/Hours -->
+            <symbol id="icon-hours" viewBox="0 0 24 24">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" fill="currentColor"/>
+                <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Lightning/Fast -->
+            <symbol id="icon-lightning" viewBox="0 0 24 24">
+                <path d="M7 2v11h3v9l7-12h-4l4-8z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Sleek Bolt (from shield logo) -->
+            <symbol id="bolt-sleek" viewBox="0 0 24 24">
+                <path d="M13 2L6 13h5l-2 9 9-12h-6l4-8z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Family -->
+            <symbol id="icon-family" viewBox="0 0 24 24">
+                <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A2.01 2.01 0 0018.06 7h-.12c-.78 0-1.49.46-1.82 1.17L14 13h-4l-2.12-4.83A2.01 2.01 0 006.06 7h-.12c-.78 0-1.49.46-1.82 1.17L1.5 16H4v6h4v-6h2v6h4v-6h2v6h4zM6 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Gavel/Legal -->
+            <symbol id="icon-gavel" viewBox="0 0 24 24">
+                <path d="M1 21h12v2H1v-2zM5.24 8.07l2.83-2.83 14.14 14.14-2.83 2.83L5.24 8.07zM12.32 1l5.66 5.66-2.83 2.83-5.66-5.66L12.32 1zM3.83 9.48l5.66 5.66-2.83 2.83L1 12.31l2.83-2.83z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Work/Employment -->
+            <symbol id="icon-work" viewBox="0 0 24 24">
+                <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Home/Real Estate -->
+            <symbol id="icon-home" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Arrow Right -->
+            <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Chevron Right -->
+            <symbol id="icon-chevron" viewBox="0 0 24 24">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Star/Top -->
+            <symbol id="icon-star" viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Alarm/Deadline -->
+            <symbol id="icon-alarm" viewBox="0 0 24 24">
+                <path d="M22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM12.5 8H11v6l4.75 2.85.75-1.23-4-2.37V8zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" fill="currentColor"/>
+            </symbol>
+
+            <!-- User/Account -->
+            <symbol id="icon-user" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Checkmark Circle -->
+            <symbol id="icon-check-circle" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Briefcase/Case -->
+            <symbol id="icon-briefcase" viewBox="0 0 24 24">
+                <path d="M20 7h-4V5c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM10 5h4v2h-4V5z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Lock/Security -->
+            <symbol id="icon-lock" viewBox="0 0 24 24">
+                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Upload/Cloud -->
+            <symbol id="icon-upload" viewBox="0 0 24 24">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Bell/Notification -->
+            <symbol id="icon-bell" viewBox="0 0 24 24">
+                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Share -->
+            <symbol id="icon-share" viewBox="0 0 24 24">
+                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Message/SMS -->
+            <symbol id="icon-sms" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-9 9H9V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Email -->
+            <symbol id="icon-email" viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Thumbs Up -->
+            <symbol id="icon-thumbup" viewBox="0 0 24 24">
+                <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Image/Photo -->
+            <symbol id="icon-image" viewBox="0 0 24 24">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="currentColor"/>
+            </symbol>
+
+            <!-- Chevron Down -->
+            <symbol id="icon-chevron-down" viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" fill="currentColor"/>
+            </symbol>
+        </defs>
+    </svg>
+
+    <div class="header">
+        <h1 style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+            <svg class="claimit-logo-icon" style="width: 48px; height: 48px;"><use href="#logo-mark"/></svg>
+            Claim<span style="color: var(--brand-gold);">It</span>
+        </h1>
+        <p>Get What You Deserve</p>
+    </div>
+
+    <div class="instructions">
+        <span>👆 Tap tabs</span> to navigate • <span>📖 Tap guides</span> to read content
+    </div>
+
+    <!-- Device Toggle -->
+    <div class="device-toggle">
+        <div class="device-toggle-container">
+            <button class="device-toggle-btn active" id="toggle-iphone" onclick="switchDevice('iphone')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="5" y="2" width="14" height="20" rx="3"/>
+                    <line x1="12" y1="18" x2="12" y2="18"/>
+                </svg>
+                iPhone
+            </button>
+            <button class="device-toggle-btn" id="toggle-ipad" onclick="switchDevice('ipad')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="18" rx="2"/>
+                    <circle cx="12" cy="17" r="1"/>
+                </svg>
+                iPad
+            </button>
+        </div>
+        <div class="device-toggle-container" style="margin-left: 16px;">
+            <button class="device-toggle-btn active" id="toggle-light" onclick="toggleTheme('light')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                Light
+            </button>
+            <button class="device-toggle-btn" id="toggle-dark" onclick="toggleTheme('dark')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                Dark
+            </button>
+        </div>
+    </div>
+
+    <div class="device-frame" id="device-frame">
+        <div class="device-screen">
+            <div class="dynamic-island"></div>
+
+            <!-- ONBOARDING OVERLAY -->
+            <div class="onboarding-overlay" id="onboarding">
+                <!-- Screen 2: Trust & Value (Welcome) -->
+                <div class="onboarding-screen" id="onboarding-1">
+                    <div class="onboarding-logo">
+                        <svg class="logo-icon" style="width: 56px; height: 56px;"><use href="#logo-mark"/></svg>
+                        <h1>Claim<span style="color: var(--brand-gold);">It</span></h1>
+                        <div class="tagline">Your Fight. Our Fury.</div>
+                    </div>
+
+                    <div class="onboarding-content">
+                        <div class="trust-badges">
+                            <div class="trust-badge">
+                                <span class="value">$50M+</span>
+                                <span class="label">Recovered</span>
+                            </div>
+                            <div class="trust-badge">
+                                <span class="value">5000+</span>
+                                <span class="label">Cases Won</span>
+                            </div>
+                            <div class="trust-badge">
+                                <span class="value">98%</span>
+                                <span class="label">Success</span>
+                            </div>
+                        </div>
+
+                        <div class="value-props">
+                            <div class="value-prop">
+                                <div class="value-prop-icon"><svg style="width: 22px; height: 22px; color: white;"><use href="#icon-money"/></svg></div>
+                                <div class="value-prop-text">$0 upfront. We only get paid when you do.</div>
+                            </div>
+                            <div class="value-prop">
+                                <div class="value-prop-icon"><svg style="width: 22px; height: 22px; color: white;"><use href="#icon-clock"/></svg></div>
+                                <div class="value-prop-text">90-second claim check — no paperwork</div>
+                            </div>
+                            <div class="value-prop">
+                                <div class="value-prop-icon"><svg style="width: 22px; height: 22px; color: white;"><use href="#icon-shield"/></svg></div>
+                                <div class="value-prop-text">Aggressive attorneys who've recovered $50M+</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="onboarding-cta">
+                        <div class="onboarding-dots">
+                            <div class="dot"></div>
+                            <div class="dot active"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <button class="btn-onboarding" onclick="nextOnboarding()">
+                            Check If You Qualify <svg style="width: 20px; height: 20px; color: var(--primary);"><use href="#icon-arrow-right"/></svg>
+                        </button>
+                        <div class="skip-link">
+                            <a href="#" onclick="skipOnboarding(); return false;">I'll explore first</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screen 3: Quick Quiz Start -->
+                <div class="onboarding-screen" id="onboarding-2">
+                    <div class="onboarding-logo" style="margin-bottom: 8px;">
+                        <svg style="width: 40px; height: 40px;"><use href="#logo-mark"/></svg>
+                    </div>
+
+                    <div class="onboarding-question">
+                        <h2>What happened to you?</h2>
+                        <p>Select to start your free case review</p>
+                    </div>
+
+                    <div class="onboarding-content" style="justify-content: flex-start;">
+                        <div class="onboarding-options">
+                            <div class="onboarding-option" onclick="selectOnboardingOption(this, 'car-accident')">
+                                <span class="icon"><svg style="width: 32px; height: 32px; color: #0066FF;"><use href="#icon-car"/></svg></span>
+                                <span class="label">Car Accident</span>
+                            </div>
+                            <div class="onboarding-option" onclick="selectOnboardingOption(this, 'injury')">
+                                <span class="icon"><svg style="width: 32px; height: 32px; color: #0066FF;"><use href="#icon-injury"/></svg></span>
+                                <span class="label">I Was Injured</span>
+                            </div>
+                            <div class="onboarding-option" onclick="selectOnboardingOption(this, 'slip-fall')">
+                                <span class="icon"><svg style="width: 32px; height: 32px; color: #0066FF;"><use href="#icon-fall"/></svg></span>
+                                <span class="label">Slip & Fall</span>
+                            </div>
+                            <div class="onboarding-option" onclick="selectOnboardingOption(this, 'insurance')">
+                                <span class="icon"><svg style="width: 32px; height: 32px; color: #0066FF;"><use href="#icon-shield"/></svg></span>
+                                <span class="label">Insurance Issue</span>
+                            </div>
+                            <div class="onboarding-option" onclick="selectOnboardingOption(this, 'lemon')">
+                                <span class="icon"><svg style="width: 32px; height: 32px; color: #0066FF;"><use href="#icon-lemon"/></svg></span>
+                                <span class="label">Lemon Vehicle</span>
+                            </div>
+                            <div class="onboarding-option" onclick="selectOnboardingOption(this, 'property')">
+                                <span class="icon"><svg style="width: 32px; height: 32px; color: #0066FF;"><use href="#icon-property"/></svg></span>
+                                <span class="label">Property Damage</span>
+                            </div>
+                            <div class="onboarding-option full-width" onclick="selectOnboardingOption(this, 'other')">
+                                <span class="icon"><svg style="width: 28px; height: 28px; color: #0066FF;"><use href="#icon-question"/></svg></span>
+                                <span class="label">Something Else</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="onboarding-cta">
+                        <div class="onboarding-dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot active"></div>
+                        </div>
+                        <button class="btn-onboarding accent" id="onboarding-continue-btn" onclick="completeOnboardingWithConsent()" style="opacity: 0.5; pointer-events: none;">
+                            Calculate My Compensation
+                        </button>
+                        <div class="skip-link">
+                            <a href="#" onclick="skipOnboarding(); return false;">Skip for now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screen 1: Consent & Agreement (FIRST SCREEN) -->
+                <!-- Screen 1: Legal Agreement (Scroll-to-Accept) -->
+                <div class="onboarding-screen active" id="onboarding-3">
+                    <div class="legal-agreement-screen">
+                        <div class="legal-agreement-header">
+                            <h2>User Agreement</h2>
+                            <p>Please review and scroll to continue</p>
+                        </div>
+
+                        <div class="legal-agreement-content" id="legal-scroll-container" onscroll="checkLegalScroll()">
+                            <h3>Terms of Service</h3>
+                            <p><strong>Effective Date:</strong> February 2, 2025</p>
+                            <p>Welcome to ClaimIt, operated by Kitsinian Law Firm, APC. By using this application, you agree to these terms.</p>
+
+                            <h4>No Attorney-Client Relationship</h4>
+                            <p>Using this app does not create an attorney-client relationship. Such a relationship only forms when you sign a written retainer agreement with an attorney.</p>
+
+                            <h4>No Legal Advice</h4>
+                            <p>Information provided through this app is for general informational purposes only and should not be construed as legal advice. For advice specific to your situation, consult a licensed attorney.</p>
+
+                            <h4>No Guarantees</h4>
+                            <p>Past results do not guarantee future outcomes. All statistics and success rates represent historical data only and vary based on individual circumstances.</p>
+
+                            <h4>Fee Arrangements</h4>
+                            <p>"No Fee Unless We Win" means no attorney's fees unless we recover compensation for you. However, you may still be responsible for case costs including filing fees, expert witness fees, and other litigation expenses.</p>
+
+                            <h4>Eligibility</h4>
+                            <p>You must be 18 years of age or older to use this application.</p>
+
+                            <h3>Privacy Policy</h3>
+                            <p><strong>Effective Date:</strong> February 2, 2025</p>
+                            <p>Kitsinian Law Firm, APC ("we," "us," or "our") operates the ClaimIt mobile application. This Privacy Policy explains how we collect, use, disclose, and protect your information.</p>
+
+                            <h4>Information We Collect</h4>
+                            <ul>
+                                <li><strong>Contact Information:</strong> Name, phone number, email address</li>
+                                <li><strong>Case Information:</strong> Details about your legal matter, including descriptions, dates, and circumstances</li>
+                                <li><strong>Device Information:</strong> Device type, operating system, and app usage data</li>
+                                <li><strong>Evidence Data:</strong> Photos, voice recordings, and documents you choose to capture or upload</li>
+                            </ul>
+
+                            <h4>How We Use Your Information</h4>
+                            <ul>
+                                <li>To evaluate your potential legal case</li>
+                                <li>To contact you regarding your inquiry</li>
+                                <li>To match you with appropriate legal representation</li>
+                                <li>To improve our services and user experience</li>
+                            </ul>
+
+                            <h4>Information Sharing</h4>
+                            <p>We do not sell your personal information. We may share your information with:</p>
+                            <ul>
+                                <li>Attorneys in our referral network (with your consent)</li>
+                                <li>Service providers who assist our operations</li>
+                                <li>Law enforcement or government agencies as required by law</li>
+                            </ul>
+
+                            <h4>California Privacy Rights (CCPA)</h4>
+                            <p>California residents have the right to:</p>
+                            <ul>
+                                <li>Know what personal data we collect about you</li>
+                                <li>Request deletion of your personal data</li>
+                                <li>Opt-out of the sale of personal data (we do not sell your data)</li>
+                                <li>Exercise these rights without discrimination</li>
+                            </ul>
+                            <p>Contact: privacy@claimit.com</p>
+
+                            <h3>Legal Disclaimers</h3>
+
+                            <h4>Attorney Advertising</h4>
+                            <p>This application constitutes attorney advertising. Kitsinian Law Firm, APC. Principal office located in Los Angeles, California. Licensed to practice in California state and federal courts.</p>
+
+                            <h4>Success Rate Disclaimer</h4>
+                            <p>Statistics displayed in this app represent historical data. <strong>Past results do not guarantee future outcomes.</strong> Each case is unique and evaluated on its own merits.</p>
+
+                            <h4>Accident Mode Features</h4>
+                            <p>The Accident Mode feature allows you to capture evidence following an incident. By using this feature:</p>
+                            <ul>
+                                <li>Photos, recordings, and data are stored locally on your device</li>
+                                <li>Data is only transmitted when you explicitly choose to share it</li>
+                                <li>Using Accident Mode does not create an attorney-client relationship</li>
+                                <li>We may contact you regarding your captured evidence if you share it with us</li>
+                            </ul>
+
+                            <h4>Contact Information</h4>
+                            <p>For questions about these terms or our practices:</p>
+                            <ul>
+                                <li>Email: legal@claimit.com</li>
+                                <li>Privacy inquiries: privacy@claimit.com</li>
+                            </ul>
+
+                            <h3>Consent to Attorney Contact</h3>
+                            <p><strong>California Rule of Professional Conduct 7.3</strong></p>
+                            <p>By using this application and providing your contact information, you expressly consent to be contacted by Kitsinian Law Firm, APC, and/or attorneys in our referral network regarding your potential legal matter.</p>
+
+                            <h4>You Consent to the Following:</h4>
+                            <ul>
+                                <li><strong>Direct Contact:</strong> You consent to receive telephone calls, text messages, and/or emails regarding your legal inquiry, even if your number is on a Do Not Call registry.</li>
+                                <li><strong>Written Solicitation:</strong> You understand that this communication constitutes a written solicitation of professional employment pursuant to California Rules of Professional Conduct Rule 7.3.</li>
+                                <li><strong>Attorney Advertising:</strong> You acknowledge that this application and all communications from Kitsinian Law Firm, APC constitute attorney advertising.</li>
+                                <li><strong>Referral Network:</strong> If your case is outside our practice areas, you consent to having your information shared with qualified attorneys in our referral network who may contact you.</li>
+                            </ul>
+
+                            <h4>Your Rights</h4>
+                            <ul>
+                                <li>You may withdraw consent at any time by contacting us at optout@claimit.com</li>
+                                <li>Withdrawing consent does not affect any attorney-client relationship already established</li>
+                                <li>You are under no obligation to hire any attorney who contacts you</li>
+                            </ul>
+
+                            <div class="legal-agreement-scroll-end" id="legal-scroll-end">
+                                <p>— End of Agreement —</p>
+                            </div>
+                        </div>
+
+                        <div class="legal-agreement-footer">
+                            <div class="scroll-indicator" id="scroll-indicator">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M5 12l7 7 7-7"/>
+                                </svg>
+                                <span>Scroll down to continue</span>
+                            </div>
+
+                            <button class="btn-agree" id="btn-agree-continue" onclick="proceedFromConsent()" disabled>
+                                I Have Read and Agree
+                            </button>
+                            <div class="legal-ad-notice">
+                                ADVERTISEMENT: Kitsinian Law Firm, APC, Los Angeles, CA
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-bar light" id="status-bar">
+                <span>9:41</span>
+                <div class="status-right">
+                    <button class="signin-btn" id="signin-btn" onclick="toggleSignIn()">
+                        <svg><use href="#icon-user"/></svg>
+                    </button>
+                    <span class="status-icons">
+                        <svg style="width:17px;height:10px" viewBox="0 0 17 10"><path fill="currentColor" d="M1 6h2v4H1V6zm4-2h2v6H5V4zm4-2h2v8H9V2zm4-2h2v10h-2V0z"/></svg>
+                        <svg style="width:15px;height:10px" viewBox="0 0 15 10"><path fill="currentColor" d="M7.5 2.5a7 7 0 0 1 5 2.1l-1.4 1.4a5 5 0 0 0-7.2 0L2.5 4.6a7 7 0 0 1 5-2.1zM7.5 6a4 4 0 0 1 2.8 1.2L7.5 10 4.7 7.2A4 4 0 0 1 7.5 6z"/></svg>
+                        <svg style="width:25px;height:10px" viewBox="0 0 25 10"><rect x="0" y="1" width="21" height="8" rx="2" stroke="currentColor" fill="none"/><rect x="2" y="3" width="16" height="4" rx="1" fill="currentColor"/><path fill="currentColor" d="M23 4v2a1 1 0 0 0 0-2z"/></svg>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Confetti Canvas -->
+            <canvas id="confetti-canvas"></canvas>
+
+            <!-- Achievement Popup -->
+            <div class="achievement-popup" id="achievementPopup">
+                <div class="achievement-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 15l-2 5l9-13h-7l2-5l-9 13h7z"/>
+                    </svg>
+                </div>
+                <h3 id="achievementTitle">Claim Started!</h3>
+                <p id="achievementDesc">You've taken the first step toward justice.</p>
+                <button class="achievement-dismiss" onclick="hideAchievement()">Continue</button>
+            </div>
+
+            <!-- Toast Container -->
+            <div class="toast-container" id="toastContainer" role="status" aria-live="polite" aria-atomic="true">
+                <div class="toast" id="toast">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                    <span id="toastMessage">Success!</span>
+                </div>
+            </div>
+
+            <div class="screen-container" id="main-content" role="main">
+                <!-- HOME SCREEN -->
+                <div class="screen home-screen active" id="screen-home">
+                    <div class="hero">
+                        <div class="hero-logo">
+                            <svg style="width: 44px; height: 44px;"><use href="#logo-mark"/></svg>
+                            <span class="hero-logo-text">Claim<span class="highlight">It</span></span>
+                        </div>
+                        <h1>Hurt in an Accident?<br>Get Paid.</h1>
+                        <p>The bills are piling up. The insurance company won't call back. We can help.</p>
+                        <div class="stats-row">
+                            <div class="stat"><div class="stat-value">$50M+</div><div class="stat-label">Recovered</div></div>
+                            <div class="stat"><div class="stat-value">5000+</div><div class="stat-label">Cases</div></div>
+                            <div class="stat" onclick="showLegalDisclaimer()"><div class="stat-value">98%</div><div class="stat-label">Success</div><div class="stat-disclaimer">*Results vary</div></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <button class="btn-primary pulse" onclick="switchTab('claim')">
+                            <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13 2L4.5 14H11L10 22L18.5 10H12L13 2Z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+                            </svg>
+                            <span class="btn-text">Get My Free Case Review</span>
+                        </button>
+                        <div class="cta-subtext">$0 upfront • No obligation • 100% confidential</div>
+                    </div>
+
+                    <!-- Trust Seals -->
+                    <div class="trust-seals">
+                        <div class="trust-seal" role="button" tabindex="0">
+                            <div class="seal-icon verified">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    <polyline points="9 12 12 15 16 10"/>
+                                </svg>
+                                <div class="seal-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                                </div>
+                            </div>
+                            <h5>Verified</h5>
+                            <p>CA Attorneys</p>
+                        </div>
+                        <div class="trust-seal" role="button" tabindex="0">
+                            <div class="seal-icon secure">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                                <div class="seal-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                                </div>
+                            </div>
+                            <h5>256-bit SSL</h5>
+                            <p>Encrypted</p>
+                        </div>
+                        <div class="trust-seal" role="button" tabindex="0">
+                            <div class="seal-icon licensed">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <path d="M9 15l2 2 4-4"/>
+                                </svg>
+                                <div class="seal-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                                </div>
+                            </div>
+                            <h5>Bar Compliant</h5>
+                            <p>Ethical</p>
+                        </div>
+                    </div>
+
+                    <!-- Social Proof Feed -->
+                    <div class="social-proof-feed">
+                        <div class="social-proof-header">
+                            <div class="live-dot"></div>
+                            <span>Live Activity</span>
+                        </div>
+                        <div id="proofFeed"></div>
+                    </div>
+
+                    <!-- How It Works Section -->
+                    <div class="how-it-works">
+                        <div class="how-it-works-header">
+                            <h3>How It Works</h3>
+                            <p>Get help in 3 simple steps</p>
+                        </div>
+                        <div class="how-it-works-steps">
+                            <div class="how-step">
+                                <div class="how-step-number"><svg><use href="#icon-document"/></svg></div>
+                                <h4>Tell Us</h4>
+                                <p>90 seconds, no paperwork</p>
+                            </div>
+                            <div class="how-step">
+                                <div class="how-step-number"><svg><use href="#icon-phone"/></svg></div>
+                                <h4>We Call</h4>
+                                <p>A real attorney calls you back</p>
+                            </div>
+                            <div class="how-step">
+                                <div class="how-step-number"><svg><use href="#icon-shield"/></svg></div>
+                                <h4>We Win</h4>
+                                <p>We fight until you get paid</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-header">
+                        <span class="section-title">Quick Actions</span>
+                    </div>
+                    <div class="quick-actions">
+                        <div class="quick-action" onclick="switchTab('claim')" tabindex="0" role="button" aria-label="Start a new claim" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('claim');}"><div class="quick-action-icon"><svg style="width: 26px; height: 26px; color: white;" aria-hidden="true"><use href="#icon-lightning"/></svg></div><h4>New Claim</h4><p>Start review</p></div>
+                        <div class="quick-action" onclick="switchTab('learn')" tabindex="0" role="button" aria-label="View legal guides" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('learn');}"><div class="quick-action-icon"><svg style="width: 26px; height: 26px; color: white;" aria-hidden="true"><use href="#icon-book"/></svg></div><h4>Guides</h4><p>Free resources</p></div>
+                        <div class="quick-action" onclick="switchTab('account')" tabindex="0" role="button" aria-label="View my cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchTab('account');}"><div class="quick-action-icon"><svg style="width: 26px; height: 26px; color: white;" aria-hidden="true"><use href="#icon-briefcase"/></svg></div><h4>My Cases</h4><p>Track status</p></div>
+                    </div>
+
+                    <div class="section-header">
+                        <span class="section-title">We Fight For</span>
+                        <span class="section-link" onclick="switchTab('learn')" role="button" tabindex="0">See All <svg style="width: 12px; height: 12px;"><use href="#icon-chevron"/></svg></span>
+                    </div>
+
+                    <div class="practice-cards-container">
+                        <div class="practice-card" onclick="showArticle('pa-personal-injury')" tabindex="0" role="button" aria-label="Learn about Personal Injury cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showArticle('pa-personal-injury');}"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;" aria-hidden="true"><use href="#icon-injury"/></svg></div><div class="practice-info"><h4>Personal Injury <span class="badge-primary"><svg style="width: 10px; height: 10px; color: white;" aria-hidden="true"><use href="#icon-star"/></svg> Top</span></h4><p>Accidents, negligence, pain & suffering</p></div><span class="chevron" aria-hidden="true"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-premises-liability')" tabindex="0" role="button" aria-label="Learn about Premises Liability cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showArticle('pa-premises-liability');}"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;" aria-hidden="true"><use href="#icon-building"/></svg></div><div class="practice-info"><h4>Premises Liability</h4><p>Slip & fall, unsafe properties</p></div><span class="chevron" aria-hidden="true"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-property-damage')" tabindex="0" role="button" aria-label="Learn about Property Damage cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showArticle('pa-property-damage');}"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;" aria-hidden="true"><use href="#icon-property"/></svg></div><div class="practice-info"><h4>Property Damage</h4><p>Fire, water, theft, vehicle damage</p></div><span class="chevron" aria-hidden="true"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-insurance-bad-faith')" tabindex="0" role="button" aria-label="Learn about Insurance Bad Faith cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showArticle('pa-insurance-bad-faith');}"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;" aria-hidden="true"><use href="#icon-shield"/></svg></div><div class="practice-info"><h4>Insurance Bad Faith</h4><p>Denied claims, lowball offers</p></div><span class="chevron" aria-hidden="true"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                        <div class="practice-card" onclick="showArticle('pa-lemon-law')" tabindex="0" role="button" aria-label="Learn about Lemon Law cases" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showArticle('pa-lemon-law');}"><div class="practice-icon"><svg style="width: 28px; height: 28px; color: white;" aria-hidden="true"><use href="#icon-lemon"/></svg></div><div class="practice-info"><h4>Lemon Law</h4><p>Defective vehicles, buybacks</p></div><span class="chevron" aria-hidden="true"><svg style="width: 18px; height: 18px;"><use href="#icon-chevron"/></svg></span></div>
+                    </div>
+
+                    <div class="section-header">
+                        <span class="section-title">Referral Network</span>
+                        <span class="section-link" onclick="switchTab('learn')" role="button" tabindex="0">See All <svg style="width: 12px; height: 12px;"><use href="#icon-chevron"/></svg></span>
+                    </div>
+
+                    <div class="referral-scroll">
+                        <div class="referral-card" onclick="showReferralInfo('Family Law')"><div class="referral-icon"><svg style="width: 24px; height: 24px; color: white;"><use href="#icon-family"/></svg></div><h4>Family Law</h4></div>
+                        <div class="referral-card" onclick="showReferralInfo('Criminal Defense')"><div class="referral-icon"><svg style="width: 24px; height: 24px; color: white;"><use href="#icon-gavel"/></svg></div><h4>Criminal</h4></div>
+                        <div class="referral-card" onclick="showReferralInfo('Employment Law')"><div class="referral-icon"><svg style="width: 24px; height: 24px; color: white;"><use href="#icon-work"/></svg></div><h4>Employment</h4></div>
+                        <div class="referral-card" onclick="showReferralInfo('Real Estate Law')"><div class="referral-icon"><svg style="width: 24px; height: 24px; color: white;"><use href="#icon-home"/></svg></div><h4>Real Estate</h4></div>
+                    </div>
+
+                    <!-- FAQ Section -->
+                    <div class="faq-section">
+                        <h3>Common Questions</h3>
+                        <div class="faq-item" onclick="toggleFaq(this)">
+                            <div class="faq-question">
+                                <span>Do I have to pay anything upfront?</span>
+                                <div class="faq-toggle"><svg style="width: 16px; height: 16px;"><use href="#icon-chevron-down"/></svg></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p><strong>Absolutely not.</strong> We work on contingency — meaning we only get paid if YOU get paid. If we don't win, you owe us nothing. Zero.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item" onclick="toggleFaq(this)">
+                            <div class="faq-question">
+                                <span>How long does this take?</span>
+                                <div class="faq-toggle"><svg style="width: 16px; height: 16px;"><use href="#icon-chevron-down"/></svg></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>The claim check takes <strong>90 seconds</strong>. A real attorney (not a call center) will call you within 24 hours — usually much faster.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item" onclick="toggleFaq(this)">
+                            <div class="faq-question">
+                                <span>Is my information private?</span>
+                                <div class="faq-toggle"><svg style="width: 16px; height: 16px;"><use href="#icon-chevron-down"/></svg></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p><strong>Yes.</strong> Everything you share is protected by attorney-client privilege and 256-bit encryption. We never sell your information.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item" onclick="toggleFaq(this)">
+                            <div class="faq-question">
+                                <span>What if I'm not sure I have a case?</span>
+                                <div class="faq-toggle"><svg style="width: 16px; height: 16px;"><use href="#icon-chevron-down"/></svg></div>
+                            </div>
+                            <div class="faq-answer">
+                                <p>That's perfectly okay! Our free consultation exists to help you find out. There's no obligation - we'll honestly tell you if we can help.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Legal Footer -->
+                    <div class="legal-footer">
+                        <p>© 2025 Kitsinian Law Firm, APC. This is attorney advertising. Results vary based on individual circumstances. Using this app does not create an attorney-client relationship.</p>
+                        <div class="legal-footer-links">
+                            <a href="#" onclick="showPrivacyModal(); return false;">Privacy Policy</a>
+                            <a href="#" onclick="showTermsModal(); return false;">Terms of Service</a>
+                            <a href="#" onclick="showLegalDisclaimer(); return false;">Disclaimers</a>
+                            <a href="#" onclick="showPrivacyModal(); return false;">Do Not Sell My Info</a>
+                        </div>
+                        <div class="powered-by">
+                            <span>Powered by</span>
+                            <img src="klf-logo.png" alt="Kitsinian Law Firm, APC">
+                        </div>
+                    </div>
+
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- CLAIM SCREEN -->
+                <div class="screen claim-screen" id="screen-claim">
+                    <div class="progress-container">
+                        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+                        <div class="progress-info">
+                            <span class="progress-text" id="progress-text">Step 1 of 4</span>
+                            <span class="progress-time"><svg style="width: 12px; height: 12px;"><use href="#icon-clock"/></svg> ~90 seconds</span>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: What happened -->
+                    <div class="quiz-step active" id="quiz-step-1">
+                        <div class="question-container">
+                            <div class="question-text">What happened to you?</div>
+                            <div class="question-subtext">Select the option that best describes your situation</div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'car-accident')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-car"/></svg></div><span>Car or vehicle accident</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'injury')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-injury"/></svg></div><span>I was injured</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'slip-fall')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-fall"/></svg></div><span>Slip, trip, or fall</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'insurance')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-shield"/></svg></div><span>Insurance dispute</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'lemon')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-lemon"/></svg></div><span>Defective vehicle (Lemon)</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'property')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-property"/></svg></div><span>Property was damaged</span></div>
+                            <div class="quiz-option" onclick="selectCaseType(this, 'other')"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-question"/></svg></div><span>Something else</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Dynamic - Details based on case type -->
+                    <div class="quiz-step" id="quiz-step-2">
+                        <div class="question-container">
+                            <button class="quiz-back-btn" onclick="goToStep(1)">Back</button>
+                            <div class="question-text" id="step2-question">Tell us more</div>
+                            <div class="question-subtext" id="step2-subtext">Select the option that applies</div>
+                            <div id="step2-options">
+                                <!-- Options populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: When did it happen -->
+                    <div class="quiz-step" id="quiz-step-3">
+                        <div class="question-container">
+                            <button class="quiz-back-btn" onclick="goToStep(2)">Back</button>
+                            <div class="question-text">When did this happen?</div>
+                            <div class="question-subtext">California has strict deadlines. Your time to file may be running out.</div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'recent', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-calendar"/></svg></div><span>Within the last week</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, '1month', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-calendar"/></svg></div><span>Within the last month</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, '6months', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-clock"/></svg></div><span>1-6 months ago</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, '1year', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-clock"/></svg></div><span>6-12 months ago</span></div>
+                            <div class="quiz-option" onclick="selectAndAdvance(this, 'over1year', 4)"><div class="quiz-option-icon"><svg style="width: 26px; height: 26px; color: white;"><use href="#icon-alarm"/></svg></div><span>Over a year ago</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Contact Form -->
+                    <div class="quiz-step" id="quiz-step-4">
+                        <div class="question-container">
+                            <button class="quiz-back-btn" onclick="goToStep(3)">Back</button>
+                            <div class="question-text">You're Almost There!</div>
+                            <div class="question-subtext">Enter your info so our attorneys can fight for you</div>
+
+                            <!-- Value Props -->
+                            <div class="form-value-props">
+                                <div class="form-value-prop"><svg><use href="#icon-check-circle"/></svg> No upfront costs</div>
+                                <div class="form-value-prop"><svg><use href="#icon-check-circle"/></svg> 24-hour response</div>
+                                <div class="form-value-prop"><svg><use href="#icon-check-circle"/></svg> 100% confidential</div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-input-wrapper">
+                                    <label for="lead-name" class="visually-hidden">Full Name</label>
+                                    <input type="text" id="lead-name" placeholder="Your Full Name *" class="form-input" aria-label="Full Name (required)" required maxlength="100" autocomplete="name" oninput="validateInput(this, 'name')">
+                                    <svg class="validation-icon"><use href="#icon-check-circle"/></svg>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-input-wrapper">
+                                    <label for="lead-phone" class="visually-hidden">Phone Number</label>
+                                    <input type="tel" id="lead-phone" placeholder="Phone Number *" class="form-input" aria-label="Phone Number (required)" required maxlength="14" autocomplete="tel" oninput="formatPhoneNumber(this)">
+                                    <svg class="validation-icon"><use href="#icon-check-circle"/></svg>
+                                </div>
+                                <div class="form-hint">We'll call to discuss your case</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-input-wrapper">
+                                    <label for="lead-email" class="visually-hidden">Email Address</label>
+                                    <input type="email" id="lead-email" placeholder="Email Address" class="form-input" aria-label="Email Address" maxlength="254" autocomplete="email" oninput="validateInput(this, 'email')">
+                                    <svg class="validation-icon"><use href="#icon-check-circle"/></svg>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lead-description" class="visually-hidden">Case Description</label>
+                                <textarea id="lead-description" placeholder="Tell us more for faster review (optional)..." class="form-textarea" aria-label="Case Description" maxlength="2000"></textarea>
+                            </div>
+
+                            <!-- Document Upload Area -->
+                            <div class="document-upload-area" id="doc-upload-area" onclick="document.getElementById('file-input').click()">
+                                <input type="file" id="file-input" multiple accept="image/*,.pdf" style="display:none" onchange="handleFileUpload(this)">
+                                <svg><use href="#icon-upload"/></svg>
+                                <h4>Have photos or documents?</h4>
+                                <p>Tap to upload for faster review</p>
+                                <div class="uploaded-files" id="uploaded-files"></div>
+                            </div>
+                            <div class="upload-hint">Accident photos, medical bills, police report, etc.</div>
+
+                            <button class="btn-submit" id="submit-btn" onclick="submitLead()" aria-label="Submit for free case evaluation">
+                                <span class="btn-spinner"></span>
+                                <span class="btn-label">Get My Free Demand Letter — Free</span>
+                            </button>
+
+                            <!-- Security Badges -->
+                            <div class="security-badges">
+                                <div class="security-badge"><svg><use href="#icon-lock"/></svg> 256-bit Encryption</div>
+                                <div class="security-badge"><svg><use href="#icon-shield"/></svg> Attorney-Client Privilege</div>
+                            </div>
+
+                            <p class="form-disclaimer">By submitting, you agree to our <a href="#" onclick="showTermsModal(); return false;">Terms</a> and <a href="#" onclick="showPrivacyModal(); return false;">Privacy Policy</a>. Free consultation, no obligation.</p>
+
+                            <div style="text-align: center;">
+                                <a class="save-progress-link" onclick="showSaveProgressModal()">Save progress & continue later</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Success -->
+                    <div class="quiz-step" id="quiz-step-5">
+                        <div class="question-container success-container">
+                            <!-- Professional Success Animation -->
+                            <div class="success-animation">
+                                <div class="success-circle">
+                                    <svg class="success-check" viewBox="0 0 24 24">
+                                        <path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" fill="none"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="question-text">Your Fight Has Begun!</div>
+                            <div class="question-subtext">An attorney is reviewing your case right now. Expect a call within 24 hours — but probably much sooner.</div>
+
+                            <div class="success-card">
+                                <h4>What happens next?</h4>
+                                <div class="success-step"><span class="step-number">1</span><span>Our team reviews your case details</span></div>
+                                <div class="success-step"><span class="step-number">2</span><span>An attorney calls to discuss your options</span></div>
+                                <div class="success-step"><span class="step-number">3</span><span>We fight to get you the compensation you deserve</span></div>
+                            </div>
+
+                            <!-- Notification Preferences -->
+                            <div class="post-submit-options">
+                                <h4>How should we update you?</h4>
+                                <div class="notification-option" onclick="toggleNotificationOption(this)" data-type="sms">
+                                    <div class="notification-checkbox"><svg><use href="#icon-check"/></svg></div>
+                                    <div class="notification-label">
+                                        <h5>Text me updates</h5>
+                                        <p>Get case status via SMS</p>
+                                    </div>
+                                </div>
+                                <div class="notification-option" onclick="toggleNotificationOption(this)" data-type="email">
+                                    <div class="notification-checkbox"><svg><use href="#icon-check"/></svg></div>
+                                    <div class="notification-label">
+                                        <h5>Email me updates</h5>
+                                        <p>Receive detailed updates by email</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn-primary" onclick="switchTab('account')" style="margin-top: 16px;">
+                                <svg style="width: 20px; height: 20px; color: white;"><use href="#icon-briefcase"/></svg> Track My Case
+                            </button>
+
+                            <button class="btn-secondary" onclick="resetQuiz()" style="margin-top: 10px;">
+                                Submit Another Case
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- LEARN SCREEN -->
+                <div class="screen learn-screen" id="screen-learn">
+                    <div class="learn-header">
+                        <div class="header-logo"><svg style="width: 28px; height: 28px;"><use href="#logo-mark"/></svg><span>Claim<span class="highlight">It</span></span></div>
+                        <h1>Learn</h1><p>The knowledge they don't want you to have.</p>
+                    </div>
+                    <div class="category-scroll category-chips">
+                        <div class="category-chip active"><svg style="width: 14px; height: 14px;"><use href="#icon-star"/></svg> Popular</div>
+                        <div class="category-chip"><svg style="width: 14px; height: 14px;"><use href="#icon-book"/></svg> Guides</div>
+                        <div class="category-chip"><svg style="width: 14px; height: 14px;"><use href="#icon-check"/></svg> Checklists</div>
+                        <div class="category-chip"><svg style="width: 14px; height: 14px;"><use href="#icon-alarm"/></svg> Deadlines</div>
+                    </div>
+
+                    <div class="resources-grid">
+                        <div class="resource-card" onclick="showArticle('car-accident')">
+                            <div class="resource-icon" style="background: linear-gradient(135deg, #00C48C 0%, #00E6A0 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-car"/></svg></div>
+                            <div class="resource-info"><h4>After a Car Accident: Step-by-Step</h4><div class="resource-meta"><span>Guide</span> • 8 min</div></div>
+                        </div>
+
+                        <div class="resource-card" onclick="showArticle('checklist')">
+                            <div class="resource-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-check"/></svg></div>
+                            <div class="resource-info"><h4>Injury Claim Checklist</h4><div class="resource-meta"><span>Checklist</span> • 5 min</div></div>
+                        </div>
+
+                        <div class="resource-card" onclick="showArticle('lemon-law')">
+                            <div class="resource-icon" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-lemon"/></svg></div>
+                            <div class="resource-info"><h4>California Lemon Law Guide</h4><div class="resource-meta"><span>Guide</span> • 12 min</div></div>
+                        </div>
+
+                        <div class="resource-card" onclick="showArticle('insurance')">
+                            <div class="resource-icon" style="background: linear-gradient(135deg, #9333EA 0%, #A855F7 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-shield"/></svg></div>
+                            <div class="resource-info"><h4>Fight Insurance Bad Faith</h4><div class="resource-meta"><span>Know Your Rights</span> • 8 min</div></div>
+                        </div>
+
+                        <div class="resource-card" onclick="showArticle('deadlines')">
+                            <div class="resource-icon" style="background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);"><svg style="width: 30px; height: 30px; color: white;"><use href="#icon-alarm"/></svg></div>
+                            <div class="resource-info"><h4>Don't Miss These Deadlines</h4><div class="resource-meta"><span>Timeline</span> • 6 min</div></div>
+                        </div>
+                    </div>
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- ACCIDENT MODE SCREEN -->
+                <div class="screen accident-screen" id="screen-accident">
+                    <div class="accident-screen-header">
+                        <div class="header-logo">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            <span>Accident Mode</span>
+                        </div>
+                        <h1>Emergency Evidence</h1>
+                        <p>Capture critical information after an accident</p>
+                    </div>
+
+                    <div class="accident-status-card">
+                        <div class="accident-status-badge enabled" id="accident-status-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            <span id="accident-status-text">Enabled & Ready</span>
+                        </div>
+                        <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">When enabled, you'll receive a notification to quickly collect evidence if an accident is detected.</p>
+
+                        <div class="accident-toggle-row">
+                            <div class="accident-toggle-label">
+                                <h4>Accident Mode</h4>
+                                <p>Enable crash detection alerts</p>
+                            </div>
+                            <div class="toggle-switch active" id="accident-mode-toggle" onclick="toggleAccidentMode(this)"></div>
+                        </div>
+                    </div>
+
+                    <div class="accident-info-section">
+                        <div class="accident-info-card">
+                            <h3>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 16v-4M12 8h.01"/>
+                                </svg>
+                                How It Works
+                            </h3>
+                            <p>When an accident is detected or you manually activate Accident Mode, ClaimIt guides you through collecting critical evidence:</p>
+                            <ul>
+                                <li><strong>Photo Checklist</strong> - Capture all necessary scene photos</li>
+                                <li><strong>Voice Recording</strong> - Record what happened while it's fresh</li>
+                                <li><strong>Witness Info</strong> - Collect contact details</li>
+                                <li><strong>Critical Reminders</strong> - Know what NOT to say</li>
+                            </ul>
+                        </div>
+
+                        <div class="accident-info-card">
+                            <h3>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                                </svg>
+                                Automatic Detection
+                            </h3>
+                            <p>When enabled, ClaimIt can detect sudden impacts and send you an instant notification. Tap the notification to immediately start collecting evidence.</p>
+                        </div>
+
+                        <button class="accident-enter-btn" id="manual-accident-btn" onclick="enterAccidentMode()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            Enter Accident Mode Now
+                        </button>
+                        <p style="text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 12px;">Use this if you've just been in an accident</p>
+                    </div>
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- ACCOUNT SCREEN -->
+                <div class="screen account-screen" id="screen-account">
+                    <div class="account-header">
+                        <div class="header-logo"><svg style="width: 28px; height: 28px;"><use href="#logo-mark"/></svg><span>Claim<span class="highlight">It</span></span></div>
+                        <h1>My Cases</h1>
+                        <p>Track your claim evaluations</p>
+                    </div>
+
+                    <!-- If not signed in: prompt to sign in -->
+                    <div class="signin-prompt" id="signin-prompt">
+                        <div class="signin-prompt-icon">
+                            <svg><use href="#icon-user"/></svg>
+                        </div>
+                        <h2>Track Your Fight</h2>
+                        <p>Track the status of your submitted claims and see which attorney has been assigned to your case.</p>
+                        <button class="btn-signin" onclick="showSignInModal()">
+                            <svg style="width: 18px; height: 18px;"><use href="#icon-user"/></svg>
+                            Sign In
+                        </button>
+                    </div>
+
+                    <!-- If signed in: show user profile and cases -->
+                    <div class="cases-list hidden" id="cases-list">
+                        <div class="user-profile-card" id="user-profile-card">
+                            <div class="user-avatar" id="user-avatar">J</div>
+                            <div class="user-info">
+                                <h3 id="user-name">John Doe</h3>
+                                <p id="user-phone">(555) 123-4567</p>
+                            </div>
+                            <span class="signout-link" onclick="signOut()">Sign Out</span>
+                        </div>
+
+                        <div class="cases-section-header">Your Cases</div>
+                        <div id="cases-container">
+                            <!-- Cases will be dynamically inserted here -->
+                        </div>
+
+                        <!-- Document Upload & Notification Preferences (side-by-side on tablet) -->
+                        <div class="account-sections-row">
+                            <div class="account-documents">
+                                <h4><svg style="width: 16px; height: 16px;"><use href="#icon-upload"/></svg> Upload Documents</h4>
+                                <div class="document-upload-area" id="account-upload-area" onclick="document.getElementById('account-file-input').click()">
+                                    <input type="file" id="account-file-input" multiple accept="image/*,.pdf" style="display:none" onchange="handleAccountFileUpload(this)">
+                                    <svg><use href="#icon-upload"/></svg>
+                                    <h4>Upload supporting documents</h4>
+                                    <p>Photos, medical records, receipts</p>
+                                </div>
+                            </div>
+
+                            <div class="notification-prefs">
+                                <h4><svg><use href="#icon-bell"/></svg> Notification Preferences</h4>
+                                <div class="notif-toggle">
+                                    <div class="notif-toggle-label">
+                                        <h5>SMS Updates</h5>
+                                        <p>Get text message updates</p>
+                                    </div>
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)" data-pref="sms"></div>
+                                </div>
+                                <div class="notif-toggle">
+                                    <div class="notif-toggle-label">
+                                        <h5>Email Updates</h5>
+                                        <p>Receive detailed email notifications</p>
+                                    </div>
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)" data-pref="email"></div>
+                                </div>
+                                <div class="notif-toggle">
+                                    <div class="notif-toggle-label">
+                                        <h5>Push Notifications</h5>
+                                        <p>Instant alerts when status changes</p>
+                                    </div>
+                                    <div class="toggle-switch" onclick="toggleSwitch(this)" data-pref="push"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accident Mode Settings -->
+                        <div class="accident-mode-settings">
+                            <h4>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                    <line x1="12" y1="9" x2="12" y2="13"/>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                </svg>
+                                Accident Mode
+                            </h4>
+                            <p class="settings-description">Emergency evidence collection if you're in a car accident</p>
+                            <div class="notif-toggle">
+                                <div class="notif-toggle-label">
+                                    <h5>Enable Accident Mode</h5>
+                                    <p>Show emergency banner on Home screen</p>
+                                </div>
+                                <div class="toggle-switch" id="accident-settings-toggle" onclick="toggleAccidentModeFromSettings(this)" data-pref="accident-mode"></div>
+                            </div>
+                            <p class="accident-mode-note">When enabled, you'll see a quick-access banner to collect photos, voice recordings, and witness info immediately after an accident.</p>
+                        </div>
+                    </div>
+                    <div class="spacer"></div>
+                </div>
+
+                <!-- ARTICLE: Car Accident -->
+                <div class="screen detail-screen" id="article-car-accident">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category">📖 Guide</div>
+                        <h1 class="detail-title">What to Do After a Car Accident</h1>
+                        <div class="detail-meta">8 min read • Updated Jan 2025</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Being in a car accident is stressful and overwhelming. Knowing what to do can protect your health, your rights, and your potential claim.</p>
+
+                        <h2>At the Scene</h2>
+
+                        <h3>1. Check for Injuries</h3>
+                        <p>Check yourself and passengers for injuries. Call 911 if anyone is hurt. Don't move seriously injured people unless there's immediate danger.</p>
+
+                        <h3>2. Move to Safety</h3>
+                        <p>If possible, move vehicles out of traffic. Turn on hazard lights. Set up flares or triangles if you have them.</p>
+
+                        <h3>3. Call the Police</h3>
+                        <p>Always get a police report, even for minor accidents. The report documents the scene and may assign fault. Get the report number before officers leave.</p>
+
+                        <div class="tip-box">
+                            <p><strong>💡 Pro Tip:</strong> Always get a police report, even if the other driver asks you not to. It's crucial evidence for your claim.</p>
+                        </div>
+
+                        <h3>4. Exchange Information</h3>
+                        <p>Collect from all drivers:</p>
+                        <ul>
+                            <li>Name, address, phone number</li>
+                            <li>Driver's license number</li>
+                            <li>Insurance company and policy number</li>
+                            <li>License plate number</li>
+                            <li>Vehicle make, model, color</li>
+                        </ul>
+
+                        <h3>5. Document Everything</h3>
+                        <p>Take photos of all vehicles, damage, and the scene. Photograph skid marks, traffic signs, and road conditions. Get contact info for witnesses.</p>
+
+                        <div class="warning-box">
+                            <p><strong>⚠️ Important:</strong> Don't say "I'm sorry" or admit fault. Stick to facts when talking to police.</p>
+                        </div>
+
+                        <h2>After Leaving the Scene</h2>
+
+                        <h3>6. Seek Medical Attention</h3>
+                        <p>See a doctor within 24-48 hours, even if you feel fine. Some injuries don't show symptoms immediately. Medical records link your injuries to the accident.</p>
+
+                        <h3>7. Notify Your Insurance</h3>
+                        <p>Report the accident promptly. Stick to facts; don't speculate about fault. Don't give recorded statements without legal advice.</p>
+
+                        <h2>Important Deadlines</h2>
+                        <ul>
+                            <li><strong>Police Report:</strong> Get a copy within a few weeks</li>
+                            <li><strong>Insurance Claim:</strong> File promptly per your policy</li>
+                            <li><strong>Lawsuit Deadline:</strong> 2 years from accident date in California</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Were you in an accident?</h3>
+                        <p>Get a free case evaluation in 2 minutes</p>
+                        <button onclick="startQuizWithTopic('car-accident')">Start My Claim Review</button>
+                    </div>
+
+                    <!-- Article Actions -->
+                    <div class="article-actions">
+                        <div class="share-buttons">
+                            <button class="share-btn" onclick="shareArticle('sms')" title="Share via Text">
+                                <svg><use href="#icon-sms"/></svg>
+                            </button>
+                            <button class="share-btn" onclick="shareArticle('email')" title="Share via Email">
+                                <svg><use href="#icon-email"/></svg>
+                            </button>
+                            <button class="share-btn" onclick="shareArticle('copy')" title="Copy Link">
+                                <svg><use href="#icon-share"/></svg>
+                            </button>
+                        </div>
+                        <div class="helpful-feedback">
+                            <span>Helpful?</span>
+                            <button class="helpful-btn" onclick="helpfulFeedback(this, 'yes')">👍 Yes</button>
+                            <button class="helpful-btn" onclick="helpfulFeedback(this, 'no')">👎 No</button>
+                        </div>
+                    </div>
+
+                    <!-- Related Articles -->
+                    <div class="related-articles">
+                        <h3>Related Articles</h3>
+                        <div class="related-article-card" onclick="showArticle('checklist')">
+                            <div class="icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">
+                                <svg style="width: 18px; height: 18px; color: white;"><use href="#icon-check-circle"/></svg>
+                            </div>
+                            <div>
+                                <h4>Personal Injury Checklist</h4>
+                                <p>5 min read</p>
+                            </div>
+                        </div>
+                        <div class="related-article-card" onclick="showArticle('deadlines')">
+                            <div class="icon" style="background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);">
+                                <svg style="width: 18px; height: 18px; color: white;"><use href="#icon-clock"/></svg>
+                            </div>
+                            <div>
+                                <h4>California Legal Deadlines</h4>
+                                <p>6 min read</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ARTICLE: Checklist -->
+                <div class="screen detail-screen" id="article-checklist">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">✅ Checklist</div>
+                        <h1 class="detail-title">Personal Injury Claim Checklist</h1>
+                        <div class="detail-meta">5 min read • Interactive checklist</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Use this checklist to gather everything you need for your claim. Tap items to mark them complete.</p>
+
+                        <h2>Immediate Documentation</h2>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Photos of your injuries</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Photos of the accident scene</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Photos of property damage</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Witness names and contact info</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Police report number</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Other party's insurance info</span></div>
+
+                        <h2>Medical Records</h2>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Emergency room records</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Doctor visit notes</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Physical therapy records</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Prescription records</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Medical imaging (X-rays, MRIs)</span></div>
+
+                        <h2>Financial Documentation</h2>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>All medical bills</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Pay stubs (before and after)</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Lost income calculations</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check">✓</div><span>Out-of-pocket expense receipts</span></div>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Have your documents ready?</h3>
+                        <p>Let us review your case for free</p>
+                        <button onclick="startQuizWithTopic('injury')">Start My Claim Review</button>
+                    </div>
+
+                    <!-- Article Actions -->
+                    <div class="article-actions">
+                        <div class="share-buttons">
+                            <button class="share-btn" onclick="shareArticle('sms')" title="Share via Text">
+                                <svg><use href="#icon-sms"/></svg>
+                            </button>
+                            <button class="share-btn" onclick="shareArticle('email')" title="Share via Email">
+                                <svg><use href="#icon-email"/></svg>
+                            </button>
+                            <button class="share-btn" onclick="shareArticle('copy')" title="Copy Link">
+                                <svg><use href="#icon-share"/></svg>
+                            </button>
+                        </div>
+                        <div class="helpful-feedback">
+                            <span>Helpful?</span>
+                            <button class="helpful-btn" onclick="helpfulFeedback(this, 'yes')">👍 Yes</button>
+                            <button class="helpful-btn" onclick="helpfulFeedback(this, 'no')">👎 No</button>
+                        </div>
+                    </div>
+
+                    <!-- Related Articles -->
+                    <div class="related-articles">
+                        <h3>Related Articles</h3>
+                        <div class="related-article-card" onclick="showArticle('car-accident')">
+                            <div class="icon" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);">
+                                <svg style="width: 18px; height: 18px; color: white;"><use href="#icon-car"/></svg>
+                            </div>
+                            <div>
+                                <h4>After a Car Accident</h4>
+                                <p>10 min read</p>
+                            </div>
+                        </div>
+                        <div class="related-article-card" onclick="showArticle('insurance')">
+                            <div class="icon" style="background: linear-gradient(135deg, #9333EA 0%, #A855F7 100%);">
+                                <svg style="width: 18px; height: 18px; color: white;"><use href="#icon-shield"/></svg>
+                            </div>
+                            <div>
+                                <h4>Fight Insurance Bad Faith</h4>
+                                <p>8 min read</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ARTICLE: Lemon Law -->
+                <div class="screen detail-screen" id="article-lemon-law">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);">🍋 Guide</div>
+                        <h1 class="detail-title">California Lemon Law Guide</h1>
+                        <div class="detail-meta">12 min read • Complete guide</div>
+                    </div>
+                    <div class="article-content">
+                        <p>California has some of the strongest lemon laws in the country. If you're stuck with a defective vehicle, you have rights.</p>
+
+                        <h2>What Qualifies as a "Lemon"?</h2>
+                        <p>Your vehicle may qualify if:</p>
+
+                        <h3>Repair Attempts</h3>
+                        <ul>
+                            <li><strong>2 or more attempts</strong> to fix a safety defect, OR</li>
+                            <li><strong>4 or more attempts</strong> to fix any substantial defect, OR</li>
+                            <li>Vehicle has been <strong>in the shop 30+ days</strong> total</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <p><strong>💡 Good News:</strong> Under California law, the manufacturer pays your attorney fees if you win. There's no cost to you!</p>
+                        </div>
+
+                        <h2>What Vehicles Are Covered?</h2>
+                        <ul>
+                            <li>✅ New cars, trucks, and SUVs</li>
+                            <li>✅ Used vehicles still under manufacturer's warranty</li>
+                            <li>✅ Leased vehicles</li>
+                            <li>✅ Demonstrator vehicles</li>
+                        </ul>
+
+                        <h2>What Can You Get?</h2>
+
+                        <h3>Refund ("Buyback")</h3>
+                        <ul>
+                            <li>Full purchase price</li>
+                            <li>Down payment</li>
+                            <li>Monthly payments made</li>
+                            <li>Registration and taxes</li>
+                            <li>Incidental costs (towing, rentals)</li>
+                        </ul>
+
+                        <h3>Replacement</h3>
+                        <p>A new vehicle of the same make and model that's acceptable to you.</p>
+
+                        <div class="warning-box">
+                            <p><strong>⏰ Time Limit:</strong> Generally 4 years from when you first noticed the defect. Don't wait!</p>
+                        </div>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Stuck with a lemon?</h3>
+                        <p>Find out if you qualify for a buyback</p>
+                        <button onclick="startQuizWithTopic('lemon')">Check My Vehicle</button>
+                    </div>
+
+                    <!-- Article Actions -->
+                    <div class="article-actions">
+                        <div class="share-buttons">
+                            <button class="share-btn" onclick="shareArticle('sms')" title="Share via Text">
+                                <svg><use href="#icon-sms"/></svg>
+                            </button>
+                            <button class="share-btn" onclick="shareArticle('email')" title="Share via Email">
+                                <svg><use href="#icon-email"/></svg>
+                            </button>
+                            <button class="share-btn" onclick="shareArticle('copy')" title="Copy Link">
+                                <svg><use href="#icon-share"/></svg>
+                            </button>
+                        </div>
+                        <div class="helpful-feedback">
+                            <span>Helpful?</span>
+                            <button class="helpful-btn" onclick="helpfulFeedback(this, 'yes')">👍 Yes</button>
+                            <button class="helpful-btn" onclick="helpfulFeedback(this, 'no')">👎 No</button>
+                        </div>
+                    </div>
+
+                    <!-- Related Articles -->
+                    <div class="related-articles">
+                        <h3>Related Articles</h3>
+                        <div class="related-article-card" onclick="showArticle('insurance')">
+                            <div class="icon" style="background: linear-gradient(135deg, #9333EA 0%, #A855F7 100%);">
+                                <svg style="width: 18px; height: 18px; color: white;"><use href="#icon-shield"/></svg>
+                            </div>
+                            <div>
+                                <h4>Fight Insurance Bad Faith</h4>
+                                <p>8 min read</p>
+                            </div>
+                        </div>
+                        <div class="related-article-card" onclick="showArticle('deadlines')">
+                            <div class="icon" style="background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);">
+                                <svg style="width: 18px; height: 18px; color: white;"><use href="#icon-clock"/></svg>
+                            </div>
+                            <div>
+                                <h4>California Legal Deadlines</h4>
+                                <p>6 min read</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ARTICLE: Insurance -->
+                <div class="screen detail-screen" id="article-insurance">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, #9333EA 0%, #A855F7 100%);">✊ Know Your Rights</div>
+                        <h1 class="detail-title">Fight Insurance Bad Faith</h1>
+                        <div class="detail-meta">8 min read • Know your rights</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Insurance companies are businesses focused on profits. Know your rights to level the playing field.</p>
+
+                        <h2>California Insurance Deadlines</h2>
+                        <p>Insurers MUST follow these timelines:</p>
+                        <ul>
+                            <li><strong>15 days</strong> - Acknowledge your claim</li>
+                            <li><strong>Immediately</strong> - Begin investigation</li>
+                            <li><strong>40 days</strong> - Accept or deny after proof submitted</li>
+                            <li><strong>30 days</strong> - Pay undisputed amounts after settlement</li>
+                        </ul>
+
+                        <h2>Signs of Bad Faith</h2>
+                        <p>Your insurer may be acting in bad faith if they:</p>
+                        <ul>
+                            <li>🚩 Deny claim without explanation</li>
+                            <li>🚩 Unreasonably delay processing</li>
+                            <li>🚩 Offer far less than claim is worth</li>
+                            <li>🚩 Misrepresent policy terms</li>
+                            <li>🚩 Fail to conduct proper investigation</li>
+                            <li>🚩 Refuse to communicate</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <p><strong>⚠️ Don't Accept the First Offer:</strong> Insurance companies often lowball initial offers. You don't have to accept.</p>
+                        </div>
+
+                        <h2>What You Can Recover</h2>
+                        <p>Bad faith claims can recover:</p>
+                        <ul>
+                            <li>Original claim amount</li>
+                            <li>Consequential damages</li>
+                            <li>Emotional distress</li>
+                            <li>Attorney fees</li>
+                            <li>Punitive damages (in egregious cases)</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Insurance treating you unfairly?</h3>
+                        <p>Find out if you have a bad faith claim</p>
+                        <button onclick="startQuizWithTopic('insurance')">Review My Claim</button>
+                    </div>
+
+                    <!-- Article Actions -->
+                    <div class="article-actions">
+                        <div class="share-buttons">
+                            <button class="share-btn" onclick="shareArticle('sms')" title="Share via Text">
+                                <svg><use href="#icon-sms"/></svg>
+                            </button>
+                            <button class="share-btn" onclick="shareArticle('email')" title="Share via Email">
+                                <svg><use href="#icon-email"/></svg>
+                            </button>
+                            <button class="share-btn" onclick="shareArticle('copy')" title="Copy Link">
+                                <svg><use href="#icon-share"/></svg>
+                            </button>
+                        </div>
+                        <div class="helpful-feedback">
+                            <span>Helpful?</span>
+                            <button class="helpful-btn" onclick="helpfulFeedback(this, 'yes')">👍 Yes</button>
+                            <button class="helpful-btn" onclick="helpfulFeedback(this, 'no')">👎 No</button>
+                        </div>
+                    </div>
+
+                    <!-- Related Articles -->
+                    <div class="related-articles">
+                        <h3>Related Articles</h3>
+                        <div class="related-article-card" onclick="showArticle('car-accident')">
+                            <div class="icon" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);">
+                                <svg style="width: 18px; height: 18px; color: white;"><use href="#icon-car"/></svg>
+                            </div>
+                            <div>
+                                <h4>After a Car Accident</h4>
+                                <p>10 min read</p>
+                            </div>
+                        </div>
+                        <div class="related-article-card" onclick="showArticle('lemon-law')">
+                            <div class="icon" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);">
+                                <svg style="width: 18px; height: 18px; color: white;"><use href="#icon-document"/></svg>
+                            </div>
+                            <div>
+                                <h4>California Lemon Law Guide</h4>
+                                <p>12 min read</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ARTICLE: Deadlines -->
+                <div class="screen detail-screen" id="article-deadlines">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);">⏰ Timeline</div>
+                        <h1 class="detail-title">California Legal Deadlines</h1>
+                        <div class="detail-meta">6 min read • Critical info</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Missing a deadline can mean losing your right to legal action. Know these critical timeframes.</p>
+
+                        <div class="warning-box">
+                            <p><strong>⚠️ Warning:</strong> These are general guidelines. Some cases have shorter deadlines. Consult an attorney immediately if you're unsure.</p>
+                        </div>
+
+                        <h2>Personal Injury Claims</h2>
+                        <ul>
+                            <li><strong>Personal injury (general):</strong> 2 years from injury</li>
+                            <li><strong>Medical malpractice:</strong> 3 years from injury OR 1 year from discovery</li>
+                            <li><strong>Against government:</strong> 6 months to file claim</li>
+                            <li><strong>Minors:</strong> Until 2 years after turning 18</li>
+                        </ul>
+
+                        <h2>Property Damage</h2>
+                        <ul>
+                            <li><strong>Property damage from accident:</strong> 3 years</li>
+                            <li><strong>Against government:</strong> 6 months claim + 2 years lawsuit</li>
+                        </ul>
+
+                        <h2>Employment Claims</h2>
+                        <ul>
+                            <li><strong>Discrimination (DFEH):</strong> 3 years to file complaint</li>
+                            <li><strong>Wage claims:</strong> 3-4 years depending on type</li>
+                            <li><strong>Wrongful termination:</strong> 2-3 years depending on basis</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <p><strong>💡 Don't Wait:</strong> Even if you have time, evidence disappears, witnesses forget, and records get lost. Cases are stronger when fresh.</p>
+                        </div>
+
+                        <h2>Government Claims</h2>
+                        <p>Claims against cities, counties, or state require:</p>
+                        <ol>
+                            <li>Filing administrative claim within <strong>6 months</strong></li>
+                            <li>Waiting for response (45 days)</li>
+                            <li>Then filing lawsuit</li>
+                        </ol>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Don't miss your deadline</h3>
+                        <p>Get a free case evaluation today</p>
+                        <button onclick="startQuizWithTopic('other')">Check My Deadline</button>
+                    </div>
+
+                    <!-- Article Actions -->
+                    <div class="article-actions">
+                        <div class="share-buttons">
+                            <button class="share-btn" onclick="shareArticle('sms')" title="Share via Text">
+                                <svg><use href="#icon-sms"/></svg>
+                            </button>
+                            <button class="share-btn" onclick="shareArticle('email')" title="Share via Email">
+                                <svg><use href="#icon-email"/></svg>
+                            </button>
+                            <button class="share-btn" onclick="shareArticle('copy')" title="Copy Link">
+                                <svg><use href="#icon-share"/></svg>
+                            </button>
+                        </div>
+                        <div class="helpful-feedback">
+                            <span>Helpful?</span>
+                            <button class="helpful-btn" onclick="helpfulFeedback(this, 'yes')">👍 Yes</button>
+                            <button class="helpful-btn" onclick="helpfulFeedback(this, 'no')">👎 No</button>
+                        </div>
+                    </div>
+
+                    <!-- Related Articles -->
+                    <div class="related-articles">
+                        <h3>Related Articles</h3>
+                        <div class="related-article-card" onclick="showArticle('car-accident')">
+                            <div class="icon" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);">
+                                <svg style="width: 18px; height: 18px; color: white;"><use href="#icon-car"/></svg>
+                            </div>
+                            <div>
+                                <h4>After a Car Accident</h4>
+                                <p>10 min read</p>
+                            </div>
+                        </div>
+                        <div class="related-article-card" onclick="showArticle('checklist')">
+                            <div class="icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">
+                                <svg style="width: 18px; height: 18px; color: white;"><use href="#icon-check-circle"/></svg>
+                            </div>
+                            <div>
+                                <h4>Personal Injury Checklist</h4>
+                                <p>5 min read</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRACTICE AREA: Personal Injury -->
+                <div class="screen detail-screen" id="article-pa-personal-injury">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
+                        <h1 class="detail-title">Personal Injury</h1>
+                        <div class="detail-meta" onclick="showNoFeeDisclaimer()" style="cursor: help;">No Fee Unless We Win*</div>
+                    </div>
+                    <div class="article-content">
+                        <p>If you've been injured due to someone else's negligence, you deserve compensation. We fight aggressively to get you the maximum recovery.</p>
+
+                        <h2>What We Handle</h2>
+                        <ul>
+                            <li>Car, truck, and motorcycle accidents</li>
+                            <li>Pedestrian and bicycle accidents</li>
+                            <li>Dog bites and animal attacks</li>
+                            <li>Assault and battery injuries</li>
+                            <li>Wrongful death claims</li>
+                        </ul>
+
+                        <h2>Types of Compensation</h2>
+                        <ul>
+                            <li><strong>Medical expenses:</strong> Past, present, and future</li>
+                            <li><strong>Lost wages:</strong> Time missed from work</li>
+                            <li><strong>Pain & suffering:</strong> Physical and emotional</li>
+                            <li><strong>Loss of enjoyment:</strong> Impact on quality of life</li>
+                            <li><strong>Property damage:</strong> Vehicle and personal items</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <p><strong>Important:</strong> California law gives you 2 years from the date of injury to file a lawsuit. Don't wait—evidence can disappear and memories fade.</p>
+                        </div>
+
+                        <h2>Why Choose Us?</h2>
+                        <ul>
+                            <li>Millions recovered for clients</li>
+                            <li>Free initial consultation</li>
+                            <li>No fee unless we win your case</li>
+                            <li>24/7 availability for urgent cases</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Injured? Let's Talk.</h3>
+                        <p>Get your free case evaluation today</p>
+                        <button onclick="startQuizWithTopic('injury')">Start My Claim Review</button>
+                    </div>
+                </div>
+
+                <!-- PRACTICE AREA: Premises Liability -->
+                <div class="screen detail-screen" id="article-pa-premises-liability">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
+                        <h1 class="detail-title">Premises Liability</h1>
+                        <div class="detail-meta" onclick="showNoFeeDisclaimer()" style="cursor: help;">No Fee Unless We Win*</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Property owners have a legal duty to maintain safe conditions. When they fail and you're injured, we hold them accountable.</p>
+
+                        <h2>Common Cases We Handle</h2>
+                        <ul>
+                            <li>Slip and fall accidents</li>
+                            <li>Trip hazards and uneven surfaces</li>
+                            <li>Inadequate lighting injuries</li>
+                            <li>Swimming pool accidents</li>
+                            <li>Negligent security incidents</li>
+                            <li>Construction site injuries</li>
+                        </ul>
+
+                        <h2>Who Can Be Held Liable?</h2>
+                        <ul>
+                            <li><strong>Property owners:</strong> Residential or commercial</li>
+                            <li><strong>Business operators:</strong> Stores, restaurants, hotels</li>
+                            <li><strong>Property managers:</strong> Apartments, condos</li>
+                            <li><strong>Government entities:</strong> Public buildings, sidewalks</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <p><strong>Act Fast:</strong> Claims against government entities have shorter deadlines—often just 6 months. Contact us immediately if injured on public property.</p>
+                        </div>
+
+                        <h2>What You Need to Prove</h2>
+                        <ul>
+                            <li>The property had a dangerous condition</li>
+                            <li>The owner knew or should have known</li>
+                            <li>They failed to fix it or warn visitors</li>
+                            <li>The condition caused your injury</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Injured on someone's property?</h3>
+                        <p>Free consultation—we'll review your case</p>
+                        <button onclick="startQuizWithTopic('slip-fall')">Start My Claim Review</button>
+                    </div>
+                </div>
+
+                <!-- PRACTICE AREA: Property Damage -->
+                <div class="screen detail-screen" id="article-pa-property-damage">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
+                        <h1 class="detail-title">Property Damage</h1>
+                        <div class="detail-meta" onclick="showNoFeeDisclaimer()" style="cursor: help;">No Fee Unless We Win*</div>
+                    </div>
+                    <div class="article-content">
+                        <p>When your vehicle or property is damaged in an accident, insurance companies often try to pay as little as possible. We fight to get you fair compensation.</p>
+
+                        <h2>Types of Claims</h2>
+                        <ul>
+                            <li>Vehicle damage from accidents</li>
+                            <li>Total loss claims</li>
+                            <li>Diminished value claims</li>
+                            <li>Personal property damage</li>
+                            <li>Electronics and valuables</li>
+                        </ul>
+
+                        <h2>What You Can Recover</h2>
+                        <ul>
+                            <li><strong>Repair costs:</strong> Full cost to fix your vehicle</li>
+                            <li><strong>Replacement value:</strong> If your vehicle is totaled</li>
+                            <li><strong>Rental car:</strong> While yours is being repaired</li>
+                            <li><strong>Diminished value:</strong> Decrease in resale value</li>
+                            <li><strong>Personal items:</strong> Things damaged in the accident</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <p><strong>Pro Tip:</strong> Don't accept the first offer from insurance. They typically lowball by 20-40%. Get your own estimate and let us negotiate.</p>
+                        </div>
+
+                        <h2>Insurance Tactics to Watch For</h2>
+                        <ul>
+                            <li>Undervaluing your vehicle</li>
+                            <li>Using cheap aftermarket parts</li>
+                            <li>Denying rental car coverage</li>
+                            <li>Ignoring diminished value</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Property damage dispute?</h3>
+                        <p>We'll help you get fair compensation</p>
+                        <button onclick="startQuizWithTopic('property')">Start My Claim Review</button>
+                    </div>
+                </div>
+
+                <!-- PRACTICE AREA: Insurance Bad Faith -->
+                <div class="screen detail-screen" id="article-pa-insurance-bad-faith">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">⚡ We Handle Directly</div>
+                        <h1 class="detail-title">Insurance Bad Faith</h1>
+                        <div class="detail-meta" onclick="showNoFeeDisclaimer()" style="cursor: help;">No Fee Unless We Win*</div>
+                    </div>
+                    <div class="article-content">
+                        <p>Insurance companies have a legal duty to act in good faith. When they don't, you can sue them for bad faith and potentially recover additional damages.</p>
+
+                        <h2>Signs of Bad Faith</h2>
+                        <ul>
+                            <li>Unreasonable claim denial</li>
+                            <li>Excessive delays in processing</li>
+                            <li>Lowball settlement offers</li>
+                            <li>Failure to investigate properly</li>
+                            <li>Constantly changing their position</li>
+                            <li>Misrepresenting policy terms</li>
+                        </ul>
+
+                        <h2>Your Rights Under California Law</h2>
+                        <ul>
+                            <li><strong>15 days:</strong> To acknowledge your claim</li>
+                            <li><strong>40 days:</strong> To accept or deny after proof</li>
+                            <li><strong>30 days:</strong> To pay after settlement</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <p><strong>Document Everything:</strong> Keep records of all communications with your insurer—emails, letters, phone call notes with dates and names.</p>
+                        </div>
+
+                        <h2>What You Can Recover</h2>
+                        <ul>
+                            <li>Your original claim amount</li>
+                            <li>Emotional distress damages</li>
+                            <li>Attorney fees</li>
+                            <li>Punitive damages (in severe cases)</li>
+                        </ul>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Insurance treating you unfairly?</h3>
+                        <p>We'll hold them accountable</p>
+                        <button onclick="startQuizWithTopic('insurance')">Start My Claim Review</button>
+                    </div>
+                </div>
+
+                <!-- PRACTICE AREA: Lemon Law -->
+                <div class="screen detail-screen" id="article-pa-lemon-law">
+                    <button class="back-btn" onclick="hideArticle()">← Back</button>
+                    <div class="detail-header">
+                        <div class="detail-category" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);">We Handle Directly</div>
+                        <h1 class="detail-title">Lemon Law</h1>
+                        <div class="detail-meta">Manufacturer Pays Our Fees</div>
+                    </div>
+                    <div class="article-content">
+                        <p>California's Lemon Law is one of the strongest in the country. If you're stuck with a defective vehicle, we can help you get a refund or replacement.</p>
+
+                        <h2>Does Your Vehicle Qualify?</h2>
+                        <ul>
+                            <li><strong>2+ repair attempts</strong> for a safety defect, OR</li>
+                            <li><strong>4+ repair attempts</strong> for any substantial defect, OR</li>
+                            <li>Vehicle in shop <strong>30+ days</strong> total</li>
+                        </ul>
+
+                        <h2>Covered Vehicles</h2>
+                        <ul>
+                            <li>New cars, trucks, SUVs</li>
+                            <li>Used vehicles under warranty</li>
+                            <li>Leased vehicles</li>
+                            <li>Certified pre-owned</li>
+                            <li>RVs and motorcycles</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <p><strong>Great News:</strong> Under California law, the manufacturer pays your attorney fees if you win. There's NO cost to you!</p>
+                        </div>
+
+                        <h2>What You Can Get</h2>
+                        <h3>Buyback (Refund)</h3>
+                        <ul>
+                            <li>Full purchase price</li>
+                            <li>Down payment returned</li>
+                            <li>Monthly payments made</li>
+                            <li>Registration and taxes</li>
+                            <li>Incidental costs (towing, rentals)</li>
+                        </ul>
+
+                        <h3>OR Replacement</h3>
+                        <p>A new vehicle of equal value that's acceptable to you.</p>
+                    </div>
+
+                    <div class="article-cta">
+                        <h3>Stuck with a lemon?</h3>
+                        <p>Find out if you qualify for a buyback</p>
+                        <button onclick="startQuizWithTopic('lemon')">Check My Vehicle</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Bar -->
+            <nav class="tab-bar" id="tab-bar" role="navigation" aria-label="Main navigation">
+                <button class="tab active" id="tab-home" data-action="switch-tab" data-tab="home" role="tab" aria-selected="true" aria-label="Home">
+                    <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-home"/></svg></div>
+                    <span>Home</span>
+                </button>
+                <button class="tab" id="tab-claim" data-action="switch-tab" data-tab="claim" role="tab" aria-selected="false" aria-label="Start a claim">
+                    <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-lightning"/></svg></div>
+                    <span>Claim</span>
+                </button>
+                <button class="tab" id="tab-learn" data-action="switch-tab" data-tab="learn" role="tab" aria-selected="false" aria-label="Learning resources">
+                    <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-book"/></svg></div>
+                    <span>Learn</span>
+                </button>
+                <button class="tab accident-tab" id="tab-accident" data-action="switch-tab" data-tab="accident" role="tab" aria-selected="false" aria-label="Accident Mode">
+                    <div class="tab-icon accident-tab-icon" aria-hidden="true">
+                        <svg style="width: 26px; height: 26px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        <span class="accident-tab-dot" id="accident-tab-dot"></span>
+                    </div>
+                    <span>Accident</span>
+                </button>
+                <button class="tab" id="tab-account" data-action="switch-tab" data-tab="account" role="tab" aria-selected="false" aria-label="Your account">
+                    <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-user"/></svg></div>
+                    <span>Account</span>
+                </button>
+            </nav>
+
+            <!-- PRIVACY POLICY MODAL -->
+            <div class="legal-modal" id="privacy-modal" onclick="hidePrivacyModal()">
+                <div class="legal-modal-content" onclick="event.stopPropagation()">
+                    <h2>Privacy Policy</h2>
+                    <p><strong>Effective Date:</strong> February 2, 2025</p>
+                    <p>Kitsinian Law Firm, APC ("we," "us," or "our") operates the ClaimIt mobile application. This Privacy Policy explains how we collect, use, disclose, and protect your information.</p>
+
+                    <h3>Information We Collect</h3>
+                    <ul>
+                        <li><strong>Contact Information:</strong> Name, phone number, email address</li>
+                        <li><strong>Case Information:</strong> Details about your legal matter</li>
+                        <li><strong>Device Information:</strong> Device type, OS, app usage</li>
+                    </ul>
+
+                    <h3>How We Use Your Information</h3>
+                    <ul>
+                        <li>To evaluate your potential legal case</li>
+                        <li>To contact you regarding your inquiry</li>
+                        <li>To match you with legal representation</li>
+                        <li>To improve our services</li>
+                    </ul>
+
+                    <h3>Information Sharing</h3>
+                    <p>We do not sell your personal information. We may share with attorneys in our referral network (with consent), service providers, or as required by law.</p>
+
+                    <h3>California Privacy Rights (CCPA)</h3>
+                    <p>California residents may: know what data we collect, request deletion, opt-out of data sales (we don't sell), and exercise rights without discrimination.</p>
+                    <p>Contact: privacy@claimit.com</p>
+
+                    <button class="legal-modal-close" onclick="hidePrivacyModal()">Close</button>
+                </div>
+            </div>
+
+            <!-- TERMS OF SERVICE MODAL -->
+            <div class="legal-modal" id="terms-modal" onclick="hideTermsModal()">
+                <div class="legal-modal-content" onclick="event.stopPropagation()">
+                    <h2>Terms of Service</h2>
+                    <p><strong>Effective Date:</strong> February 2, 2025</p>
+
+                    <h3>No Attorney-Client Relationship</h3>
+                    <p>Using this app does not create an attorney-client relationship. Such relationship only forms when you sign a written retainer agreement.</p>
+
+                    <h3>No Legal Advice</h3>
+                    <p>Information provided is for general purposes only and should not be construed as legal advice.</p>
+
+                    <h3>No Guarantees</h3>
+                    <p>Past results do not guarantee future outcomes. Statistics represent historical data only.</p>
+
+                    <h3>Fee Arrangements</h3>
+                    <p>"No Fee Unless We Win" means no attorney's fees unless we recover for you. You may still be responsible for case costs (filing fees, expert fees, etc.).</p>
+
+                    <h3>Eligibility</h3>
+                    <p>You must be 18+ to use this application.</p>
+
+                    <p>Contact: legal@claimit.com</p>
+
+                    <button class="legal-modal-close" onclick="hideTermsModal()">Close</button>
+                </div>
+            </div>
+
+            <!-- DISCLAIMER MODAL -->
+            <div class="legal-modal" id="disclaimer-modal" onclick="hideDisclaimerModal()">
+                <div class="legal-modal-content" onclick="event.stopPropagation()">
+                    <h2>Legal Disclaimers</h2>
+
+                    <h3>Success Rate Disclaimer</h3>
+                    <p>Statistics represent historical data. <strong>Past results do not guarantee future outcomes.</strong> Each case is evaluated on its own merits.</p>
+
+                    <h3>"No Fee Unless We Win"</h3>
+                    <ul>
+                        <li>No attorney's fees unless we recover for you</li>
+                        <li>You may be responsible for case costs (filing fees, expert fees, etc.)</li>
+                        <li>Details in your retainer agreement</li>
+                    </ul>
+
+                    <h3>Attorney Advertising</h3>
+                    <p>This is attorney advertising. Kitsinian Law Firm, APC. Principal office: Los Angeles, CA.</p>
+
+                    <button class="legal-modal-close" onclick="hideDisclaimerModal()">Close</button>
+                </div>
+            </div>
+
+            <!-- REFERRAL MODAL -->
+            <div class="legal-modal" id="referral-modal" onclick="hideReferralModal()">
+                <div class="legal-modal-content" onclick="event.stopPropagation()" style="text-align: center;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                        <svg style="width: 28px; height: 28px; color: white;"><use href="#icon-family"/></svg>
+                    </div>
+                    <h2 id="referral-area-name">Family Law</h2>
+                    <p id="referral-area-desc" style="margin-bottom: 16px;">We partner with trusted California attorneys who specialize in family law.</p>
+                    <p style="font-weight: 600; color: var(--text-primary);">Complete a quick questionnaire to get matched with qualified representation.</p>
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="legal-modal-close" onclick="hideReferralModal()" style="background: var(--border-color); color: var(--text-primary); flex: 1;">Cancel</button>
+                        <button class="legal-modal-close" onclick="startReferralQuiz()" style="flex: 1;">Get Started</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACCIDENT MODE FULL SCREEN -->
+            <div class="accident-mode-screen" id="accident-mode-screen" role="dialog" aria-modal="true" aria-label="Accident Mode - Emergency Evidence Collection">
+
+                <!-- Accident Mode Header -->
+                <div class="accident-header">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <button class="accident-exit-btn" onclick="exitAccidentMode()" aria-label="Exit Accident Mode">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                        <h1>🚨 ACCIDENT MODE</h1>
+                        <div style="width: 40px;"></div>
+                    </div>
+                    <p id="accident-step-indicator">Step 1 of 7</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="accident-progress-bar">
+                    <div class="accident-progress-fill" id="accident-progress-fill" style="width: 14%;"></div>
+                </div>
+
+                <!-- Accident Mode Content Container -->
+                <div class="accident-content">
+
+                    <!-- STEP 1: Safety Check -->
+                    <div class="accident-step" id="accident-step-1">
+                        <div class="safety-check-container">
+                            <div class="safety-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="safety-question">Are You Safe?</h2>
+                            <p class="safety-subtext">Your safety comes first. If anyone is injured, call 911 immediately.</p>
+
+                            <button class="btn-emergency btn-911" onclick="call911()">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                                Call 911
+                            </button>
+
+                            <button class="btn-emergency btn-safe" onclick="accidentGoToStep(2)">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                I'm Safe - Continue
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Photo Checklist -->
+                    <div class="accident-step" id="accident-step-2" style="display: none;">
+                        <h2 class="section-title-accident">📸 Photo Checklist</h2>
+                        <p class="section-subtitle-accident">Capture these 8 photos to protect your case</p>
+
+                        <div class="photo-checklist" id="photo-checklist">
+                            <div class="photo-item" onclick="capturePhoto(0, 'Scene Overview')" data-captured="false">
+                                <div class="photo-item-number">1</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Scene Overview</h4>
+                                    <p>Wide shot showing full accident scene</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(1, 'Your Vehicle - Front')" data-captured="false">
+                                <div class="photo-item-number">2</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"></path>
+                                        <line x1="9" y1="17" x2="15" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Your Vehicle - Front</h4>
+                                    <p>Document all front damage</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(2, 'Your Vehicle - Side')" data-captured="false">
+                                <div class="photo-item-number">3</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"></path>
+                                        <line x1="9" y1="17" x2="15" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Your Vehicle - Side</h4>
+                                    <p>Document side damage</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(3, 'Your Vehicle - Rear')" data-captured="false">
+                                <div class="photo-item-number">4</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"></path>
+                                        <line x1="9" y1="17" x2="15" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Your Vehicle - Rear</h4>
+                                    <p>Document rear damage</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(4, 'Other Vehicle Damage')" data-captured="false">
+                                <div class="photo-item-number">5</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                        <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"></path>
+                                        <line x1="9" y1="17" x2="15" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Other Vehicle Damage</h4>
+                                    <p>Their vehicle's condition</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(5, 'License Plates')" data-captured="false">
+                                <div class="photo-item-number">6</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                                        <path d="M7 12h10"></path>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>License Plates</h4>
+                                    <p>Both vehicles' plates</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(6, 'Insurance Cards')" data-captured="false">
+                                <div class="photo-item-number">7</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Insurance Cards</h4>
+                                    <p>Both drivers' insurance</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="photo-item" onclick="capturePhoto(7, 'Road Conditions')" data-captured="false">
+                                <div class="photo-item-number">8</div>
+                                <div class="photo-item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 19l4-14h8l4 14"></path>
+                                        <path d="M9 19h6"></path>
+                                        <path d="M8 5v3"></path>
+                                        <path d="M16 5v3"></path>
+                                    </svg>
+                                </div>
+                                <div class="photo-item-info">
+                                    <h4>Road Conditions</h4>
+                                    <p>Signs, weather, hazards</p>
+                                </div>
+                                <div class="photo-item-status">
+                                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="photo-counter" id="photo-counter">0 of 8 photos captured</div>
+
+                        <div class="accident-nav-buttons">
+                            <button class="btn-accident-secondary" onclick="accidentGoToStep(1)">← Back</button>
+                            <button class="btn-accident-primary" onclick="accidentGoToStep(3)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Voice Recording -->
+                    <div class="accident-step" id="accident-step-3" style="display: none;">
+                        <h2 class="section-title-accident">🎙️ Record Your Statement</h2>
+                        <p class="section-subtitle-accident">Describe what happened while it's fresh in your memory</p>
+
+                        <div class="voice-recorder">
+                            <div class="recorder-visual" id="recorder-visual">
+                                <div class="recorder-circle" id="recorder-circle">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                                    </svg>
+                                </div>
+                                <div class="recorder-timer" id="recorder-timer">0:00</div>
+                            </div>
+
+                            <button class="record-button" id="record-button" onclick="toggleRecording()">
+                                <span id="record-btn-text">Tap to Record</span>
+                            </button>
+
+                            <div class="recording-tip">
+                                <strong>💡 Recording Tips:</strong>
+                                <ul>
+                                    <li>Describe what you saw and heard</li>
+                                    <li>Mention weather and road conditions</li>
+                                    <li>Note the time and location</li>
+                                    <li>Don't admit fault or speculate</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accident-nav-buttons">
+                            <button class="btn-accident-secondary" onclick="accidentGoToStep(2)">← Back</button>
+                            <button class="btn-accident-primary" onclick="accidentGoToStep(4)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Witness Information -->
+                    <div class="accident-step" id="accident-step-4" style="display: none;">
+                        <h2 class="section-title-accident">👥 Witness Information</h2>
+                        <p class="section-subtitle-accident">Collect contact info from anyone who saw the accident</p>
+
+                        <div class="witness-form">
+                            <div class="witness-input-group">
+                                <label for="witness-name">Name</label>
+                                <input type="text" id="witness-name" placeholder="Witness full name" class="accident-input">
+                            </div>
+                            <div class="witness-input-group">
+                                <label for="witness-phone">Phone</label>
+                                <input type="tel" id="witness-phone" placeholder="(555) 123-4567" class="accident-input" maxlength="14">
+                            </div>
+                            <div class="witness-input-group">
+                                <label for="witness-email">Email (optional)</label>
+                                <input type="email" id="witness-email" placeholder="email@example.com" class="accident-input">
+                            </div>
+                            <button class="btn-add-witness" onclick="addWitness()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                                Add Witness
+                            </button>
+                        </div>
+
+                        <div class="witness-list" id="witness-list">
+                            <!-- Witnesses will be added here -->
+                        </div>
+
+                        <p class="witness-skip-note">No witnesses? You can skip this step.</p>
+
+                        <div class="accident-nav-buttons">
+                            <button class="btn-accident-secondary" onclick="accidentGoToStep(3)">← Back</button>
+                            <button class="btn-accident-primary" onclick="accidentGoToStep(5)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: Critical Reminders -->
+                    <div class="accident-step" id="accident-step-5" style="display: none;">
+                        <h2 class="section-title-accident">⚠️ Critical Reminders</h2>
+                        <p class="section-subtitle-accident">Protect your case - review these important tips</p>
+
+                        <div class="reminder-section do-section">
+                            <h3 class="reminder-header do-header">
+                                <span class="reminder-icon">✅</span> DO These Things
+                            </h3>
+                            <div class="reminder-list">
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Check for injuries first</span>
+                                </label>
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Call 911 if anyone is hurt</span>
+                                </label>
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Take photos of EVERYTHING</span>
+                                </label>
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Get witness contact info</span>
+                                </label>
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Get police report number</span>
+                                </label>
+                                <label class="reminder-item">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Seek medical attention within 24 hours</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="reminder-section dont-section">
+                            <h3 class="reminder-header dont-header">
+                                <span class="reminder-icon">❌</span> DON'T Do These Things
+                            </h3>
+                            <div class="reminder-list">
+                                <label class="reminder-item dont">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Admit fault or apologize</span>
+                                </label>
+                                <label class="reminder-item dont">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Sign anything at the scene</span>
+                                </label>
+                                <label class="reminder-item dont">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Give recorded statement to insurance</span>
+                                </label>
+                                <label class="reminder-item dont">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Accept first settlement offer</span>
+                                </label>
+                                <label class="reminder-item dont">
+                                    <input type="checkbox" class="reminder-checkbox" onchange="updateReminderProgress()">
+                                    <span>Post about accident on social media</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="accident-nav-buttons">
+                            <button class="btn-accident-secondary" onclick="accidentGoToStep(4)">← Back</button>
+                            <button class="btn-accident-primary" onclick="accidentGoToStep(6)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 6: Evidence Review & Distribution -->
+                    <div class="accident-step" id="accident-step-6" style="display: none;">
+                        <h2 class="section-title-accident">📋 Your Evidence Package</h2>
+                        <p class="section-subtitle-accident">Choose how you'd like to save and share</p>
+
+                        <!-- Compact Evidence Summary -->
+                        <div class="evidence-summary-compact">
+                            <div class="evidence-summary-row">
+                                <span>📸 Photos</span>
+                                <span id="evidence-photos-count-compact">0 captured</span>
+                            </div>
+                            <div class="evidence-summary-row">
+                                <span>🎙️ Recording</span>
+                                <span id="evidence-recording-compact">None</span>
+                            </div>
+                            <div class="evidence-summary-row">
+                                <span>👥 Witnesses</span>
+                                <span id="evidence-witnesses-compact">0 added</span>
+                            </div>
+                            <div class="evidence-summary-row">
+                                <span>📍 Location</span>
+                                <span id="evidence-location-compact">Captured</span>
+                            </div>
+                            <div class="evidence-summary-row">
+                                <span>🕐 Timestamp</span>
+                                <span id="evidence-timestamp-compact">-</span>
+                            </div>
+                        </div>
+
+                        <!-- Distribution Options -->
+                        <div class="distribution-options">
+                            <h3 class="distribution-title">What would you like to do?</h3>
+
+                            <div class="distribution-option" id="dist-option-self" onclick="selectDistribution('self')">
+                                <div class="distribution-icon">📧</div>
+                                <div class="distribution-content">
+                                    <h4>Email to Myself</h4>
+                                    <p>Save evidence as a ZIP file for your records</p>
+                                </div>
+                                <div class="distribution-check">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="distribution-option" id="dist-option-lawyer" onclick="selectDistribution('lawyer')">
+                                <div class="distribution-icon">⚖️</div>
+                                <div class="distribution-content">
+                                    <h4>Send to Attorney</h4>
+                                    <p>Get a free case review from our legal team</p>
+                                </div>
+                                <div class="distribution-check">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="distribution-option selected" id="dist-option-both" onclick="selectDistribution('both')">
+                                <div class="distribution-icon">✨</div>
+                                <div class="distribution-content">
+                                    <h4>Both</h4>
+                                    <p>Keep a copy and get legal help (Recommended)</p>
+                                </div>
+                                <div class="distribution-check">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email Input (shown when self or both selected) -->
+                        <div class="distribution-email-input" id="distribution-email-section">
+                            <label for="evidence-email">Your email address</label>
+                            <input type="email" id="evidence-email" placeholder="you@example.com" autocomplete="email">
+                            <p class="email-note">We'll send your evidence package as a secure ZIP file</p>
+                        </div>
+
+                        <div class="submit-disclaimer">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <span id="submit-disclaimer-text">Your evidence will be securely encrypted.</span>
+                        </div>
+
+                        <div class="accident-nav-buttons">
+                            <button class="btn-accident-secondary" onclick="accidentGoToStep(5)">← Back</button>
+                            <button class="btn-accident-primary btn-submit-evidence" id="submit-evidence-btn" onclick="submitEvidence()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                                <span id="submit-btn-text">Send Evidence</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 7: Success (Dynamic based on distribution choice) -->
+                    <div class="accident-step" id="accident-step-7" style="display: none;">
+                        <div class="success-container-accident">
+                            <div class="success-icon-accident">
+                                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <h2 class="success-title-accident" id="success-title">Evidence Saved!</h2>
+                            <p class="success-subtitle-accident" id="success-subtitle">Check your email for the evidence package.</p>
+
+                            <!-- Content for "self" only -->
+                            <div class="next-steps-accident" id="success-self-content" style="display: none;">
+                                <h3>Your Evidence is Safe</h3>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">1</span>
+                                    <span>Check your email for the ZIP file</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">2</span>
+                                    <span>Download and save to a safe location</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">3</span>
+                                    <span>Keep for insurance or legal needs</span>
+                                </div>
+
+                                <div class="reminder-notice" id="reminder-notice">
+                                    <div class="reminder-icon">💡</div>
+                                    <div class="reminder-content">
+                                        <h4>Want a Free Case Review?</h4>
+                                        <p>Our attorneys can review your evidence and let you know if you have a case - at no cost.</p>
+                                        <button class="btn-reminder-cta" onclick="sendToLawyerLater()">
+                                            Send to Attorney
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Content for "lawyer" only -->
+                            <div class="next-steps-accident" id="success-lawyer-content" style="display: none;">
+                                <h3>What Happens Next?</h3>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">1</span>
+                                    <span>Our team reviews your evidence</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">2</span>
+                                    <span>We'll call you within 2 hours</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">3</span>
+                                    <span>We handle everything from here</span>
+                                </div>
+                            </div>
+
+                            <!-- Content for "both" -->
+                            <div class="next-steps-accident" id="success-both-content" style="display: none;">
+                                <h3>You're All Set!</h3>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">📧</span>
+                                    <span>Evidence package sent to your email</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">⚖️</span>
+                                    <span>Legal team reviewing your case</span>
+                                </div>
+                                <div class="next-step-item">
+                                    <span class="next-step-number">📞</span>
+                                    <span>We'll call you within 2 hours</span>
+                                </div>
+                            </div>
+
+                            <div class="emergency-contact-card">
+                                <p>Need immediate help?</p>
+                                <a href="tel:+12135550123" class="emergency-phone">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                    </svg>
+                                    (213) 555-0123
+                                </a>
+                            </div>
+
+                            <button class="btn-accident-primary" onclick="exitAccidentMode()" style="margin-top: 24px;">
+                                Return to Home
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- EVIDENCE REMINDER MODAL (24-48 hours after self-save) -->
+            <div class="modal-overlay evidence-reminder-modal" id="evidence-reminder-modal" onclick="hideReminderModal()" role="dialog" aria-modal="true" aria-labelledby="reminder-modal-title" style="display: none;">
+                <div class="modal-content reminder-modal-content" onclick="event.stopPropagation()">
+                    <button class="modal-close" onclick="hideReminderModal()" aria-label="Close reminder">×</button>
+
+                    <div class="reminder-header">
+                        <div class="reminder-modal-icon">💡</div>
+                        <h2 id="reminder-modal-title">How Are You Feeling?</h2>
+                        <p class="reminder-intro">We hope you're recovering well from your accident.</p>
+                    </div>
+
+                    <div class="reminder-body">
+                        <p class="reminder-message">
+                            You saved accident evidence but haven't connected with a legal professional yet.
+                            Our attorneys can provide a <strong>free, no-obligation case review</strong>.
+                        </p>
+
+                        <div class="reminder-evidence-box">
+                            <h4>Your Saved Evidence</h4>
+                            <div id="reminder-evidence-summary">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+
+                        <div class="reminder-benefits">
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Free case evaluation</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>No obligation to proceed</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span>Response within 2 hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reminder-actions">
+                        <button class="modal-btn primary" onclick="sendEvidenceFromReminder()">
+                            Yes, Review My Case
+                        </button>
+                        <button class="modal-btn secondary" onclick="dismissReminder(false)">
+                            Remind Me Later
+                        </button>
+                        <button class="reminder-dismiss-link" onclick="dismissReminder(true)">
+                            No thanks, I don't need help
+                        </button>
+                    </div>
+
+                    <p class="reminder-disclaimer">
+                        <span style="font-size: 10px;">ADVERTISEMENT: Kitsinian Law Firm, APC, Los Angeles, CA. This does not create an attorney-client relationship.</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- SIGN-IN MODAL -->
+            <div class="modal-overlay" id="signin-modal" onclick="hideSignInModal()" role="dialog" aria-modal="true" aria-labelledby="signin-modal-title">
+                <div class="modal-content" onclick="event.stopPropagation()">
+                    <button class="modal-close" onclick="hideSignInModal()" aria-label="Close sign in dialog">×</button>
+                    <div class="modal-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">
+                        <svg style="width: 32px; height: 32px; color: white;"><use href="#icon-user"/></svg>
+                    </div>
+                    <h2 id="signin-modal-title">Sign In</h2>
+                    <p>Access your submitted cases and track their status.</p>
+                    <label for="signin-phone" class="visually-hidden">Phone Number</label>
+                    <input type="tel" id="signin-phone" class="modal-input" placeholder="Phone Number" aria-label="Phone Number" maxlength="14" autocomplete="tel">
+                    <label for="signin-email" class="visually-hidden">Email Address</label>
+                    <input type="email" id="signin-email" class="modal-input" placeholder="Email (optional)" aria-label="Email Address" maxlength="254" autocomplete="email">
+                    <button class="modal-btn primary" onclick="signIn()">Sign In</button>
+
+                    <div class="signin-divider">
+                        <span>or continue with</span>
+                    </div>
+
+                    <button class="apple-signin-btn" onclick="signInWithApple()">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                        </svg>
+                        Sign in with Apple
+                    </button>
+
+                    <p class="modal-help">New here? Submit a claim to create an account automatically.</p>
+                </div>
+            </div>
+
+            <!-- SAVE PROGRESS MODAL -->
+            <div class="modal-overlay" id="save-progress-modal" onclick="hideSaveProgressModal()" role="dialog" aria-modal="true" aria-labelledby="save-progress-modal-title">
+                <div class="modal-content" onclick="event.stopPropagation()">
+                    <button class="modal-close" onclick="hideSaveProgressModal()" aria-label="Close save progress dialog">×</button>
+                    <div class="modal-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);">
+                        <svg style="width: 32px; height: 32px; color: white;"><use href="#icon-document"/></svg>
+                    </div>
+                    <h2 id="save-progress-modal-title">Save Your Progress</h2>
+                    <p>We'll send you a link to continue where you left off.</p>
+                    <div class="save-method-tabs">
+                        <button class="save-tab active" onclick="showSaveMethod('sms')">Text Me</button>
+                        <button class="save-tab" onclick="showSaveMethod('email')">Email Me</button>
+                    </div>
+                    <div class="save-method" id="save-method-sms">
+                        <label for="save-phone" class="visually-hidden">Phone Number</label>
+                        <input type="tel" id="save-phone" class="modal-input" placeholder="Phone Number" aria-label="Phone Number" maxlength="14" autocomplete="tel">
+                        <button class="modal-btn primary" onclick="saveProgress('sms')">Send Link</button>
+                    </div>
+                    <div class="save-method hidden" id="save-method-email">
+                        <label for="save-email" class="visually-hidden">Email Address</label>
+                        <input type="email" id="save-email" class="modal-input" placeholder="Email Address" aria-label="Email Address" maxlength="254" autocomplete="email">
+                        <button class="modal-btn primary" onclick="saveProgress('email')">Send Link</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Security: HTML escape function to prevent XSS
+        function escapeHtml(text) {
+            if (typeof text !== 'string') return text;
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        let currentDevice = 'iphone';
+        let currentScreen = 'home';
+        let articleOpen = false;
+        let currentQuizStep = 1;
+        let quizAnswers = {};
+        let currentOnboardingScreen = 1;
+        let selectedOnboardingOption = null;
+        let isDarkMode = false;
+
+        // User auth state
+        let isSignedIn = false;
+        let currentUser = null;
+
+        // Mock cases data (demo)
+        let userCases = [];
+
+        // Mock data for demo - cases from a returning user
+        const mockCases = [
+            {
+                id: 1,
+                type: 'Car Accident',
+                submitted: '2025-01-28',
+                status: 'retained',
+                attorney: {
+                    name: 'Sarah Mitchell',
+                    phone: '(213) 555-0123',
+                    email: 'smitchell@kitsinian.com'
+                }
+            },
+            {
+                id: 2,
+                type: 'Insurance Bad Faith',
+                submitted: '2025-02-01',
+                status: 'under-review',
+                attorney: null
+            }
+        ];
+
+        const progressSteps = {
+            1: 20,
+            2: 40,
+            3: 60,
+            4: 80,
+            5: 100
+    <script src="scripts.js"></script>
+</body>
+</html>

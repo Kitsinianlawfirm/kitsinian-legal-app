@@ -54,7 +54,7 @@ struct QuizStartView: View {
                     Divider().padding(.leading, isIPad ? 64 : 56)
                     BenefitRow(icon: "person.fill.checkmark", text: "Get matched with the right attorney", color: .claimPrimary, isIPad: isIPad)
                 }
-                .background(Color.white)
+                .background(Color.claimCardBackground)
                 .cornerRadius(isIPad ? 20 : 16)
                 .overlay(
                     RoundedRectangle(cornerRadius: isIPad ? 20 : 16)

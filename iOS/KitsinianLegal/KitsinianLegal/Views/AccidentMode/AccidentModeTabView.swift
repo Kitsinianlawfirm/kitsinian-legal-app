@@ -125,7 +125,7 @@ struct AccidentModeTabView: View {
             .padding(.top, 8)
         }
         .padding(24)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(20)
         .claimShadowMedium()
     }
@@ -174,7 +174,7 @@ struct AccidentModeTabView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(16)
         .claimShadowSmall()
     }

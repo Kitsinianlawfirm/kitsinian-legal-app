@@ -229,7 +229,7 @@ struct PracticeAreaListCard: View {
                 .foregroundColor(.claimTextMuted)
         }
         .padding(14)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)

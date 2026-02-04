@@ -115,7 +115,7 @@ struct PracticeAreaDetailView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
@@ -153,7 +153,7 @@ struct PracticeAreaDetailView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
@@ -197,7 +197,7 @@ struct PracticeAreaDetailView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
@@ -254,7 +254,7 @@ struct PracticeAreaDetailView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(16)
-            .background(Color.white)
+            .background(Color.claimCardBackground)
             .cornerRadius(16)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
@@ -298,7 +298,7 @@ struct PracticeAreaDetailView: View {
                 .foregroundColor(.claimPrimary)
                 .frame(maxWidth: .infinity)
                 .frame(height: 54)
-                .background(Color.white)
+                .background(Color.claimCardBackground)
                 .cornerRadius(14)
                 .overlay(
                     RoundedRectangle(cornerRadius: 14)

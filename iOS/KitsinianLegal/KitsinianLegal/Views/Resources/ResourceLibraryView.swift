@@ -241,7 +241,7 @@ struct FeaturedResourceCard: View {
         }
         .frame(width: 200, height: 190)
         .padding(16)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
@@ -288,7 +288,7 @@ struct ResourceListCard: View {
                 .foregroundColor(.claimTextMuted)
         }
         .padding(14)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)

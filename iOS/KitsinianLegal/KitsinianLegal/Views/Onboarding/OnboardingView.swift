@@ -2,7 +2,7 @@
 //  OnboardingView.swift
 //  ClaimIt
 //
-//  Modern 2-screen onboarding flow
+//  Modern 3-screen onboarding flow with legal agreement
 //
 
 import SwiftUI
@@ -11,6 +11,8 @@ struct OnboardingView: View {
     @EnvironmentObject var appState: AppState
     @State private var currentScreen = 1
     @State private var selectedIncident: IncidentType?
+    @State private var hasScrolledToBottom = false
+    @State private var hasAgreedToTerms = false
 
     var body: some View {
         ZStack {
@@ -20,13 +22,19 @@ struct OnboardingView: View {
 
             VStack(spacing: 0) {
                 if currentScreen == 1 {
-                    onboardingScreen1
+                    legalAgreementScreen
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .trailing),
+                            removal: .move(edge: .leading)
+                        ))
+                } else if currentScreen == 2 {
+                    welcomeScreen
                         .transition(.asymmetric(
                             insertion: .move(edge: .trailing),
                             removal: .move(edge: .leading)
                         ))
                 } else {
-                    onboardingScreen2
+                    incidentSelectionScreen
                         .transition(.asymmetric(
                             insertion: .move(edge: .trailing),
                             removal: .move(edge: .leading)
@@ -37,8 +45,252 @@ struct OnboardingView: View {
         .animation(.easeInOut(duration: 0.35), value: currentScreen)
     }
 
-    // MARK: - Screen 1: Trust & Value
-    private var onboardingScreen1: some View {
+    // MARK: - Screen 1: Legal Agreement
+    private var legalAgreementScreen: some View {
+        VStack(spacing: 0) {
+            // Mini logo
+            ClaimItLogo(size: 40, showText: false)
+                .padding(.top, 16)
+                .padding(.bottom, 12)
+
+            // Title
+            Text("User Agreement")
+                .font(.system(size: 22, weight: .heavy))
+                .foregroundColor(.white)
+
+            Text("Please review and scroll to continue")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(.white.opacity(0.7))
+                .padding(.bottom, 16)
+
+            // Scrollable legal text
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        legalAgreementContent
+
+                        // Bottom marker for scroll detection
+                        Color.clear
+                            .frame(height: 1)
+                            .id("bottomMarker")
+                    }
+                    .padding(20)
+                    .background(
+                        GeometryReader { geometry in
+                            Color.clear.preference(
+                                key: ScrollOffsetPreferenceKey.self,
+                                value: geometry.frame(in: .named("scroll")).maxY
+                            )
+                        }
+                    )
+                }
+                .coordinateSpace(name: "scroll")
+                .onPreferenceChange(ScrollOffsetPreferenceKey.self) { maxY in
+                    // Check if user has scrolled to near bottom (within 50 points)
+                    if maxY < 450 && !hasScrolledToBottom {
+                        hasScrolledToBottom = true
+                    }
+                }
+            }
+            .background(Color.claimCardBackground)
+            .cornerRadius(20)
+            .padding(.horizontal, 16)
+
+            // Scroll indicator
+            if !hasScrolledToBottom {
+                HStack(spacing: 6) {
+                    Image(systemName: "arrow.down")
+                        .font(.system(size: 12, weight: .bold))
+                    Text("Scroll to read full agreement")
+                        .font(.system(size: 12, weight: .medium))
+                }
+                .foregroundColor(.white.opacity(0.8))
+                .padding(.top, 12)
+            }
+
+            Spacer()
+
+            // CTA Section
+            VStack(spacing: 14) {
+                // Page dots
+                HStack(spacing: 8) {
+                    RoundedRectangle(cornerRadius: 2)
+                        .fill(.white)
+                        .frame(width: 24, height: 8)
+
+                    Circle()
+                        .fill(.white.opacity(0.35))
+                        .frame(width: 8, height: 8)
+
+                    Circle()
+                        .fill(.white.opacity(0.35))
+                        .frame(width: 8, height: 8)
+                }
+                .padding(.bottom, 4)
+
+                // Agreement checkbox
+                Button(action: {
+                    if hasScrolledToBottom {
+                        hasAgreedToTerms.toggle()
+                    }
+                }) {
+                    HStack(spacing: 12) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(hasAgreedToTerms ? Color.white : Color.white.opacity(0.5), lineWidth: 2)
+                                .frame(width: 24, height: 24)
+
+                            if hasAgreedToTerms {
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(.white)
+                            }
+                        }
+
+                        Text("I agree to the Terms of Service and Privacy Policy")
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.leading)
+
+                        Spacer()
+                    }
+                }
+                .opacity(hasScrolledToBottom ? 1 : 0.5)
+                .disabled(!hasScrolledToBottom)
+
+                // Continue button
+                Button(action: {
+                    currentScreen = 2
+                }) {
+                    Text("I Have Read and Agree")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundColor(hasAgreedToTerms ? .claimPrimary : .claimPrimary.opacity(0.5))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 54)
+                        .background(hasAgreedToTerms ? Color.white : Color.white.opacity(0.5))
+                        .cornerRadius(14)
+                        .claimShadowLarge()
+                }
+                .disabled(!hasAgreedToTerms)
+
+                // Legal ad notice
+                Text("ADVERTISEMENT: Kitsinian Law Firm, APC, Los Angeles, CA")
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundColor(.white.opacity(0.6))
+                    .padding(.top, 8)
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 40)
+        }
+    }
+
+    // MARK: - Legal Agreement Content
+    private var legalAgreementContent: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            // Terms of Service
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Terms of Service")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
+
+                Text("By using ClaimIt, you agree to these terms. This app provides information and connects you with legal services but does not constitute legal advice or create an attorney-client relationship until you formally retain an attorney.")
+                    .font(.system(size: 13))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineSpacing(4)
+            }
+
+            Divider()
+
+            // Attorney Advertising Notice
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Attorney Advertising Notice")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
+
+                Text("This is an advertisement for legal services. The information contained in this app is intended for general informational purposes and should not be construed as legal advice. Past results do not guarantee future outcomes.")
+                    .font(.system(size: 13))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineSpacing(4)
+            }
+
+            Divider()
+
+            // CA Rule 7.3 Consent (Important!)
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 8) {
+                    Image(systemName: "exclamationmark.shield.fill")
+                        .foregroundColor(.claimAccent)
+                    Text("California Rule 7.3 Consent")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.claimTextPrimary)
+                }
+
+                Text("By proceeding, you consent to be contacted by Kitsinian Law Firm, APC or its network of affiliated attorneys regarding potential legal representation. You understand that you may receive communications about your legal matter including case evaluation, settlement opportunities, and legal updates.")
+                    .font(.system(size: 13))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineSpacing(4)
+
+                Text("You may opt out of communications at any time by contacting us or using the settings in this app.")
+                    .font(.system(size: 13))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineSpacing(4)
+            }
+
+            Divider()
+
+            // Privacy Policy
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Privacy Policy")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
+
+                Text("We collect personal information you provide, including name, contact details, and case information. This data is used to evaluate your case and connect you with legal services. We do not sell your personal information.")
+                    .font(.system(size: 13))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineSpacing(4)
+
+                Text("California residents have additional rights under the CCPA including the right to know, delete, and opt-out of data sales.")
+                    .font(.system(size: 13))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineSpacing(4)
+            }
+
+            Divider()
+
+            // Accident Mode Consent
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 8) {
+                    Image(systemName: "car.fill")
+                        .foregroundColor(.claimPrimary)
+                    Text("Accident Mode")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.claimTextPrimary)
+                }
+
+                Text("By agreeing, Accident Mode will be enabled by default. This feature helps you collect evidence after an accident including photos, voice recordings, and witness information. You can disable this feature at any time in Settings or the Accident tab.")
+                    .font(.system(size: 13))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineSpacing(4)
+            }
+
+            Divider()
+
+            // No Fee Unless You Win
+            VStack(alignment: .leading, spacing: 8) {
+                Text("No Fee Unless You Win")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.claimTextPrimary)
+
+                Text("For contingency fee cases, attorney fees are only charged if compensation is recovered. Case costs (filing fees, expert fees, etc.) may apply separately. Fee arrangements will be clearly explained before you retain an attorney.")
+                    .font(.system(size: 13))
+                    .foregroundColor(.claimTextSecondary)
+                    .lineSpacing(4)
+            }
+        }
+    }
+
+    // MARK: - Screen 2: Welcome & Trust
+    private var welcomeScreen: some View {
         VStack(spacing: 0) {
             Spacer()
 
@@ -46,7 +298,7 @@ struct OnboardingView: View {
             VStack(spacing: 12) {
                 ClaimItLogo(size: 56)
 
-                Text("Get What You Deserve")
+                Text("Your Fight. Our Fury.")
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.white.opacity(0.85))
             }
@@ -62,9 +314,9 @@ struct OnboardingView: View {
 
             // Value Props
             VStack(spacing: 10) {
-                ValuePropRow(icon: "dollarsign.circle.fill", text: "No fees unless you win your case")
-                ValuePropRow(icon: "clock.fill", text: "Free case review in under 2 minutes")
-                ValuePropRow(icon: "shield.fill", text: "Trusted California attorneys on your side")
+                ValuePropRow(icon: "dollarsign.circle.fill", text: "$0 upfront. We only get paid when you do.")
+                ValuePropRow(icon: "clock.fill", text: "90-second claim check — no paperwork")
+                ValuePropRow(icon: "shield.fill", text: "Aggressive attorneys who've recovered $50M+")
             }
             .padding(.horizontal, 20)
 
@@ -74,6 +326,10 @@ struct OnboardingView: View {
             VStack(spacing: 14) {
                 // Page dots
                 HStack(spacing: 8) {
+                    Circle()
+                        .fill(.white.opacity(0.35))
+                        .frame(width: 8, height: 8)
+
                     RoundedRectangle(cornerRadius: 2)
                         .fill(.white)
                         .frame(width: 24, height: 8)
@@ -84,12 +340,12 @@ struct OnboardingView: View {
                 }
                 .padding(.bottom, 4)
 
-                // Get Started button
+                // Check If You Qualify button
                 Button(action: {
-                    currentScreen = 2
+                    currentScreen = 3
                 }) {
                     HStack(spacing: 10) {
-                        Text("Get Started")
+                        Text("Check If You Qualify")
                             .font(.system(size: 17, weight: .bold))
 
                         Image(systemName: "arrow.right")
@@ -116,8 +372,8 @@ struct OnboardingView: View {
         }
     }
 
-    // MARK: - Screen 2: Quick Quiz Start
-    private var onboardingScreen2: some View {
+    // MARK: - Screen 3: Incident Selection
+    private var incidentSelectionScreen: some View {
         VStack(spacing: 0) {
             // Mini logo
             ClaimItLogo(size: 40, showText: false)
@@ -166,13 +422,17 @@ struct OnboardingView: View {
                         .fill(.white.opacity(0.35))
                         .frame(width: 8, height: 8)
 
+                    Circle()
+                        .fill(.white.opacity(0.35))
+                        .frame(width: 8, height: 8)
+
                     RoundedRectangle(cornerRadius: 2)
                         .fill(.white)
                         .frame(width: 24, height: 8)
                 }
                 .padding(.bottom, 4)
 
-                // Start Review button
+                // Calculate My Compensation button
                 Button(action: {
                     if let incident = selectedIncident {
                         appState.startQuizWithIncident(incident.rawValue)
@@ -182,7 +442,7 @@ struct OnboardingView: View {
                         Image(systemName: "bolt.fill")
                             .font(.system(size: 18, weight: .bold))
 
-                        Text("Start My Free Review")
+                        Text("Calculate My Compensation")
                             .font(.system(size: 17, weight: .bold))
                     }
                     .foregroundColor(.white)
@@ -208,6 +468,14 @@ struct OnboardingView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 40)
         }
+    }
+}
+
+// MARK: - Scroll Offset Preference Key
+struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
     }
 }
 
@@ -241,7 +509,7 @@ enum IncidentType: String, CaseIterable, Identifiable {
         case .injury: return "cross.case.fill"
         case .slipFall: return "figure.fall"
         case .insurance: return "shield.fill"
-        case .lemon: return "exclamationmark.triangle.fill"
+        case .lemon: return "car.badge.gearshape.fill"
         case .property: return "house.fill"
         case .other: return "questionmark.circle.fill"
         }
@@ -276,7 +544,7 @@ struct ValuePropRow: View {
             Spacer()
         }
         .padding(14)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(14)
         .claimShadowSmall()
     }
@@ -305,7 +573,7 @@ struct IncidentOptionCard: View {
             .frame(height: incident.isFullWidth ? 50 : 90)
             .padding(.vertical, incident.isFullWidth ? 8 : 16)
             .padding(.horizontal, 12)
-            .background(isSelected ? Color(hex: "FFF5F0") : Color.white)
+            .background(isSelected ? Color(hex: "FFF5F0") : Color.claimCardBackground)
             .cornerRadius(16)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)

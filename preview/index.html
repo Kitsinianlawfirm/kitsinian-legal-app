@@ -1631,6 +1631,35 @@
             box-shadow: 0 4px 12px rgba(0, 196, 140, 0.35);
         }
 
+        /* Loading State for Submit Button */
+        .btn-submit.loading {
+            pointer-events: none;
+            opacity: 0.8;
+            cursor: wait;
+        }
+
+        .btn-submit .btn-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .btn-submit.loading .btn-spinner {
+            display: inline-block;
+        }
+
+        .btn-submit.loading .btn-label {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         .form-disclaimer {
             font-size: 12px;
             color: var(--text-secondary);
@@ -4052,6 +4081,30 @@
             .how-step { padding: 0 4px; }
             .how-step-number { width: 48px; height: 48px; }
             .how-step-number svg { width: 20px; height: 20px; }
+
+            /* Keep CTA above fold on small screens */
+            .hero { padding: 12px 16px 24px; }
+            .hero p { font-size: 14px; margin-bottom: 12px; }
+            .stats-row { margin-bottom: 0; gap: 8px; }
+            .stat { padding: 8px 6px; }
+            .stat-value { font-size: 18px; }
+            .stat-label { font-size: 10px; }
+            .glass-card { margin: -12px 12px 12px; padding: 12px; }
+            .cta-subtext { font-size: 11px; margin-top: 8px; }
+        }
+
+        /* Extra small screens - even more compact */
+        @media (max-width: 350px) {
+            .hero { padding: 8px 12px 20px; }
+            .hero h1 { font-size: 22px; line-height: 1.2; }
+            .hero p { font-size: 13px; }
+            .hero-logo { margin-bottom: 8px; }
+            .hero-logo svg { width: 32px; height: 32px; }
+            .hero-logo-text { font-size: 18px; }
+            .stats-row { gap: 4px; }
+            .stat-value { font-size: 16px; }
+            .glass-card { margin: -8px 10px 10px; padding: 10px; }
+            .btn-primary { padding: 12px 16px; font-size: 14px; }
         }
 
         /* Enhanced Touch Targets */
@@ -5548,6 +5601,231 @@
         .device-screen.dark-mode .checklist-item .check.checked {
             background: var(--primary) !important;
             color: white !important;
+        }
+
+        /* ==================== DARK MODE - ADDITIONAL FIXES ==================== */
+        /* Toggle Switches - Dark Mode */
+        .device-screen.dark-mode .toggle-switch {
+            background: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .toggle-switch.active {
+            background: var(--primary);
+        }
+
+        .device-screen.dark-mode .toggle-switch::after {
+            background: var(--dark-text-primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Case Status Badges - Dark Mode (maintain semantic colors) */
+        .device-screen.dark-mode .case-status-badge {
+            border: 1px solid var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .case-status-badge.submitted {
+            background: rgba(229, 231, 235, 0.15);
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .case-status-badge.under-review {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93C5FD;
+        }
+
+        .device-screen.dark-mode .case-status-badge.qualified {
+            background: rgba(16, 185, 129, 0.2);
+            color: #6EE7B7;
+        }
+
+        .device-screen.dark-mode .case-status-badge.matched {
+            background: rgba(245, 158, 11, 0.2);
+            color: #FCD34D;
+        }
+
+        .device-screen.dark-mode .case-status-badge.retained {
+            background: rgba(16, 185, 129, 0.2);
+            color: #6EE7B7;
+        }
+
+        /* Accident Status Badge - Dark Mode */
+        .device-screen.dark-mode .accident-status-badge {
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .accident-status-badge.enabled {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6EE7B7;
+        }
+
+        .device-screen.dark-mode .accident-status-badge.disabled {
+            background: rgba(107, 114, 128, 0.15);
+            color: var(--dark-text-muted);
+        }
+
+        /* Dropdown/Select Elements - Dark Mode */
+        .device-screen.dark-mode select,
+        .device-screen.dark-mode .select-dropdown {
+            background: var(--dark-card-bg-elevated);
+            border-color: var(--dark-border-color);
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode select option {
+            background: var(--dark-card-bg);
+            color: var(--dark-text-primary);
+        }
+
+        /* Dividers and Separators - Dark Mode */
+        .device-screen.dark-mode hr,
+        .device-screen.dark-mode .divider,
+        .device-screen.dark-mode .separator {
+            background: var(--dark-border-color);
+            border-color: var(--dark-border-color);
+        }
+
+        /* Progress Steps - Dark Mode */
+        .device-screen.dark-mode .progress-step {
+            background: var(--dark-card-bg-elevated);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode .progress-step.completed {
+            background: rgba(0, 102, 255, 0.15);
+            border-color: var(--primary);
+        }
+
+        .device-screen.dark-mode .progress-step span {
+            color: var(--dark-text-secondary);
+        }
+
+        .device-screen.dark-mode .progress-step.completed span {
+            color: var(--primary-light);
+        }
+
+        /* How It Works Step Numbers - Enhanced Dark Mode */
+        .device-screen.dark-mode .step-number {
+            background: var(--dark-card-bg-elevated);
+            border-color: var(--dark-border-color);
+            color: var(--primary-light);
+        }
+
+        /* Alert/Notice Boxes - Dark Mode variants */
+        .device-screen.dark-mode .alert,
+        .device-screen.dark-mode .notice {
+            background: var(--dark-card-bg-elevated);
+            border-color: var(--dark-border-color);
+            color: var(--dark-text-primary);
+        }
+
+        .device-screen.dark-mode .alert-success {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .device-screen.dark-mode .alert-warning {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .device-screen.dark-mode .alert-error {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        /* Tooltip/Popover - Dark Mode */
+        .device-screen.dark-mode .tooltip,
+        .device-screen.dark-mode .popover {
+            background: var(--dark-card-bg-elevated);
+            border-color: var(--dark-border-color);
+            color: var(--dark-text-primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Links in body content - Dark Mode (improved contrast) */
+        .device-screen.dark-mode a:not(.btn-primary):not(.btn-secondary):not([class*="btn"]) {
+            color: var(--primary-light);
+        }
+
+        .device-screen.dark-mode a:not(.btn-primary):not(.btn-secondary):not([class*="btn"]):hover {
+            color: #93C5FD;
+        }
+
+        /* Scrollbar styling for dark mode - webkit */
+        .device-screen.dark-mode *::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .device-screen.dark-mode *::-webkit-scrollbar-track {
+            background: var(--dark-bg-secondary);
+            border-radius: 4px;
+        }
+
+        .device-screen.dark-mode *::-webkit-scrollbar-thumb {
+            background: var(--dark-border-light);
+            border-radius: 4px;
+        }
+
+        .device-screen.dark-mode *::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-text-muted);
+        }
+
+        /* Form Labels & Help Text - Dark Mode */
+        .device-screen.dark-mode .help-text,
+        .device-screen.dark-mode .form-help,
+        .device-screen.dark-mode small {
+            color: var(--dark-text-muted);
+        }
+
+        /* Disabled State - Dark Mode */
+        .device-screen.dark-mode button:disabled,
+        .device-screen.dark-mode input:disabled,
+        .device-screen.dark-mode .disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Focus States - Dark Mode (accessibility) */
+        .device-screen.dark-mode *:focus-visible {
+            outline: 2px solid var(--primary-light);
+            outline-offset: 2px;
+        }
+
+        /* Table Styling - Dark Mode */
+        .device-screen.dark-mode table {
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode th {
+            background: var(--dark-card-bg-elevated);
+            color: var(--dark-text-primary);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode td {
+            background: var(--dark-card-bg);
+            color: var(--dark-text-secondary);
+            border-color: var(--dark-border-color);
+        }
+
+        .device-screen.dark-mode tr:hover td {
+            background: var(--dark-card-bg-elevated);
+        }
+
+        /* Code/Pre blocks - Dark Mode */
+        .device-screen.dark-mode code,
+        .device-screen.dark-mode pre {
+            background: var(--dark-card-bg-elevated);
+            color: var(--dark-text-primary);
+            border-color: var(--dark-border-color);
+        }
+
+        /* Blockquote - Dark Mode */
+        .device-screen.dark-mode blockquote {
+            background: var(--dark-card-bg);
+            border-left-color: var(--primary);
+            color: var(--dark-text-secondary);
         }
 
         /* ==================== Tablet Layout ==================== */
@@ -8642,8 +8920,9 @@
                             </div>
                             <div class="upload-hint">Accident photos, medical bills, police report, etc.</div>
 
-                            <button class="btn-submit" onclick="submitLead()" aria-label="Submit for free case evaluation">
-                                Get My Free Demand Letter — Free
+                            <button class="btn-submit" id="submit-btn" onclick="submitLead()" aria-label="Submit for free case evaluation">
+                                <span class="btn-spinner"></span>
+                                <span class="btn-label">Get My Free Demand Letter — Free</span>
                             </button>
 
                             <!-- Security Badges -->
@@ -9669,19 +9948,19 @@
 
             <!-- Tab Bar -->
             <nav class="tab-bar" id="tab-bar" role="navigation" aria-label="Main navigation">
-                <button class="tab active" id="tab-home" onclick="switchTab('home')" role="tab" aria-selected="true" aria-label="Home">
+                <button class="tab active" id="tab-home" data-action="switch-tab" data-tab="home" role="tab" aria-selected="true" aria-label="Home">
                     <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-home"/></svg></div>
                     <span>Home</span>
                 </button>
-                <button class="tab" id="tab-claim" onclick="switchTab('claim')" role="tab" aria-selected="false" aria-label="Start a claim">
+                <button class="tab" id="tab-claim" data-action="switch-tab" data-tab="claim" role="tab" aria-selected="false" aria-label="Start a claim">
                     <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-lightning"/></svg></div>
                     <span>Claim</span>
                 </button>
-                <button class="tab" id="tab-learn" onclick="switchTab('learn')" role="tab" aria-selected="false" aria-label="Learning resources">
+                <button class="tab" id="tab-learn" data-action="switch-tab" data-tab="learn" role="tab" aria-selected="false" aria-label="Learning resources">
                     <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-book"/></svg></div>
                     <span>Learn</span>
                 </button>
-                <button class="tab accident-tab" id="tab-accident" onclick="switchTab('accident')" role="tab" aria-selected="false" aria-label="Accident Mode">
+                <button class="tab accident-tab" id="tab-accident" data-action="switch-tab" data-tab="accident" role="tab" aria-selected="false" aria-label="Accident Mode">
                     <div class="tab-icon accident-tab-icon" aria-hidden="true">
                         <svg style="width: 26px; height: 26px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
@@ -9692,7 +9971,7 @@
                     </div>
                     <span>Accident</span>
                 </button>
-                <button class="tab" id="tab-account" onclick="switchTab('account')" role="tab" aria-selected="false" aria-label="Your account">
+                <button class="tab" id="tab-account" data-action="switch-tab" data-tab="account" role="tab" aria-selected="false" aria-label="Your account">
                     <div class="tab-icon" aria-hidden="true"><svg style="width: 26px; height: 26px;"><use href="#icon-user"/></svg></div>
                     <span>Account</span>
                 </button>
@@ -10541,6 +10820,67 @@
             5: 100
         };
 
+        // ==================== EVENT DELEGATION SYSTEM ====================
+        // Central event handler for data-action attributes
+        // This replaces inline onclick handlers for better maintainability
+        document.addEventListener('DOMContentLoaded', function() {
+            const screenContainer = document.querySelector('.device-screen');
+            if (!screenContainer) return;
+
+            screenContainer.addEventListener('click', function(e) {
+                // Find closest element with data-action
+                const actionEl = e.target.closest('[data-action]');
+                if (!actionEl) return;
+
+                const action = actionEl.dataset.action;
+
+                // Route to appropriate handler
+                switch(action) {
+                    case 'switch-tab':
+                        e.preventDefault();
+                        switchTab(actionEl.dataset.tab);
+                        break;
+                    case 'show-article':
+                        e.preventDefault();
+                        showArticle(actionEl.dataset.article);
+                        break;
+                    case 'hide-article':
+                        e.preventDefault();
+                        hideArticle();
+                        break;
+                    case 'toggle-faq':
+                        e.preventDefault();
+                        toggleFaq(actionEl);
+                        break;
+                    case 'toggle-check':
+                        e.preventDefault();
+                        toggleCheck(actionEl);
+                        break;
+                    case 'show-privacy':
+                        e.preventDefault();
+                        showPrivacyModal();
+                        break;
+                    case 'show-terms':
+                        e.preventDefault();
+                        showTermsModal();
+                        break;
+                    case 'show-signin':
+                        e.preventDefault();
+                        toggleSignIn();
+                        break;
+                    case 'start-quiz':
+                        e.preventDefault();
+                        const topic = actionEl.dataset.topic;
+                        if (topic) {
+                            startQuizWithTopic(topic);
+                        } else {
+                            switchTab('claim');
+                        }
+                        break;
+                }
+            });
+        });
+
         // Dynamic questions for Step 2 based on case type
         const step2Questions = {
             'car-accident': {
@@ -10805,12 +11145,17 @@
             const phone = document.getElementById('lead-phone').value;
             const email = document.getElementById('lead-email').value;
             const description = document.getElementById('lead-description').value;
+            const submitBtn = document.getElementById('submit-btn');
 
             // Simple validation
             if (!name || !phone) {
                 showToast('Please enter your name and phone number', 'error');
                 return;
             }
+
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
 
             // Store lead info
             quizAnswers.name = name;
@@ -10819,9 +11164,13 @@
             quizAnswers.description = description;
 
             // Note: In production, submit to secure backend API here
-            // console.log('Lead submitted:', quizAnswers); // Removed for security - do not log sensitive user data
+            // Simulate API call with timeout (remove in production)
+            setTimeout(() => {
+                // Remove loading state before transitioning
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
 
-            // Get case type from step 1 answer
+                // Get case type from step 1 answer
             const caseTypeMap = {
                 'car-accident': 'Car Accident',
                 'injury': 'Personal Injury',
@@ -10865,6 +11214,7 @@
 
             // Go to success step
             goToStep(5);
+            }, 1500); // End setTimeout - simulates API call delay
         }
 
         function resetQuiz() {
@@ -10876,6 +11226,13 @@
             document.getElementById('lead-phone').value = '';
             document.getElementById('lead-email').value = '';
             document.getElementById('lead-description').value = '';
+
+            // Reset submit button state
+            const submitBtn = document.getElementById('submit-btn');
+            if (submitBtn) {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+            }
 
             // Clear selections
             document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));

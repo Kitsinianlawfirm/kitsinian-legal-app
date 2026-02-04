@@ -116,7 +116,7 @@ struct QuizResultView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(isIPad ? 20 : 16)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(isIPad ? 20 : 16)
         .overlay(
             RoundedRectangle(cornerRadius: isIPad ? 20 : 16)
@@ -160,7 +160,7 @@ struct QuizResultView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(isIPad ? 20 : 16)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(isIPad ? 20 : 16)
         .overlay(
             RoundedRectangle(cornerRadius: isIPad ? 20 : 16)
@@ -203,7 +203,7 @@ struct QuizResultView: View {
                 .foregroundColor(.claimPrimary)
                 .frame(maxWidth: .infinity)
                 .frame(height: isIPad ? 58 : 54)
-                .background(Color.white)
+                .background(Color.claimCardBackground)
                 .cornerRadius(isIPad ? 16 : 14)
                 .overlay(
                     RoundedRectangle(cornerRadius: isIPad ? 16 : 14)
@@ -237,7 +237,7 @@ struct QuizResultView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(isIPad ? 20 : 16)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(isIPad ? 20 : 16)
         .overlay(
             RoundedRectangle(cornerRadius: isIPad ? 20 : 16)

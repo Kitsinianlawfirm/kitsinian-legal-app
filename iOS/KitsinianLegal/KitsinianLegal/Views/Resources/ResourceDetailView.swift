@@ -86,7 +86,7 @@ struct ResourceDetailView: View {
                 .lineSpacing(4)
         }
         .padding(16)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
@@ -101,7 +101,7 @@ struct ResourceDetailView: View {
             MarkdownView(content: resource.content)
         }
         .padding(16)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
@@ -156,7 +156,7 @@ struct ResourceDetailView: View {
             }
         }
         .padding(16)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
@@ -200,7 +200,7 @@ struct ResourceDetailView: View {
             }
         }
         .padding(20)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)

@@ -64,6 +64,19 @@ struct LeadFormView: View {
         } message: {
             Text("Thank you! We'll be in touch within 24 hours.")
         }
+        .alert("Submission Failed", isPresented: $viewModel.showError) {
+            Button("Try Again") {
+                Task {
+                    await viewModel.submitLead()
+                }
+            }
+            Button("Cancel", role: .cancel) {
+                viewModel.resetError()
+            }
+        } message: {
+            Text(viewModel.errorMessage ?? "Please check your connection and try again.")
+        }
+        .disabled(viewModel.isSubmitting)
         .onAppear {
             if let area = practiceArea {
                 viewModel.lead.practiceArea = area.id
@@ -182,7 +195,7 @@ struct LeadFormView: View {
                                 .foregroundColor(.claimTextMuted)
                         }
                         .padding(14)
-                        .background(Color.white)
+                        .background(Color.claimCardBackground)
                         .cornerRadius(12)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
@@ -220,7 +233,7 @@ struct LeadFormView: View {
                     .font(.system(size: 15))
                     .frame(height: 100)
                     .padding(12)
-                    .background(Color.white)
+                    .background(Color.claimCardBackground)
                     .cornerRadius(12)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
@@ -230,7 +243,7 @@ struct LeadFormView: View {
             }
         }
         .padding(isIPad ? 24 : 16)
-        .background(Color.white)
+        .background(Color.claimCardBackground)
         .cornerRadius(isIPad ? 20 : 16)
         .overlay(
             RoundedRectangle(cornerRadius: isIPad ? 20 : 16)
@@ -303,7 +316,7 @@ struct FormTextField: View {
                 .textContentType(contentType)
                 .autocapitalization(keyboardType == .emailAddress ? .none : .words)
                 .padding(14)
-                .background(Color.white)
+                .background(Color.claimCardBackground)
                 .cornerRadius(12)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
@@ -338,7 +351,7 @@ struct ContactMethodButton: View {
             .foregroundColor(isSelected ? .white : .claimTextPrimary)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 14)
-            .background(isSelected ? LinearGradient.claimPrimaryGradient : LinearGradient(colors: [.white, .white], startPoint: .leading, endPoint: .trailing))
+            .background(isSelected ? LinearGradient.claimPrimaryGradient : LinearGradient(colors: [Color.claimCardBackground, Color.claimCardBackground], startPoint: .leading, endPoint: .trailing))
             .cornerRadius(12)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
@@ -370,7 +383,7 @@ struct UrgencyButton: View {
                 }
             }
             .padding(14)
-            .background(isSelected ? Color.claimPrimary.opacity(0.08) : Color.white)
+            .background(isSelected ? Color.claimSelectedBackgroundAlt : Color.claimCardBackground)
             .cornerRadius(12)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
@@ -381,46 +394,7 @@ struct UrgencyButton: View {
     }
 }
 
-// MARK: - Lead Form ViewModel
-class LeadFormViewModel: ObservableObject {
-    @Published var lead = Lead()
-    @Published var isSubmitting = false
-    @Published var submissionSuccessful = false
-    @Published var errorMessage: String?
-
-    var isFormValid: Bool {
-        !lead.firstName.isEmpty &&
-        !lead.lastName.isEmpty &&
-        !lead.email.isEmpty &&
-        !lead.phone.isEmpty &&
-        isValidEmail(lead.email)
-    }
-
-    var selectedAreaName: String? {
-        PracticeArea.allAreas.first(where: { $0.id == lead.practiceArea })?.name
-    }
-
-    private func isValidEmail(_ email: String) -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-        return emailPredicate.evaluate(with: email)
-    }
-
-    @MainActor
-    func submitLead() async {
-        isSubmitting = true
-        errorMessage = nil
-
-        do {
-            try await APIService.shared.submitLead(lead)
-            submissionSuccessful = true
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-
-        isSubmitting = false
-    }
-}
+// LeadFormViewModel is now in ViewModels/LeadFormViewModel.swift
 
 #Preview {
     NavigationStack {

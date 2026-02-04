@@ -42,9 +42,9 @@ extension PracticeArea {
     static let personalInjury = PracticeArea(
         id: "personal-injury",
         name: "Personal Injury",
-        shortDescription: "Injured due to someone else's negligence? We fight for maximum compensation.",
+        shortDescription: "Accidents, negligence, pain & suffering",
         fullDescription: "When you've been injured because of someone else's carelessness, you deserve fair compensation for your medical bills, lost wages, pain and suffering, and other damages. Our personal injury team has recovered millions for injured Californians.",
-        icon: "bandage.fill",
+        icon: "cross.case.fill",
         category: .inHouse,
         commonCauses: [
             "Car, motorcycle, and truck accidents",
@@ -77,9 +77,9 @@ extension PracticeArea {
     static let premisesLiability = PracticeArea(
         id: "premises-liability",
         name: "Premises Liability",
-        shortDescription: "Injured on someone else's property? Property owners have a duty to keep you safe.",
+        shortDescription: "Slip & fall, unsafe properties",
         fullDescription: "Property owners and occupiers have a legal obligation to maintain safe conditions. When they fail and you get hurt, they can be held responsible. We handle slip and falls, inadequate security, dangerous conditions, and more.",
-        icon: "building.2.fill",
+        icon: "building.fill",
         category: .inHouse,
         commonCauses: [
             "Wet or slippery floors",
@@ -112,9 +112,9 @@ extension PracticeArea {
     static let propertyDamage = PracticeArea(
         id: "property-damage",
         name: "Property Damage",
-        shortDescription: "Vehicle or property damaged? Get full compensation, not lowball offers.",
+        shortDescription: "Fire, water, theft, vehicle damage",
         fullDescription: "Insurance companies routinely undervalue property damage claims. Whether your car was totaled in an accident or your property was damaged, we fight to get you the full value you deserve—not the first lowball offer.",
-        icon: "car.fill",
+        icon: "house.fill",
         category: .inHouse,
         commonCauses: [
             "Vehicle damage from car accidents",
@@ -145,9 +145,9 @@ extension PracticeArea {
     static let insuranceBadFaith = PracticeArea(
         id: "insurance-bad-faith",
         name: "Insurance Bad Faith",
-        shortDescription: "Insurance company playing games? Hold them accountable.",
+        shortDescription: "Denied claims, lowball offers",
         fullDescription: "You pay premiums expecting your insurance company to be there when you need them. When they unreasonably deny, delay, or undervalue your claim, they may be acting in bad faith—and you can hold them accountable for additional damages.",
-        icon: "shield.slash.fill",
+        icon: "shield.fill",
         category: .inHouse,
         commonCauses: [
             "Unreasonable claim denials",
@@ -180,9 +180,9 @@ extension PracticeArea {
     static let lemonLaw = PracticeArea(
         id: "lemon-law",
         name: "Lemon Law",
-        shortDescription: "Stuck with a defective vehicle? California's Lemon Law can help.",
+        shortDescription: "Defective vehicles, buybacks",
         fullDescription: "California has some of the strongest lemon laws in the country. If your new or used vehicle has recurring problems that the dealer can't fix, you may be entitled to a refund, replacement, or cash compensation.",
-        icon: "exclamationmark.triangle.fill",
+        icon: "car.badge.gearshape.fill",
         category: .inHouse,
         commonCauses: [
             "Repeated repair attempts for same issue",

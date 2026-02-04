@@ -71,9 +71,9 @@ struct LegalQuiz {
         text: "What type of legal issue are you facing?",
         subtext: "Select the category that best describes your situation",
         options: [
-            QuizOption(id: "injury", text: "I was injured", icon: "bandage.fill", leadsTo: "injury_type"),
+            QuizOption(id: "injury", text: "I was injured", icon: "cross.case.fill", leadsTo: "injury_type"),
             QuizOption(id: "vehicle", text: "Vehicle/property damage", icon: "car.fill", leadsTo: "vehicle_type"),
-            QuizOption(id: "insurance", text: "Insurance dispute", icon: "shield.slash.fill", leadsTo: "insurance_type"),
+            QuizOption(id: "insurance", text: "Insurance dispute", icon: "shield.fill", leadsTo: "insurance_type"),
             QuizOption(id: "family", text: "Family matter", icon: "figure.2.and.child.holdinghands", resultArea: "family-law"),
             QuizOption(id: "criminal", text: "Criminal charges", icon: "building.columns.fill", resultArea: "criminal-defense"),
             QuizOption(id: "employment", text: "Employment/workplace", icon: "briefcase.fill", leadsTo: "employment_type"),
@@ -100,7 +100,7 @@ struct LegalQuiz {
             QuizOption(id: "pedestrian", text: "Hit as pedestrian or cyclist", icon: "figure.walk", leadsTo: "injury_severity"),
             QuizOption(id: "product", text: "Defective product", icon: "exclamationmark.triangle.fill", leadsTo: "injury_severity"),
             QuizOption(id: "assault", text: "Assault or attack", icon: "exclamationmark.shield.fill", leadsTo: "assault_location"),
-            QuizOption(id: "other_injury", text: "Other injury", icon: "bandage.fill", leadsTo: "injury_severity")
+            QuizOption(id: "other_injury", text: "Other injury", icon: "cross.case.fill", leadsTo: "injury_severity")
         ]
     )
 
@@ -139,7 +139,7 @@ struct LegalQuiz {
         options: [
             QuizOption(id: "emergency", text: "Required emergency room visit", icon: "cross.circle.fill", resultArea: "personal-injury"),
             QuizOption(id: "ongoing", text: "Required ongoing medical treatment", icon: "stethoscope", resultArea: "personal-injury"),
-            QuizOption(id: "minor", text: "Minor injuries, mostly recovered", icon: "bandage.fill", resultArea: "personal-injury"),
+            QuizOption(id: "minor", text: "Minor injuries, mostly recovered", icon: "cross.case.fill", resultArea: "personal-injury"),
             QuizOption(id: "unknown", text: "Still being evaluated", icon: "questionmark.circle.fill", resultArea: "personal-injury")
         ]
     )
@@ -177,7 +177,7 @@ struct LegalQuiz {
         options: [
             QuizOption(id: "accident_damage", text: "Damaged in an accident", icon: "car.fill", leadsTo: "accident_injuries"),
             QuizOption(id: "totaled", text: "Vehicle totaled, unfair offer", icon: "xmark.circle.fill", resultArea: "property-damage"),
-            QuizOption(id: "lemon", text: "Recurring mechanical problems", icon: "exclamationmark.triangle.fill", leadsTo: "lemon_questions"),
+            QuizOption(id: "lemon", text: "Recurring mechanical problems", icon: "car.badge.gearshape.fill", leadsTo: "lemon_questions"),
             QuizOption(id: "diminished", text: "Diminished value after repair", icon: "chart.line.downtrend.xyaxis", resultArea: "property-damage"),
             QuizOption(id: "theft", text: "Stolen or vandalized", icon: "lock.slash.fill", leadsTo: "theft_insurance"),
             QuizOption(id: "other_property", text: "Other property damage", icon: "house.fill", resultArea: "property-damage")
@@ -188,7 +188,7 @@ struct LegalQuiz {
         id: "accident_injuries",
         text: "Were you injured in the accident?",
         options: [
-            QuizOption(id: "yes_injured", text: "Yes, I was injured", icon: "bandage.fill", resultArea: "personal-injury"),
+            QuizOption(id: "yes_injured", text: "Yes, I was injured", icon: "cross.case.fill", resultArea: "personal-injury"),
             QuizOption(id: "no_property_only", text: "No, just property damage", icon: "car.fill", resultArea: "property-damage")
         ]
     )
@@ -247,7 +247,7 @@ struct LegalQuiz {
         id: "employment_type",
         text: "What's your employment issue?",
         options: [
-            QuizOption(id: "injured", text: "I was injured at work", icon: "bandage.fill", leadsTo: "work_injury_type"),
+            QuizOption(id: "injured", text: "I was injured at work", icon: "cross.case.fill", leadsTo: "work_injury_type"),
             QuizOption(id: "fired", text: "I was fired/let go", icon: "person.fill.xmark", resultArea: "employment-law"),
             QuizOption(id: "discrimination", text: "Discrimination", icon: "person.fill.questionmark", resultArea: "employment-law"),
             QuizOption(id: "harassment", text: "Harassment", icon: "exclamationmark.bubble.fill", resultArea: "employment-law"),
