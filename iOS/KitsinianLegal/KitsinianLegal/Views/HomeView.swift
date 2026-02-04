@@ -492,10 +492,12 @@ extension LegalResource {
             return LinearGradient.claimSuccessGradient
         case .checklist:
             return LinearGradient.claimPrimaryGradient
-        case .knowYourRights:
+        case .rights:
             return LinearGradient(colors: [Color(hex: "9333EA"), Color(hex: "A855F7")], startPoint: .topLeading, endPoint: .bottomTrailing)
         case .faq:
             return LinearGradient(colors: [.claimWarning, Color(hex: "FBBF24")], startPoint: .topLeading, endPoint: .bottomTrailing)
+        case .timeline:
+            return LinearGradient.claimAccentGradient
         }
     }
 }

@@ -45,9 +45,15 @@ struct ContentView: View {
     // MARK: - iPad Navigation (Sidebar)
     private var iPadNavigationView: some View {
         NavigationSplitView {
-            List(Tab.allCases, id: \.self, selection: $selectedTab) { tab in
-                Label(tab.rawValue, systemImage: tab.icon)
-                    .tag(tab)
+            List {
+                ForEach(Tab.allCases, id: \.self) { tab in
+                    Button {
+                        selectedTab = tab
+                    } label: {
+                        Label(tab.rawValue, systemImage: tab.icon)
+                    }
+                    .listRowBackground(selectedTab == tab ? Color.claimPrimary.opacity(0.15) : Color.clear)
+                }
             }
             .navigationTitle("ClaimIt")
             .listStyle(.sidebar)
