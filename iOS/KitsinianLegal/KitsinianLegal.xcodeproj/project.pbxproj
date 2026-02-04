@@ -12,6 +12,14 @@
 		E01A00002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00102 /* ContentView.swift */; };
 		E01A00003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E01A00103 /* Assets.xcassets */; };
 		E01A00004 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00104 /* Theme.swift */; };
+		E01A00005 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00105 /* AppConfiguration.swift */; };
+		E01A00006 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00106 /* Typography.swift */; };
+		E01A00007 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00107 /* Spacing.swift */; };
+		E01A00008 /* ValidationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00108 /* ValidationUtils.swift */; };
+
+		/* ViewModels */
+		E01A00061 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00161 /* QuizViewModel.swift */; };
+		E01A00062 /* LeadFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00162 /* LeadFormViewModel.swift */; };
 
 		/* Models */
 		E01A00011 /* PracticeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00111 /* PracticeArea.swift */; };
@@ -47,16 +55,41 @@
 		/* Services */
 		E01A00041 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00141 /* APIService.swift */; };
 		E01A00042 /* AccidentModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00142 /* AccidentModeManager.swift */; };
+		E01A00043 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00143 /* KeychainService.swift */; };
+
+		/* Test Files */
+		E01A00701 /* ValidationUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00801 /* ValidationUtilsTests.swift */; };
+		E01A00702 /* KeychainServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00802 /* KeychainServiceTests.swift */; };
+		E01A00703 /* LeadFormViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01A00803 /* LeadFormViewModelTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E01A00750 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E01A00500 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E01A00400;
+			remoteInfo = KitsinianLegal;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		E01A00000 /* KitsinianLegal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KitsinianLegal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E01A00700 /* KitsinianLegalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KitsinianLegalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 
 		/* App Files */
 		E01A00101 /* KitsinianLegalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitsinianLegalApp.swift; sourceTree = "<group>"; };
 		E01A00102 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E01A00103 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E01A00104 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		E01A00105 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		E01A00106 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		E01A00107 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		E01A00108 /* ValidationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationUtils.swift; sourceTree = "<group>"; };
+
+		/* ViewModels */
+		E01A00161 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
+		E01A00162 /* LeadFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadFormViewModel.swift; sourceTree = "<group>"; };
 
 		/* Models */
 		E01A00111 /* PracticeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeArea.swift; sourceTree = "<group>"; };
@@ -92,10 +125,23 @@
 		/* Services */
 		E01A00141 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		E01A00142 /* AccidentModeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccidentModeManager.swift; sourceTree = "<group>"; };
+		E01A00143 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+
+		/* Test Files */
+		E01A00801 /* ValidationUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationUtilsTests.swift; sourceTree = "<group>"; };
+		E01A00802 /* KeychainServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainServiceTests.swift; sourceTree = "<group>"; };
+		E01A00803 /* LeadFormViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadFormViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E01A00200 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E01A00720 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -109,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				E01A00301 /* KitsinianLegal */,
+				E01A00340 /* KitsinianLegalTests */,
 				E01A00302 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -118,6 +165,7 @@
 			children = (
 				E01A00310 /* App */,
 				E01A00311 /* Models */,
+				E01A00314 /* ViewModels */,
 				E01A00312 /* Views */,
 				E01A00313 /* Services */,
 				E01A00103 /* Assets.xcassets */,
@@ -129,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				E01A00000 /* KitsinianLegal.app */,
+				E01A00700 /* KitsinianLegalTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -139,6 +188,10 @@
 				E01A00101 /* KitsinianLegalApp.swift */,
 				E01A00102 /* ContentView.swift */,
 				E01A00104 /* Theme.swift */,
+				E01A00105 /* AppConfiguration.swift */,
+				E01A00106 /* Typography.swift */,
+				E01A00107 /* Spacing.swift */,
+				E01A00108 /* ValidationUtils.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -153,6 +206,15 @@
 				E01A00115 /* AccidentReport.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		E01A00314 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00161 /* QuizViewModel.swift */,
+				E01A00162 /* LeadFormViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		E01A00312 /* Views */ = {
@@ -173,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				E01A00141 /* APIService.swift */,
+				E01A00143 /* KeychainService.swift */,
 				E01A00330 /* AccidentMode */,
 			);
 			path = Services;
@@ -247,6 +310,16 @@
 			path = AccidentMode;
 			sourceTree = "<group>";
 		};
+		E01A00340 /* KitsinianLegalTests */ = {
+			isa = PBXGroup;
+			children = (
+				E01A00801 /* ValidationUtilsTests.swift */,
+				E01A00802 /* KeychainServiceTests.swift */,
+				E01A00803 /* LeadFormViewModelTests.swift */,
+			);
+			path = KitsinianLegalTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -267,6 +340,24 @@
 			productReference = E01A00000 /* KitsinianLegal.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E01A00710 /* KitsinianLegalTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E01A00730 /* Build configuration list for PBXNativeTarget "KitsinianLegalTests" */;
+			buildPhases = (
+				E01A00711 /* Sources */,
+				E01A00720 /* Frameworks */,
+				E01A00712 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E01A00751 /* PBXTargetDependency */,
+			);
+			name = KitsinianLegalTests;
+			productName = KitsinianLegalTests;
+			productReference = E01A00700 /* KitsinianLegalTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -279,6 +370,10 @@
 				TargetAttributes = {
 					E01A00400 = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					E01A00710 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = E01A00400;
 					};
 				};
 			};
@@ -296,6 +391,7 @@
 			projectRoot = "";
 			targets = (
 				E01A00400 /* KitsinianLegal */,
+				E01A00710 /* KitsinianLegalTests */,
 			);
 		};
 /* End PBXProject section */
@@ -309,6 +405,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E01A00712 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -319,6 +422,12 @@
 				E01A00001 /* KitsinianLegalApp.swift in Sources */,
 				E01A00002 /* ContentView.swift in Sources */,
 				E01A00004 /* Theme.swift in Sources */,
+				E01A00005 /* AppConfiguration.swift in Sources */,
+				E01A00006 /* Typography.swift in Sources */,
+				E01A00007 /* Spacing.swift in Sources */,
+				E01A00008 /* ValidationUtils.swift in Sources */,
+				E01A00061 /* QuizViewModel.swift in Sources */,
+				E01A00062 /* LeadFormViewModel.swift in Sources */,
 				E01A00011 /* PracticeArea.swift in Sources */,
 				E01A00012 /* Lead.swift in Sources */,
 				E01A00013 /* Quiz.swift in Sources */,
@@ -337,6 +446,7 @@
 				E01A00031 /* LeadFormView.swift in Sources */,
 				E01A00041 /* APIService.swift in Sources */,
 				E01A00042 /* AccidentModeManager.swift in Sources */,
+				E01A00043 /* KeychainService.swift in Sources */,
 				E01A00051 /* AccidentModeTabView.swift in Sources */,
 				E01A00052 /* AccidentModeFlowView.swift in Sources */,
 				E01A00053 /* SafetyCheckView.swift in Sources */,
@@ -349,7 +459,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E01A00711 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E01A00701 /* ValidationUtilsTests.swift in Sources */,
+				E01A00702 /* KeychainServiceTests.swift in Sources */,
+				E01A00703 /* LeadFormViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E01A00751 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E01A00400 /* KitsinianLegal */;
+			targetProxy = E01A00750 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		E01A00600 /* Debug */ = {
@@ -531,6 +659,44 @@
 			};
 			name = Release;
 		};
+		E01A00731 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitsinianlaw.claimit.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KitsinianLegal.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KitsinianLegal";
+			};
+			name = Debug;
+		};
+		E01A00732 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitsinianlaw.claimit.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KitsinianLegal.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KitsinianLegal";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -548,6 +714,15 @@
 			buildConfigurations = (
 				E01A00610 /* Debug */,
 				E01A00611 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E01A00730 /* Build configuration list for PBXNativeTarget "KitsinianLegalTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E01A00731 /* Debug */,
+				E01A00732 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
