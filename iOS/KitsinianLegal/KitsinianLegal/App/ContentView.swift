@@ -14,14 +14,16 @@ struct ContentView: View {
         case home = "Home"
         case claim = "Claim"
         case learn = "Learn"
-        case contact = "Contact"
+        case accident = "Accident"
+        case contact = "Account"
 
         var icon: String {
             switch self {
             case .home: return "house.fill"
             case .claim: return "bolt.fill"
             case .learn: return "book.fill"
-            case .contact: return "bubble.left.fill"
+            case .accident: return "exclamationmark.triangle.fill"
+            case .contact: return "person.fill"
             }
         }
     }
@@ -71,6 +73,8 @@ struct ContentView: View {
             QuizStartView()
         case .learn:
             ResourceLibraryView()
+        case .accident:
+            AccidentModeTabView()
         case .contact:
             ContactView()
         }
@@ -96,6 +100,12 @@ struct ContentView: View {
                     Label(Tab.learn.rawValue, systemImage: Tab.learn.icon)
                 }
                 .tag(Tab.learn)
+
+            AccidentModeTabView()
+                .tabItem {
+                    Label(Tab.accident.rawValue, systemImage: Tab.accident.icon)
+                }
+                .tag(Tab.accident)
 
             ContactView()
                 .tabItem {
